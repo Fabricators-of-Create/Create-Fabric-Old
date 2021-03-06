@@ -1,0 +1,9 @@
+accessWidener    v1   named
+
+accessible   class   net/minecraft/world/chunk/PaletteResizeListener
+accessible   class   com/mojang/blaze3d/platform/GlStateManager$FogState
+accessible   class   com/mojang/blaze3d/platform/GlStateManager$CapabilityTracker
+accessible   class   net/minecraft/client/MinecraftClient
+accessible   class   net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
+accessible   class   net/minecraft/client/render/model/BakedModelManager
+accessible   method   net/minecraft/item/Item isIn isIn(Lnet/minecraft/item/ItemGroup;)B

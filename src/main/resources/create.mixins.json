@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.smellypengu.createfabric.foundation.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "BufferBuilderAccessor",
+    "GlStateManagerAccessor",
+    "OnModelBakeMixin"
+  ],
+  "client": [
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
