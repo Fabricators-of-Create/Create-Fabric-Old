@@ -1,6 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions.relays.belt;
 
 import com.smellypengu.createfabric.AllBlocks;
+import com.smellypengu.createfabric.AllItems;
 import com.smellypengu.createfabric.AllTileEntities;
 import com.smellypengu.createfabric.content.contraptions.base.HorizontalKineticBlock;
 import com.smellypengu.createfabric.content.schematics.ISpecialBlockItemRequirement;
@@ -48,7 +49,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 	@Override
 	public void addStacksForDisplay(ItemGroup group, DefaultedList<ItemStack> list) {
-		//list.add(AllItems.BELT_CONNECTOR.asStack());
+		list.add(AllItems.BELT_CONNECTOR.getDefaultStack());
 	}
 
 	@Override
