@@ -1,8 +1,8 @@
 package com.smellypengu.createfabric.content.contraptions.relays.belt;
 
 /*import com.simibubi.create.foundation.data.SpecialBlockStateGen;
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.com.smellypengu.registrate.providers.DataGenContext;
+import com.tterrag.com.smellypengu.registrate.providers.RegistrateBlockstateProvider;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

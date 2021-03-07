@@ -1,6 +1,8 @@
 package com.smellypengu.createfabric.foundation.item;
 
 import com.smellypengu.createfabric.foundation.block.render.CustomRenderedItemModel;
+import com.smellypengu.registrate.util.nullness.NonNullBiConsumer;
+import com.smellypengu.registrate.util.nullness.NonNullFunction;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.Item;
 import org.apache.commons.lang3.tuple.Pair;
@@ -9,14 +11,12 @@ import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class CustomRenderedItems {
 
-	private List<Pair<Supplier<? extends Item>, Function<BakedModel, ? extends CustomRenderedItemModel>>> registered;
-	private Map<Item, Function<BakedModel, ? extends CustomRenderedItemModel>> customModels;
+	private List<Pair<Supplier<? extends Item>, NonNullFunction<BakedModel, ? extends CustomRenderedItemModel>>> registered;
+	private Map<Item, NonNullFunction<BakedModel, ? extends CustomRenderedItemModel>> customModels;
 	
 	public CustomRenderedItems() {
 		registered = new ArrayList<>();
@@ -24,11 +24,11 @@ public class CustomRenderedItems {
 	}
 
 	public void register(Supplier<? extends Item> entry,
-						 Function<BakedModel, ? extends CustomRenderedItemModel> behaviour) {
+						 NonNullFunction<BakedModel, ? extends CustomRenderedItemModel> behaviour) {
 		registered.add(Pair.of(entry, behaviour));
 	}
 	
-	public void foreach(BiConsumer<Item, Function<BakedModel, ? extends CustomRenderedItemModel>> consumer) {
+	public void foreach(NonNullBiConsumer<Item, NonNullFunction<BakedModel, ? extends CustomRenderedItemModel>> consumer) {
 		loadEntriesIfMissing();
 		customModels.forEach(consumer);
 	}

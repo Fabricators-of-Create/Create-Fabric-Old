@@ -45,12 +45,12 @@ public enum AllSections {
 	}
 
 	static AllSections ofItem(Item item) {
-		return Create.registrate()
+		return Create.com.smellypengu.registrate()
 			.getSection(item);
 	}
 
 	static AllSections ofBlock(Block block) {
-		return Create.registrate()
+		return Create.com.smellypengu.registrate()
 			.getSection(block);
 	}*/
 

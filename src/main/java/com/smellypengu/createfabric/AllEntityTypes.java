@@ -50,7 +50,7 @@ public class AllEntityTypes {
 		EntityClassification group, int range, int updateFrequency, boolean sendVelocity, boolean immuneToFire,
 		NonNullConsumer<EntityType.Builder<T>> propertyBuilder) {
 		String id = Lang.asId(name);
-		return Create.registrate()
+		return Create.com.smellypengu.registrate()
 			.entity(id, factory, group)
 			.properties(b -> b.setTrackingRange(range)
 				.setUpdateInterval(updateFrequency)
