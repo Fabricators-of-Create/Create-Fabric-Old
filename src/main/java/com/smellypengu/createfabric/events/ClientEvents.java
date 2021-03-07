@@ -8,6 +8,7 @@ import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatch
 import com.smellypengu.createfabric.foundation.render.backend.RenderWork;
 import com.smellypengu.createfabric.foundation.renderState.SuperRenderTypeBuffer;
 import com.smellypengu.createfabric.foundation.utility.AnimationTickHolder;
+import com.smellypengu.createfabric.foundation.utility.placement.PlacementHelpers;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
@@ -22,7 +23,7 @@ public class ClientEvents {
         BeltConnectorHandler.tick();
 
         KineticDebugger.tick();
-        //PlacementHelpers.tick();
+        PlacementHelpers.tick();
         ContraptionRenderDispatcher.tick();
     }
 

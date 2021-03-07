@@ -1,6 +1,7 @@
 package com.smellypengu.createfabric.foundation.utility.placement;
 
 import com.mojang.datafixers.util.Pair;
+import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.foundation.utility.Iterate;
 import com.smellypengu.createfabric.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
@@ -58,7 +59,7 @@ public interface IPlacementHelper {
 	default void renderAt(BlockPos pos, BlockState state, BlockHitResult ray, PlacementOffset offset) {
 		//IPlacementHelper.renderArrow(VecHelper.getCenterOf(pos), VecHelper.getCenterOf(offset.getPos()), ray.getFace());
 
-		/**displayGhost(offset);*/
+		displayGhost(offset);
 	}
 
 	/**static void renderArrow(Vec3d center, Vec3d target, Direction arrowPlane) { TODO render arrow
@@ -78,14 +79,14 @@ public interface IPlacementHelper {
 		CreateClient.outliner.showLine("placementArrowB" + center + target, start.add(offset), endB.add(offset)).lineWidth(1/16f);
 	}*/
 
-	/**default void displayGhost(PlacementOffset offset) {
+	default void displayGhost(PlacementOffset offset) {
 		if (!offset.hasGhostState())
 			return;
 
 		CreateClient.ghostBlocks.showGhostState(this, offset.getTransform().apply(offset.getGhostState()))
 				.at(offset.getBlockPos())
 				.breathingAlpha();
-	}*/
+	}
 
 	static List<Direction> orderedByDistanceOnlyAxis(BlockPos pos, Vec3d hit, Direction.Axis axis) {
 		return orderedByDistance(pos, hit, dir -> dir.getAxis() == axis);

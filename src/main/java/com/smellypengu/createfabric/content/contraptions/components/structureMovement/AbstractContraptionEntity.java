@@ -1,44 +1,35 @@
 package com.smellypengu.createfabric.content.contraptions.components.structureMovement;
 
-import java.util.IdentityHashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-
 import com.smellypengu.createfabric.AllMovementBehaviours;
 import com.smellypengu.createfabric.foundation.collision.Matrix3d;
 import com.smellypengu.createfabric.foundation.utility.AngleHelper;
 import com.smellypengu.createfabric.foundation.utility.VecHelper;
-import io.netty.buffer.ByteBuf;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.vehicle.AbstractMinecartEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.structure.Structure;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.MutablePair;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import java.util.*;
+import java.util.Map.Entry;
 
 public abstract class AbstractContraptionEntity extends Entity {
 
@@ -97,7 +88,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 		if (world.isClient)
 			return;
 		if (transformedVector != null)
-			passenger.writeNbt((CompoundTag) new CompoundTag().put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector))); // TODO COULD BE WRONG AHJAHAHAA
+			passenger.writeNbt((CompoundTag) new CompoundTag().put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector))); // TODO COULD BE WRONG
 		contraption.getSeatMapping()
 			.remove(passenger.getUuid());
 		/**AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),

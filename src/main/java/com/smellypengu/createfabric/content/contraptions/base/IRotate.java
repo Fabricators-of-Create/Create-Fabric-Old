@@ -5,11 +5,9 @@ import com.smellypengu.createfabric.content.contraptions.wrench.IWrenchable;
 import com.smellypengu.createfabric.foundation.item.ItemDescription;
 import com.smellypengu.createfabric.foundation.utility.Lang;
 import net.minecraft.block.BlockState;
-import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 //TODO !!!!!!!! FIX THIS
@@ -99,7 +97,7 @@ public interface IRotate extends IWrenchable {
 			else if (stressPercent > .5d) return StressImpact.MEDIUM;
 			else return StressImpact.LOW;
 		}
-		
+		// TODO CONFIG
 		public static boolean isEnabled() {
 			return true; //!AllConfigs.SERVER.kinetics.disableStress.get();
 		}

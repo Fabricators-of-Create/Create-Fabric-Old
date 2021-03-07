@@ -149,8 +149,8 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			if (!entityIn.isAlive())
 				return;
 			withTileEntityDo(worldIn, pos, te -> {
-				ItemEntity itemEntity = (ItemEntity) entityIn;
-				/**IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+				/**ItemEntity itemEntity = (ItemEntity) entityIn;
+				IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 					.orElse(null);
 				if (handler == null)
 					return;

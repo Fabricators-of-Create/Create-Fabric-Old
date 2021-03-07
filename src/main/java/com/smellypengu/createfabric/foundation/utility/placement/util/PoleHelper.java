@@ -70,6 +70,6 @@ public abstract class PoleHelper<T extends Comparable<T>> implements IPlacementH
 		//Vec3d centerOffset = new Vec3d(ray.getFace().getDirectionVec()).scale(.3);
 		//IPlacementHelper.renderArrow(VecHelper.getCenterOf(pos).add(centerOffset), VecHelper.getCenterOf(offset.getPos()).add(centerOffset), ray.getFace(), 0.75D);
 
-		/**displayGhost(offset); TODO display ghost*/
+		displayGhost(offset);
 	}
 }

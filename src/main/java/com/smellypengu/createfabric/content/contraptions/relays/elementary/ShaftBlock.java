@@ -10,6 +10,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -84,8 +85,8 @@ public class ShaftBlock extends AbstractShaftBlock {
 		private PlacementHelper(){
 			super(
 					state -> state.getBlock() instanceof AbstractShaftBlock,
-					state -> state.get(AXIS),
-					AXIS
+					state -> state.get(Properties.AXIS),
+					Properties.AXIS
 			);
 		}
 
@@ -96,7 +97,7 @@ public class ShaftBlock extends AbstractShaftBlock {
 
 		@Override
 		public Predicate<BlockState> getStatePredicate() {
-			return AllBlocks.SHAFT::hasTileEntity;
+			return AllBlocks.SHAFT.stateManager.getStates()::contains;
 		}
 	}
 }

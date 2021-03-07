@@ -117,10 +117,10 @@ public class PlacementOffset {
 			state = state.with(Properties.WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
 		}
 
-		/**BlockSnapshot snapshot = BlockSnapshot.getBlockSnapshot(world, newPos); TODO don't know what to do here, BlockSnapshot
+		/**BlockSnapshot snapshot = BlockSnapshot.getBlockSnapshot(world, newPos);*/
 		world.setBlockState(newPos, state);
 
-		BlockEvent.EntityPlaceEvent event = new BlockEvent.EntityPlaceEvent(snapshot, IPlacementHelper.ID, player);
+		/**BlockEvent.EntityPlaceEvent event = new BlockEvent.EntityPlaceEvent(snapshot, IPlacementHelper.ID, player);
 		if (MinecraftForge.EVENT_BUS.post(event)) {
 			snapshot.restore(true, false);
 			return ActionResult.FAIL;

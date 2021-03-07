@@ -528,7 +528,7 @@ public abstract class KineticTileEntity extends SmartTileEntity
 	}
 
 	/**@Override
-	public void onChunkUnloaded() { TODO onChunkUnloaded COULD BE VERY IMPORTANT PLS FIX AASAPSPAPSP
+	public void onChunkUnloaded() { TODO onChunkUnloaded COULD BE VERY IMPORTANT
 		if (world != null && world.isClient)
 			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> CreateClient.kineticRenderer.remove(this);
 	}*/

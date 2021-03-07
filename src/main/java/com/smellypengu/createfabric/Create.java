@@ -33,6 +33,8 @@ public class Create implements ModInitializer  {
         AllMovementBehaviours.register();
 
         AllWorldFeatures.reload();
+
+        torquePropagator = new TorquePropagator();
     }
 
     public static Identifier asResource(String path) {
