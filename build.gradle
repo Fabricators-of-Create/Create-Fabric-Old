@@ -11,11 +11,9 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
+	maven {
+		url = "https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/"
+	}
 }
 
 dependencies {
@@ -27,8 +25,12 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-	// You may need to force-disable transitiveness on them.
+	modImplementation "net.devtech:arrp:${project.arrp_version}"
+	include "net.devtech:arrp:${project.arrp_version}"
+}
+
+minecraft {
+	accessWidener =  file("src/main/resources/create.accesswidener")
 }
 
 processResources {
@@ -89,8 +91,4 @@ publishing {
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
     }
-}
-
-minecraft {
-	accessWidener =  file("src/main/resources/create.accesswidener")
 }
