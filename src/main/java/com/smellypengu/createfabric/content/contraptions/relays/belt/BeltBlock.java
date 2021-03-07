@@ -13,6 +13,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -137,31 +138,31 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 				return;*/
 		}
 
-		/**BeltTileEntity belt = BeltHelper.getSegmentTE(worldIn, pos);
+		BeltTileEntity belt = BeltHelper.getSegmentTE(worldIn, pos);
 		if (belt == null)
 			return;
 		if (entityIn instanceof ItemEntity && entityIn.isAlive()) {
 			if (worldIn.isClient)
 				return;
-			if (entityIn.getMotion().y > 0)
+			if (entityIn.getVelocity().y > 0)
 				return;
 			if (!entityIn.isAlive())
 				return;
 			withTileEntityDo(worldIn, pos, te -> {
 				ItemEntity itemEntity = (ItemEntity) entityIn;
-				IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+				/**IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 					.orElse(null);
 				if (handler == null)
 					return;
 				ItemStack remainder = handler.insertItem(0, itemEntity.getItem()
 					.copy(), false);
 				if (remainder.isEmpty())
-					itemEntity.remove();
+					itemEntity.remove();*/
 			});
 			return;
 		}
 
-		BeltTileEntity controller = BeltHelper.getControllerTE(worldIn, pos);
+		/**BeltTileEntity controller = BeltHelper.getControllerTE(worldIn, pos);
 		if (controller == null || controller.passengers == null)
 			return;
 		if (controller.passengers.containsKey(entityIn)) {

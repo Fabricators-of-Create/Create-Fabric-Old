@@ -3,8 +3,10 @@ package com.smellypengu.createfabric.content.contraptions.relays.belt;
 import com.smellypengu.createfabric.AllTileEntities;
 import com.smellypengu.createfabric.content.contraptions.base.IRotate;
 import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntity;
+import com.smellypengu.createfabric.content.contraptions.relays.belt.transport.BeltInventory;
 import com.smellypengu.createfabric.foundation.utility.NBTHelperC;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.state.property.Properties;
@@ -29,8 +31,8 @@ public class BeltTileEntity extends KineticTileEntity {
 	public CasingType casing;
 
 	protected BlockPos controller;
-	/**protected BeltInventory inventory;
-	protected LazyOptional<IItemHandler> itemHandler;*/
+	protected BeltInventory inventory;
+	/**protected LazyOptional<IItemHandler> itemHandler;*/
 
 	public CompoundTag trackerUpdateTag;
 
@@ -165,8 +167,8 @@ public class BeltTileEntity extends KineticTileEntity {
 		if (color.isPresent())
 			NBTHelperC.writeEnum(compound, "Dye", color.get());
 
-		/**if (isController())
-			compound.put("Inventory", getInventory().write());*/
+		if (isController())
+			compound.put("Inventory", getInventory().write());
 		super.write(compound, clientPacket);
 	}
 
@@ -231,16 +233,16 @@ public class BeltTileEntity extends KineticTileEntity {
 		}
 	}*/
 
-	/*public BeltTileEntity getControllerTE() {
+	public BeltTileEntity getControllerTE() {
 		if (controller == null)
 			return null;
-		if (!world.isBlockPresent(controller))
+		if (!world.canSetBlock(controller))
 			return null;
 		BlockEntity te = world.getBlockEntity(controller);
 		if (te == null || !(te instanceof BeltTileEntity))
 			return null;
 		return (BeltTileEntity) te;
-	}*/
+	}
 
 	public void setController(BlockPos controller) {
 		this.controller = controller;
@@ -337,7 +339,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		return getCachedState().get(Properties.HORIZONTAL_FACING);
 	}
 
-	/**public BeltInventory getInventory() {
+	public BeltInventory getInventory() {
 		if (!isController()) {
 			BeltTileEntity controllerTE = getControllerTE();
 			if (controllerTE != null)
@@ -348,7 +350,7 @@ public class BeltTileEntity extends KineticTileEntity {
 			inventory = new BeltInventory(this);
 		}
 		return inventory;
-	}*/
+	}
 
 	/**private void applyToAllItems(float maxDistanceFromCenter,
 		Function<TransportedItemStack, TransportedResult> processFunction) {
