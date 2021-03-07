@@ -14,6 +14,7 @@ import com.smellypengu.createfabric.foundation.render.KineticRenderer;
 import com.smellypengu.createfabric.foundation.render.SuperByteBufferCache;
 import com.smellypengu.createfabric.foundation.render.backend.Backend;
 import com.smellypengu.createfabric.foundation.utility.ghost.GhostBlocks;
+import com.smellypengu.createfabric.foundation.utility.outliner.Outliner;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -29,7 +30,7 @@ import net.minecraft.resource.ResourceManager;
 public class CreateClient implements ClientModInitializer {
     public static KineticRenderer kineticRenderer;
     public static SuperByteBufferCache bufferCache;
-    //public static final Outliner outliner = new Outliner();
+    public static final Outliner outliner = new Outliner();
     public static GhostBlocks ghostBlocks;
 
     public static CustomBlockModels customBlockModels;
