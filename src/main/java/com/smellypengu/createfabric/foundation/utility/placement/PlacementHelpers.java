@@ -59,7 +59,7 @@ public class PlacementHelpers {
 		if (world == null)
 			return;
 
-		if (!(mc.crosshairTarget instanceof BlockHitResult)) // TODO COULD BE WRONG crosshair Target CHECK
+		if (!(mc.crosshairTarget instanceof BlockHitResult))
 			return;
 
 		BlockHitResult ray = (BlockHitResult) mc.crosshairTarget;

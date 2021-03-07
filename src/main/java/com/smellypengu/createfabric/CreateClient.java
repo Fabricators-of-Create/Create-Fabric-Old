@@ -7,6 +7,7 @@ import com.smellypengu.createfabric.content.palettes.AllPaletteBlocks;
 import com.smellypengu.createfabric.events.ClientEvents;
 import com.smellypengu.createfabric.foundation.ResourceReloadHandler;
 import com.smellypengu.createfabric.foundation.block.render.CustomBlockModels;
+import com.smellypengu.createfabric.foundation.block.render.SpriteShifter;
 import com.smellypengu.createfabric.foundation.item.CustomItemModels;
 import com.smellypengu.createfabric.foundation.item.CustomRenderedItems;
 import com.smellypengu.createfabric.foundation.render.KineticRenderer;
@@ -18,8 +19,10 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ResourceManager;
 
@@ -60,8 +63,9 @@ public class CreateClient implements ClientModInitializer {
         WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
         HudRenderCallback.EVENT.register(GoggleOverlayRenderer::lookingAtBlocksThroughGogglesShowsTooltip);
 
-
-
+        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlas, registry) -> {
+            SpriteShifter.getAllTargetSprites().forEach(registry::register);
+        });
 
 
 
