@@ -21,7 +21,7 @@ import static net.minecraft.util.math.Direction.AxisDirection.POSITIVE;
 
 public class BeltTileEntity extends KineticTileEntity {
 
-	//public Map<Entity, TransportedEntityInfo> passengers;
+	/**public Map<Entity, TransportedEntityInfo> passengers;*/
 	public Optional<DyeColor> color;
 	public int beltLength;
 	public int index;
@@ -29,7 +29,7 @@ public class BeltTileEntity extends KineticTileEntity {
 	public CasingType casing;
 
 	protected BlockPos controller;
-	/*protected BeltInventory inventory;
+	/**protected BeltInventory inventory;
 	protected LazyOptional<IItemHandler> itemHandler;*/
 
 	public CompoundTag trackerUpdateTag;
@@ -45,12 +45,12 @@ public class BeltTileEntity extends KineticTileEntity {
 	public BeltTileEntity(BlockPos pos, BlockState state) {
 		super(AllTileEntities.BELT, pos, state);
 		controller = BlockPos.ORIGIN;
-		//itemHandler = LazyOptional.empty();
+		/**itemHandler = LazyOptional.empty();*/
 		casing = CasingType.NONE;
 		color = Optional.empty();
 	}
 
-	/*@Override
+	/**@Override
 	public void addBehaviours(List<TileEntityBehaviour> behaviours) {
 		super.addBehaviours(behaviours);
 		behaviours.add(new DirectBeltInputBehaviour(this).onlyInsertWhen(this::canInsertFrom)
@@ -137,7 +137,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		return !isController();
 	}*/
 
-	/*@Override
+	/**@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (side == Direction.UP || BeltBlock.canAccessFromSide(side, getBlockState())) {
@@ -150,7 +150,7 @@ public class BeltTileEntity extends KineticTileEntity {
 	@Override
 	public void markRemoved() {
 		super.markRemoved();
-		//itemHandler.invalidate();
+		/**itemHandler.invalidate();*/
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		if (color.isPresent())
 			NBTHelperC.writeEnum(compound, "Dye", color.get());
 
-		/*if (isController())
+		/**if (isController())
 			compound.put("Inventory", getInventory().write());*/
 		super.write(compound, clientPacket);
 	}
@@ -174,7 +174,7 @@ public class BeltTileEntity extends KineticTileEntity {
 	protected void read(CompoundTag compound, boolean clientPacket) {
 		super.read(compound, clientPacket);
 
-		/*if (compound.getBoolean("IsController"))
+		/**if (compound.getBoolean("IsController"))
 			controller = pos;
 
 		color = compound.contains("Dye") ? Optional.of(NBTHelperC.readEnum(compound, "Dye", DyeColor.class))
@@ -213,7 +213,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		trackerUpdateTag = new CompoundTag();
 	}
 
-	/*public void applyColor(DyeColor colorIn) {
+	/**public void applyColor(DyeColor colorIn) {
 		if (colorIn == null) {
 			if (!color.isPresent())
 				return;
@@ -244,7 +244,7 @@ public class BeltTileEntity extends KineticTileEntity {
 
 	public void setController(BlockPos controller) {
 		this.controller = controller;
-		//cachedBoundingBox = null;
+		/**cachedBoundingBox = null;*/
 	}
 
 	public BlockPos getController() {
@@ -270,7 +270,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		return getBeltMovementSpeed() * offset;
 	}
 
-	/*public boolean hasPulley() {
+	/**public boolean hasPulley() {
 		if (!AllBlocks.BELT.has(getBlockState()))
 			return false;
 		return getBlockState().get(BeltBlock.PART) != BeltPart.MIDDLE;
@@ -337,7 +337,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		return getCachedState().get(Properties.HORIZONTAL_FACING);
 	}
 
-	/*public BeltInventory getInventory() {
+	/**public BeltInventory getInventory() {
 		if (!isController()) {
 			BeltTileEntity controllerTE = getControllerTE();
 			if (controllerTE != null)
@@ -350,7 +350,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		return inventory;
 	}*/
 
-	/*private void applyToAllItems(float maxDistanceFromCenter,
+	/**private void applyToAllItems(float maxDistanceFromCenter,
 		Function<TransportedItemStack, TransportedResult> processFunction) {
 		BeltTileEntity controller = getControllerTE();
 		if (controller == null)
@@ -360,14 +360,14 @@ public class BeltTileEntity extends KineticTileEntity {
 			inventory.applyToEachWithin(index + .5f, maxDistanceFromCenter, processFunction);
 	}*/
 
-	/*private Vec3d getWorldPositionOf(TransportedItemStack transported) {
+	/**private Vec3d getWorldPositionOf(TransportedItemStack transported) {
 		BeltTileEntity controllerTE = getControllerTE();
 		if (controllerTE == null)
 			return Vec3d.ZERO;
 		return BeltHelper.getVectorForOffset(controllerTE, transported.beltPosition);
 	}*/
 
-	/*public void setCasingType(CasingType type) {
+	/**public void setCasingType(CasingType type) {
 		if (casing == type)
 			return;
 		if (casing != CasingType.NONE)
@@ -389,7 +389,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		return getMovementFacing() != side.getOpposite();
 	}
 
-	/*private ItemStack tryInsertingFromSide(TransportedItemStack transportedStack, Direction side, boolean simulate) {
+	/**private ItemStack tryInsertingFromSide(TransportedItemStack transportedStack, Direction side, boolean simulate) {
 		BeltTileEntity nextBeltController = getControllerTE();
 		ItemStack inserted = transportedStack.stack;
 		ItemStack empty = ItemStack.EMPTY;
@@ -454,7 +454,7 @@ public class BeltTileEntity extends KineticTileEntity {
 		return empty;
 	}*/
 
-	/*public static ModelProperty<CasingType> CASING_PROPERTY = new ModelProperty<>();
+	/**public static ModelProperty<CasingType> CASING_PROPERTY = new ModelProperty<>();
 
 	@Override
 	public ModelData getModelData() {
