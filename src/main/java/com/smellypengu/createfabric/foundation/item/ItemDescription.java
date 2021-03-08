@@ -1,26 +1,5 @@
 package com.smellypengu.createfabric.foundation.item;
 
-import static com.smellypengu.createfabric.foundation.item.TooltipHelper.cutString;
-import static net.minecraft.util.Formatting.AQUA;
-import static net.minecraft.util.Formatting.BLUE;
-import static net.minecraft.util.Formatting.DARK_GRAY;
-import static net.minecraft.util.Formatting.DARK_GREEN;
-import static net.minecraft.util.Formatting.DARK_PURPLE;
-import static net.minecraft.util.Formatting.DARK_RED;
-import static net.minecraft.util.Formatting.GOLD;
-import static net.minecraft.util.Formatting.GRAY;
-import static net.minecraft.util.Formatting.GREEN;
-import static net.minecraft.util.Formatting.LIGHT_PURPLE;
-import static net.minecraft.util.Formatting.RED;
-import static net.minecraft.util.Formatting.STRIKETHROUGH;
-import static net.minecraft.util.Formatting.WHITE;
-import static net.minecraft.util.Formatting.YELLOW;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.smellypengu.createfabric.AllItems;
 import com.smellypengu.createfabric.content.contraptions.base.IRotate;
 import com.smellypengu.createfabric.foundation.utility.Lang;
@@ -29,8 +8,15 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.smellypengu.createfabric.foundation.item.TooltipHelper.cutString;
+import static net.minecraft.util.Formatting.*;
 
 public class ItemDescription {
 
@@ -76,21 +62,20 @@ public class ItemDescription {
 		return this;
 	}
 
-	public ItemDescription withKineticStats(Block block) {
+	public ItemDescription withKineticStats(Block block) { // TODO FIX CONFIGS
 
-		/**boolean isEngine = block instanceof EngineBlock; TODO FIX ALL OF THIS withKineticStats DESCRIPTION
-		CKinetics config = AllConfigs.SERVER.kinetics;
+		boolean isEngine = false /**block instanceof EngineBlock*/;
+		/**CKinetics config = AllConfigs.SERVER.kinetics;*/
 		IRotate.SpeedLevel minimumRequiredSpeedLevel =
 			isEngine ? IRotate.SpeedLevel.NONE : ((IRotate) block).getMinimumRequiredSpeedLevel();
 		boolean hasSpeedRequirement = minimumRequiredSpeedLevel != IRotate.SpeedLevel.NONE;
-		Identifier id = ((Block) block).getRegistryName();
-		Map<Identifier, ConfigValue<Double>> impacts = config.stressValues.getImpacts();
-		Map<Identifier, ConfigValue<Double>> capacities = config.stressValues.getCapacities();
-		boolean hasStressImpact = impacts.containsKey(id) && impacts.get(id)
+		MutableText id = block.getName();
+		/**Map<Identifier, ConfigValue<Double>> impacts = config.stressValues.getImpacts();
+		Map<Identifier, ConfigValue<Double>> capacities = config.stressValues.getCapacities();*/
+		/**boolean hasStressImpact = impacts.containsKey(id) && impacts.get(id)
 			.get() > 0 && IRotate.StressImpact.isEnabled();
-		boolean hasStressCapacity = capacities.containsKey(id) && IRotate.StressImpact.isEnabled();
-		boolean hasGlasses = true;
-			AllItems.GOGGLES.get() == MinecraftClient.getInstance().player.getEquippedStack(EquipmentSlot.HEAD)
+		boolean hasStressCapacity = capacities.containsKey(id) && IRotate.StressImpact.isEnabled();*/
+		boolean hasGlasses = AllItems.GOGGLES.getDefaultStack().getItem() == MinecraftClient.getInstance().player.getEquippedStack(EquipmentSlot.HEAD)
 				.getItem();
 
 		String rpmUnit = Lang.translate("generic.unit.rpm");
@@ -107,35 +92,33 @@ public class ItemDescription {
 			add(linesOnShift, level);
 		}
 
-		if (hasStressImpact && !(!isEngine && ((IRotate) block).hideStressImpact())) {
+		if (/**hasStressImpact &&*/ !(!isEngine && ((IRotate) block).hideStressImpact())) {
 			List<String> stressLevels = Lang.translatedOptions("tooltip.stressImpact", "low", "medium", "high");
-			double impact = impacts.get(id)
-				.get();
-			IRotate.StressImpact impactId = impact >= config.highStressImpact.get() ? IRotate.StressImpact.HIGH
-				: (impact >= config.mediumStressImpact.get() ? IRotate.StressImpact.MEDIUM : IRotate.StressImpact.LOW);
+			double impact = /**impacts.get(id).get()*/ 0;
+			IRotate.StressImpact impactId = impact >= /**config.highStressImpact.get()*/ 0 ? IRotate.StressImpact.HIGH
+				: (impact >= /**config.mediumStressImpact.get()*/ 0 ? IRotate.StressImpact.MEDIUM : IRotate.StressImpact.LOW);
 			int index = impactId.ordinal();
 			String level = impactId.getAbsoluteColor() + makeProgressBar(3, index) + stressLevels.get(index);
 
 			if (hasGlasses)
-				level += " (" + impacts.get(id)
-					.get() + "x " + rpmUnit + ")";
+				level += " (" + /**impacts.get(id).get()*/ 4 + "x " + rpmUnit + ")";
 
 			add(linesOnShift, GRAY + Lang.translate("tooltip.stressImpact"));
 			add(linesOnShift, level);
 		}
 
-		if (hasStressCapacity) {
+		if (/**hasStressCapacity*/ true) {
 			List<String> stressCapacityLevels =
 				Lang.translatedOptions("tooltip.capacityProvided", "low", "medium", "high");
-			double capacity = capacities.get(id)
+			/**double capacity = capacities.get(id)
 				.get();
 			IRotate.StressImpact impactId = capacity >= config.highCapacity.get() ? IRotate.StressImpact.LOW
 				: (capacity >= config.mediumCapacity.get() ? IRotate.StressImpact.MEDIUM : IRotate.StressImpact.HIGH);
-			int index = IRotate.StressImpact.values().length - 2 - impactId.ordinal();
-			String level = impactId.getAbsoluteColor() + makeProgressBar(3, index) + stressCapacityLevels.get(index);
+			int index = IRotate.StressImpact.values().length - 2 - impactId.ordinal();*/
+			String level = /**impactId.getAbsoluteColor() +*/ makeProgressBar(3, /**index*/ 4) + stressCapacityLevels.get(/**index*/ 4);
 
 			if (hasGlasses)
-				level += " (" + capacity + "x " + rpmUnit + ")";
+				level += " (" + /**capacity*/ 4 + "x " + rpmUnit + ")";
 			if (!isEngine && ((IRotate) block).showCapacityWithAnnotation())
 				level +=
 					" " + DARK_GRAY + Formatting.ITALIC + Lang.translate("tooltip.capacityProvided.asGenerator");
@@ -147,10 +130,10 @@ public class ItemDescription {
 			if (!genSpeed.equals("")) {
 				add(linesOnShift, GREEN + " " + genSpeed);
 			}
-		}*/
+		}
 
-		/**if (hasSpeedRequirement || hasStressImpact || hasStressCapacity)
-			add(linesOnShift, "");*/
+		if (hasSpeedRequirement /**|| hasStressImpact || hasStressCapacity*/)
+			add(linesOnShift, "");
 		return this;
 	}
 

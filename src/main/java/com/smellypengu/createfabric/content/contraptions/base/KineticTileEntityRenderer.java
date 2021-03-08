@@ -1,5 +1,6 @@
 package com.smellypengu.createfabric.content.contraptions.base;
 
+import com.smellypengu.createfabric.AllBlocks;
 import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.KineticDebugger;
 import com.smellypengu.createfabric.foundation.render.Compartment;
@@ -15,6 +16,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -92,10 +94,10 @@ public class KineticTileEntityRenderer extends SafeTileEntityRenderer<KineticTil
 		return offset;
 	}*/
 
-	/**public static BlockState shaft(Direction.Axis axis) { TODO SHAFT
+	public static BlockState shaft(Direction.Axis axis) {
 		return AllBlocks.SHAFT.getDefaultState()
 			.with(Properties.AXIS, axis);
-	}*/
+	}
 
 	public static Direction.Axis getRotationAxisOf(KineticTileEntity te) {
 		return ((IRotate) te.getCachedState()

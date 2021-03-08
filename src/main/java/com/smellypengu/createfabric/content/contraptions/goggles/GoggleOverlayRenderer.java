@@ -2,8 +2,12 @@ package com.smellypengu.createfabric.content.contraptions.goggles;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.smellypengu.createfabric.AllItems;
+import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.IDisplayAssemblyExceptions;
 import com.smellypengu.createfabric.foundation.gui.GuiGameElement;
+import com.smellypengu.createfabric.foundation.tileEntity.behaviour.ValueBox;
+import com.smellypengu.createfabric.foundation.utility.outliner.Outline;
+import com.smellypengu.createfabric.foundation.utility.outliner.Outliner;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -18,24 +22,25 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GoggleOverlayRenderer {
 
-	/**private static final Map<Object, OutlineEntry> outlines = CreateClient.outliner.getOutlines();*/
+	private static final Map<Object, Outliner.OutlineEntry> outlines = CreateClient.outliner.getOutlines();
 
 	public static void lookingAtBlocksThroughGogglesShowsTooltip(MatrixStack matrixStack, float v) {
 		HitResult objectMouseOver = MinecraftClient.getInstance().crosshairTarget;
 		if (!(objectMouseOver instanceof BlockHitResult))
 			return;
 
-		/**for (OutlineEntry entry : outlines.values()) {
+		for (Outliner.OutlineEntry entry : outlines.values()) {
 			if (!entry.isAlive())
 				continue;
 			Outline outline = entry.getOutline();
 			if (outline instanceof ValueBox && !((ValueBox) outline).isPassive) {
 				return;
 			}
-		}*/
+		}
 
 		BlockHitResult result = (BlockHitResult) objectMouseOver;
 		MinecraftClient mc = MinecraftClient.getInstance();
@@ -44,7 +49,7 @@ public class GoggleOverlayRenderer {
 		ItemStack headSlot = mc.player.getEquippedStack(EquipmentSlot.HEAD);
 		BlockEntity te = world.getBlockEntity(pos);
 
-		boolean wearingGoggles = true; //AllItems.GOGGLES.isIn(headSlot); TODO fix this check
+		boolean wearingGoggles = headSlot.isItemEqualIgnoreDamage(AllItems.GOGGLES.getDefaultStack());
 
 		boolean hasGoggleInformation = te instanceof IHaveGoggleInformation;
 		boolean hasHoveringInformation = te instanceof IHaveHoveringInformation;
@@ -112,11 +117,11 @@ public class GoggleOverlayRenderer {
 			.getScaledWidth(),
 			mc.getWindow()
 				.getScaledHeight());
-		int posX = tooltipScreen.width / 2 + 0; /** AllConfigs.CLIENT.overlayOffsetX.get(); TODO CONFIG*/
+		int posX = tooltipScreen.width / 2 + 20; /** AllConfigs.CLIENT.overlayOffsetX.get(); TODO CONFIG*/
 		int posY = tooltipScreen.height / 2 + 0; /** AllConfigs.CLIENT.overlayOffsetY.get(); TODO CONFIG*/
 		// tooltipScreen.renderTooltip(tooltip, tooltipScreen.width / 2,
 		// tooltipScreen.height / 2);
-		tooltipScreen.renderTooltip(matrixStack, (Text) tooltip, posX, posY);
+		tooltipScreen.renderTooltip(matrixStack, Text.of(String.valueOf(tooltip)), posX, posY);
 
 		ItemStack item = AllItems.GOGGLES.getDefaultStack();
 		// GuiGameElement.of(item).at(tooltipScreen.width / 2 + 10, tooltipScreen.height

@@ -2,16 +2,20 @@ package com.smellypengu.createfabric.foundation.item;
 
 import com.google.common.base.Strings;
 import com.mojang.bridge.game.Language;
+import com.smellypengu.createfabric.AllItems;
+import com.smellypengu.createfabric.content.contraptions.base.IRotate;
 import com.smellypengu.createfabric.content.contraptions.goggles.IHaveGoggleInformation;
 import com.smellypengu.createfabric.content.curiosities.tools.AllToolTiers;
 import com.smellypengu.createfabric.foundation.utility.Lang;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.Formatting;
 
+import java.text.BreakIterator;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -59,15 +63,21 @@ public class TooltipHelper {
 		// Apply markup
 		String markedUp = s.replaceAll("_([^_]+)_", highlightColor + "$1" + defaultColor);
 
+		String localeStr = MinecraftClient.getInstance().getLanguageManager().getLanguage().getCode();
+		Locale locale =  Locale.forLanguageTag(localeStr.replace("_", "-"));
+
 		// Split words
 		List<String> words = new LinkedList<>();
-		/**BreakIterator iterator = BreakIterator.getLineInstance(MinecraftForgeClient.getLocale()); TODO FIX THIS Tooltip !
+		BreakIterator iterator = BreakIterator.getLineInstance(locale);
 		iterator.setText(markedUp);
 		int start = iterator.first();
+
 		for (int end = iterator.next(); end != BreakIterator.DONE; start = end, end = iterator.next()) {
 			String word = markedUp.substring(start, end);
 			words.add(word);
-		}*/
+		}
+
+		System.out.println(words.size());
 
 		// Apply hard wrap
 		TextRenderer font = MinecraftClient.getInstance().textRenderer;
@@ -119,12 +129,12 @@ public class TooltipHelper {
 	public static boolean hasTooltip(ItemStack stack, PlayerEntity player) {
 		checkLocale();
 
-		/**boolean hasGlasses = AllItems.GOGGLES.isIn(player.getEquippedStack(EquipmentSlot.HEAD)); TODO GOGGLES CHECK
+		boolean hasGlasses = AllItems.GOGGLES.isIn(player.getEquippedStack(EquipmentSlot.HEAD).getItem().getGroup());
 
 		if (hasGlasses != gogglesMode) {
 			gogglesMode = hasGlasses;
 			cachedTooltips.clear();
-		}*/
+		}
 
 		String key = getTooltipTranslationKey(stack);
 		if (cachedTooltips.containsKey(key))
@@ -159,7 +169,7 @@ public class TooltipHelper {
 			.equals("WIP"))
 			return new WipScription(module.getTooltipPalette());*/
 
-		ItemDescription tooltip = new ItemDescription(null); //new ItemDescription(module.getTooltipPalette());
+		ItemDescription tooltip = new ItemDescription(null); /**new ItemDescription(module.getTooltipPalette());*/
 		String summaryKey = translationKey + ".summary";
 
 		// Summary
@@ -169,9 +179,9 @@ public class TooltipHelper {
 		// Requirements
 		if (stack.getItem() instanceof BlockItem) {
 			BlockItem item = (BlockItem) stack.getItem();
-			/**if (item.getBlock() instanceof IRotate || item.getBlock() instanceof EngineBlock) { TODO EngineBlock CHECK
+			if (item.getBlock() instanceof IRotate /**|| item.getBlock() instanceof EngineBlock*/) { // TODO EngineBlock CHECK
 				tooltip = tooltip.withKineticStats(item.getBlock());
-			}*/
+			}
 		}
 
 		// Behaviours
