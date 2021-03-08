@@ -121,7 +121,7 @@ public class SimpleChannel {
 				Class<?> clazz = c2sIdMap.get(id);
 				packet = (C2SPacket) clazz.getDeclaredConstructor().newInstance();
 			} catch (Exception e) {
-				throw new RuntimeException("Could not create c2s packet with id " + String.valueOf(id), e);
+				throw new RuntimeException("Could not create c2s packet in channel " + channelName + " with id " + String.valueOf(id), e);
 			}
 			if (packet != null) {
 				packet.read(buf);
@@ -139,7 +139,7 @@ public class SimpleChannel {
 				Class<?> clazz = s2cIdMap.get(id);
 				packet = (S2CPacket) clazz.getDeclaredConstructor().newInstance();
 			} catch (Exception e) {
-				throw new RuntimeException("Could not create s2c packet with id " + String.valueOf(id), e);
+				throw new RuntimeException("Could not create s2c packet in channel " + channelName + " with id " + String.valueOf(id), e);
 			}
 			if (packet != null) {
 				packet.read(buf);
