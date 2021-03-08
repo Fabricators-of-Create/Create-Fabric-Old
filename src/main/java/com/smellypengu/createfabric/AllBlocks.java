@@ -1,5 +1,6 @@
 package com.smellypengu.createfabric;
 
+import com.smellypengu.createfabric.content.contraptions.components.motor.CreativeMotorBlock;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltBlock;
 import com.smellypengu.createfabric.content.contraptions.relays.elementary.ShaftBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -34,7 +35,13 @@ public class AllBlocks {
 
     public static final ShaftBlock SHAFT = new ShaftBlock(Block.Settings
             .of(Material.STONE)
-            .strength(0.8f, 0.8f));
+            .strength(0.8f, 0.8f)
+            .nonOpaque());
+
+    public static final CreativeMotorBlock CREATIVE_MOTOR = new CreativeMotorBlock(Block.Settings
+            .of(Material.STONE)
+            .strength(0.8f, 0.8f)
+            .nonOpaque());
 
     public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
@@ -45,6 +52,9 @@ public class AllBlocks {
 
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "shaft"), SHAFT);
         Registry.register(Registry.ITEM, new Identifier(Create.ID, "shaft"), new BlockItem(SHAFT, new Item.Settings().group(Create.baseCreativeTab)));
+
+        Registry.register(Registry.BLOCK, new Identifier(Create.ID, "creative_motor"), CREATIVE_MOTOR);
+        Registry.register(Registry.ITEM, new Identifier(Create.ID, "creative_motor"), new BlockItem(CREATIVE_MOTOR, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }

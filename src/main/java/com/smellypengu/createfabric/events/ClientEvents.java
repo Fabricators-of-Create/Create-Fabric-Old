@@ -1,12 +1,14 @@
 package com.smellypengu.createfabric.events;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.KineticDebugger;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.item.BeltConnectorHandler;
 import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatcher;
 import com.smellypengu.createfabric.foundation.render.backend.RenderWork;
 import com.smellypengu.createfabric.foundation.renderState.SuperRenderTypeBuffer;
+import com.smellypengu.createfabric.foundation.tileEntity.behaviour.scrollvalue.ScrollValueRenderer;
 import com.smellypengu.createfabric.foundation.utility.AnimationTickHolder;
 import com.smellypengu.createfabric.foundation.utility.placement.PlacementHelpers;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
@@ -20,10 +22,13 @@ public class ClientEvents {
         AnimationTickHolder.tick();
         FastRenderDispatcher.tick();
 
+        ScrollValueRenderer.tick();
         BeltConnectorHandler.tick();
 
         KineticDebugger.tick();
         PlacementHelpers.tick();
+        CreateClient.outliner.tickOutlines();
+        CreateClient.ghostBlocks.tickGhosts();
         ContraptionRenderDispatcher.tick();
     }
 
@@ -35,6 +40,9 @@ public class ClientEvents {
         ms.translate(-cameraPos.getX(), -cameraPos.getY(), -cameraPos.getZ());
         SuperRenderTypeBuffer buffer = SuperRenderTypeBuffer.getInstance();
 
+        CreateClient.ghostBlocks.renderAll(ms, buffer);
+
+        CreateClient.outliner.renderOutlines(ms, buffer);
         buffer.draw();
         RenderSystem.enableCull();
 

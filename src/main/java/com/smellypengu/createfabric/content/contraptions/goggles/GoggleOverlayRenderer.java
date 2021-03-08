@@ -44,7 +44,7 @@ public class GoggleOverlayRenderer {
 		ItemStack headSlot = mc.player.getEquippedStack(EquipmentSlot.HEAD);
 		BlockEntity te = world.getBlockEntity(pos);
 
-		boolean wearingGoggles = true; /**AllItems.GOGGLES.isIn(headSlot);*/
+		boolean wearingGoggles = true; //AllItems.GOGGLES.isIn(headSlot); TODO fix this check
 
 		boolean hasGoggleInformation = te instanceof IHaveGoggleInformation;
 		boolean hasHoveringInformation = te instanceof IHaveHoveringInformation;

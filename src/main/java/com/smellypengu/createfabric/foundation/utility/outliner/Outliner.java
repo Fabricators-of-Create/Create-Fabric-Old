@@ -1,6 +1,7 @@
 package com.smellypengu.createfabric.foundation.utility.outliner;
 
 import com.smellypengu.createfabric.foundation.renderState.SuperRenderTypeBuffer;
+import com.smellypengu.createfabric.foundation.tileEntity.behaviour.ValueBox;
 import com.smellypengu.createfabric.foundation.utility.AnimationTickHolder;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
@@ -20,10 +21,10 @@ public class Outliner {
 
 	// Facade
 
-	/**public Outline.OutlineParams showValueBox(Object slot, ValueBox box) {
+	public Outline.OutlineParams showValueBox(Object slot, ValueBox box) {
 		outlines.put(slot, new OutlineEntry(box));
 		return box.getParams();
-	}*/
+	}
 
 	public Outline.OutlineParams showLine(Object slot, Vec3d start, Vec3d end) {
 		if (!outlines.containsKey(slot)) {

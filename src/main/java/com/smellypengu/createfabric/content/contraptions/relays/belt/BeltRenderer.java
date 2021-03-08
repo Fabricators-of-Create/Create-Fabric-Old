@@ -25,7 +25,6 @@ import net.minecraft.util.math.Vec3i;
 public class BeltRenderer extends SafeTileEntityRenderer<BeltTileEntity> {
 
 	public BeltRenderer(BlockEntityRendererFactory.Context ctx) {
-
 	}
 
 	@Override

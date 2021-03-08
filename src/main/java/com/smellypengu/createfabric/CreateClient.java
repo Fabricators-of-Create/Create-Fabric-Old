@@ -64,9 +64,8 @@ public class CreateClient implements ClientModInitializer {
         WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
         HudRenderCallback.EVENT.register(GoggleOverlayRenderer::lookingAtBlocksThroughGogglesShowsTooltip);
 
-        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlas, registry) -> {
-            SpriteShifter.getAllTargetSprites().forEach(registry::register);
-        });
+
+        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlas, registry) -> SpriteShifter.getAllTargetSprites().forEach(registry::register));
 
 
 
