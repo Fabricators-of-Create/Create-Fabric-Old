@@ -1,6 +1,9 @@
 package com.smellypengu.createfabric.content.contraptions.base;
 
+import com.smellypengu.createfabric.AllBlocks;
+import com.smellypengu.createfabric.content.contraptions.relays.elementary.ShaftBlock;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.*;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.LightType;
 
@@ -47,10 +50,10 @@ public abstract class KineticTileInstance<T extends KineticTileEntity> extends T
         return offset;
     }
 
-    /*public static BlockState shaft(Direction.Axis axis) {
+    public static BlockState shaft(Direction.Axis axis) {
         return AllBlocks.SHAFT.getDefaultState()
                               .with(ShaftBlock.AXIS, axis);
-    }*/
+    }
 
     public Direction.Axis getRotationAxis() {
         return ((IRotate) lastState.getBlock()).getRotationAxis(lastState);

@@ -6,6 +6,7 @@ import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltModelPr
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltRenderer;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltTileEntity;
 import com.smellypengu.createfabric.content.contraptions.relays.elementary.SimpleKineticTileEntity;
+import com.smellypengu.createfabric.content.contraptions.relays.encased.ShaftInstance;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.minecraft.block.entity.BlockEntityType;
@@ -25,6 +26,7 @@ public class AllTileEntities {
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(rm -> new BeltModelProvider());
 
 		HalfShaftInstance.register(MOTOR);
+		ShaftInstance.register(SIMPLE_KINETIC);
 		/**BlockEntityRendererRegistry.INSTANCE.register(MOTOR, CreativeMotorRenderer::new);*/
 		/**Create.RESOURCE_PACK.addBlockState(JState.state(JState.variant(JState.model(Create.ID + ":block/belt"))), new Identifier("belt"));*/
 

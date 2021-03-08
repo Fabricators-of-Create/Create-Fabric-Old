@@ -22,8 +22,8 @@ public class ClientEvents {
         AnimationTickHolder.tick();
         FastRenderDispatcher.tick();
 
-        ScrollValueRenderer.tick();
         BeltConnectorHandler.tick();
+        ScrollValueRenderer.tick();
 
         KineticDebugger.tick();
         PlacementHelpers.tick();
