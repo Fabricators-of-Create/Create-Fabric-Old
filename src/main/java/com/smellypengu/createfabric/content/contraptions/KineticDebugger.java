@@ -39,20 +39,20 @@ public class KineticDebugger {
 		VoxelShape shape = world.getBlockState(toOutline)
 			.getSidesShape(world, toOutline); // TODO EITHER THIS OR .getCullingShape
 
-		/*if (te.getTheoreticalSpeed() != 0 && !shape.isEmpty())
-			CreateClient.outliner.chaseAABB("kineticSource", shape.getBoundingBox() TODO OUTLINER
+		if (te.getTheoreticalSpeed() != 0 && !shape.isEmpty())
+			CreateClient.outliner.chaseAABB("kineticSource", shape.getBoundingBox()
 				.offset(toOutline))
 				.lineWidth(1 / 16f)
-				.colored(te.hasSource() ? ColorHelper.colorFromLong(te.network) : 0xffcc00);*/
+				.colored(te.hasSource() ? ColorHelper.colorFromLong(te.network) : 0xffcc00);
 
-		/*if (state.getBlock() instanceof IRotate) {
+		if (state.getBlock() instanceof IRotate) {
 			Direction.Axis axis = ((IRotate) state.getBlock()).getRotationAxis(state);
 			Vec3d vec = new Vec3d(Direction.get(Direction.AxisDirection.POSITIVE, axis)
-				.getVector());
+				.getUnitVector());
 			Vec3d center = VecHelper.getCenterOf(te.getPos());
-			CreateClient.outliner.showLine("rotationAxis", center.add(vec), center.subtract(vec)) TODO OUTLINER
+			CreateClient.outliner.showLine("rotationAxis", center.add(vec), center.subtract(vec))
 				.lineWidth(1 / 16f);
-		}*/
+		}
 
 	}
 

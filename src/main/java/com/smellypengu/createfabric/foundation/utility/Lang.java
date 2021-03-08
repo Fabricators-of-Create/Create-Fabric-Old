@@ -19,7 +19,7 @@ public class Lang {
 	}
 
 	public static void sendStatus(PlayerEntity player, String key, Object... args) {
-		player.sendMessage(createTranslationTextComponent(key, args), true); // TODO sendmessage INSTEAD OF sendStatusMessage??
+		player.sendMessage(createTranslationTextComponent(key, args), true);
 	}
 
 	public static List<String> translatedOptions(String prefix, String... keys) {
