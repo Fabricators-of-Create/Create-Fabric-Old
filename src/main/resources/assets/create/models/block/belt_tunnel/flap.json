@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"4": "create:block/brass_tunnel"
+	},
+	"elements": [
+		{
+			"name": "F4",
+			"from": [11, -3, 1],
+			"to": [14, 10, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-24.5, -7.5, 9]},
+			"faces": {
+				"north": {"uv": [9.5, 14.5, 16, 16], "rotation": 90, "texture": "#4"},
+				"east": {"uv": [9.5, 15.5, 16, 16], "rotation": 90, "texture": "#4"},
+				"south": {"uv": [9.5, 16, 16, 14.5], "rotation": 90, "texture": "#4"},
+				"west": {"uv": [9.5, 14.5, 16, 15], "rotation": 90, "texture": "#4"},
+				"up": {"uv": [15.5, 14.5, 16, 16], "rotation": 270, "texture": "#4"},
+				"down": {"uv": [9.5, 14.5, 10, 16], "rotation": 270, "texture": "#4"}
+			}
+		}
+	]
+}
