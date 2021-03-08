@@ -1,0 +1,115 @@
+package com.simibubi.create.content.contraptions.fluids.particle;
+
+import com.simibubi.create.AllParticleTypes;
+import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
+import com.simibubi.create.foundation.utility.ColorHelper;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.client.particle.SpriteBillboardParticle;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.screen.PlayerScreenHandler;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fluids.FluidStack;
+
+public class FluidStackParticle extends SpriteBillboardParticle {
+	private final float field_217587_G;
+	private final float field_217588_H;
+	private FluidStack fluid;
+
+	public static FluidStackParticle create(ParticleType<FluidParticleData> type, ClientWorld world, FluidStack fluid, double x,
+		double y, double z, double vx, double vy, double vz) {
+		if (type == AllParticleTypes.BASIN_FLUID.get())
+			return new BasinFluidParticle(world, fluid, x, y, z, vx, vy, vz);
+		return new FluidStackParticle(world, fluid, x, y, z, vx, vy, vz);
+	}
+
+	public FluidStackParticle(ClientWorld world, FluidStack fluid, double x, double y, double z, double vx, double vy,
+		double vz) {
+		super(world, x, y, z, vx, vy, vz);
+		this.fluid = fluid;
+		this.setSprite(MinecraftClient.getInstance()
+			.getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE)
+			.apply(fluid.getFluid()
+				.getAttributes()
+				.getStillTexture()));
+
+		this.gravityStrength = 1.0F;
+		this.colorRed = 0.8F;
+		this.colorGreen = 0.8F;
+		this.colorBlue = 0.8F;
+		this.multiplyColor(fluid.getFluid()
+			.getAttributes()
+			.getColor(fluid));
+		
+		this.velocityX = vx;
+		this.velocityY = vy;
+		this.velocityZ = vz;
+
+		this.scale /= 2.0F;
+		this.field_217587_G = this.random.nextFloat() * 3.0F;
+		this.field_217588_H = this.random.nextFloat() * 3.0F;
+	}
+
+	@Override
+	protected int getColorMultiplier(float p_189214_1_) {
+		int brightnessForRender = super.getColorMultiplier(p_189214_1_);
+		int skyLight = brightnessForRender >> 20;
+		int blockLight = (brightnessForRender >> 4) & 0xf;
+		blockLight = Math.max(blockLight, fluid.getFluid()
+			.getAttributes()
+			.getLuminosity(fluid));
+		return (skyLight << 20) | (blockLight << 4);
+	}
+
+	protected void multiplyColor(int color) {
+		this.colorRed *= (float) (color >> 16 & 255) / 255.0F;
+		this.colorGreen *= (float) (color >> 8 & 255) / 255.0F;
+		this.colorBlue *= (float) (color & 255) / 255.0F;
+	}
+
+	protected float getMinU() {
+		return this.sprite.getFrameU((double) ((this.field_217587_G + 1.0F) / 4.0F * 16.0F));
+	}
+
+	protected float getMaxU() {
+		return this.sprite.getFrameU((double) (this.field_217587_G / 4.0F * 16.0F));
+	}
+
+	protected float getMinV() {
+		return this.sprite.getFrameV((double) (this.field_217588_H / 4.0F * 16.0F));
+	}
+
+	protected float getMaxV() {
+		return this.sprite.getFrameV((double) ((this.field_217588_H + 1.0F) / 4.0F * 16.0F));
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if (!canEvaporate())
+			return;
+		if (onGround)
+			markDead();
+		if (!dead)
+			return;
+		if (!onGround && world.random.nextFloat() < 1 / 8f)
+			return;
+
+		Vec3d rgb = ColorHelper.getRGB(fluid.getFluid()
+			.getAttributes()
+			.getColor(fluid));
+		world.addParticle(ParticleTypes.ENTITY_EFFECT, x, y, z, rgb.x, rgb.y, rgb.z);
+	}
+	
+	protected boolean canEvaporate() {
+		return fluid.getFluid() instanceof PotionFluid;
+	}
+
+	@Override
+	public ParticleTextureSheet getType() {
+		return ParticleTextureSheet.TERRAIN_SHEET;
+	}
+
+}

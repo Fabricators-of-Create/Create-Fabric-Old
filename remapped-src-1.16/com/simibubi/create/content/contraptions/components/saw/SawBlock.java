@@ -1,0 +1,124 @@
+package com.simibubi.create.content.contraptions.components.saw;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.AllTileEntities;
+import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.components.actors.DrillBlock;
+import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.item.ItemHelper;
+import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
+
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
+
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class SawBlock extends DirectionalAxisKineticBlock implements ITE<SawTileEntity> {
+	public static DamageSource damageSourceSaw = new DamageSource("create.mechanical_saw").setBypassesArmor();
+
+	public SawBlock(Settings properties) {
+		super(properties);
+	}
+
+	@Override
+	public BlockState getPlacementState(ItemPlacementContext context) {
+		BlockState stateForPlacement = super.getPlacementState(context);
+		Direction facing = stateForPlacement.get(FACING);
+		if (facing.getAxis().isVertical())
+			return stateForPlacement;
+		return stateForPlacement.with(AXIS_ALONG_FIRST_COORDINATE, facing.getAxis() == Axis.X);
+	}
+
+	@Override
+	public BlockEntity createTileEntity(BlockState state, BlockView world) {
+		return AllTileEntities.SAW.create();
+	}
+
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
+		return AllShapes.CASING_12PX.get(state.get(FACING));
+	}
+
+	@Override
+	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+		if (entityIn instanceof ItemEntity)
+			return;
+		if (!new Box(pos).contract(.1f).intersects(entityIn.getBoundingBox()))
+			return;
+		withTileEntityDo(worldIn, pos, te -> {
+			if (te.getSpeed() == 0)
+				return;
+			entityIn.damage(damageSourceSaw, (float) DrillBlock.getDamage(te.getSpeed()));
+		});
+	}
+
+	@Override
+	public void onEntityLand(BlockView worldIn, Entity entityIn) {
+		super.onEntityLand(worldIn, entityIn);
+		if (!(entityIn instanceof ItemEntity))
+			return;
+		if (entityIn.world.isClient)
+			return;
+
+		BlockPos pos = entityIn.getBlockPos();
+		withTileEntityDo(entityIn.world, pos, te -> {
+			if (te.getSpeed() == 0)
+				return;
+			te.insertItem((ItemEntity) entityIn);
+		});
+	}
+
+	@Override
+	public PistonBehavior getPistonBehavior(BlockState state) {
+		return PistonBehavior.NORMAL;
+	}
+
+	public static boolean isHorizontal(BlockState state) {
+		return state.get(FACING).getAxis().isHorizontal();
+	}
+
+	@Override
+	public Axis getRotationAxis(BlockState state) {
+		return isHorizontal(state) ? state.get(FACING).getAxis() : super.getRotationAxis(state);
+	}
+
+	@Override
+	public boolean hasShaftTowards(WorldView world, BlockPos pos, BlockState state, Direction face) {
+		return isHorizontal(state) ? face == state.get(FACING).getOpposite()
+				: super.hasShaftTowards(world, pos, state, face);
+	}
+
+	@Override
+	public void onStateReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (!state.hasTileEntity() || state.getBlock() == newState.getBlock())
+			return;
+
+		withTileEntityDo(worldIn, pos, te -> ItemHelper.dropContents(worldIn, pos, te.inventory));
+		TileEntityBehaviour.destroy(worldIn, pos, FilteringBehaviour.TYPE);
+      		worldIn.removeBlockEntity(pos);
+	}
+
+	@Override
+	public Class<SawTileEntity> getTileEntityClass() {
+		return SawTileEntity.class;
+	}
+
+}
