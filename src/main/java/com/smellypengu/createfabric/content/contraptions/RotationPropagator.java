@@ -1,6 +1,6 @@
 package com.smellypengu.createfabric.content.contraptions;
 
-import com.smellypengu.createfabric.content.contraptions.base.IRotate;
+import com.smellypengu.createfabric.content.contraptions.base.Rotating;
 import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 import com.smellypengu.createfabric.foundation.utility.Iterate;
 import net.minecraft.block.Block;
@@ -34,11 +34,11 @@ public class RotationPropagator {
 
 		Block fromBlock = stateFrom.getBlock();
 		Block toBlock = stateTo.getBlock();
-		if (!(fromBlock instanceof IRotate && toBlock instanceof IRotate))
+		if (!(fromBlock instanceof Rotating && toBlock instanceof Rotating))
 			return 0;
 
-		final IRotate definitionFrom = (IRotate) fromBlock;
-		final IRotate definitionTo = (IRotate) toBlock;
+		final Rotating definitionFrom = (Rotating) fromBlock;
+		final Rotating definitionTo = (Rotating) toBlock;
 		final BlockPos diff = to.getPos()
 			.subtract(from.getPos());
 		final Direction direction = Direction.getFacing(diff.getX(), diff.getY(), diff.getZ());
@@ -158,7 +158,7 @@ public class RotationPropagator {
 		return 1;
 	}*/
 
-	private static boolean isLargeToSmallCog(BlockState from, BlockState to, IRotate defTo, BlockPos diff) {
+	private static boolean isLargeToSmallCog(BlockState from, BlockState to, Rotating defTo, BlockPos diff) {
 		Direction.Axis axisFrom = from.get(AXIS);
 		if (axisFrom != defTo.getRotationAxis(to))
 			return false;
@@ -288,31 +288,25 @@ public class RotationPropagator {
 	/**
 	 * Remove the given entity from the network.
 	 * 
-	 * @param worldIn
+	 * @param world
 	 * @param pos
 	 * @param removedTE
 	 */
-	public static void handleRemoved(World worldIn, BlockPos pos, KineticBlockEntity removedTE) {
-		if (worldIn.isClient)
-			return;
-		if (removedTE == null)
-			return;
-		if (removedTE.getTheoreticalSpeed() == 0)
-			return;
+	public static void handleRemoved(World world, BlockPos pos, KineticBlockEntity removedTE) {
+		if (world.isClient) return;
+		if (removedTE == null) return;
+		if (removedTE.getTheoreticalSpeed() == 0) return;
 
 		for (BlockPos neighbourPos : getPotentialNeighbourLocations(removedTE)) {
-			BlockState neighbourState = worldIn.getBlockState(neighbourPos);
-			if (!(neighbourState.getBlock() instanceof IRotate))
-				continue;
-			BlockEntity tileEntity = worldIn.getBlockEntity(neighbourPos);
-			if (!(tileEntity instanceof KineticBlockEntity))
-				continue;
+			BlockState neighbourState = world.getBlockState(neighbourPos);
+			if (!(neighbourState.getBlock() instanceof Rotating)) continue;
+			BlockEntity blockEntity = world.getBlockEntity(neighbourPos);
+			if (!(blockEntity instanceof KineticBlockEntity)) continue;
 
-			final KineticBlockEntity neighbourTE = (KineticBlockEntity) tileEntity;
-			if (!neighbourTE.hasSource() || !neighbourTE.source.equals(pos))
-				continue;
+			final KineticBlockEntity neighbourBe = (KineticBlockEntity) blockEntity;
+			if (!neighbourBe.hasSource() || !neighbourBe.source.equals(pos)) continue;
 
-			propagateMissingSource(neighbourTE);
+			propagateMissingSource(neighbourBe);
 		}
 
 	}
@@ -333,30 +327,26 @@ public class RotationPropagator {
 
 		while (!frontier.isEmpty()) {
 			final BlockPos pos = frontier.remove(0);
-			BlockEntity tileEntity = world.getBlockEntity(pos);
-			if (!(tileEntity instanceof KineticBlockEntity))
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (!(blockEntity instanceof KineticBlockEntity))
 				continue;
-			final KineticBlockEntity currentTE = (KineticBlockEntity) tileEntity;
+			final KineticBlockEntity currentTE = (KineticBlockEntity) blockEntity;
 
 			currentTE.removeSource();
 			currentTE.sendData();
 
-			for (KineticBlockEntity neighbourTE : getConnectedNeighbours(currentTE)) {
-				if (neighbourTE.getPos()
-					.equals(missingSource))
-					continue;
-				if (!neighbourTE.hasSource())
-					continue;
+			for (KineticBlockEntity neighbourBe : getConnectedNeighbours(currentTE)) {
+				if (neighbourBe.getPos().equals(missingSource)) continue;
+				if (!neighbourBe.hasSource()) continue;
 
-				if (!neighbourTE.source.equals(pos)) {
-					potentialNewSources.add(neighbourTE);
+				if (!neighbourBe.source.equals(pos)) {
+					potentialNewSources.add(neighbourBe);
 					continue;
 				}
 
-				if (neighbourTE.isSource())
-					potentialNewSources.add(neighbourTE);
+				if (neighbourBe.isSource()) potentialNewSources.add(neighbourBe);
 
-				frontier.add(neighbourTE.getPos());
+				frontier.add(neighbourBe.getPos());
 			}
 		}
 
@@ -369,23 +359,15 @@ public class RotationPropagator {
 	}
 
 	private static KineticBlockEntity findConnectedNeighbour(KineticBlockEntity currentTE, BlockPos neighbourPos) {
-		BlockState neighbourState = currentTE.getWorld()
-			.getBlockState(neighbourPos);
-		if (!(neighbourState.getBlock() instanceof IRotate))
-			return null;
-		if (!neighbourState.hasBlockEntity())
-			return null;
-		BlockEntity neighbourTE = currentTE.getWorld()
-			.getBlockEntity(neighbourPos);
-		if (!(neighbourTE instanceof KineticBlockEntity))
-			return null;
-		KineticBlockEntity neighbourKTE = (KineticBlockEntity) neighbourTE;
-		if (!(neighbourKTE.getCachedState()
-			.getBlock() instanceof IRotate))
-			return null;
-		if (!isConnected(currentTE, neighbourKTE) && !isConnected(neighbourKTE, currentTE))
-			return null;
-		return neighbourKTE;
+		BlockState neighbourState = currentTE.getWorld().getBlockState(neighbourPos);
+		if (!(neighbourState.getBlock() instanceof Rotating)) return null;
+		if (!neighbourState.hasBlockEntity()) return null;
+		BlockEntity neighbourTE = currentTE.getWorld().getBlockEntity(neighbourPos);
+		if (!(neighbourTE instanceof KineticBlockEntity)) return null;
+		KineticBlockEntity neighbourKbe = (KineticBlockEntity) neighbourTE;
+		if (!(neighbourKbe.getCachedState().getBlock() instanceof Rotating))return null;
+		if (!isConnected(currentTE, neighbourKbe) && !isConnected(neighbourKbe, currentTE)) return null;
+		return neighbourKbe;
 	}
 
 	public static boolean isConnected(KineticBlockEntity from, KineticBlockEntity to) {
@@ -396,10 +378,10 @@ public class RotationPropagator {
 			|| from.isCustomConnection(to, stateFrom, stateTo);*/
 	}
 
-	private static List<KineticBlockEntity> getConnectedNeighbours(KineticBlockEntity te) {
+	private static List<KineticBlockEntity> getConnectedNeighbours(KineticBlockEntity be) {
 		List<KineticBlockEntity> neighbours = new LinkedList<>();
-		for (BlockPos neighbourPos : getPotentialNeighbourLocations(te)) {
-			final KineticBlockEntity neighbourTE = findConnectedNeighbour(te, neighbourPos);
+		for (BlockPos neighbourPos : getPotentialNeighbourLocations(be)) {
+			final KineticBlockEntity neighbourTE = findConnectedNeighbour(be, neighbourPos);
 			if (neighbourTE == null)
 				continue;
 
@@ -408,22 +390,22 @@ public class RotationPropagator {
 		return neighbours;
 	}
 
-	private static List<BlockPos> getPotentialNeighbourLocations(KineticBlockEntity te) {
+	private static List<BlockPos> getPotentialNeighbourLocations(KineticBlockEntity be) {
 		List<BlockPos> neighbours = new LinkedList<>();
 
-		if (!te.getWorld()
-			.isRegionLoaded(te.getPos(), BlockPos.fromLong(1))) // TODO COULD BE COMPLETELY WRONG
+		if (!be.getWorld()
+			.isRegionLoaded(be.getPos(), BlockPos.fromLong(1))) // TODO COULD BE COMPLETELY WRONG
 			return neighbours;
 
 		for (Direction facing : Iterate.directions)
-			neighbours.add(te.getPos()
+			neighbours.add(be.getPos()
 				.offset(facing));
 
-		BlockState blockState = te.getCachedState();
-		if (!(blockState.getBlock() instanceof IRotate))
+		BlockState blockState = be.getCachedState();
+		if (!(blockState.getBlock() instanceof Rotating))
 			return neighbours;
-		IRotate block = (IRotate) blockState.getBlock();
-		return te.addPropagationLocations(block, blockState, neighbours);
+		Rotating block = (Rotating) blockState.getBlock();
+		return be.addPropagationLocations(block, blockState, neighbours);
 	}
 
 }

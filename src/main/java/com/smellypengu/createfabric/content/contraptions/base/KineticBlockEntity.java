@@ -111,10 +111,9 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			if (!world.canSetBlock(source))
 				return;
 
-			BlockEntity tileEntity = world.getBlockEntity(source);
-			KineticBlockEntity sourceTe =
-				tileEntity instanceof KineticBlockEntity ? (KineticBlockEntity) tileEntity : null;
-			if (sourceTe == null || sourceTe.speed == 0) {
+			BlockEntity blockEntity = world.getBlockEntity(source);
+			KineticBlockEntity sourceBe = blockEntity instanceof KineticBlockEntity ? (KineticBlockEntity) blockEntity : null;
+			if (sourceBe == null || sourceBe.speed == 0) {
 				removeSource();
 				detachKinetics();
 				return;
@@ -134,7 +133,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		this.capacity = maxStress;
 		this.stress = currentStress;
 		this.networkSize = networkSize;
-		boolean overStressed = maxStress < currentStress && IRotate.StressImpact.isEnabled();
+		boolean overStressed = maxStress < currentStress && Rotating.StressImpact.isEnabled();
 
 		if (overStressed != this.overStressed) {
 			float prevSpeed = getSpeed();
@@ -233,7 +232,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			networkSize = networkTag.getInt("Size");
 			lastStressApplied = networkTag.getFloat("AddedStress");
 			lastCapacityProvided = networkTag.getFloat("AddedCapacity");
-			overStressed = capacity < stress && IRotate.StressImpact.isEnabled();
+			overStressed = capacity < stress && Rotating.StressImpact.isEnabled();
 		}
 
 		super.read(compound, clientPacket);
@@ -332,15 +331,15 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 
 	public boolean isSpeedRequirementFulfilled() {
 		BlockState state = getCachedState();
-		if (!(getCachedState().getBlock() instanceof IRotate))
+		if (!(getCachedState().getBlock() instanceof Rotating))
 			return true;
-		IRotate def = (IRotate) state.getBlock();
-		IRotate.SpeedLevel minimumRequiredSpeedLevel = def.getMinimumRequiredSpeedLevel();
+		Rotating def = (Rotating) state.getBlock();
+		Rotating.SpeedLevel minimumRequiredSpeedLevel = def.getMinimumRequiredSpeedLevel();
 		if (minimumRequiredSpeedLevel == null)
 			return true;
-		if (minimumRequiredSpeedLevel == IRotate.SpeedLevel.MEDIUM)
+		if (minimumRequiredSpeedLevel == Rotating.SpeedLevel.MEDIUM)
 			return Math.abs(getSpeed()) >= 1000 /**AllConfigs.SERVER.kinetics.mediumSpeed.get() TODO FIX THIS CONFIG */;
-		if (minimumRequiredSpeedLevel == IRotate.SpeedLevel.FAST)
+		if (minimumRequiredSpeedLevel == Rotating.SpeedLevel.FAST)
 			return Math.abs(getSpeed()) >= 1000 /**AllConfigs.SERVER.kinetics.fastSpeed.get() TODO FIX THIS CONFIG */;
 		return true;
 	}
@@ -413,7 +412,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		boolean added = false;
 		float stressAtBase = calculateStressApplied();
 
-		if (calculateStressApplied() != 0 && IRotate.StressImpact.isEnabled()) {
+		if (calculateStressApplied() != 0 && Rotating.StressImpact.isEnabled()) {
 			tooltip.add(spacing + Lang.translate("gui.goggles.kinetic_stats"));
 			tooltip.add(spacing + Formatting.GRAY + Lang.translate("tooltip.stressImpact"));
 
@@ -490,7 +489,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	 * @param neighbours
 	 * @return
 	 */
-	public List<BlockPos> addPropagationLocations(IRotate block, BlockState state, List<BlockPos> neighbours) {
+	public List<BlockPos> addPropagationLocations(Rotating block, BlockState state, List<BlockPos> neighbours) {
 		if (!canPropagateDiagonally(block, state))
 			return neighbours;
 
@@ -522,7 +521,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		return false;
 	}
 
-	protected boolean canPropagateDiagonally(IRotate block, BlockState state) {
+	protected boolean canPropagateDiagonally(Rotating block, BlockState state) {
 		return block.hasIntegratedCogwheel(world, pos, state);
 	}
 

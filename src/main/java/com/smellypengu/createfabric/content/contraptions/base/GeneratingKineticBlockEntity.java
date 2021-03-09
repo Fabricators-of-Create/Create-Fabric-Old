@@ -55,7 +55,7 @@ public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 		boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
 
 		float stressBase = calculateAddedStressCapacity();
-		if (stressBase != 0 && IRotate.StressImpact.isEnabled()) {
+		if (stressBase != 0 && Rotating.StressImpact.isEnabled()) {
 			tooltip.add(spacing + Lang.translate("gui.goggles.generator_stats"));
 			tooltip.add(spacing + Formatting.GRAY + Lang.translate("tooltip.capacityProvided"));
 
@@ -86,8 +86,8 @@ public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 
 		if (prevSpeed != speed) {
 			if (!hasSource()) {
-				IRotate.SpeedLevel levelBefore = IRotate.SpeedLevel.of(this.speed);
-				IRotate.SpeedLevel levelafter = IRotate.SpeedLevel.of(speed);
+				Rotating.SpeedLevel levelBefore = Rotating.SpeedLevel.of(this.speed);
+				Rotating.SpeedLevel levelafter = Rotating.SpeedLevel.of(speed);
 				if (levelBefore != levelafter)
 					effects.queueRotationIndicators();
 			}

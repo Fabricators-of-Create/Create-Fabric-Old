@@ -18,7 +18,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
-public abstract class KineticBlock extends Block implements BlockEntityProvider, IRotate {
+public abstract class KineticBlock extends Block implements BlockEntityProvider, Rotating {
 
 	protected static final ItemDescription.Palette color = ItemDescription.Palette.Red;
 
@@ -33,10 +33,10 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 		// however, if a block change occurs that does not change kinetic connections,
 		// we can prevent a major re-propagation here
 
-		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-		if (tileEntity instanceof KineticBlockEntity) {
-			KineticBlockEntity kineticTileEntity = (KineticBlockEntity) tileEntity;
-			kineticTileEntity.preventSpeedUpdate = false;
+		BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+		if (blockEntity instanceof KineticBlockEntity) {
+			KineticBlockEntity kineticBlockEntity = (KineticBlockEntity) blockEntity;
+			kineticBlockEntity.preventSpeedUpdate = false;
 
 			if (oldState.getBlock() != state.getBlock())
 				return;
@@ -45,7 +45,7 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 			if (!areStatesKineticallyEquivalent(oldState, state))
 				return;
 
-			kineticTileEntity.preventSpeedUpdate = true;
+			kineticBlockEntity.preventSpeedUpdate = true;
 		}
 	}
 
@@ -59,7 +59,7 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 		return false;
 	}
 
-	public boolean hasTileEntity(BlockState state) {
+	public boolean hasBlockEntity(BlockState state) {
 		return true;
 	}
 
@@ -85,20 +85,19 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 		if (world.isClient())
 			return;
 
-		BlockEntity tileEntity = world.getBlockEntity(pos);
-		if (!(tileEntity instanceof KineticBlockEntity))
-			return;
-		KineticBlockEntity kte = (KineticBlockEntity) tileEntity;
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (!(blockEntity instanceof KineticBlockEntity)) return;
+		KineticBlockEntity kbe = (KineticBlockEntity) blockEntity;
 
-		if (kte.preventSpeedUpdate) {
-			kte.preventSpeedUpdate = false;
+		if (kbe.preventSpeedUpdate) {
+			kbe.preventSpeedUpdate = false;
 			return;
 		}
 
 		// Remove previous information when block is added
-		kte.warnOfMovement();
-		kte.clearKineticInformation();
-		kte.updateSpeed = true;
+		kbe.warnOfMovement();
+		kbe.clearKineticInformation();
+		kbe.updateSpeed = true;
 	}
 
 	@Override
@@ -106,11 +105,10 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 		if (world.isClient)
 			return;
 
-		BlockEntity tileEntity = world.getBlockEntity(pos);
-		if (!(tileEntity instanceof KineticBlockEntity))
-			return;
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (!(blockEntity instanceof KineticBlockEntity)) return;
 
-		KineticBlockEntity kte = (KineticBlockEntity) tileEntity;
+		KineticBlockEntity kte = (KineticBlockEntity) blockEntity;
 		kte.effects.queueRotationIndicators();
 	}
 

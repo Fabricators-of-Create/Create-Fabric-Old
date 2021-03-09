@@ -60,7 +60,7 @@ public class KineticBlockEntityRenderer extends SafeBlockEntityRenderer<KineticB
 	public static SuperByteBuffer standardKineticRotationTransform(SuperByteBuffer buffer, KineticBlockEntity te,
 		int light) {
 		final BlockPos pos = te.getPos();
-		Direction.Axis axis = ((IRotate) te.getCachedState()
+		Direction.Axis axis = ((Rotating) te.getCachedState()
 			.getBlock()).getRotationAxis(te.getCachedState());
 		return kineticRotationTransform(buffer, te, axis, getAngleForTe(te, pos, axis), light);
 	}
@@ -104,7 +104,7 @@ public class KineticBlockEntityRenderer extends SafeBlockEntityRenderer<KineticB
 	}
 
 	public static Direction.Axis getRotationAxisOf(KineticBlockEntity te) {
-		return ((IRotate) te.getCachedState()
+		return ((Rotating) te.getCachedState()
 			.getBlock()).getRotationAxis(te.getCachedState());
 	}
 

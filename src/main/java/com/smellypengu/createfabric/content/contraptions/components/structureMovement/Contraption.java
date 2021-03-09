@@ -215,7 +215,7 @@ public abstract class Contraption {
 		/**if (AllBlocks.ADJUSTABLE_CRATE.has(state))
 			AdjustableCrateBlock.splitCrate(world, pos);*/
 
-		if (AllBlocks.BELT.hasTileEntity(state))
+		if (AllBlocks.BELT.hasBlockEntity(state))
 			moveBelt(pos, frontier, visited, state);
 
 		/**if (AllBlocks.GANTRY_PINION.has(state))

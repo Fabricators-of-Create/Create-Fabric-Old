@@ -92,7 +92,7 @@ public class KineticEffectHandler {
 
 		char axisChar = axis.name().charAt(0);
 		Vec3d vec = VecHelper.getCenterOf(pos);
-		IRotate.SpeedLevel speedLevel = IRotate.SpeedLevel.of(speed);
+		Rotating.SpeedLevel speedLevel = Rotating.SpeedLevel.of(speed);
 		int color = speedLevel.getColor();
 		int particleSpeed = speedLevel.getParticleSpeed();
 		particleSpeed *= Math.signum(speed);

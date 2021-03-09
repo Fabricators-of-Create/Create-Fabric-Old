@@ -11,7 +11,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldView;
 
 //TODO !!!!!!!! FIX THIS
-public interface IRotate extends IWrenchable {
+public interface Rotating extends IWrenchable {
 
 	enum SpeedLevel {
 		NONE,

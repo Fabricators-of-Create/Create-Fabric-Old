@@ -44,8 +44,8 @@ public abstract class RotatedPillarKineticBlock extends KineticBlock {
 			BlockState blockState = context.getWorld()
 				.getBlockState(context.getBlockPos()
 					.offset(side));
-			if (blockState.getBlock() instanceof IRotate) {
-				if (((IRotate) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getBlockPos()
+			if (blockState.getBlock() instanceof Rotating) {
+				if (((Rotating) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getBlockPos()
 					.offset(side), blockState, side.getOpposite()))
 					if (prefferedAxis != null && prefferedAxis != side.getAxis()) {
 						prefferedAxis = null;

@@ -7,7 +7,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -93,8 +92,7 @@ public abstract class DirectionalAxisKineticBlock extends DirectionalKineticBloc
 		BlockPos neighbourPos = pos.offset(facing);
 		BlockState blockState = reader.getBlockState(neighbourPos);
 		Block block = blockState.getBlock();
-		return block instanceof IRotate
-			&& ((IRotate) block).hasShaftTowards(reader, neighbourPos, blockState, facing.getOpposite());
+		return block instanceof Rotating && ((Rotating) block).hasShaftTowards(reader, neighbourPos, blockState, facing.getOpposite());
 	}
 
 	@Override

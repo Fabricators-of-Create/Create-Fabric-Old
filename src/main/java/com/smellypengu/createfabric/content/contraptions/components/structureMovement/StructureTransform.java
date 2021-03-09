@@ -138,7 +138,7 @@ public class StructureTransform {
 			return state;
 		}
 
-		if (AllBlocks.BELT.hasTileEntity(state)) { // TODO MIGHT BE WRONG ORIGINAL supports()
+		if (AllBlocks.BELT.hasBlockEntity(state)) { // TODO MIGHT BE WRONG ORIGINAL supports()
 			state = transformBelt(state, halfTurn);
 			return state;
 		}

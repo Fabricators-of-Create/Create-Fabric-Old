@@ -37,10 +37,10 @@ public class ScrollValueRenderer {
 
 		if (behaviour instanceof BulkScrollValueBehaviour && AllKeys.ctrlDown()) {
 			BulkScrollValueBehaviour bulkScrolling = (BulkScrollValueBehaviour) behaviour;
-			for (SmartBlockEntity smartTileEntity : bulkScrolling.getBulk()) {
-				ScrollValueBehaviour other = smartTileEntity.getBehaviour(ScrollValueBehaviour.TYPE);
+			for (SmartBlockEntity smartBlockEntity : bulkScrolling.getBulk()) {
+				ScrollValueBehaviour other = smartBlockEntity.getBehaviour(ScrollValueBehaviour.TYPE);
 				if (other != null)
-					addBox(world, smartTileEntity.getPos(), face, other, highlight);
+					addBox(world, smartBlockEntity.getPos(), face, other, highlight);
 			}
 		} else
 			addBox(world, pos, face, behaviour, highlight);

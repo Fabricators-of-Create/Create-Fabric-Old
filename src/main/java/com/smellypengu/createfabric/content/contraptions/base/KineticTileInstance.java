@@ -56,7 +56,7 @@ public abstract class KineticTileInstance<T extends KineticBlockEntity> extends 
     }
 
     public Direction.Axis getRotationAxis() {
-        return ((IRotate) lastState.getBlock()).getRotationAxis(lastState);
+        return ((Rotating) lastState.getBlock()).getRotationAxis(lastState);
     }
 
     protected final RenderMaterial<?, InstancedModel<RotatingData>> rotatingMaterial() {

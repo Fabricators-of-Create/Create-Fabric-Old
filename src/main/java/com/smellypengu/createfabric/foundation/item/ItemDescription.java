@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.foundation.item;
 
 import com.smellypengu.createfabric.AllItems;
-import com.smellypengu.createfabric.content.contraptions.base.IRotate;
+import com.smellypengu.createfabric.content.contraptions.base.Rotating;
 import com.smellypengu.createfabric.foundation.utility.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
@@ -66,9 +66,9 @@ public class ItemDescription {
 
 		boolean isEngine = false /**block instanceof EngineBlock*/;
 		/**CKinetics config = AllConfigs.SERVER.kinetics;*/
-		IRotate.SpeedLevel minimumRequiredSpeedLevel =
-			isEngine ? IRotate.SpeedLevel.NONE : ((IRotate) block).getMinimumRequiredSpeedLevel();
-		boolean hasSpeedRequirement = minimumRequiredSpeedLevel != IRotate.SpeedLevel.NONE;
+		Rotating.SpeedLevel minimumRequiredSpeedLevel =
+			isEngine ? Rotating.SpeedLevel.NONE : ((Rotating) block).getMinimumRequiredSpeedLevel();
+		boolean hasSpeedRequirement = minimumRequiredSpeedLevel != Rotating.SpeedLevel.NONE;
 		MutableText id = block.getName();
 		/**Map<Identifier, ConfigValue<Double>> impacts = config.stressValues.getImpacts();
 		Map<Identifier, ConfigValue<Double>> capacities = config.stressValues.getCapacities();*/
@@ -92,11 +92,11 @@ public class ItemDescription {
 			add(linesOnShift, level);
 		}
 
-		if (/**hasStressImpact &&*/ !(!isEngine && ((IRotate) block).hideStressImpact())) {
+		if (/**hasStressImpact &&*/ !(!isEngine && ((Rotating) block).hideStressImpact())) {
 			List<String> stressLevels = Lang.translatedOptions("tooltip.stressImpact", "low", "medium", "high");
 			double impact = /**impacts.get(id).get()*/ 0;
-			IRotate.StressImpact impactId = impact >= /**config.highStressImpact.get()*/ 0 ? IRotate.StressImpact.HIGH
-				: (impact >= /**config.mediumStressImpact.get()*/ 0 ? IRotate.StressImpact.MEDIUM : IRotate.StressImpact.LOW);
+			Rotating.StressImpact impactId = impact >= /**config.highStressImpact.get()*/ 0 ? Rotating.StressImpact.HIGH
+				: (impact >= /**config.mediumStressImpact.get()*/ 0 ? Rotating.StressImpact.MEDIUM : Rotating.StressImpact.LOW);
 			int index = impactId.ordinal();
 			String level = impactId.getAbsoluteColor() + makeProgressBar(3, index) + stressLevels.get(index);
 
@@ -119,7 +119,7 @@ public class ItemDescription {
 
 			if (hasGlasses)
 				level += " (" + /**capacity*/ 4 + "x " + rpmUnit + ")";
-			if (!isEngine && ((IRotate) block).showCapacityWithAnnotation())
+			if (!isEngine && ((Rotating) block).showCapacityWithAnnotation())
 				level +=
 					" " + DARK_GRAY + Formatting.ITALIC + Lang.translate("tooltip.capacityProvided.asGenerator");
 

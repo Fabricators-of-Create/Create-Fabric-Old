@@ -453,14 +453,14 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 		List<BlockPos> positions = new LinkedList<>();
 
 		BlockState blockState = world.getBlockState(controllerPos);
-		if (!AllBlocks.BELT.hasTileEntity(blockState))
+		if (!AllBlocks.BELT.hasBlockEntity(blockState))
 			return positions;
 
 		int limit = 1000;
 		BlockPos current = controllerPos;
 		while (limit-- > 0 && current != null) {
 			BlockState state = world.getBlockState(current);
-			if (!AllBlocks.BELT.hasTileEntity(state))
+			if (!AllBlocks.BELT.hasBlockEntity(state))
 				break;
 			positions.add(current);
 			current = nextSegmentPosition(state, current, true);

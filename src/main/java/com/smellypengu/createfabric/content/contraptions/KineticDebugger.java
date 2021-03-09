@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions;
 
 import com.smellypengu.createfabric.CreateClient;
-import com.smellypengu.createfabric.content.contraptions.base.IRotate;
+import com.smellypengu.createfabric.content.contraptions.base.Rotating;
 import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntityRenderer;
 import com.smellypengu.createfabric.foundation.utility.ColorHelper;
@@ -45,8 +45,8 @@ public class KineticDebugger {
 				.lineWidth(1 / 16f)
 				.colored(te.hasSource() ? ColorHelper.colorFromLong(te.network) : 0xffcc00);
 
-		if (state.getBlock() instanceof IRotate) {
-			Direction.Axis axis = ((IRotate) state.getBlock()).getRotationAxis(state);
+		if (state.getBlock() instanceof Rotating) {
+			Direction.Axis axis = ((Rotating) state.getBlock()).getRotationAxis(state);
 			Vec3d vec = new Vec3d(Direction.get(Direction.AxisDirection.POSITIVE, axis)
 				.getUnitVector());
 			Vec3d center = VecHelper.getCenterOf(te.getPos());

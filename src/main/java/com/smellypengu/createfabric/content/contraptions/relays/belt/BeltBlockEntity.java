@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions.relays.belt;
 
 import com.smellypengu.createfabric.AllBlockEntities;
-import com.smellypengu.createfabric.content.contraptions.base.IRotate;
+import com.smellypengu.createfabric.content.contraptions.base.Rotating;
 import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.transport.BeltInventory;
 import com.smellypengu.createfabric.foundation.utility.CNBTHelper;
@@ -465,7 +465,7 @@ public class BeltBlockEntity extends KineticBlockEntity {
 	}*/
 
 	@Override
-	protected boolean canPropagateDiagonally(IRotate block, BlockState state) {
+	protected boolean canPropagateDiagonally(Rotating block, BlockState state) {
 		return state.contains(BeltBlock.SLOPE)
 			&& (state.get(BeltBlock.SLOPE) == BeltSlope.UPWARD || state.get(BeltBlock.SLOPE) == BeltSlope.DOWNWARD);
 	}

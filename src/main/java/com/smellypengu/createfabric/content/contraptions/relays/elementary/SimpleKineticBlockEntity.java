@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions.relays.elementary;
 
 import com.smellypengu.createfabric.AllBlockEntities;
-import com.smellypengu.createfabric.content.contraptions.base.IRotate;
+import com.smellypengu.createfabric.content.contraptions.base.Rotating;
 import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 import com.smellypengu.createfabric.foundation.block.entity.BlockEntityBehaviour;
 import net.minecraft.block.BlockState;
@@ -29,7 +29,7 @@ public class SimpleKineticBlockEntity extends KineticBlockEntity {
 	}*/
 
 	@Override
-	public List<BlockPos> addPropagationLocations(IRotate block, BlockState state, List<BlockPos> neighbours) {
+	public List<BlockPos> addPropagationLocations(Rotating block, BlockState state, List<BlockPos> neighbours) {
 		/**if (!AllBlocks.LARGE_COGWHEEL.has(state)) TODO LARGE_COGWHEEL CHECK
 			return super.addPropagationLocations(block, state, neighbours);*/
 

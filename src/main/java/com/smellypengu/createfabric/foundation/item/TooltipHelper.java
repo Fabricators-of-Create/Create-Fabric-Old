@@ -3,7 +3,7 @@ package com.smellypengu.createfabric.foundation.item;
 import com.google.common.base.Strings;
 import com.mojang.bridge.game.Language;
 import com.smellypengu.createfabric.AllItems;
-import com.smellypengu.createfabric.content.contraptions.base.IRotate;
+import com.smellypengu.createfabric.content.contraptions.base.Rotating;
 import com.smellypengu.createfabric.content.contraptions.goggles.IHaveGoggleInformation;
 import com.smellypengu.createfabric.content.curiosities.tools.AllToolTiers;
 import com.smellypengu.createfabric.foundation.utility.Lang;
@@ -179,7 +179,7 @@ public class TooltipHelper {
 		// Requirements
 		if (stack.getItem() instanceof BlockItem) {
 			BlockItem item = (BlockItem) stack.getItem();
-			if (item.getBlock() instanceof IRotate /**|| item.getBlock() instanceof EngineBlock*/) { // TODO EngineBlock CHECK
+			if (item.getBlock() instanceof Rotating /**|| item.getBlock() instanceof EngineBlock*/) { // TODO EngineBlock CHECK
 				tooltip = tooltip.withKineticStats(item.getBlock());
 			}
 		}
