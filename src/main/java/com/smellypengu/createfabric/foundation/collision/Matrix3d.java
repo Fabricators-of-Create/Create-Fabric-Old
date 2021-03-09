@@ -1,5 +1,6 @@
 package com.smellypengu.createfabric.foundation.collision;
 
+import com.smellypengu.createfabric.foundation.utility.extensions.Matrix4fUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.math.MathHelper;
@@ -140,6 +141,6 @@ public class Matrix3d {
         conversionBuffer[9] = (float) m21;
         conversionBuffer[10] = (float) m22;
 
-        return new Matrix4f(conversionBuffer);
+        return Matrix4fUtils.fromFloatArray(conversionBuffer);
     }
 }

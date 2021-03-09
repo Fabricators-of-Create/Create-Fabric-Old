@@ -9,7 +9,20 @@ public final class Matrix4fUtils {
     public static void multiplyBackward(Matrix4f $this, Matrix4f other) {
         Matrix4f copy = other.copy();
         copy.multiply($this); // Uno reverse card
-        MixinHelper.<Matrix4fExtensions>cast($this).setFrom(copy);
+        get($this).setFrom(copy);
+    }
+
+    public static Matrix4f fromFloatArray(float[] values) {
+        Matrix4f matrix = new Matrix4f();
+        Matrix4fExtensions ext = get(matrix);
+
+        ext.fromFloatArray(values);
+
+        return matrix;
+    }
+
+    private static Matrix4fExtensions get(Matrix4f m) {
+        return MixinHelper.cast(m);
     }
 
     private Matrix4fUtils() {}
