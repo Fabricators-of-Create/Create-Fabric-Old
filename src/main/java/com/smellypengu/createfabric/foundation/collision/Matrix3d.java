@@ -7,7 +7,6 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
 public class Matrix3d {
-
     double m00, m01, m02;
     double m10, m11, m12;
     double m20, m21, m22;
@@ -143,5 +142,4 @@ public class Matrix3d {
 
         return new Matrix4f(conversionBuffer);
     }
-
 }

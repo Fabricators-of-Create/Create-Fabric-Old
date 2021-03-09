@@ -7,6 +7,7 @@ import com.smellypengu.createfabric.foundation.render.backend.gl.BasicProgram;
 import com.smellypengu.createfabric.foundation.render.backend.gl.shader.ShaderCallback;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstancedTileRenderer;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.RenderMaterial;
+import com.smellypengu.createfabric.foundation.utility.extensions.Matrix4fUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
@@ -69,8 +70,7 @@ public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
 
         Matrix4f translate = Matrix4f.translate((float) -camX, (float) -camY, (float) -camZ);
 
-        translate.multiplyBackward(viewProjection);
-
+        Matrix4fUtils.multiplyBackward(translate, viewProjection);
         super.render(layer, translate, camX, camY, camZ, callback);
     }
 }

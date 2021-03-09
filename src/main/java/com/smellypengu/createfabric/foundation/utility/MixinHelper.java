@@ -1,5 +1,7 @@
 package com.smellypengu.createfabric.foundation.utility;
 
+import org.jetbrains.annotations.Contract;
+
 public final class MixinHelper {
     /**
      * A simple utility method that casts an object to a type.
@@ -11,6 +13,7 @@ public final class MixinHelper {
      * @param <T> the type to cast to
      * @return the casted object
      */
+    @Contract(value = "_->param1", pure = true)
     @SuppressWarnings("unchecked")
     public static <T> T cast(Object in) {
         return (T) in;

@@ -1,6 +1,6 @@
 package com.smellypengu.createfabric.content.contraptions.components.motor;
 
-import com.smellypengu.createfabric.AllTileEntities;
+import com.smellypengu.createfabric.AllBlockEntities;
 import com.smellypengu.createfabric.content.contraptions.base.DirectionalKineticBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -22,7 +22,7 @@ public class CreativeMotorBlock extends DirectionalKineticBlock {
 
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-		return AllTileEntities.MOTOR.instantiate(pos, state);
+		return AllBlockEntities.MOTOR.instantiate(pos, state);
 	}
 
 	@Override

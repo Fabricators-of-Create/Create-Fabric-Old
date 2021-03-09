@@ -5,14 +5,15 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BakedModelManagerMixin",
-    "accessor.BufferBuilderAccessor",
-    "accessor.GlStateManagerAccessor",
-    "accessor.GameRendererAccessor",
-    "MouseMixin",
-    "RenderHooksMixin",
     "ChunkBuilder$ChunkDataMixin",
     "FogColorTrackerMixin",
-    "OnRemoveTileMixin"
+    "Matrix4fMixin",
+    "MouseMixin",
+    "OnRemoveTileMixin",
+    "RenderHooksMixin",
+    "accessor.BufferBuilderAccessor",
+    "accessor.GameRendererAccessor",
+    "accessor.GlStateManagerAccessor"
   ],
   "client": [
   ],
