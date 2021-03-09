@@ -1,17 +1,19 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.smellypengu.createfabric.foundation.mixin",
+  "package": "com.simibubi.create.foundation.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BakedModelManagerMixin",
-    "BufferBuilderAccessor",
-    "GlStateManagerAccessor",
-    "MouseMixin",
-    "RenderHooksMixin",
-    "CancelTileEntityRenderMixin",
+    "ChunkBuilder$ChunkDataMixin",
     "FogColorTrackerMixin",
-    "OnRemoveTileMixin"
+    "Matrix4fMixin",
+    "MouseMixin",
+    "OnRemoveTileMixin",
+    "RenderHooksMixin",
+    "accessor.BufferBuilderAccessor",
+    "accessor.GameRendererAccessor",
+    "accessor.GlStateManagerAccessor"
   ],
   "client": [
   ],

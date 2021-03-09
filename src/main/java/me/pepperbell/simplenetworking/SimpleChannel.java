@@ -1,10 +1,7 @@
 package me.pepperbell.simplenetworking;
 
-import java.lang.reflect.Constructor;
-
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -23,14 +20,14 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
+import java.lang.reflect.Constructor;
+
 public class SimpleChannel {
 	private final Identifier channelName;
-
-	private C2SHandler c2sHandler;
 	private final BiMap<Integer, Class<?>> c2sIdMap = HashBiMap.create();
-
-	private S2CHandler s2cHandler;
 	private final BiMap<Integer, Class<?>> s2cIdMap = HashBiMap.create();
+	private C2SHandler c2sHandler;
+	private S2CHandler s2cHandler;
 
 	public SimpleChannel(Identifier channelName) {
 		this.channelName = channelName;
@@ -125,7 +122,7 @@ public class SimpleChannel {
 	}
 
 	public static class ResponseTarget {
-		private PacketSender sender;
+		private final PacketSender sender;
 
 		private ResponseTarget(PacketSender sender) {
 			this.sender = sender;
@@ -143,7 +140,7 @@ public class SimpleChannel {
 				ctor.setAccessible(true);
 				packet = (C2SPacket) ctor.newInstance();
 			} catch (Exception e) {
-				throw new RuntimeException("Could not create c2s packet in channel " + channelName + " with id " + String.valueOf(id), e);
+				throw new RuntimeException("Could not create c2s packet in channel " + channelName + " with id " + id, e);
 			}
 			if (packet != null) {
 				packet.read(buf);
@@ -164,7 +161,7 @@ public class SimpleChannel {
 				ctor.setAccessible(true);
 				packet = (S2CPacket) ctor.newInstance();
 			} catch (Exception e) {
-				throw new RuntimeException("Could not create s2c packet in channel " + channelName + " with id " + String.valueOf(id), e);
+				throw new RuntimeException("Could not create s2c packet in channel " + channelName + " with id " + id, e);
 			}
 			if (packet != null) {
 				packet.read(buf);
