@@ -7,7 +7,11 @@
     "BakedModelManagerMixin",
     "BufferBuilderAccessor",
     "GlStateManagerAccessor",
-    "MouseMixin"
+    "MouseMixin",
+    "RenderHooksMixin",
+    "CancelTileEntityRenderMixin",
+    "FogColorTrackerMixin",
+    "OnRemoveTileMixin"
   ],
   "client": [
   ],

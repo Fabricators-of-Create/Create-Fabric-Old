@@ -18,9 +18,7 @@ import com.smellypengu.createfabric.foundation.utility.ghost.GhostBlocks;
 import com.smellypengu.createfabric.foundation.utility.outliner.Outliner;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
@@ -63,8 +61,7 @@ public class CreateClient implements ClientModInitializer {
             ((ReloadableResourceManager) resourceManager).registerListener(new ResourceReloadHandler());
 
 
-        ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onTick);
-        WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
+        ClientEvents.register();
         HudRenderCallback.EVENT.register(GoggleOverlayRenderer::lookingAtBlocksThroughGogglesShowsTooltip);
 
 

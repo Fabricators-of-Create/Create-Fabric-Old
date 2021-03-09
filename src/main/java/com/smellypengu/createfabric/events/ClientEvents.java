@@ -11,12 +11,21 @@ import com.smellypengu.createfabric.foundation.renderState.SuperRenderTypeBuffer
 import com.smellypengu.createfabric.foundation.tileEntity.behaviour.scrollvalue.ScrollValueRenderer;
 import com.smellypengu.createfabric.foundation.utility.AnimationTickHolder;
 import com.smellypengu.createfabric.foundation.utility.placement.PlacementHelpers;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 public class ClientEvents {
+
+    public static void register() {
+        ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onTick);
+        WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
+    }
 
     public static void onTick(MinecraftClient client) {
     	if (!isGameActive())
@@ -33,6 +42,21 @@ public class ClientEvents {
         CreateClient.outliner.tickOutlines();
         CreateClient.ghostBlocks.tickGhosts();
         ContraptionRenderDispatcher.tick();
+    }
+
+    public static void onLoadWorld(World world) {
+        if (world.isClient && world instanceof ClientWorld) {
+            CreateClient.invalidateRenderers();
+            AnimationTickHolder.reset();
+            //((ClientWorld) world).blockentites.forEach(CreateClient.kineticRenderer::add);
+        }
+    }
+
+    public static void onUnloadWorld(World world) {
+        if (world.isClient) {
+            CreateClient.invalidateRenderers();
+            AnimationTickHolder.reset();
+        }
     }
 
     public static void onRenderWorld(WorldRenderContext context) {

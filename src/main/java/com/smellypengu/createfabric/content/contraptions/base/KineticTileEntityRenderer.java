@@ -52,7 +52,7 @@ public class KineticTileEntityRenderer extends SafeTileEntityRenderer<KineticTil
 
 	public static float getAngleForTe(KineticTileEntity te, final BlockPos pos, Direction.Axis axis) {
 		float time = AnimationTickHolder.getRenderTick();
-		float offset = 0; //getRotationOffsetForPosition(te, pos, axis); TODO FIX THIS
+		float offset = getRotationOffsetForPosition(te, pos, axis);
 		float angle = ((time * te.getSpeed() * 3f / 10 + offset) % 360) / 180 * (float) Math.PI;
 		return angle;
 	}
@@ -88,15 +88,15 @@ public class KineticTileEntityRenderer extends SafeTileEntityRenderer<KineticTil
 		return buffer;
 	}
 
-	/**protected static float getRotationOffsetForPosition(KineticTileEntity te, final BlockPos pos, final Direction.Axis axis) { TODO CogWheelBlock CHECK
-		float offset = CogWheelBlock.isLargeCog(te.getCachedState()) ? 11.25f : 0;
+	protected static float getRotationOffsetForPosition(KineticTileEntity te, final BlockPos pos, final Direction.Axis axis) {
+		float offset = /**CogWheelBlock.isLargeCog(te.getCachedState()) ? 11.25f :*/ 0;
 		double d = (((axis == Direction.Axis.X) ? 0 : pos.getX()) + ((axis == Direction.Axis.Y) ? 0 : pos.getY())
 			+ ((axis == Direction.Axis.Z) ? 0 : pos.getZ())) % 2;
 		if (d == 0) {
 			offset = 22.5f;
 		}
 		return offset;
-	}*/
+	}
 
 	public static BlockState shaft(Direction.Axis axis) {
 		return AllBlocks.SHAFT.getDefaultState()
