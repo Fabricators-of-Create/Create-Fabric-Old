@@ -6,7 +6,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -136,17 +135,17 @@ public class AllIcons {
 			.bindTexture(ICON_ATLAS);
 	}
 
-	/**@Environment(EnvType.CLIENT)
-	public void draw(DrawableHelper screen, int x, int y) {
+	@Environment(EnvType.CLIENT)
+	public void draw(MatrixStack ms, DrawableHelper screen, int x, int y) {
 		bind();
-		screen.blit(x, y, iconX, iconY, 16, 16);
+		screen.drawTexture(ms, x, y, iconX, iconY, 16, 16);
 	}
 
 	@Environment(EnvType.CLIENT)
-	public void draw(int x, int y) {
-		draw(new Screen(null) {
+	public void draw(MatrixStack ms, int x, int y) {
+		draw(ms, new DrawableHelper() {
 		}, x, y);
-	}*/
+	}
 
 	@Environment(EnvType.CLIENT)
 	public void draw(MatrixStack ms, VertexConsumerProvider buffer, int color) {
@@ -182,5 +181,4 @@ public class AllIcons {
 			.light(j, k)
 			.next(); // TODO next INSTEAD OF end?
 	}
-
 }
