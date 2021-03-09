@@ -4,12 +4,12 @@
   "version": "${version}",
 
   "name": "Create Fabric",
-  "description": "Create but for Fabric",
+  "description": "Create for Fabric",
   "authors": [
     "smellypengu"
   ],
   "contact": {
-    "sources": "https://github.com/smellypengu/CreateFabric"
+    "sources": "https://github.com/Create-Fabric/Create-Fabric"
   },
 
   "license": "MIT",
@@ -18,10 +18,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.smellypengu.createfabric.Create"
+      "com.simibubi.create.Create"
     ],
     "client": [
-      "com.smellypengu.createfabric.CreateClient"
+      "com.simibubi.create.CreateClient"
     ]
   },
   "mixins": [
@@ -32,7 +32,6 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.17.x",
-    "fabric-key-binding-api-v1": "*"
+    "minecraft": "1.17.x"
   }
 }
