@@ -49,7 +49,7 @@ public class ScrollValueRenderer {
 	protected static void addBox(ClientWorld world, BlockPos pos, Direction face, ScrollValueBehaviour behaviour,
 		boolean highlight) {
 		Box bb = new Box(Vec3d.ZERO, Vec3d.ZERO).expand(.5f)
-			//.contract(0, 0, -.5f)
+			.shrink(0, 0, -.5f)
 			.offset(0, 0, -.125f);
 		String label = behaviour.label;
 		ValueBox box;

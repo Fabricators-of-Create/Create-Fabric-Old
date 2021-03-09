@@ -15,6 +15,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +23,9 @@ import net.minecraft.util.math.Direction;
 
 @Environment(EnvType.CLIENT)
 public class KineticTileEntityRenderer extends SafeTileEntityRenderer<KineticTileEntity> {
+
+	public KineticTileEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+	}
 
 	public static final Compartment<BlockState> KINETIC_TILE = new Compartment<>();
 	public static boolean rainbowMode = false;

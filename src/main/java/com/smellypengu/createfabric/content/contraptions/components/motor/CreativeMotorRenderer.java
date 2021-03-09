@@ -9,6 +9,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 public class CreativeMotorRenderer extends KineticTileEntityRenderer {
 
 	public CreativeMotorRenderer(BlockEntityRendererFactory.Context ctx) {
+		super(ctx);
 	}
 
 	@Override

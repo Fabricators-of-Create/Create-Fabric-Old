@@ -1,5 +1,6 @@
 package com.smellypengu.createfabric.foundation.tileEntity.behaviour.scrollvalue;
 
+import com.smellypengu.createfabric.foundation.networking.AllPackets;
 import com.smellypengu.createfabric.foundation.tileEntity.SmartTileEntity;
 import com.smellypengu.createfabric.foundation.tileEntity.TileEntityBehaviour;
 import com.smellypengu.createfabric.foundation.tileEntity.behaviour.BehaviourType;
@@ -81,7 +82,7 @@ public class ScrollValueBehaviour extends TileEntityBehaviour {
 			return;
 		}
 
-		//AllPackets.channel.sendToServer(new ScrollValueUpdatePacket(getPos(), scrollableValue)); TODO packet
+		AllPackets.CHANNEL.sendToServer(new ScrollValueUpdatePacket(getPos(), scrollableValue));
 		ticksUntilScrollPacket = -1;
 	}
 

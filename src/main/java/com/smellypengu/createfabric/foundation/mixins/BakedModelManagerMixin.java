@@ -24,7 +24,7 @@ import java.util.function.Function;
 import static com.smellypengu.createfabric.CreateClient.*;
 
 @Mixin(BakedModelManager.class)
-public class OnModelBakeMixin {
+public class BakedModelManagerMixin {
     @Inject(at = @At("TAIL"), method = "apply(Lnet/minecraft/client/render/model/ModelLoader;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V")
     public void onModelBake(ModelLoader modelLoader, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
         AllBlockPartials.onModelRegistry();

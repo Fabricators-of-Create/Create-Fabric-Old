@@ -4,13 +4,15 @@
   "package": "com.smellypengu.createfabric.foundation.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "BakedModelManagerMixin",
     "BufferBuilderAccessor",
     "GlStateManagerAccessor",
-    "OnModelBakeMixin"
+    "MouseMixin"
   ],
   "client": [
   ],
-  "server": [],
+  "server": [
+  ],
   "injectors": {
     "defaultRequire": 1
   }

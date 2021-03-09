@@ -19,6 +19,9 @@ import net.minecraft.util.math.Vec3d;
 public class ClientEvents {
 
     public static void onTick(MinecraftClient client) {
+    	if (!isGameActive())
+			return;
+
         AnimationTickHolder.tick();
         FastRenderDispatcher.tick();
 
@@ -51,4 +54,9 @@ public class ClientEvents {
         RenderWork.runAll();
         FastRenderDispatcher.endFrame();
     }
+
+    protected static boolean isGameActive() {
+		return !(MinecraftClient.getInstance().world == null || MinecraftClient.getInstance().player == null);
+	}
+
 }
