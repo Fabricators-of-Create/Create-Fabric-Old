@@ -10,13 +10,12 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public abstract class BlockEntityBehaviour {
-
-	public SmartBlockEntity tileEntity;
+	public SmartBlockEntity blockEntity;
 	private int lazyTickRate;
 	private int lazyTickCounter;
 
-	public BlockEntityBehaviour(SmartBlockEntity te) {
-		tileEntity = te;
+	public BlockEntityBehaviour(SmartBlockEntity be) {
+		blockEntity = be;
 		setLazyTickRate(10);
 	}
 
@@ -68,11 +67,11 @@ public abstract class BlockEntityBehaviour {
 	}
 
 	public BlockPos getPos() {
-		return tileEntity.getPos();
+		return blockEntity.getPos();
 	}
 
 	public World getWorld() {
-		return tileEntity.getWorld();
+		return blockEntity.getWorld();
 	}
 
 	public static <T extends BlockEntityBehaviour> T get(BlockView reader, BlockPos pos,

@@ -12,13 +12,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class TileEntityConfigurationPacket<TE extends SyncedBlockEntity> implements C2SPacket {
+public abstract class BlockEntityConfigurationPacket<TE extends SyncedBlockEntity> implements C2SPacket {
 
 	protected BlockPos pos;
 
-	protected TileEntityConfigurationPacket() {}
+	protected BlockEntityConfigurationPacket() {}
 
-	public TileEntityConfigurationPacket(BlockPos pos) {
+	public BlockEntityConfigurationPacket(BlockPos pos) {
 		this.pos = pos;
 	}
 
@@ -44,11 +44,11 @@ public abstract class TileEntityConfigurationPacket<TE extends SyncedBlockEntity
 
 			if (world == null || !world.canSetBlock(pos))
 				return;
-			BlockEntity tileEntity = world.getBlockEntity(pos);
-			if (tileEntity instanceof SyncedBlockEntity) {
-				applySettings((TE) tileEntity);
-				((SyncedBlockEntity) tileEntity).sendData();
-				tileEntity.markDirty();
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof SyncedBlockEntity) {
+				applySettings((TE) blockEntity);
+				((SyncedBlockEntity) blockEntity).sendData();
+				blockEntity.markDirty();
 			}
 		});
 		

@@ -24,10 +24,10 @@ public class KineticData<D extends KineticData<D>> extends InstanceData {
         super(owner);
     }
 
-    public D setTileEntity(KineticBlockEntity te) {
-        setPosition(te.getPos());
-        if (te.hasSource()) {
-            setColor(te.network);
+    public D setBlockEntity(KineticBlockEntity be) {
+        setPosition(be.getPos());
+        if (be.hasSource()) {
+            setColor(be.network);
         }else {
             setColor(0xFF, 0xFF, 0x00);
         }

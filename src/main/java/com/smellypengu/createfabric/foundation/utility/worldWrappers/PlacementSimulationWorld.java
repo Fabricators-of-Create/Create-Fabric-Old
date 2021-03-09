@@ -40,9 +40,9 @@ public class PlacementSimulationWorld extends WrappedWorld {
 		return lighter;
 	}
 
-	public void setTileEntities(Collection<BlockEntity> tileEntities) {
+	public void setBlockEntities(Collection<BlockEntity> blockEntities) {
 		tesAdded.clear();
-		tileEntities.forEach(te -> tesAdded.put(te.getPos(), te));
+		blockEntities.forEach(te -> tesAdded.put(te.getPos(), te));
 	}
 
 	public void clear() {
@@ -51,7 +51,6 @@ public class PlacementSimulationWorld extends WrappedWorld {
 
 	@Override
 	public boolean setBlockState(BlockPos pos, BlockState newState, int flags) {
-
 		ChunkSectionPos sectionPos = ChunkSectionPos.from(pos);
 
 		if (spannedChunks.add(sectionPos)) {

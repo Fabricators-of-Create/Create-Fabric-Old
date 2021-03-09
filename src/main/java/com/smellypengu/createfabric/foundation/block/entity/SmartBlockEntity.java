@@ -21,8 +21,8 @@ public abstract class SmartBlockEntity extends SyncedBlockEntity implements Tick
 	private int lazyTickRate;
 	private int lazyTickCounter;
 
-	public SmartBlockEntity(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
-		super(tileEntityTypeIn, pos, state);
+	public SmartBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
+		super(blockEntityType, pos, state);
 		behaviours = new HashMap<>();
 		initialized = false;
 		firstNbtRead = true;

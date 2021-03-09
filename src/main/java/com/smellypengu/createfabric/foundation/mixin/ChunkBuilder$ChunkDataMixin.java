@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.foundation.mixin;
 
 import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatcher;
-import com.smellypengu.createfabric.foundation.render.backend.instancing.IInstanceRendered;
+import com.smellypengu.createfabric.foundation.render.backend.instancing.InstanceRendered;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
@@ -28,7 +28,7 @@ public class ChunkBuilder$ChunkDataMixin {
         if (FastRenderDispatcher.available()) {
             List<BlockEntity> tiles = cir.getReturnValue();
 
-            tiles.removeIf(tile -> tile instanceof IInstanceRendered && !((IInstanceRendered) tile).shouldRenderAsTE());
+            tiles.removeIf(tile -> tile instanceof InstanceRendered && !((InstanceRendered) tile).shouldRenderAsBe());
         }
     }
 }

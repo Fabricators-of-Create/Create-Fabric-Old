@@ -46,7 +46,7 @@ public abstract class MovementBehaviour {
 
 	}
 
-	public boolean renderAsNormalTileEntity() {
+	public boolean renderAsNormalBlockEntity() {
 		return false;
 	}
 

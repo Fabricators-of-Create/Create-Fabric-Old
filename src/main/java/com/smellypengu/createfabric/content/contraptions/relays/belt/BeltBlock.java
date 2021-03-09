@@ -137,7 +137,7 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 				return;*/
 		}
 
-		BeltBlockEntity belt = BeltHelper.getSegmentTE(worldIn, pos);
+		BeltBlockEntity belt = BeltHelper.getSegmentBe(worldIn, pos);
 		if (belt == null)
 			return;
 		if (entityIn instanceof ItemEntity && entityIn.isAlive()) {
@@ -367,19 +367,19 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 		}
 
 		for (BlockPos beltPos : beltChain) {
-			BlockEntity tileEntity = world.getBlockEntity(beltPos);
+			BlockEntity blockEntity = world.getBlockEntity(beltPos);
 			BlockState currentState = world.getBlockState(beltPos);
 
-			if (tileEntity instanceof BeltBlockEntity && AllBlocks.BELT.stateManager.getStates().contains((currentState))) {
-				BeltBlockEntity te = (BeltBlockEntity) tileEntity;
-				te.setController(currentPos);
-				te.beltLength = beltChain.size();
-				te.index = index;
-				te.attachKinetics();
-				te.markDirty();
-				te.sendData();
+			if (blockEntity instanceof BeltBlockEntity && AllBlocks.BELT.stateManager.getStates().contains((currentState))) {
+				BeltBlockEntity be = (BeltBlockEntity) blockEntity;
+				be.setController(currentPos);
+				be.beltLength = beltChain.size();
+				be.index = index;
+				be.attachKinetics();
+				be.markDirty();
+				be.sendData();
 
-				// if (te.isController() && !canTransportObjects(currentState)) te.getInventory().ejectAll();
+				// if (be.isController() && !canTransportObjects(currentState)) be.getInventory().ejectAll();
 			} else {
 				world.removeBlock(currentPos, true);
 				return;
@@ -416,9 +416,9 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 				continue;
 
 			boolean hasPulley = false;
-			BlockEntity tileEntity = world.getBlockEntity(currentPos);
-			if (tileEntity instanceof BeltBlockEntity) {
-				BeltBlockEntity belt = (BeltBlockEntity) tileEntity;
+			BlockEntity blockEntity = world.getBlockEntity(currentPos);
+			if (blockEntity instanceof BeltBlockEntity) {
+				BeltBlockEntity belt = (BeltBlockEntity) blockEntity;
 				/**if (belt.isController())
 					belt.getInventory()
 							.ejectAll();*/

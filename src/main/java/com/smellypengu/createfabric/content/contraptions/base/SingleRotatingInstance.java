@@ -10,7 +10,7 @@ import net.minecraft.util.math.Direction;
 
 import static com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntityRenderer.KINETIC_TILE;
 
-public class SingleRotatingInstance extends KineticTileInstance<KineticBlockEntity> {
+public class SingleRotatingInstance extends KineticBlockInstance<KineticBlockEntity> {
     public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
         /**DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->*/
                 InstancedTileRenderRegistry.instance.register(type, SingleRotatingInstance::new);

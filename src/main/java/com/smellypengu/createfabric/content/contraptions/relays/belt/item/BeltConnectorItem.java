@@ -212,16 +212,16 @@ public class BeltConnectorItem extends BlockItem {
 		if (shaftAxis == Direction.Axis.Y && x != 0 && z != 0)
 			return false;
 
-		BlockEntity tileEntity = world.getBlockEntity(first);
-		BlockEntity tileEntity2 = world.getBlockEntity(second);
+		BlockEntity blockEntity = world.getBlockEntity(first);
+		BlockEntity blockEntity1 = world.getBlockEntity(second);
 
-		if (!(tileEntity instanceof KineticBlockEntity))
+		if (!(blockEntity instanceof KineticBlockEntity))
 			return false;
-		if (!(tileEntity2 instanceof KineticBlockEntity))
+		if (!(blockEntity1 instanceof KineticBlockEntity))
 			return false;
 
-		float speed1 = ((KineticBlockEntity) tileEntity).getTheoreticalSpeed();
-		float speed2 = ((KineticBlockEntity) tileEntity2).getTheoreticalSpeed();
+		float speed1 = ((KineticBlockEntity) blockEntity).getTheoreticalSpeed();
+		float speed2 = ((KineticBlockEntity) blockEntity1).getTheoreticalSpeed();
 		if (Math.signum(speed1) != Math.signum(speed2) && speed1 != 0 && speed2 != 0)
 			return false;
 

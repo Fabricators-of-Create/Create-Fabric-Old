@@ -32,7 +32,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class Contraption {
-
 	public AbstractContraptionEntity entity;
 	/**public CombinedInvWrapper inventory;
 	public CombinedTankWrapper fluidInventory;*/
@@ -54,9 +53,9 @@ public abstract class Contraption {
 	private List<BlockFace> pendingSubContraptions;
 
 	// Client
-	public Map<BlockPos, BlockEntity> presentTileEntities;
-	public List<BlockEntity> maybeInstancedTileEntities;
-	public List<BlockEntity> specialRenderedTileEntities;
+	public Map<BlockPos, BlockEntity> presentBlockEntities;
+	public List<BlockEntity> maybeInstancedBlockEntities;
+	public List<BlockEntity> specialRenderedBlockEntities;
 
 	public Contraption() {
 		blocks = new HashMap<>();
@@ -68,9 +67,9 @@ public abstract class Contraption {
 		/**fluidStorage = new HashMap<>();
 		glueToRemove = new ArrayList<>();*/
 		initialPassengers = new HashMap<>();
-		presentTileEntities = new HashMap<>();
-		maybeInstancedTileEntities = new ArrayList<>();
-		specialRenderedTileEntities = new ArrayList<>();
+		presentBlockEntities = new HashMap<>();
+		maybeInstancedBlockEntities = new ArrayList<>();
+		specialRenderedBlockEntities = new ArrayList<>();
 		pendingSubContraptions = new ArrayList<>();
 		stabilizedSubContraptions = new HashMap<>();
 	}
@@ -511,16 +510,16 @@ public abstract class Contraption {
 	}
 
 	@Nullable
-	protected CompoundTag getTileEntityNBT(World world, BlockPos pos) {
-		BlockEntity tileentity = world.getBlockEntity(pos);
-		if (tileentity == null)
+	protected CompoundTag getBlockEntityNbt(World world, BlockPos pos) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity == null)
 			return null;
-		CompoundTag nbt = tileentity.writeNbt(new CompoundTag());
+		CompoundTag nbt = blockEntity.writeNbt(new CompoundTag());
 		nbt.remove("x");
 		nbt.remove("y");
 		nbt.remove("z");
 
-		/**if (tileentity instanceof FluidTankTileEntity && nbt.contains("Controller"))
+		/**if (blockEntity instanceof FluidTankTileEntity && nbt.contains("Controller"))
 			nbt.put("Controller",
 				NbtHelper.fromBlockPos(toLocalPos(NbtHelper.toBlockPos(nbt.getCompound("Controller")))));*/
 
@@ -548,8 +547,8 @@ public abstract class Contraption {
 
 	public void readNBT(World world, CompoundTag nbt, boolean spawnData) {
 		blocks.clear();
-		presentTileEntities.clear();
-		specialRenderedTileEntities.clear();
+		presentBlockEntities.clear();
+		specialRenderedBlockEntities.clear();
 
 		Tag blocks = nbt.get("Blocks");
 		//used to differentiate between the 'old' and the paletted serialization
@@ -749,31 +748,31 @@ public abstract class Contraption {
 				tag.putInt("y", info.pos.getY());
 				tag.putInt("z", info.pos.getZ());
 
-				BlockEntity te = BlockEntity.createFromNbt(info.pos, info.state, tag);
-				if (te == null)
+				BlockEntity be = BlockEntity.createFromNbt(info.pos, info.state, tag);
+				if (be == null)
 					return;
-				/**te.setLocation(new WrappedWorld(world) { //TODO POSITION THING IDK IF CORRECT
+				/**be.setLocation(new WrappedWorld(world) { //TODO POSITION THING IDK IF CORRECT
 
 					@Override
 					public BlockState getBlockState(BlockPos pos) {
-						if (!pos.equals(te.getPos()))
+						if (!pos.equals(be.getPos()))
 							return Blocks.AIR.getDefaultState();
 						return info.state;
 					}
 
-				}, te.getPos());*/
-				if (te instanceof KineticBlockEntity)
-					((KineticBlockEntity) te).setSpeed(0);
-				te.getCachedState();
+				}, be.getPos());*/
+				if (be instanceof KineticBlockEntity)
+					((KineticBlockEntity) be).setSpeed(0);
+				be.getCachedState();
 
 				if (movementBehaviour == null || !movementBehaviour.hasSpecialInstancedRendering())
-					maybeInstancedTileEntities.add(te);
+					maybeInstancedBlockEntities.add(be);
 
-				if (movementBehaviour != null && !movementBehaviour.renderAsNormalTileEntity())
+				if (movementBehaviour != null && !movementBehaviour.renderAsNormalBlockEntity())
 					return;
 
-				presentTileEntities.put(info.pos, te);
-				specialRenderedTileEntities.add(te);
+				presentBlockEntities.put(info.pos, be);
+				specialRenderedBlockEntities.add(be);
 			}
 
 		});
@@ -883,35 +882,35 @@ public abstract class Contraption {
 						world.removeBlock(targetPos, true);*/
 				}
 
-				BlockEntity tileEntity = world.getBlockEntity(targetPos);
+				BlockEntity blockEntity = world.getBlockEntity(targetPos);
 				CompoundTag tag = block.tag;
-				if (tileEntity != null)
-					tag = NBTProcessors.process(tileEntity, tag, false);
-				if (tileEntity != null && tag != null) {
+				if (blockEntity != null)
+					tag = NBTProcessors.process(blockEntity, tag, false);
+				if (blockEntity != null && tag != null) {
 					tag.putInt("x", targetPos.getX());
 					tag.putInt("y", targetPos.getY());
 					tag.putInt("z", targetPos.getZ());
 
-					/**if (verticalRotation && tileEntity instanceof PulleyTileEntity) {
+					/**if (verticalRotation && blockEntity instanceof PulleyTileEntity) {
 						tag.remove("Offset");
 						tag.remove("InitialOffset");
 					}
 
-					if (tileEntity instanceof FluidTankTileEntity && tag.contains("LastKnownPos"))
+					if (blockEntity instanceof FluidTankTileEntity && tag.contains("LastKnownPos"))
 						tag.put("LastKnownPos", NbtHelper.fromBlockPos((BlockPos) BlockPos.ZERO.down()));*/
 
-					tileEntity.readNbt(tag);
+					blockEntity.readNbt(tag);
 
 					/**if (storage.containsKey(block.pos)) {
 						MountedStorage mountedStorage = storage.get(block.pos);
 						if (mountedStorage.isValid())
-							mountedStorage.addStorageToWorld(tileEntity);
+							mountedStorage.addStorageToWorld(blockEntity);
 					}
 
 					if (fluidStorage.containsKey(block.pos)) {
 						MountedFluidStorage mountedStorage = fluidStorage.get(block.pos);
 						if (mountedStorage.isValid())
-							mountedStorage.addStorageToWorld(tileEntity);
+							mountedStorage.addStorageToWorld(blockEntity);
 					}*/
 				}
 			}

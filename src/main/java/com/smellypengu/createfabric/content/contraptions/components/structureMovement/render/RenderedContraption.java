@@ -5,7 +5,7 @@ import com.smellypengu.createfabric.content.contraptions.base.KineticRenderMater
 import com.smellypengu.createfabric.content.contraptions.components.actors.ContraptionActorData;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.*;
 import com.smellypengu.createfabric.foundation.render.backend.Backend;
-import com.smellypengu.createfabric.foundation.render.backend.instancing.IInstanceRendered;
+import com.smellypengu.createfabric.foundation.render.backend.instancing.InstanceRendered;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstancedModel;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.RenderMaterial;
 import com.smellypengu.createfabric.foundation.render.backend.light.GridAlignedBB;
@@ -142,14 +142,14 @@ public class RenderedContraption {
     }
 
     private void buildInstancedTiles() {
-        Collection<BlockEntity> tileEntities = contraption.maybeInstancedTileEntities;
-        if (!tileEntities.isEmpty()) {
-            for (BlockEntity te : tileEntities) {
-                if (te instanceof IInstanceRendered) {
-                    World world = te.getWorld();
-                    te.setWorld(renderWorld);
-                    kinetics.add(te);
-                    te.setWorld(world);
+        Collection<BlockEntity> blockEntities = contraption.maybeInstancedBlockEntities;
+        if (!blockEntities.isEmpty()) {
+            for (BlockEntity be : blockEntities) {
+                if (be instanceof InstanceRendered) {
+                    World world = be.getWorld();
+                    be.setWorld(renderWorld);
+                    kinetics.add(be);
+                    be.setWorld(world);
                     // TODO setWorld IS PROBABLY THE CORRECT SOLUTION
                 }
             }
@@ -179,7 +179,7 @@ public class RenderedContraption {
     private static PlacementSimulationWorld setupRenderWorld(World world, Contraption c) {
         PlacementSimulationWorld renderWorld = new PlacementSimulationWorld(world);
 
-        renderWorld.setTileEntities(c.presentTileEntities.values());
+        renderWorld.setBlockEntities(c.presentBlockEntities.values());
 
         for (Structure.StructureBlockInfo info : c.getBlocks()
                                         .values())

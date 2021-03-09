@@ -15,7 +15,7 @@ import com.smellypengu.createfabric.content.contraptions.goggles.IHaveGoggleInfo
 import com.smellypengu.createfabric.content.contraptions.goggles.IHaveHoveringInformation;
 import com.smellypengu.createfabric.foundation.item.TooltipHelper;
 import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatcher;
-import com.smellypengu.createfabric.foundation.render.backend.instancing.IInstanceRendered;
+import com.smellypengu.createfabric.foundation.render.backend.instancing.InstanceRendered;
 import com.smellypengu.createfabric.foundation.block.entity.SmartBlockEntity;
 import com.smellypengu.createfabric.foundation.block.entity.BlockEntityBehaviour;
 import com.smellypengu.createfabric.foundation.utility.Lang;
@@ -33,7 +33,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public abstract class KineticBlockEntity extends SmartBlockEntity
-	implements IHaveGoggleInformation, IHaveHoveringInformation, IInstanceRendered {
+	implements IHaveGoggleInformation, IHaveHoveringInformation, InstanceRendered {
 
 	public @Nullable Long network;
 	public @Nullable BlockPos source;
@@ -275,13 +275,13 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		if (world == null || world.isClient)
 			return;
 
-		BlockEntity tileEntity = world.getBlockEntity(source);
-		if (!(tileEntity instanceof KineticBlockEntity)) {
+		BlockEntity blockEntity = world.getBlockEntity(source);
+		if (!(blockEntity instanceof KineticBlockEntity)) {
 			removeSource();
 			return;
 		}
 
-		KineticBlockEntity sourceTe = (KineticBlockEntity) tileEntity;
+		KineticBlockEntity sourceTe = (KineticBlockEntity) blockEntity;
 		setNetwork(sourceTe.network);
 	}
 
@@ -348,25 +348,25 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		if (world.isClient)
 			return;
 
-		BlockEntity tileEntityIn = world.getBlockEntity(pos);
+		BlockEntity blockEntity = world.getBlockEntity(pos);
 		BlockState currentState = world.getBlockState(pos);
-		boolean isKinetic = tileEntityIn instanceof KineticBlockEntity;
+		boolean isKinetic = blockEntity instanceof KineticBlockEntity;
 
 		if (currentState == state)
 			return;
-		if (tileEntityIn == null || !isKinetic) {
+		if (blockEntity == null || !isKinetic) {
 			world.setBlockState(pos, state, 3);
 			return;
 		}
 
-		KineticBlockEntity tileEntity = (KineticBlockEntity) tileEntityIn;
+		KineticBlockEntity be = (KineticBlockEntity) blockEntity;
 		if (state.getBlock() instanceof KineticBlock
 			&& !((KineticBlock) state.getBlock()).areStatesKineticallyEquivalent(currentState, state)) {
-			if (tileEntity.hasNetwork())
-				tileEntity.getOrCreateNetwork()
-					.remove(tileEntity);
-			tileEntity.detachKinetics();
-			tileEntity.removeSource();
+			if (be.hasNetwork())
+				be.getOrCreateNetwork()
+					.remove(be);
+			be.detachKinetics();
+			be.removeSource();
 		}
 
 		world.setBlockState(pos, state, 3);

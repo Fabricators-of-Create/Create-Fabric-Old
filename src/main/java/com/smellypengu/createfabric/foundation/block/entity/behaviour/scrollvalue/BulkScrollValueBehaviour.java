@@ -17,7 +17,7 @@ public class BulkScrollValueBehaviour extends ScrollValueBehaviour {
 	}
 
 	List<? extends SmartBlockEntity> getBulk() {
-		return groupGetter.apply(tileEntity);
+		return groupGetter.apply(blockEntity);
 	}
 
 }

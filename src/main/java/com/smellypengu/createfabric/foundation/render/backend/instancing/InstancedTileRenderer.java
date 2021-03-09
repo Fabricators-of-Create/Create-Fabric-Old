@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class InstancedTileRenderer<P extends BasicProgram> {
-    protected Map<BlockEntity, TileEntityInstance<?>> instances = new HashMap<>();
+    protected Map<BlockEntity, BlockEntityInstance<?>> instances = new HashMap<>();
 
     protected Map<MaterialType<?>, RenderMaterial<P, ?>> materials = new HashMap<>();
 
@@ -55,21 +55,21 @@ public abstract class InstancedTileRenderer<P extends BasicProgram> {
     }
 
     @Nullable
-    public <T extends BlockEntity> TileEntityInstance<? super T> getInstance(T tile) {
+    public <T extends BlockEntity> BlockEntityInstance<? super T> getInstance(T tile) {
         return getInstance(tile, true);
     }
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public <T extends BlockEntity> TileEntityInstance<? super T> getInstance(T tile, boolean create) {
+    public <T extends BlockEntity> BlockEntityInstance<? super T> getInstance(T tile, boolean create) {
         if (!Backend.canUseInstancing() || isTileUnloaded(tile)) return null;
 
-        TileEntityInstance<?> instance = instances.get(tile);
+        BlockEntityInstance<?> instance = instances.get(tile);
 
         if (instance != null) {
-            return (TileEntityInstance<? super T>) instance;
+            return (BlockEntityInstance<? super T>) instance;
         } else if (create) {
-            TileEntityInstance<? super T> renderer = InstancedTileRenderRegistry.instance.create(this, tile);
+            BlockEntityInstance<? super T> renderer = InstancedTileRenderRegistry.instance.create(this, tile);
 
             if (renderer != null) {
                 instances.put(tile, renderer);
@@ -84,8 +84,8 @@ public abstract class InstancedTileRenderer<P extends BasicProgram> {
     public <T extends BlockEntity> void onLightUpdate(T tile) {
         if (!Backend.canUseInstancing()) return;
 
-        if (tile instanceof IInstanceRendered) {
-            TileEntityInstance<? super T> instance = getInstance(tile, false);
+        if (tile instanceof InstanceRendered) {
+            BlockEntityInstance<? super T> instance = getInstance(tile, false);
 
             if (instance != null)
                 instance.updateLight();
@@ -95,7 +95,7 @@ public abstract class InstancedTileRenderer<P extends BasicProgram> {
     public <T extends BlockEntity> void add(T tile) {
         if (!Backend.canUseInstancing()) return;
 
-        if (tile instanceof IInstanceRendered) {
+        if (tile instanceof InstanceRendered) {
             getInstance(tile);
         }
     }
@@ -103,8 +103,8 @@ public abstract class InstancedTileRenderer<P extends BasicProgram> {
     public <T extends BlockEntity> void update(T tile) {
         if (!Backend.canUseInstancing()) return;
 
-        if (tile instanceof IInstanceRendered) {
-            TileEntityInstance<? super T> instance = getInstance(tile, false);
+        if (tile instanceof InstanceRendered) {
+            BlockEntityInstance<? super T> instance = getInstance(tile, false);
 
             if (instance != null)
                 instance.update();
@@ -114,8 +114,8 @@ public abstract class InstancedTileRenderer<P extends BasicProgram> {
     public <T extends BlockEntity> void remove(T tile) {
         if (!Backend.canUseInstancing()) return;
 
-        if (tile instanceof IInstanceRendered) {
-            TileEntityInstance<? super T> instance = getInstance(tile, false);
+        if (tile instanceof InstanceRendered) {
+            BlockEntityInstance<? super T> instance = getInstance(tile, false);
 
             if (instance != null) {
                 instance.remove();

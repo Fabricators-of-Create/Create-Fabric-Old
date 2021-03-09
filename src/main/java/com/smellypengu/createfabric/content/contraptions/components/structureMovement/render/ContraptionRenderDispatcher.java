@@ -58,15 +58,15 @@ public class ContraptionRenderDispatcher {
         firstLayer = true;
     }
 
-    public static void renderTileEntities(World world, Contraption c, MatrixStack ms, MatrixStack msLocal,
-                                          VertexConsumerProvider buffer) {
+    public static void renderBlockEntities(World world, Contraption c, MatrixStack ms, MatrixStack msLocal,
+                                           VertexConsumerProvider buffer) {
         PlacementSimulationWorld renderWorld = null;
         if (Backend.canUseVBOs()) {
             RenderedContraption renderer = getRenderer(world, c);
 
             renderWorld = renderer.renderWorld;
         }
-        TileEntityRenderHelper.renderTileEntities(world, renderWorld, c.specialRenderedTileEntities, ms, msLocal, buffer);
+        BlockEntityRenderHelper.renderBlockEntities(world, renderWorld, c.specialRenderedBlockEntities, ms, msLocal, buffer);
 
     }
 
@@ -156,7 +156,7 @@ public class ContraptionRenderDispatcher {
 
     public static void renderDynamic(World world, Contraption c, MatrixStack ms, MatrixStack msLocal,
                                      VertexConsumerProvider buffer) {
-        renderTileEntities(world, c, ms, msLocal, buffer);
+        renderBlockEntities(world, c, ms, msLocal, buffer);
         if (buffer instanceof VertexConsumerProvider.Immediate)
             ((VertexConsumerProvider.Immediate) buffer).draw();
         renderActors(world, c, ms, msLocal, buffer);
@@ -198,7 +198,7 @@ public class ContraptionRenderDispatcher {
         Random random = new Random();
         BufferBuilder builder = new BufferBuilder(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL.getVertexSizeInteger());
         builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL); // TODO MIGHT BE WRONG DRAWMODE
-        renderWorld.setTileEntities(c.presentTileEntities.values());
+        renderWorld.setBlockEntities(c.presentBlockEntities.values());
 
         for (Structure.StructureBlockInfo info : c.getBlocks()
                                         .values())

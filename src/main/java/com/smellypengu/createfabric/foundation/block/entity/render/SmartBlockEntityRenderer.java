@@ -7,10 +7,10 @@ import net.minecraft.client.util.math.MatrixStack;
 public class SmartBlockEntityRenderer<T extends SmartBlockEntity> extends SafeBlockEntityRenderer<T> {
 	
 	@Override
-	protected void renderSafe(T tileEntityIn, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer, int light,
+	protected void renderSafe(T blockEntityIn, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer, int light,
 			int overlay) {
-		/**FilteringRenderer.renderOnTileEntity(tileEntityIn, partialTicks, ms, buffer, light, overlay);
-		LinkRenderer.renderOnTileEntity(tileEntityIn, partialTicks, ms, buffer, light, overlay);*/
+		/**FilteringRenderer.renderOnTileEntity(blockEntityIn, partialTicks, ms, buffer, light, overlay);
+		LinkRenderer.renderOnTileEntity(blockEntityIn, partialTicks, ms, buffer, light, overlay);*/
 	}
 
 }

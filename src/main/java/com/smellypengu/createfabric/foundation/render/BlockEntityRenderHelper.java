@@ -18,32 +18,32 @@ import net.minecraft.world.World;
 
 import java.util.Iterator;
 
-public class TileEntityRenderHelper {
+public class BlockEntityRenderHelper {
 
-	public static void renderTileEntities(World world, Iterable<BlockEntity> customRenderTEs, MatrixStack ms,
-										  MatrixStack localTransform, VertexConsumerProvider buffer) {
+	public static void renderBlockEntities(World world, Iterable<BlockEntity> customRenderTEs, MatrixStack ms,
+										   MatrixStack localTransform, VertexConsumerProvider buffer) {
 
-		renderTileEntities(world, null, customRenderTEs, ms, localTransform, buffer);
+		renderBlockEntities(world, null, customRenderTEs, ms, localTransform, buffer);
 	}
 
-	public static void renderTileEntities(World world, PlacementSimulationWorld renderWorld, Iterable<BlockEntity> customRenderTEs, MatrixStack ms,
-										  MatrixStack localTransform, VertexConsumerProvider buffer) {
+	public static void renderBlockEntities(World world, PlacementSimulationWorld renderWorld, Iterable<BlockEntity> customRenderTEs, MatrixStack ms,
+										   MatrixStack localTransform, VertexConsumerProvider buffer) {
 		float pt = AnimationTickHolder.getPartialTicks();
 		Matrix4f matrix = localTransform.peek()
 			.getModel();
 
 		for (Iterator<BlockEntity> iterator = customRenderTEs.iterator(); iterator.hasNext();) {
-			BlockEntity tileEntity = iterator.next();
-			//if (tileEntity instanceof IInstanceRendered) continue; // TODO: some things still need to render
+			BlockEntity blockEntity = iterator.next();
+			//if (blockEntity instanceof IInstanceRendered) continue; // TODO: some things still need to render
 
-			BlockEntityRenderer<BlockEntity> renderer = MinecraftClient.getInstance().getBlockEntityRenderDispatcher().get(tileEntity); // TODO I THINK THIS IS RIGHT
+			BlockEntityRenderer<BlockEntity> renderer = MinecraftClient.getInstance().getBlockEntityRenderDispatcher().get(blockEntity); // TODO I THINK THIS IS RIGHT
 			if (renderer == null) {
 				iterator.remove();
 				continue;
 			}
 
 			try {
-				BlockPos pos = tileEntity.getPos();
+				BlockPos pos = blockEntity.getPos();
 				ms.push();
 				MatrixStacker.of(ms)
 					.translate(pos);
@@ -53,14 +53,14 @@ public class TileEntityRenderHelper {
 				BlockPos lightPos = new BlockPos(vec.getX(), vec.getY(), vec.getZ());
 				int worldLight = ContraptionRenderDispatcher.getLightOnContraption(world, renderWorld, pos, lightPos);
 
-				renderer.render(tileEntity, pt, ms, buffer, worldLight,
+				renderer.render(blockEntity, pt, ms, buffer, worldLight,
 								OverlayTexture.DEFAULT_UV);
 				ms.pop();
 
 			} catch (Exception e) {
 				iterator.remove();
 				
-				String message = "TileEntity " + tileEntity.getType()
+				String message = "BlockEntity " + blockEntity.getType()
 					.toString() + " didn't want to render while moved.\n";
 				/**if (AllConfigs.CLIENT.explainRenderErrors.get()) { TODO FIX CONFIG
 					Create.logger.error(message, e);

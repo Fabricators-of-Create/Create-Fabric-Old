@@ -9,9 +9,9 @@ import net.minecraft.world.LightType;
 
 import java.util.function.Consumer;
 
-public abstract class KineticTileInstance<T extends KineticBlockEntity> extends TileEntityInstance<T> {
+public abstract class KineticBlockInstance<T extends KineticBlockEntity> extends BlockEntityInstance<T> {
 
-    public KineticTileInstance(InstancedTileRenderer<?> modelManager, T tile) {
+    public KineticBlockInstance(InstancedTileRenderer<?> modelManager, T tile) {
         super(modelManager, tile);
     }
 
@@ -28,7 +28,7 @@ public abstract class KineticTileInstance<T extends KineticBlockEntity> extends 
         return data -> {
             data.setBlockLight(world.getLightLevel(LightType.BLOCK, pos))
                 .setSkyLight(world.getLightLevel(LightType.SKY, pos))
-                .setTileEntity(tile)
+                .setBlockEntity(tile)
                 .setRotationalSpeed(speed)
                 .setRotationOffset(getRotationOffset(axis))
                 .setRotationAxis(axis);

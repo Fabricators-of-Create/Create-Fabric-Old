@@ -48,15 +48,15 @@ public final class NBTProcessors {
 	}
 
 	@Nullable
-	public static CompoundTag process(BlockEntity tileEntity, CompoundTag compound, boolean survival) {
+	public static CompoundTag process(BlockEntity blockEntity, CompoundTag compound, boolean survival) {
 		if (compound == null)
 			return null;
-		BlockEntityType<?> type = tileEntity.getType();
+		BlockEntityType<?> type = blockEntity.getType();
 		if (survival && survivalProcessors.containsKey(type))
 			compound = survivalProcessors.get(type).apply(compound);
 		if (compound != null && processors.containsKey(type))
 			return processors.get(type).apply(compound);
-		if (tileEntity.copyItemDataRequiresOperator())
+		if (blockEntity.copyItemDataRequiresOperator())
 			return null;
 		return compound;
 	}

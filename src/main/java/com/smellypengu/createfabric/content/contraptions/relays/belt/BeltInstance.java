@@ -2,7 +2,7 @@ package com.smellypengu.createfabric.content.contraptions.relays.belt;
 
 import com.smellypengu.createfabric.AllBlockPartials;
 import com.smellypengu.createfabric.AllBlocks;
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileInstance;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockInstance;
 import com.smellypengu.createfabric.content.contraptions.base.RotatingData;
 import com.smellypengu.createfabric.foundation.block.render.SpriteShiftEntry;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstanceKey;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class BeltInstance extends KineticTileInstance<BeltBlockEntity> {
+public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
     public static void register(BlockEntityType<? extends BeltBlockEntity> type) {
         //DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
                 InstancedTileRenderRegistry.instance.register(type, BeltInstance::new);
@@ -169,7 +169,7 @@ public class BeltInstance extends KineticTileInstance<BeltBlockEntity> {
             float rotZ = sideways ? 90 : ((vertical && facing.getDirection() == Direction.AxisDirection.NEGATIVE) ? 180 : 0);
 
             BlockPos pos = tile.getPos();
-            data.setTileEntity(tile)
+            data.setBlockEntity(tile)
                 .setBlockLight(world.getLightLevel(LightType.BLOCK, pos))
                 .setSkyLight(world.getLightLevel(LightType.SKY, pos))
                 .setRotation(rotX, rotY, rotZ)

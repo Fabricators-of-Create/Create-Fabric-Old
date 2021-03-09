@@ -19,7 +19,7 @@ public class InstancedTileRenderRegistry {
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public <T extends BlockEntity> TileEntityInstance<? super T> create(InstancedTileRenderer<?> manager, T tile) {
+    public <T extends BlockEntity> BlockEntityInstance<? super T> create(InstancedTileRenderer<?> manager, T tile) {
         BlockEntityType<?> type = tile.getType();
         IRendererFactory<? super T> factory = (IRendererFactory<? super T>) this.renderers.get(type);
 

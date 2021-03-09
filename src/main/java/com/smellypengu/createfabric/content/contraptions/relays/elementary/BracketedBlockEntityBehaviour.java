@@ -49,7 +49,7 @@ public class BracketedBlockEntityBehaviour extends BlockEntityBehaviour {
 	public void applyBracket(BlockState state) {
 		this.bracket = Optional.of(state);
 		reRender = true;
-		tileEntity.notifyUpdate();
+		blockEntity.notifyUpdate();
 	}
 	
 	public void triggerAdvancements(World world, PlayerEntity player, BlockState state) {
@@ -65,9 +65,9 @@ public class BracketedBlockEntityBehaviour extends BlockEntityBehaviour {
 		this.bracket = Optional.empty();
 		reRender = true;
 		if (inOnReplacedContext)
-			tileEntity.sendData();
+			blockEntity.sendData();
 		else
-			tileEntity.notifyUpdate();
+			blockEntity.notifyUpdate();
 	}
 
 	public boolean isBacketPresent() {
@@ -94,12 +94,12 @@ public class BracketedBlockEntityBehaviour extends BlockEntityBehaviour {
 		if (nbt.contains("Bracket"))
 			bracket = Optional.of(NbtHelper.toBlockState(nbt.getCompound("Bracket")));
 		if (clientPacket && nbt.contains("Redraw"))
-			getWorld().updateListeners(getPos(), tileEntity.getCachedState(), tileEntity.getCachedState(), 16);
+			getWorld().updateListeners(getPos(), blockEntity.getCachedState(), blockEntity.getCachedState(), 16);
 		super.read(nbt, clientPacket);
 	}
 
 	public boolean canHaveBracket() {
-		return pred.test(tileEntity.getCachedState());
+		return pred.test(blockEntity.getCachedState());
 	}
 
 }

@@ -141,8 +141,8 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 		this.value = value;
 		forceClientState = true;
 		callback.accept(value);
-		tileEntity.markDirty();
-		tileEntity.sendData();
+		blockEntity.markDirty();
+		blockEntity.sendData();
 		scrollableValue = value;
 	}
 
@@ -160,8 +160,8 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 	}
 
 	public boolean testHit(Vec3d hit) {
-		BlockState state = tileEntity.getCachedState();
-		Vec3d localHit = hit.subtract(new Vec3d(tileEntity.getPos().getX(), tileEntity.getPos().getY(), tileEntity.getPos().getZ()));
+		BlockState state = blockEntity.getCachedState();
+		Vec3d localHit = hit.subtract(new Vec3d(blockEntity.getPos().getX(), blockEntity.getPos().getY(), blockEntity.getPos().getZ()));
 		return slotPositioning.testHit(state, localHit);
 	}
 

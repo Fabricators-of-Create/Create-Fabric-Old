@@ -33,10 +33,10 @@ public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 	@Override
 	public void setSource(BlockPos source) {
 		super.setSource(source);
-		BlockEntity tileEntity = world.getBlockEntity(source);
-		if (!(tileEntity instanceof KineticBlockEntity))
+		BlockEntity blockEntity = world.getBlockEntity(source);
+		if (!(blockEntity instanceof KineticBlockEntity))
 			return;
-		KineticBlockEntity sourceTe = (KineticBlockEntity) tileEntity;
+		KineticBlockEntity sourceTe = (KineticBlockEntity) blockEntity;
 		if (reActivateSource && Math.abs(sourceTe.getSpeed()) >= Math.abs(getGeneratedSpeed()))
 			reActivateSource = false;
 	}

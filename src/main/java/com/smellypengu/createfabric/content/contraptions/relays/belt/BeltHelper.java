@@ -18,23 +18,23 @@ public class BeltHelper {
 				.isIn(AllItemTags.UPRIGHT_ON_BELT.tag);*/
 	}
 
-	public static BeltBlockEntity getSegmentTE(World world, BlockPos pos) {
+	public static BeltBlockEntity getSegmentBe(World world, BlockPos pos) {
 		if (!world.isRegionLoaded(pos, BlockPos.ORIGIN))
 			return null;
-		BlockEntity tileEntity = world.getBlockEntity(pos);
-		if (!(tileEntity instanceof BeltBlockEntity))
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (!(blockEntity instanceof BeltBlockEntity))
 			return null;
-		return (BeltBlockEntity) tileEntity;
+		return (BeltBlockEntity) blockEntity;
 	}
 
-	public static BeltBlockEntity getControllerTE(World world, BlockPos pos) {
-		BeltBlockEntity segment = getSegmentTE(world, pos);
+	public static BeltBlockEntity getControllerBe(World world, BlockPos pos) {
+		BeltBlockEntity segment = getSegmentBe(world, pos);
 		if (segment == null)
 			return null;
 		BlockPos controllerPos = segment.controller;
 		if (controllerPos == null)
 			return null;
-		return getSegmentTE(world, controllerPos);
+		return getSegmentBe(world, controllerPos);
 	}
 
 	public static BeltBlockEntity getBeltForOffset(BeltBlockEntity controller, float offset) {

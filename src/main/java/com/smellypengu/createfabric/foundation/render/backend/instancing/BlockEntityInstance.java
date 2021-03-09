@@ -5,7 +5,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class TileEntityInstance<T extends BlockEntity> {
+public abstract class BlockEntityInstance<T extends BlockEntity> {
 
     protected final InstancedTileRenderer<?> modelManager;
     protected final T tile;
@@ -13,7 +13,7 @@ public abstract class TileEntityInstance<T extends BlockEntity> {
     protected final BlockPos pos;
     protected BlockState lastState;
 
-    public TileEntityInstance(InstancedTileRenderer<?> modelManager, T tile) {
+    public BlockEntityInstance(InstancedTileRenderer<?> modelManager, T tile) {
         this.modelManager = modelManager;
         this.tile = tile;
         this.world = tile.getWorld();
