@@ -5,5 +5,5 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 
 public interface S2CPacket extends Packet {
-    void handle(MinecraftClient client, ClientPlayNetworkHandler handler, ResponseTarget responseTarget);
+	void handle(MinecraftClient client, ClientPlayNetworkHandler handler, ResponseTarget responseTarget);
 }
