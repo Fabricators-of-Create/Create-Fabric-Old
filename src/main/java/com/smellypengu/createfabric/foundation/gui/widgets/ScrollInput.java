@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.foundation.gui.widgets;
 
 import com.smellypengu.createfabric.AllKeys;
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.scrollvalue.ScrollValueBehaviour;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
 import com.smellypengu.createfabric.foundation.utility.Lang;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;

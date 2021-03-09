@@ -1,6 +1,6 @@
 package com.smellypengu.createfabric.foundation.networking;
 
-import com.smellypengu.createfabric.foundation.tileEntity.SyncedTileEntity;
+import com.smellypengu.createfabric.foundation.block.entity.SyncedBlockEntity;
 
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
@@ -12,7 +12,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class TileEntityConfigurationPacket<TE extends SyncedTileEntity> implements C2SPacket {
+public abstract class TileEntityConfigurationPacket<TE extends SyncedBlockEntity> implements C2SPacket {
 
 	protected BlockPos pos;
 
@@ -45,9 +45,9 @@ public abstract class TileEntityConfigurationPacket<TE extends SyncedTileEntity>
 			if (world == null || !world.canSetBlock(pos))
 				return;
 			BlockEntity tileEntity = world.getBlockEntity(pos);
-			if (tileEntity instanceof SyncedTileEntity) {
+			if (tileEntity instanceof SyncedBlockEntity) {
 				applySettings((TE) tileEntity);
-				((SyncedTileEntity) tileEntity).sendData();
+				((SyncedBlockEntity) tileEntity).sendData();
 				tileEntity.markDirty();
 			}
 		});

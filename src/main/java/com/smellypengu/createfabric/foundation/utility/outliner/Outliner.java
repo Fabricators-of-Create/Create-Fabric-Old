@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.foundation.utility.outliner;
 
 import com.smellypengu.createfabric.foundation.renderState.SuperRenderTypeBuffer;
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.ValueBox;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.ValueBox;
 import com.smellypengu.createfabric.foundation.utility.AnimationTickHolder;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;

@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions.components.structureMovement;
 
 import com.smellypengu.createfabric.foundation.gui.AllIcons;
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.scrollvalue.INamedIconOptions;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.scrollvalue.NamedIconOptions;
 import com.smellypengu.createfabric.foundation.utility.Lang;
 import net.minecraft.util.math.BlockPos;
 
@@ -19,7 +19,7 @@ public interface IControlContraption {
 	
 	public BlockPos getBlockPosition();
 
-	static enum MovementMode implements INamedIconOptions {
+	static enum MovementMode implements NamedIconOptions {
 
 		MOVE_PLACE(AllIcons.I_MOVE_PLACE),
 		MOVE_PLACE_RETURNED(AllIcons.I_MOVE_PLACE_RETURNED),
@@ -47,7 +47,7 @@ public interface IControlContraption {
 
 	}
 
-	static enum RotationMode implements INamedIconOptions {
+	static enum RotationMode implements NamedIconOptions {
 
 		ROTATE_PLACE(AllIcons.I_ROTATE_PLACE),
 		ROTATE_PLACE_RETURNED(AllIcons.I_ROTATE_PLACE_RETURNED),

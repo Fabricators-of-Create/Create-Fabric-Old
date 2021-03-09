@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class BeltInstance extends KineticTileInstance<BeltTileEntity> {
-    public static void register(BlockEntityType<? extends BeltTileEntity> type) {
+public class BeltInstance extends KineticTileInstance<BeltBlockEntity> {
+    public static void register(BlockEntityType<? extends BeltBlockEntity> type) {
         //DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
                 InstancedTileRenderRegistry.instance.register(type, BeltInstance::new);
     }
@@ -39,7 +39,7 @@ public class BeltInstance extends KineticTileInstance<BeltTileEntity> {
     protected ArrayList<InstanceKey<BeltData>> keys;
     protected InstanceKey<RotatingData> pulleyKey;
 
-    public BeltInstance(InstancedTileRenderer<?> modelManager, BeltTileEntity tile) {
+    public BeltInstance(InstancedTileRenderer<?> modelManager, BeltBlockEntity tile) {
         super(modelManager, tile);
     }
 

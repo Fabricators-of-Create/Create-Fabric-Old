@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntity;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 
 public class KineticNetwork {
 
 	public Long id;
 	public boolean initialized;
 	public boolean containsFlywheel;
-	public Map<KineticTileEntity, Float> sources;
-	public Map<KineticTileEntity, Float> members;
+	public Map<KineticBlockEntity, Float> sources;
+	public Map<KineticBlockEntity, Float> members;
 
 	private float currentCapacity;
 	private float currentStress;
@@ -35,7 +35,7 @@ public class KineticNetwork {
 		updateCapacity();
 	}
 
-	public void addSilently(KineticTileEntity te, float lastCapacity, float lastStress) {
+	public void addSilently(KineticBlockEntity te, float lastCapacity, float lastStress) {
 		if (members.containsKey(te))
 			return;
 		if (te.isSource()) {
@@ -58,7 +58,7 @@ public class KineticNetwork {
 			unloadedStress = 0;
 	}
 
-	public void add(KineticTileEntity te) {
+	public void add(KineticBlockEntity te) {
 		if (members.containsKey(te))
 			return;
 		if (te.isSource())
@@ -68,17 +68,17 @@ public class KineticNetwork {
 		te.networkDirty = true;
 	}
 
-	public void updateCapacityFor(KineticTileEntity te, float capacity) {
+	public void updateCapacityFor(KineticBlockEntity te, float capacity) {
 		sources.put(te, capacity);
 		updateCapacity();
 	}
 
-	public void updateStressFor(KineticTileEntity te, float stress) {
+	public void updateStressFor(KineticBlockEntity te, float stress) {
 		members.put(te, stress);
 		updateStress();
 	}
 
-	public void remove(KineticTileEntity te) {
+	public void remove(KineticBlockEntity te) {
 		if (!members.containsKey(te))
 			return;
 		if (te.isSource())
@@ -99,11 +99,11 @@ public class KineticNetwork {
 	}
 
 	public void sync() {
-		for (KineticTileEntity te : members.keySet())
+		for (KineticBlockEntity te : members.keySet())
 			updateFromNetwork(te);
 	}
 
-	private void updateFromNetwork(KineticTileEntity te) {
+	private void updateFromNetwork(KineticBlockEntity te) {
 		boolean wasOverStressed = te.isOverStressed();
 		te.updateFromNetwork(currentCapacity, currentStress, getSize());
 		if (!wasOverStressed && te.isOverStressed() && te.getTheoreticalSpeed() != 0) {
@@ -142,9 +142,9 @@ public class KineticNetwork {
 	public float calculateCapacity() {
 		float presentCapacity = 0;
 		containsFlywheel = false;
-		for (Iterator<KineticTileEntity> iterator = sources.keySet()
+		for (Iterator<KineticBlockEntity> iterator = sources.keySet()
 			.iterator(); iterator.hasNext();) {
-			KineticTileEntity te = iterator.next();
+			KineticBlockEntity te = iterator.next();
 			if (te.getWorld()
 				.getBlockEntity(te.getPos()) != te) {
 				iterator.remove();
@@ -159,9 +159,9 @@ public class KineticNetwork {
 
 	public float calculateStress() {
 		float presentStress = 0;
-		for (Iterator<KineticTileEntity> iterator = members.keySet()
+		for (Iterator<KineticBlockEntity> iterator = members.keySet()
 			.iterator(); iterator.hasNext();) {
-			KineticTileEntity te = iterator.next();
+			KineticBlockEntity te = iterator.next();
 			if (te.getWorld()
 				.getBlockEntity(te.getPos()) != te) {
 				iterator.remove();
@@ -173,11 +173,11 @@ public class KineticNetwork {
 		return newStress;
 	}
 
-	public float getActualCapacityOf(KineticTileEntity te) {
+	public float getActualCapacityOf(KineticBlockEntity te) {
 		return sources.get(te) * getStressMultiplierForSpeed(te.getGeneratedSpeed());
 	}
 
-	public float getActualStressOf(KineticTileEntity te) {
+	public float getActualStressOf(KineticBlockEntity te) {
 		return members.get(te) * getStressMultiplierForSpeed(te.getTheoreticalSpeed());
 	}
 

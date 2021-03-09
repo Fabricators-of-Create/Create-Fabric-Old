@@ -5,7 +5,7 @@ import com.smellypengu.createfabric.AllItems;
 import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.IDisplayAssemblyExceptions;
 import com.smellypengu.createfabric.foundation.gui.GuiGameElement;
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.ValueBox;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.ValueBox;
 import com.smellypengu.createfabric.foundation.utility.outliner.Outline;
 import com.smellypengu.createfabric.foundation.utility.outliner.Outliner;
 import net.minecraft.block.entity.BlockEntity;

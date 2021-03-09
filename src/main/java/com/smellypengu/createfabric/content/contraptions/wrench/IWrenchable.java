@@ -23,7 +23,7 @@ public interface IWrenchable {
 		if (!rotated.canPlaceAt(world, context.getBlockPos()))
 			return ActionResult.PASS;
 
-		KineticTileEntity.switchToBlockState(world, context.getBlockPos(), updateAfterWrenched(rotated, context));
+		KineticBlockEntity.switchToBlockState(world, context.getBlockPos(), updateAfterWrenched(rotated, context));
 
 		BlockEntity te = context.getWorld()
 			.getBlockEntity(context.getBlockPos());

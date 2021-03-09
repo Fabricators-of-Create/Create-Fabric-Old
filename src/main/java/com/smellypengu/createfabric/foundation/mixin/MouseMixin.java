@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.scrollvalue.ScrollValueHandler;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.scrollvalue.ScrollValueHandler;
 
 import net.minecraft.client.Mouse;
 import net.minecraft.entity.player.PlayerInventory;

@@ -1,6 +1,6 @@
 package com.smellypengu.createfabric.foundation.render.backend.gl;
 
-import com.smellypengu.createfabric.foundation.mixin.GlStateManagerAccessor;
+import com.smellypengu.createfabric.foundation.mixin.accessor.GlStateManagerAccessor;
 import org.lwjgl.opengl.GL11;
 
 public class GlFog {

@@ -2,10 +2,10 @@ package com.smellypengu.createfabric.content.contraptions.relays.belt;
 
 import com.smellypengu.createfabric.AllBlocks;
 import com.smellypengu.createfabric.AllItems;
-import com.smellypengu.createfabric.AllTileEntities;
+import com.smellypengu.createfabric.AllBlockEntities;
 import com.smellypengu.createfabric.content.contraptions.base.HorizontalKineticBlock;
 import com.smellypengu.createfabric.content.schematics.ISpecialBlockItemRequirement;
-import com.smellypengu.createfabric.foundation.block.ITE;
+import com.smellypengu.createfabric.foundation.block.IBE;
 import com.smellypengu.createfabric.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -39,8 +39,7 @@ import net.minecraft.world.WorldView;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEntity>, ISpecialBlockItemRequirement {
-
+public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEntity>, ISpecialBlockItemRequirement {
 	public static final Property<BeltSlope> SLOPE = EnumProperty.of("slope", BeltSlope.class);
 	public static final Property<BeltPart> PART = EnumProperty.of("part", BeltPart.class);
 	public static final BooleanProperty CASING = BooleanProperty.of("casing");
@@ -67,7 +66,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 	public boolean hasShaftTowards(WorldView world, BlockPos pos, BlockState state, Direction face) {
 		if (face.getAxis() != getRotationAxis(state))
 			return false;
-		/**try {
+		/*try {
 			return getTileEntity(world, pos).hasPulley();
 		} catch (ITE.TileEntityException e) {
 		}*/
@@ -88,7 +87,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 		return AllItems.BELT_CONNECTOR.asItem().getDefaultStack();
 	}
 
-	/**@Override
+	/*@Override
 	public Material getMaterial(BlockState state) {
 		return state.get(CASING) ? Material.WOOD : Material.WOOL;
 	}*/
@@ -96,14 +95,14 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> drops = super.getDroppedStacks(state, builder);
-		BlockEntity tileEntity = builder.get(LootContextParameters.BLOCK_ENTITY);
-		/**if (tileEntity instanceof BeltTileEntity && ((BeltTileEntity) tileEntity).hasPulley())
+		BlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY);
+		/**if (blockEntity instanceof BeltTileEntity && ((BeltTileEntity) blockEntity).hasPulley())
 			drops.addAll(AllBlocks.SHAFT.getDefaultState()
 					.getDrops(builder));*/
 		return drops;
 	}
 
-	/**@Override
+	/*@Override
 	public boolean isFlammable(BlockState state, World world, BlockPos pos, Direction face) {
 		return false;
 	}*/
@@ -134,11 +133,11 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			PlayerEntity player = (PlayerEntity) entityIn;
 			if (player.isSneaking())
 				return;
-			/**if (player.abilities.isFlying)
+			/*if (player.abilities.isFlying)
 				return;*/
 		}
 
-		BeltTileEntity belt = BeltHelper.getSegmentTE(worldIn, pos);
+		BeltBlockEntity belt = BeltHelper.getSegmentTE(worldIn, pos);
 		if (belt == null)
 			return;
 		if (entityIn instanceof ItemEntity && entityIn.isAlive()) {
@@ -148,7 +147,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 				return;
 			if (!entityIn.isAlive())
 				return;
-			withTileEntityDo(worldIn, pos, te -> {
+			withBlockEntityDo(worldIn, pos, te -> {
 				/**ItemEntity itemEntity = (ItemEntity) entityIn;
 				IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 					.orElse(null);
@@ -162,7 +161,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			return;
 		}
 
-		/**BeltTileEntity controller = BeltHelper.getControllerTE(worldIn, pos);
+		/*BeltTileEntity controller = BeltHelper.getControllerTE(worldIn, pos);
 		if (controller == null || controller.passengers == null)
 			return;
 		if (controller.passengers.containsKey(entityIn)) {
@@ -184,7 +183,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		/**if (player.isSneaking() || !player.isAllowEdit())
+		/*if (player.isSneaking() || !player.isAllowEdit())
 			return ActionResult.PASS;
 		ItemStack heldItem = player.getHeldItem(handIn);
 		boolean isShaft = AllBlocks.SHAFT.isIn(heldItem);
@@ -248,7 +247,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 		return ActionResult.PASS;
 	}
 
-	/**@Override
+	/*@Override
 	public ActionResult onWrenched(BlockState state, ItemUsageContext context) {
 		World world = context.getWorld();
 		PlayerEntity player = context.getPlayer();
@@ -279,29 +278,29 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 		super.appendProperties(builder);
 	}
 
-	/**@Override TODO MIGHT NEED FIXING BELT BLOCK IMPORTANT
+	/*@Override TODO MIGHT NEED FIXING BELT BLOCK IMPORTANT
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}*/
 
-	/**@Override
+	/*@Override
 	public PathNodeType getAiPathNodeType(BlockState state, BlockView world, BlockPos pos, MobEntity entity) {
 		return PathNodeType.RAIL;
 	}*/
 
-	/**@Override
+	/*@Override
 	@Environment(EnvType.CLIENT)
 	public boolean addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
 		BlockHelper.addReducedDestroyEffects(state, world, pos, manager);
 		return true;
 	}*/
 
-	/**@Override
+	/*@Override
 	public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return BeltShapes.getShape(state);
 	}*/
 
-	/**@Override
+	/*@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
 		if (state.getBlock() != this)
 			return VoxelShapes.empty();
@@ -327,7 +326,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-		return AllTileEntities.BELT.instantiate(pos, state);
+		return AllBlockEntities.BELT.instantiate(pos, state);
 	}
 
 	@Override
@@ -371,8 +370,8 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			BlockEntity tileEntity = world.getBlockEntity(beltPos);
 			BlockState currentState = world.getBlockState(beltPos);
 
-			if (tileEntity instanceof BeltTileEntity && AllBlocks.BELT.stateManager.getStates().contains((currentState))) {
-				BeltTileEntity te = (BeltTileEntity) tileEntity;
+			if (tileEntity instanceof BeltBlockEntity && AllBlocks.BELT.stateManager.getStates().contains((currentState))) {
+				BeltBlockEntity te = (BeltBlockEntity) tileEntity;
 				te.setController(currentPos);
 				te.beltLength = beltChain.size();
 				te.index = index;
@@ -380,9 +379,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 				te.markDirty();
 				te.sendData();
 
-				/**if (te.isController() && !canTransportObjects(currentState))
-					te.getInventory()
-						.ejectAll();*/
+				// if (te.isController() && !canTransportObjects(currentState)) te.getInventory().ejectAll();
 			} else {
 				world.removeBlock(currentPos, true);
 				return;
@@ -398,12 +395,11 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			return;
 		if (state.getBlock() == newState.getBlock())
 			return;
-		/**if (isMoving)
-			return;*/
+		// if (isMoving) return;
 
 		BlockEntity te = world.getBlockEntity(pos);
-		if (te instanceof BeltTileEntity) {
-			/**BeltTileEntity beltTileEntity = (BeltTileEntity) te;
+		if (te instanceof BeltBlockEntity) {
+			/*BeltTileEntity beltTileEntity = (BeltTileEntity) te;
 			if (beltTileEntity.isController())
 				beltTileEntity.getInventory()
 						.ejectAll();*/
@@ -421,8 +417,8 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 			boolean hasPulley = false;
 			BlockEntity tileEntity = world.getBlockEntity(currentPos);
-			if (tileEntity instanceof BeltTileEntity) {
-				BeltTileEntity belt = (BeltTileEntity) tileEntity;
+			if (tileEntity instanceof BeltBlockEntity) {
+				BeltBlockEntity belt = (BeltBlockEntity) tileEntity;
 				/**if (belt.isController())
 					belt.getInventory()
 							.ejectAll();*/
@@ -518,21 +514,23 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 	}
 
 	@Override
-	public Class<BeltTileEntity> getTileEntityClass() {
-		return BeltTileEntity.class;
+	public Class<BeltBlockEntity> getBlockEntityClass() {
+		return BeltBlockEntity.class;
 	}
 
-	/**@Override
-	public ItemRequirement getRequiredItems(BlockState state) {
-		List<ItemStack> required = new ArrayList<>();
-		if (state.get(PART) != BeltPart.MIDDLE)
-			required.add(AllBlocks.SHAFT.asStack());
-		if (state.get(PART) == BeltPart.START)
-			required.add(AllItems.BELT_CONNECTOR.asStack());
-		if (required.isEmpty())
-			return ItemRequirement.NONE;
-		return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME, required);
-	}*/
+	/*
+	 * @Override
+	 * public ItemRequirement getRequiredItems(BlockState state) {
+	 *     List<ItemStack> required = new ArrayList<>();
+	 *     if (state.get(PART) != BeltPart.MIDDLE)
+	 *        required.add(AllBlocks.SHAFT.asStack());
+	 *    if (state.get(PART) == BeltPart.START)
+	 *        required.add(AllItems.BELT_CONNECTOR.asStack());
+	 *    if (required.isEmpty())
+	 *        return ItemRequirement.NONE;
+	 *    return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME, required);
+	 * }
+	 */
 
 	@Override
 	public BlockState rotate(BlockState state, BlockRotation rot) {

@@ -1,6 +1,6 @@
 package com.smellypengu.createfabric;
 
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntityRenderer;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntityRenderer;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.smellypengu.createfabric.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.smellypengu.createfabric.content.palettes.AllPaletteBlocks;
@@ -41,7 +41,7 @@ public class CreateClient implements ClientModInitializer {
         kineticRenderer = new KineticRenderer();
 
         bufferCache = new SuperByteBufferCache();
-        bufferCache.registerCompartment(KineticTileEntityRenderer.KINETIC_TILE);
+        bufferCache.registerCompartment(KineticBlockEntityRenderer.KINETIC_TILE);
         bufferCache.registerCompartment(ContraptionRenderDispatcher.CONTRAPTION, 20);
 
         ghostBlocks = new GhostBlocks();
@@ -49,7 +49,7 @@ public class CreateClient implements ClientModInitializer {
         Backend.init();
 
         AllKeys.register();
-        AllTileEntities.registerRenderers();
+        AllBlockEntities.registerRenderers();
         AllEntityTypes.registerRenderers();
         AllFluids.registerRenderers();
 

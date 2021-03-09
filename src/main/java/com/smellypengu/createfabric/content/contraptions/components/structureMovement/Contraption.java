@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 import com.smellypengu.createfabric.AllBlocks;
 import com.smellypengu.createfabric.AllMovementBehaviours;
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntity;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltBlock;
 import com.smellypengu.createfabric.foundation.render.backend.light.EmptyLighter;
@@ -762,8 +762,8 @@ public abstract class Contraption {
 					}
 
 				}, te.getPos());*/
-				if (te instanceof KineticTileEntity)
-					((KineticTileEntity) te).setSpeed(0);
+				if (te instanceof KineticBlockEntity)
+					((KineticBlockEntity) te).setSpeed(0);
 				te.getCachedState();
 
 				if (movementBehaviour == null || !movementBehaviour.hasSpecialInstancedRendering())

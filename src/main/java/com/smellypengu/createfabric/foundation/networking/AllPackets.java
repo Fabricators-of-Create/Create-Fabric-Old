@@ -2,7 +2,7 @@ package com.smellypengu.createfabric.foundation.networking;
 
 
 import com.smellypengu.createfabric.Create;
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.scrollvalue.ScrollValueUpdatePacket;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.scrollvalue.ScrollValueUpdatePacket;
 
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.Packet;

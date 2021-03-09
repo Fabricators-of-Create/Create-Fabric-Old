@@ -2,7 +2,9 @@ package com.smellypengu.createfabric.foundation.render.backend;
 
 import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.KineticDebugger;
+import com.smellypengu.createfabric.foundation.mixin.accessor.GameRendererAccessor;
 import com.smellypengu.createfabric.foundation.utility.AnimationTickHolder;
+import com.smellypengu.createfabric.foundation.utility.MixinHelper;
 import com.smellypengu.createfabric.foundation.utility.WorldAttached;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
@@ -39,12 +41,11 @@ public class FastRenderDispatcher {
         CreateClient.kineticRenderer.tick();
 
         ConcurrentHashMap.KeySetView<BlockEntity, Boolean> map = queuedUpdates.get(world);
-        map
-                .forEach(te -> {
-                    map.remove(te);
+        map.forEach(te -> {
+            map.remove(te);
 
-                    CreateClient.kineticRenderer.update(te);
-                });
+            CreateClient.kineticRenderer.update(te);
+        });
     }
 
     public static boolean available() {
@@ -83,7 +84,7 @@ public class FastRenderDispatcher {
         ClientPlayerEntity player = mc.player;
 
         MatrixStack matrixstack = new MatrixStack();
-        double d = gameRenderer.getFov(gameRenderer.getCamera(), gameRenderer.ticks, true);
+        double d = MixinHelper.<GameRendererAccessor>cast(gameRenderer).invokeGetFov(gameRenderer.getCamera(), gameRenderer.ticks, true);
         matrixstack.peek().getModel().multiply(gameRenderer.getBasicProjectionMatrix(d));
         gameRenderer.bobViewWhenHurt(matrixstack, partialTicks);
         if (mc.options.bobView) {

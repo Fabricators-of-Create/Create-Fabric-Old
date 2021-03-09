@@ -6,7 +6,7 @@ import com.smellypengu.createfabric.AllSpriteShifts;
 import com.smellypengu.createfabric.foundation.block.render.SpriteShiftEntry;
 import com.smellypengu.createfabric.foundation.render.SuperByteBuffer;
 import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatcher;
-import com.smellypengu.createfabric.foundation.tileEntity.render.SafeTileEntityRenderer;
+import com.smellypengu.createfabric.foundation.block.entity.render.SafeBlockEntityRenderer;
 import com.smellypengu.createfabric.foundation.utility.AngleHelper;
 import com.smellypengu.createfabric.foundation.utility.AnimationTickHolder;
 import com.smellypengu.createfabric.foundation.utility.Iterate;
@@ -22,18 +22,18 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
-public class BeltRenderer extends SafeTileEntityRenderer<BeltTileEntity> {
+public class BeltRenderer extends SafeBlockEntityRenderer<BeltBlockEntity> {
 
 	public BeltRenderer(BlockEntityRendererFactory.Context ctx) {
 	}
 
 	@Override
-	public boolean rendersOutsideBoundingBox(BeltTileEntity te) {
+	public boolean rendersOutsideBoundingBox(BeltBlockEntity te) {
 		return BeltBlock.canTransportObjects(te.getCachedState());
 	}
 
 	@Override
-	protected void renderSafe(BeltTileEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
+	protected void renderSafe(BeltBlockEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
 							  int light, int overlay) {
 
 		if (!FastRenderDispatcher.available(te.getWorld())) {
@@ -152,8 +152,8 @@ public class BeltRenderer extends SafeTileEntityRenderer<BeltTileEntity> {
 		}
 	}
 
-	protected void renderItems(BeltTileEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
-		int light, int overlay) {
+	protected void renderItems(BeltBlockEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
+							   int light, int overlay) {
 		if (!te.isController())
 			return;
 		if (te.beltLength == 0)
@@ -273,8 +273,8 @@ public class BeltRenderer extends SafeTileEntityRenderer<BeltTileEntity> {
 		ms.pop();
 	}
 
-	protected int getPackedLight(BeltTileEntity controller, float beltPos) {
-		BeltTileEntity belt = BeltHelper.getBeltForOffset(controller, beltPos);
+	protected int getPackedLight(BeltBlockEntity controller, float beltPos) {
+		BeltBlockEntity belt = BeltHelper.getBeltForOffset(controller, beltPos);
 
 		if (belt == null) return 0;
 

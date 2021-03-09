@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import com.smellypengu.createfabric.AllBlockPartials;
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntityRenderer;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntityRenderer;
 import com.smellypengu.createfabric.foundation.render.Compartment;
 import com.smellypengu.createfabric.foundation.render.SuperByteBufferCache;
 import com.smellypengu.createfabric.foundation.render.backend.Backend;
@@ -16,12 +16,10 @@ import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatch
 import com.smellypengu.createfabric.foundation.render.backend.gl.BasicProgram;
 import com.smellypengu.createfabric.foundation.render.backend.gl.shader.ProgramSpec;
 import com.smellypengu.createfabric.foundation.render.backend.gl.shader.ShaderCallback;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
@@ -56,7 +54,7 @@ public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel
         this.layerPredicate = layerPredicate;
         registerCompartment(Compartment.PARTIAL);
         registerCompartment(Compartment.DIRECTIONAL_PARTIAL);
-        registerCompartment(KineticTileEntityRenderer.KINETIC_TILE);
+        registerCompartment(KineticBlockEntityRenderer.KINETIC_TILE);
     }
 
     public boolean canRenderInLayer(RenderLayer layer) {

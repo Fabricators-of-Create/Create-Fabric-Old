@@ -1,9 +1,9 @@
 package com.smellypengu.createfabric.content.contraptions.relays.elementary;
 
-import com.smellypengu.createfabric.AllTileEntities;
+import com.smellypengu.createfabric.AllBlockEntities;
 import com.smellypengu.createfabric.content.contraptions.base.RotatedPillarKineticBlock;
 import com.smellypengu.createfabric.content.contraptions.wrench.IWrenchableWithBracket;
-import com.smellypengu.createfabric.foundation.tileEntity.TileEntityBehaviour;
+import com.smellypengu.createfabric.foundation.block.entity.BlockEntityBehaviour;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -46,7 +46,7 @@ public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock imple
 
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-		return AllTileEntities.SIMPLE_KINETIC.instantiate(pos, state);
+		return AllBlockEntities.SIMPLE_KINETIC.instantiate(pos, state);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock imple
 
 	@Override
 	public Optional<ItemStack> removeBracket(BlockView world, BlockPos pos, boolean inOnReplacedContext) {
-		BracketedTileEntityBehaviour behaviour = TileEntityBehaviour.get(world, pos, BracketedTileEntityBehaviour.TYPE);
+		BracketedBlockEntityBehaviour behaviour = BlockEntityBehaviour.get(world, pos, BracketedBlockEntityBehaviour.TYPE);
 		if (behaviour == null)
 			return Optional.empty();
 		BlockState bracket = behaviour.getBracket();

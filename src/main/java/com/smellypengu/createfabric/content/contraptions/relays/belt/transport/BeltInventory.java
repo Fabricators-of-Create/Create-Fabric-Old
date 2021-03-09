@@ -3,11 +3,11 @@ package com.smellypengu.createfabric.content.contraptions.relays.belt.transport;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltBlock;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltHelper;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltSlope;
-import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltTileEntity;
-import com.smellypengu.createfabric.foundation.tileEntity.TileEntityBehaviour;
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.belt.BeltProcessingBehaviour;
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
-import com.smellypengu.createfabric.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
+import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltBlockEntity;
+import com.smellypengu.createfabric.foundation.block.entity.BlockEntityBehaviour;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.belt.BeltProcessingBehaviour;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.belt.DirectBeltInputBehaviour;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.belt.TransportedItemStackHandlerBehaviour;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -26,14 +26,14 @@ import java.util.function.Function;
 
 public class BeltInventory {
 
-	final BeltTileEntity belt;
+	final BeltBlockEntity belt;
 	private final List<TransportedItemStack> items;
 	final List<TransportedItemStack> toInsert;
 	final List<TransportedItemStack> toRemove;
 	boolean beltMovementPositive;
 	final float SEGMENT_WINDOW = .75f;
 
-	public BeltInventory(BeltTileEntity te) {
+	public BeltInventory(BeltBlockEntity te) {
 		this.belt = te;
 		items = new LinkedList<>();
 		toInsert = new LinkedList<>();
@@ -167,7 +167,7 @@ public class BeltInventory {
 
 			if (ending == Ending.INSERT) {
 				DirectBeltInputBehaviour inputBehaviour =
-					TileEntityBehaviour.get(world, nextPosition, DirectBeltInputBehaviour.TYPE);
+					BlockEntityBehaviour.get(world, nextPosition, DirectBeltInputBehaviour.TYPE);
 				if (inputBehaviour == null)
 					continue;
 				if (!inputBehaviour.canInsertFromSide(movementFacing))
@@ -263,12 +263,12 @@ public class BeltInventory {
 	}
 
 	protected BeltProcessingBehaviour getBeltProcessingAtSegment(int segment) {
-		return TileEntityBehaviour.get(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment)
+		return BlockEntityBehaviour.get(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment)
 			.up(2), BeltProcessingBehaviour.TYPE);
 	}
 
 	protected TransportedItemStackHandlerBehaviour getTransportedItemStackHandlerAtSegment(int segment) {
-		return TileEntityBehaviour.get(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment),
+		return BlockEntityBehaviour.get(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment),
 			TransportedItemStackHandlerBehaviour.TYPE);
 	}
 
@@ -290,7 +290,7 @@ public class BeltInventory {
 //			return Ending.FUNNEL;
 
 		DirectBeltInputBehaviour inputBehaviour =
-			TileEntityBehaviour.get(world, nextPosition, DirectBeltInputBehaviour.TYPE);
+			BlockEntityBehaviour.get(world, nextPosition, DirectBeltInputBehaviour.TYPE);
 		if (inputBehaviour != null)
 			return Ending.INSERT;
 

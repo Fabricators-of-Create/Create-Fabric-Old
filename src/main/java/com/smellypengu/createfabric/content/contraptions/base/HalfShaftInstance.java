@@ -9,12 +9,12 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
 
 public class HalfShaftInstance extends SingleRotatingInstance {
-    public static void register(BlockEntityType<? extends KineticTileEntity> type) {
+    public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
         /**DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->*/
                 InstancedTileRenderRegistry.instance.register(type, HalfShaftInstance::new);
     }
 
-    public HalfShaftInstance(InstancedTileRenderer<?> modelManager, KineticTileEntity tile) {
+    public HalfShaftInstance(InstancedTileRenderer<?> modelManager, KineticBlockEntity tile) {
         super(modelManager, tile);
     }
 

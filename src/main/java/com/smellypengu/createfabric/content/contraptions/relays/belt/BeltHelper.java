@@ -18,17 +18,17 @@ public class BeltHelper {
 				.isIn(AllItemTags.UPRIGHT_ON_BELT.tag);*/
 	}
 
-	public static BeltTileEntity getSegmentTE(World world, BlockPos pos) {
+	public static BeltBlockEntity getSegmentTE(World world, BlockPos pos) {
 		if (!world.isRegionLoaded(pos, BlockPos.ORIGIN))
 			return null;
 		BlockEntity tileEntity = world.getBlockEntity(pos);
-		if (!(tileEntity instanceof BeltTileEntity))
+		if (!(tileEntity instanceof BeltBlockEntity))
 			return null;
-		return (BeltTileEntity) tileEntity;
+		return (BeltBlockEntity) tileEntity;
 	}
 
-	public static BeltTileEntity getControllerTE(World world, BlockPos pos) {
-		BeltTileEntity segment = getSegmentTE(world, pos);
+	public static BeltBlockEntity getControllerTE(World world, BlockPos pos) {
+		BeltBlockEntity segment = getSegmentTE(world, pos);
 		if (segment == null)
 			return null;
 		BlockPos controllerPos = segment.controller;
@@ -37,20 +37,20 @@ public class BeltHelper {
 		return getSegmentTE(world, controllerPos);
 	}
 
-	public static BeltTileEntity getBeltForOffset(BeltTileEntity controller, float offset) {
+	public static BeltBlockEntity getBeltForOffset(BeltBlockEntity controller, float offset) {
 		return getBeltAtSegment(controller, (int) Math.floor(offset));
 	}
 
-	public static BeltTileEntity getBeltAtSegment(BeltTileEntity controller, int segment) {
+	public static BeltBlockEntity getBeltAtSegment(BeltBlockEntity controller, int segment) {
 		BlockPos pos = getPositionForOffset(controller, segment);
 		BlockEntity te = controller.getWorld()
 			.getBlockEntity(pos);
-		if (te == null || !(te instanceof BeltTileEntity))
+		if (te == null || !(te instanceof BeltBlockEntity))
 			return null;
-		return (BeltTileEntity) te;
+		return (BeltBlockEntity) te;
 	}
 
-	public static BlockPos getPositionForOffset(BeltTileEntity controller, int offset) {
+	public static BlockPos getPositionForOffset(BeltBlockEntity controller, int offset) {
 		BlockPos pos = controller.getPos();
 		Vec3i vec = controller.getBeltFacing()
 			.getVector();
@@ -62,7 +62,7 @@ public class BeltHelper {
 			offset * vec.getZ());
 	}
 
-	public static Vec3d getVectorForOffset(BeltTileEntity controller, float offset) {
+	public static Vec3d getVectorForOffset(BeltBlockEntity controller, float offset) {
 		BeltSlope slope = controller.getCachedState()
 			.get(BeltBlock.SLOPE);
 		int verticality = slope == BeltSlope.DOWNWARD ? -1 : slope == BeltSlope.UPWARD ? 1 : 0;

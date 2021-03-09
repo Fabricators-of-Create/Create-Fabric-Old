@@ -9,7 +9,7 @@ import net.minecraft.world.LightType;
 
 import java.util.function.Consumer;
 
-public abstract class KineticTileInstance<T extends KineticTileEntity> extends TileEntityInstance<T> {
+public abstract class KineticTileInstance<T extends KineticBlockEntity> extends TileEntityInstance<T> {
 
     public KineticTileInstance(InstancedTileRenderer<?> modelManager, T tile) {
         super(modelManager, tile);

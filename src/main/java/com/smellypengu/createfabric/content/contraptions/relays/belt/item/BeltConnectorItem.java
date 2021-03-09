@@ -2,7 +2,7 @@ package com.smellypengu.createfabric.content.contraptions.relays.belt.item;
 
 import com.smellypengu.createfabric.AllBlocks;
 import com.smellypengu.createfabric.Create;
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntity;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltBlock;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltPart;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.BeltSlope;
@@ -215,13 +215,13 @@ public class BeltConnectorItem extends BlockItem {
 		BlockEntity tileEntity = world.getBlockEntity(first);
 		BlockEntity tileEntity2 = world.getBlockEntity(second);
 
-		if (!(tileEntity instanceof KineticTileEntity))
+		if (!(tileEntity instanceof KineticBlockEntity))
 			return false;
-		if (!(tileEntity2 instanceof KineticTileEntity))
+		if (!(tileEntity2 instanceof KineticBlockEntity))
 			return false;
 
-		float speed1 = ((KineticTileEntity) tileEntity).getTheoreticalSpeed();
-		float speed2 = ((KineticTileEntity) tileEntity2).getTheoreticalSpeed();
+		float speed1 = ((KineticBlockEntity) tileEntity).getTheoreticalSpeed();
+		float speed2 = ((KineticBlockEntity) tileEntity2).getTheoreticalSpeed();
 		if (Math.signum(speed1) != Math.signum(speed2) && speed1 != 0 && speed2 != 0)
 			return false;
 

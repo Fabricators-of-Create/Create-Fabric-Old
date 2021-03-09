@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions;
 
 import com.smellypengu.createfabric.content.contraptions.base.IRotate;
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntity;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 import com.smellypengu.createfabric.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,7 +28,7 @@ public class RotationPropagator {
 	 * @param to
 	 * @return
 	 */
-	private static float getRotationSpeedModifier(KineticTileEntity from, KineticTileEntity to) {
+	private static float getRotationSpeedModifier(KineticBlockEntity from, KineticBlockEntity to) {
 		final BlockState stateFrom = from.getCachedState();
 		final BlockState stateTo = to.getCachedState();
 
@@ -108,7 +108,7 @@ public class RotationPropagator {
 		return 0;
 	}
 
-	private static float getConveyedSpeed(KineticTileEntity from, KineticTileEntity to) {
+	private static float getConveyedSpeed(KineticBlockEntity from, KineticBlockEntity to) {
 		final BlockState stateFrom = from.getCachedState();
 		final BlockState stateTo = to.getCachedState();
 
@@ -192,7 +192,7 @@ public class RotationPropagator {
 	 * @param worldIn
 	 * @param pos
 	 */
-	public static void handleAdded(World worldIn, BlockPos pos, KineticTileEntity addedTE) {
+	public static void handleAdded(World worldIn, BlockPos pos, KineticBlockEntity addedTE) {
 		if (worldIn.isClient)
 			return;
 		if (!worldIn.canSetBlock(pos))
@@ -205,11 +205,11 @@ public class RotationPropagator {
 	 * 
 	 * @param currentTE
 	 */
-	private static void propagateNewSource(KineticTileEntity currentTE) {
+	private static void propagateNewSource(KineticBlockEntity currentTE) {
 		BlockPos pos = currentTE.getPos();
 		World world = currentTE.getWorld();
 
-		for (KineticTileEntity neighbourTE : getConnectedNeighbours(currentTE)) {
+		for (KineticBlockEntity neighbourTE : getConnectedNeighbours(currentTE)) {
 			float speedOfCurrent = currentTE.getTheoreticalSpeed();
 			float speedOfNeighbour = neighbourTE.getTheoreticalSpeed();
 			float newSpeed = getConveyedSpeed(currentTE, neighbourTE);
@@ -292,7 +292,7 @@ public class RotationPropagator {
 	 * @param pos
 	 * @param removedTE
 	 */
-	public static void handleRemoved(World worldIn, BlockPos pos, KineticTileEntity removedTE) {
+	public static void handleRemoved(World worldIn, BlockPos pos, KineticBlockEntity removedTE) {
 		if (worldIn.isClient)
 			return;
 		if (removedTE == null)
@@ -305,10 +305,10 @@ public class RotationPropagator {
 			if (!(neighbourState.getBlock() instanceof IRotate))
 				continue;
 			BlockEntity tileEntity = worldIn.getBlockEntity(neighbourPos);
-			if (!(tileEntity instanceof KineticTileEntity))
+			if (!(tileEntity instanceof KineticBlockEntity))
 				continue;
 
-			final KineticTileEntity neighbourTE = (KineticTileEntity) tileEntity;
+			final KineticBlockEntity neighbourTE = (KineticBlockEntity) tileEntity;
 			if (!neighbourTE.hasSource() || !neighbourTE.source.equals(pos))
 				continue;
 
@@ -323,10 +323,10 @@ public class RotationPropagator {
 	 * 
 	 * @param updateTE
 	 */
-	private static void propagateMissingSource(KineticTileEntity updateTE) {
+	private static void propagateMissingSource(KineticBlockEntity updateTE) {
 		final World world = updateTE.getWorld();
 
-		List<KineticTileEntity> potentialNewSources = new LinkedList<>();
+		List<KineticBlockEntity> potentialNewSources = new LinkedList<>();
 		List<BlockPos> frontier = new LinkedList<>();
 		frontier.add(updateTE.getPos());
 		BlockPos missingSource = updateTE.hasSource() ? updateTE.source : null;
@@ -334,14 +334,14 @@ public class RotationPropagator {
 		while (!frontier.isEmpty()) {
 			final BlockPos pos = frontier.remove(0);
 			BlockEntity tileEntity = world.getBlockEntity(pos);
-			if (!(tileEntity instanceof KineticTileEntity))
+			if (!(tileEntity instanceof KineticBlockEntity))
 				continue;
-			final KineticTileEntity currentTE = (KineticTileEntity) tileEntity;
+			final KineticBlockEntity currentTE = (KineticBlockEntity) tileEntity;
 
 			currentTE.removeSource();
 			currentTE.sendData();
 
-			for (KineticTileEntity neighbourTE : getConnectedNeighbours(currentTE)) {
+			for (KineticBlockEntity neighbourTE : getConnectedNeighbours(currentTE)) {
 				if (neighbourTE.getPos()
 					.equals(missingSource))
 					continue;
@@ -360,7 +360,7 @@ public class RotationPropagator {
 			}
 		}
 
-		for (KineticTileEntity newSource : potentialNewSources) {
+		for (KineticBlockEntity newSource : potentialNewSources) {
 			if (newSource.hasSource() || newSource.isSource()) {
 				propagateNewSource(newSource);
 				return;
@@ -368,7 +368,7 @@ public class RotationPropagator {
 		}
 	}
 
-	private static KineticTileEntity findConnectedNeighbour(KineticTileEntity currentTE, BlockPos neighbourPos) {
+	private static KineticBlockEntity findConnectedNeighbour(KineticBlockEntity currentTE, BlockPos neighbourPos) {
 		BlockState neighbourState = currentTE.getWorld()
 			.getBlockState(neighbourPos);
 		if (!(neighbourState.getBlock() instanceof IRotate))
@@ -377,9 +377,9 @@ public class RotationPropagator {
 			return null;
 		BlockEntity neighbourTE = currentTE.getWorld()
 			.getBlockEntity(neighbourPos);
-		if (!(neighbourTE instanceof KineticTileEntity))
+		if (!(neighbourTE instanceof KineticBlockEntity))
 			return null;
-		KineticTileEntity neighbourKTE = (KineticTileEntity) neighbourTE;
+		KineticBlockEntity neighbourKTE = (KineticBlockEntity) neighbourTE;
 		if (!(neighbourKTE.getCachedState()
 			.getBlock() instanceof IRotate))
 			return null;
@@ -388,7 +388,7 @@ public class RotationPropagator {
 		return neighbourKTE;
 	}
 
-	public static boolean isConnected(KineticTileEntity from, KineticTileEntity to) {
+	public static boolean isConnected(KineticBlockEntity from, KineticBlockEntity to) {
 		final BlockState stateFrom = from.getCachedState();
 		final BlockState stateTo = to.getCachedState();
 		return false; /*isLargeCogToSpeedController(stateFrom, stateTo, to.getPos() TODO IS LARGE COG TO SPEED CONTROLLER CHECK
@@ -396,10 +396,10 @@ public class RotationPropagator {
 			|| from.isCustomConnection(to, stateFrom, stateTo);*/
 	}
 
-	private static List<KineticTileEntity> getConnectedNeighbours(KineticTileEntity te) {
-		List<KineticTileEntity> neighbours = new LinkedList<>();
+	private static List<KineticBlockEntity> getConnectedNeighbours(KineticBlockEntity te) {
+		List<KineticBlockEntity> neighbours = new LinkedList<>();
 		for (BlockPos neighbourPos : getPotentialNeighbourLocations(te)) {
-			final KineticTileEntity neighbourTE = findConnectedNeighbour(te, neighbourPos);
+			final KineticBlockEntity neighbourTE = findConnectedNeighbour(te, neighbourPos);
 			if (neighbourTE == null)
 				continue;
 
@@ -408,7 +408,7 @@ public class RotationPropagator {
 		return neighbours;
 	}
 
-	private static List<BlockPos> getPotentialNeighbourLocations(KineticTileEntity te) {
+	private static List<BlockPos> getPotentialNeighbourLocations(KineticBlockEntity te) {
 		List<BlockPos> neighbours = new LinkedList<>();
 
 		if (!te.getWorld()

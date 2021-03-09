@@ -3,7 +3,7 @@ package com.smellypengu.createfabric.content.contraptions.base;
 import org.jetbrains.annotations.Nullable;
 
 import com.smellypengu.createfabric.foundation.item.ItemDescription;
-import com.smellypengu.createfabric.foundation.tileEntity.ITickableTileEntity;
+import com.smellypengu.createfabric.foundation.block.entity.TickableBlockEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -34,8 +34,8 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 		// we can prevent a major re-propagation here
 
 		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-		if (tileEntity instanceof KineticTileEntity) {
-			KineticTileEntity kineticTileEntity = (KineticTileEntity) tileEntity;
+		if (tileEntity instanceof KineticBlockEntity) {
+			KineticBlockEntity kineticTileEntity = (KineticBlockEntity) tileEntity;
 			kineticTileEntity.preventSpeedUpdate = false;
 
 			if (oldState.getBlock() != state.getBlock())
@@ -73,8 +73,8 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
 		return (world1, pos, state1, blockEntity) -> {
-			if (blockEntity instanceof ITickableTileEntity) {
-				((ITickableTileEntity) blockEntity).tick();
+			if (blockEntity instanceof TickableBlockEntity) {
+				((TickableBlockEntity) blockEntity).tick();
 			}
 		};
 	}
@@ -86,9 +86,9 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 			return;
 
 		BlockEntity tileEntity = world.getBlockEntity(pos);
-		if (!(tileEntity instanceof KineticTileEntity))
+		if (!(tileEntity instanceof KineticBlockEntity))
 			return;
-		KineticTileEntity kte = (KineticTileEntity) tileEntity;
+		KineticBlockEntity kte = (KineticBlockEntity) tileEntity;
 
 		if (kte.preventSpeedUpdate) {
 			kte.preventSpeedUpdate = false;
@@ -107,10 +107,10 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 			return;
 
 		BlockEntity tileEntity = world.getBlockEntity(pos);
-		if (!(tileEntity instanceof KineticTileEntity))
+		if (!(tileEntity instanceof KineticBlockEntity))
 			return;
 
-		KineticTileEntity kte = (KineticTileEntity) tileEntity;
+		KineticBlockEntity kte = (KineticBlockEntity) tileEntity;
 		kte.effects.queueRotationIndicators();
 	}
 

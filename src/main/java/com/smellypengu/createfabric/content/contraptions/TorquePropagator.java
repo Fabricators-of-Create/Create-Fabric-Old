@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.smellypengu.createfabric.Create;
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntity;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
 import net.minecraft.world.WorldAccess;
 
 public class TorquePropagator {
@@ -21,7 +21,7 @@ public class TorquePropagator {
 		Create.logger.debug("Removed Kinetic Network Space for " + world.getDimension());
 	}
 
-	public KineticNetwork getOrCreateNetworkFor(KineticTileEntity te) {
+	public KineticNetwork getOrCreateNetworkFor(KineticBlockEntity te) {
 		Long id = te.network;
 		KineticNetwork network;
 		Map<Long, KineticNetwork> map = networks.get(te.getWorld());

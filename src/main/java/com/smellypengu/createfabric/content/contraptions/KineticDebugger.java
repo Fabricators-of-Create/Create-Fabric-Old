@@ -2,8 +2,8 @@ package com.smellypengu.createfabric.content.contraptions;
 
 import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.base.IRotate;
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntity;
-import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntityRenderer;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
+import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntityRenderer;
 import com.smellypengu.createfabric.foundation.utility.ColorHelper;
 import com.smellypengu.createfabric.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
@@ -22,14 +22,14 @@ public class KineticDebugger {
 
 	public static void tick() {
 		if (!isActive()) {
-			if (KineticTileEntityRenderer.rainbowMode) {
-				KineticTileEntityRenderer.rainbowMode = false;
+			if (KineticBlockEntityRenderer.rainbowMode) {
+				KineticBlockEntityRenderer.rainbowMode = false;
 				CreateClient.bufferCache.invalidate();
 			}
 			return;
 		}
 		
-		KineticTileEntity te = getSelectedTE();
+		KineticBlockEntity te = getSelectedTE();
 		if (te == null)
 			return;
 
@@ -60,7 +60,7 @@ public class KineticDebugger {
 		return MinecraftClient.getInstance().options.debugEnabled; //&& AllConfigs.CLIENT.rainbowDebug.get(); TODO CONFIG THING
 	}
 
-	public static KineticTileEntity getSelectedTE() {
+	public static KineticBlockEntity getSelectedTE() {
 		HitResult obj = MinecraftClient.getInstance().crosshairTarget;
 		ClientWorld world = MinecraftClient.getInstance().world;
 		if (obj == null)
@@ -72,10 +72,10 @@ public class KineticDebugger {
 
 		BlockHitResult ray = (BlockHitResult) obj;
 		BlockEntity te = world.getBlockEntity(ray.getBlockPos());
-		if (!(te instanceof KineticTileEntity))
+		if (!(te instanceof KineticBlockEntity))
 			return null;
 
-		return (KineticTileEntity) te;
+		return (KineticBlockEntity) te;
 	}
 
 }
