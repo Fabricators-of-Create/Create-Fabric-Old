@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions.relays.elementary;
 
-import com.smellypengu.createfabric.foundation.block.entity.SmartBlockEntity;
 import com.smellypengu.createfabric.foundation.block.entity.BlockEntityBehaviour;
+import com.smellypengu.createfabric.foundation.block.entity.SmartBlockEntity;
 import com.smellypengu.createfabric.foundation.block.entity.behaviour.BehaviourType;
 import com.smellypengu.createfabric.foundation.utility.CNBTHelper;
 import net.minecraft.block.Block;
@@ -18,88 +18,93 @@ import java.util.function.Predicate;
 // TODO Advancement CHECK s
 public class BracketedBlockEntityBehaviour extends BlockEntityBehaviour {
 
-	public static BehaviourType<BracketedBlockEntityBehaviour> TYPE = new BehaviourType<>();
+    public static BehaviourType<BracketedBlockEntityBehaviour> TYPE = new BehaviourType<>();
 
-	private Optional<BlockState> bracket;
-	private boolean reRender;
+    private Optional<BlockState> bracket;
+    private boolean reRender;
 
-	private Predicate<BlockState> pred;
-	/**private Function<BlockState, ITriggerable> trigger;*/
+    private final Predicate<BlockState> pred;
 
-	public BracketedBlockEntityBehaviour(SmartBlockEntity te) {
-		this(te, state -> true);
-	}
+    /**
+     * private Function<BlockState, ITriggerable> trigger;
+     */
 
-	public BracketedBlockEntityBehaviour(SmartBlockEntity te, Predicate<BlockState> pred) {
-		super(te);
-		this.pred = pred;
-		bracket = Optional.empty();
-	}
-	
-	/**public BracketedTileEntityBehaviour withTrigger(Function<BlockState, ITriggerable> trigger) {
-		this.trigger = trigger;
-		return this;
-	}*/
+    public BracketedBlockEntityBehaviour(SmartBlockEntity te) {
+        this(te, state -> true);
+    }
 
-	@Override
-	public BehaviourType<?> getType() {
-		return TYPE;
-	}
+    public BracketedBlockEntityBehaviour(SmartBlockEntity te, Predicate<BlockState> pred) {
+        super(te);
+        this.pred = pred;
+        bracket = Optional.empty();
+    }
 
-	public void applyBracket(BlockState state) {
-		this.bracket = Optional.of(state);
-		reRender = true;
-		blockEntity.notifyUpdate();
-	}
-	
-	public void triggerAdvancements(World world, PlayerEntity player, BlockState state) {
-		/**if (trigger == null)
-			return;
-		AllTriggers.triggerFor(trigger.apply(state), player);*/
-	}
+    /**
+     * public BracketedTileEntityBehaviour withTrigger(Function<BlockState, ITriggerable> trigger) {
+     * this.trigger = trigger;
+     * return this;
+     * }
+     */
 
-	public void removeBracket(boolean inOnReplacedContext) {
-		World world = getWorld();
-		if (!world.isClient)
-			world.syncWorldEvent(2001, getPos(), Block.getRawIdFromState(getBracket()));
-		this.bracket = Optional.empty();
-		reRender = true;
-		if (inOnReplacedContext)
-			blockEntity.sendData();
-		else
-			blockEntity.notifyUpdate();
-	}
+    @Override
+    public BehaviourType<?> getType() {
+        return TYPE;
+    }
 
-	public boolean isBacketPresent() {
-		return getBracket() != Blocks.AIR.getDefaultState();
-	}
+    public void applyBracket(BlockState state) {
+        this.bracket = Optional.of(state);
+        reRender = true;
+        blockEntity.notifyUpdate();
+    }
 
-	public BlockState getBracket() {
-		return bracket.orElse(Blocks.AIR.getDefaultState());
-	}
+    public void triggerAdvancements(World world, PlayerEntity player, BlockState state) {
+        /**if (trigger == null)
+         return;
+         AllTriggers.triggerFor(trigger.apply(state), player);*/
+    }
 
-	@Override
-	public void write(CompoundTag nbt, boolean clientPacket) {
-		bracket.ifPresent(p -> nbt.put("Bracket", NbtHelper.fromBlockState(p)));
-		if (clientPacket && reRender) {
-			CNBTHelper.putMarker(nbt, "Redraw");
-			reRender = false;
-		}
-		super.write(nbt, clientPacket);
-	}
+    public void removeBracket(boolean inOnReplacedContext) {
+        World world = getWorld();
+        if (!world.isClient)
+            world.syncWorldEvent(2001, getPos(), Block.getRawIdFromState(getBracket()));
+        this.bracket = Optional.empty();
+        reRender = true;
+        if (inOnReplacedContext)
+            blockEntity.sendData();
+        else
+            blockEntity.notifyUpdate();
+    }
 
-	@Override
-	public void read(CompoundTag nbt, boolean clientPacket) {
-		bracket = Optional.empty();
-		if (nbt.contains("Bracket"))
-			bracket = Optional.of(NbtHelper.toBlockState(nbt.getCompound("Bracket")));
-		if (clientPacket && nbt.contains("Redraw"))
-			getWorld().updateListeners(getPos(), blockEntity.getCachedState(), blockEntity.getCachedState(), 16);
-		super.read(nbt, clientPacket);
-	}
+    public boolean isBacketPresent() {
+        return getBracket() != Blocks.AIR.getDefaultState();
+    }
 
-	public boolean canHaveBracket() {
-		return pred.test(blockEntity.getCachedState());
-	}
+    public BlockState getBracket() {
+        return bracket.orElse(Blocks.AIR.getDefaultState());
+    }
+
+    @Override
+    public void write(CompoundTag nbt, boolean clientPacket) {
+        bracket.ifPresent(p -> nbt.put("Bracket", NbtHelper.fromBlockState(p)));
+        if (clientPacket && reRender) {
+            CNBTHelper.putMarker(nbt, "Redraw");
+            reRender = false;
+        }
+        super.write(nbt, clientPacket);
+    }
+
+    @Override
+    public void read(CompoundTag nbt, boolean clientPacket) {
+        bracket = Optional.empty();
+        if (nbt.contains("Bracket"))
+            bracket = Optional.of(NbtHelper.toBlockState(nbt.getCompound("Bracket")));
+        if (clientPacket && nbt.contains("Redraw"))
+            getWorld().updateListeners(getPos(), blockEntity.getCachedState(), blockEntity.getCachedState(), 16);
+        super.read(nbt, clientPacket);
+    }
+
+    public boolean canHaveBracket() {
+        return pred.test(blockEntity.getCachedState());
+    }
 
 }

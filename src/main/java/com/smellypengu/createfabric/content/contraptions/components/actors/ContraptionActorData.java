@@ -1,17 +1,17 @@
 package com.smellypengu.createfabric.content.contraptions.components.actors;
 
-import java.nio.ByteBuffer;
-
 import com.smellypengu.createfabric.foundation.render.backend.gl.attrib.VertexFormat;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstanceData;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstancedModel;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3f;
 
+import java.nio.ByteBuffer;
+
 public class ContraptionActorData extends InstanceData {
     public static VertexFormat FORMAT = VertexFormat.builder()
-                                                    .addAttributes(ActorVertexAttributes.class)
-                                                    .build();
+            .addAttributes(ActorVertexAttributes.class)
+            .build();
 
     private float x;
     private float y;

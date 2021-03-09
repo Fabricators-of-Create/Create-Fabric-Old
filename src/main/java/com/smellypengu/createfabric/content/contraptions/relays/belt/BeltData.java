@@ -1,7 +1,5 @@
 package com.smellypengu.createfabric.content.contraptions.relays.belt;
 
-import java.nio.ByteBuffer;
-
 import com.smellypengu.createfabric.content.contraptions.base.KineticData;
 import com.smellypengu.createfabric.content.contraptions.base.KineticVertexAttributes;
 import com.smellypengu.createfabric.foundation.block.render.SpriteShiftEntry;
@@ -9,11 +7,13 @@ import com.smellypengu.createfabric.foundation.render.backend.gl.attrib.VertexFo
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstancedModel;
 import net.minecraft.client.texture.Sprite;
 
+import java.nio.ByteBuffer;
+
 public class BeltData extends KineticData<BeltData> {
     public static VertexFormat FORMAT = VertexFormat.builder()
-                                                    .addAttributes(KineticVertexAttributes.class)
-                                                    .addAttributes(BeltVertexAttributes.class)
-                                                    .build();
+            .addAttributes(KineticVertexAttributes.class)
+            .addAttributes(BeltVertexAttributes.class)
+            .build();
 
     private float rotX;
     private float rotY;

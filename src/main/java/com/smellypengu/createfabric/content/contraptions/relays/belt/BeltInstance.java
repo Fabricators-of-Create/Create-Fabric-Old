@@ -23,11 +23,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
-    public static void register(BlockEntityType<? extends BeltBlockEntity> type) {
-        //DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                InstancedTileRenderRegistry.instance.register(type, BeltInstance::new);
-    }
-
+    protected ArrayList<InstanceKey<BeltData>> keys;
+    protected InstanceKey<RotatingData> pulleyKey;
     private boolean upward;
     private boolean diagonal;
     private boolean sideways;
@@ -36,11 +33,13 @@ public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
     private boolean alongZ;
     private BeltSlope beltSlope;
     private Direction facing;
-    protected ArrayList<InstanceKey<BeltData>> keys;
-    protected InstanceKey<RotatingData> pulleyKey;
-
     public BeltInstance(InstancedTileRenderer<?> modelManager, BeltBlockEntity tile) {
         super(modelManager, tile);
+    }
+
+    public static void register(BlockEntityType<? extends BeltBlockEntity> type) {
+        //DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
+        InstancedTileRenderRegistry.instance.register(type, BeltInstance::new);
     }
 
     @Override
@@ -77,10 +76,10 @@ public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
         }
 
         /**if (tile.hasPulley()) { TODO hasPulley CHECK
-            InstancedModel<RotatingData> pulleyModel = getPulleyModel();
+         InstancedModel<RotatingData> pulleyModel = getPulleyModel();
 
-            pulleyKey = pulleyModel.setupInstance(setupFunc(tile.getSpeed(), getRotationAxis()));
-        }*/
+         pulleyKey = pulleyModel.setupInstance(setupFunc(tile.getSpeed(), getRotationAxis()));
+         }*/
     }
 
     @Override
@@ -92,8 +91,8 @@ public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
 
             SpriteShiftEntry spriteShiftEntry = BeltRenderer.getSpriteShiftEntry(color, diagonal, bottom);
             key.modifyInstance(data -> data.setScrollTexture(spriteShiftEntry)
-                                           .setColor(tile.network)
-                                           .setRotationalSpeed(getScrollSpeed()));
+                    .setColor(tile.network)
+                    .setRotationalSpeed(getScrollSpeed()));
             bottom = false;
         }
 
@@ -155,7 +154,7 @@ public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
 
     private Direction getOrientation() {
         Direction dir = lastState.get(BeltBlock.HORIZONTAL_FACING)
-                                  .rotateYClockwise();
+                .rotateYClockwise();
         if (beltSlope == BeltSlope.SIDEWAYS)
             dir = Direction.UP;
 
@@ -170,13 +169,13 @@ public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
 
             BlockPos pos = tile.getPos();
             data.setBlockEntity(tile)
-                .setBlockLight(world.getLightLevel(LightType.BLOCK, pos))
-                .setSkyLight(world.getLightLevel(LightType.SKY, pos))
-                .setRotation(rotX, rotY, rotZ)
-                .setRotationalSpeed(getScrollSpeed())
-                .setRotationOffset(bottom ? 0.5f : 0f)
-                .setScrollTexture(spriteShift)
-                .setScrollMult(diagonal ? 3f / 8f : 0.5f);
+                    .setBlockLight(world.getLightLevel(LightType.BLOCK, pos))
+                    .setSkyLight(world.getLightLevel(LightType.SKY, pos))
+                    .setRotation(rotX, rotY, rotZ)
+                    .setRotationalSpeed(getScrollSpeed())
+                    .setRotationOffset(bottom ? 0.5f : 0f)
+                    .setScrollTexture(spriteShift)
+                    .setScrollMult(diagonal ? 3f / 8f : 0.5f);
         };
     }
 }

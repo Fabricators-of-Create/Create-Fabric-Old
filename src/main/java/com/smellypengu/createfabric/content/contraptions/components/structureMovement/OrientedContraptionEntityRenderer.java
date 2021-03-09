@@ -5,17 +5,15 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 
 public class OrientedContraptionEntityRenderer extends ContraptionEntityRenderer<OrientedContraptionEntity> {
 
-	public OrientedContraptionEntityRenderer(EntityRendererFactory.Context ctx) {
-		super(ctx);
-	}
+    public OrientedContraptionEntityRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx);
+    }
 
-	@Override
-	public boolean shouldRender(OrientedContraptionEntity entity, Frustum frustum, double x, double y, double z) {
-		if (!super.shouldRender(entity, frustum, x, y, z))
-			return false;
-		/**if (entity.getContraption()
-				.getType() == ContraptionType.MOUNTED && entity.getRidingEntity() == null) TODO ContraptionType.MOUNTED CHECK
-			return false;*/
-		return true;
-	}
+    @Override
+    public boolean shouldRender(OrientedContraptionEntity entity, Frustum frustum, double x, double y, double z) {
+        return super.shouldRender(entity, frustum, x, y, z);
+        /**if (entity.getContraption()
+         .getType() == ContraptionType.MOUNTED && entity.getRidingEntity() == null) TODO ContraptionType.MOUNTED CHECK
+         return false;*/
+    }
 }

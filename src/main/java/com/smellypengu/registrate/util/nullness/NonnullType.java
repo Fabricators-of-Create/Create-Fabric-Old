@@ -2,11 +2,7 @@ package com.smellypengu.registrate.util.nullness;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * An alternative to {@link -} which works on type parameters (J8 feature).

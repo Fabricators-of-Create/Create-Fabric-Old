@@ -12,31 +12,31 @@ import net.minecraft.particle.ParticleType;
 
 public interface ICustomParticleDataWithSprite<T extends ParticleEffect> extends ICustomParticleData<T> {
 
-	Factory<T> getDeserializer();
-	
-	public default ParticleType<T> createType() {
-		return new ParticleType<T>(false, getDeserializer()) {
+    Factory<T> getDeserializer();
 
-			@Override
-			public Codec<T> getCodec() {
-				return ICustomParticleDataWithSprite.this.getCodec(this);
-			}
-		};
-	}
-	
-	@Override
-	@Environment(EnvType.CLIENT)
-	default ParticleFactory<T> getFactory() {
-		throw new IllegalAccessError("This particle type uses a metaFactory!");
-	}
-	
-	@Environment(EnvType.CLIENT)
-	public SpriteAwareFactory<T> getMetaFactory();
-	
-	@Override
-	@Environment(EnvType.CLIENT)
-	public default void register(ParticleType<T> type, ParticleManager particles) {
-		particles.registerFactory(type, getMetaFactory());
-	}
-	
+    default ParticleType<T> createType() {
+        return new ParticleType<T>(false, getDeserializer()) {
+
+            @Override
+            public Codec<T> getCodec() {
+                return ICustomParticleDataWithSprite.this.getCodec(this);
+            }
+        };
+    }
+
+    @Override
+    @Environment(EnvType.CLIENT)
+    default ParticleFactory<T> getFactory() {
+        throw new IllegalAccessError("This particle type uses a metaFactory!");
+    }
+
+    @Environment(EnvType.CLIENT)
+    SpriteAwareFactory<T> getMetaFactory();
+
+    @Override
+    @Environment(EnvType.CLIENT)
+    default void register(ParticleType<T> type, ParticleManager particles) {
+        particles.registerFactory(type, getMetaFactory());
+    }
+
 }

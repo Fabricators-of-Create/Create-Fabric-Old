@@ -1,17 +1,17 @@
 package com.smellypengu.createfabric.content.contraptions.base;
 
-import java.nio.ByteBuffer;
-
 import com.smellypengu.createfabric.foundation.render.backend.gl.attrib.VertexFormat;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstancedModel;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3f;
 
+import java.nio.ByteBuffer;
+
 public class RotatingData extends KineticData<RotatingData> {
     public static VertexFormat FORMAT = VertexFormat.builder()
-                                                    .addAttributes(KineticVertexAttributes.class)
-                                                    .addAttributes(RotatingVertexAttributes.class)
-                                                    .build();
+            .addAttributes(KineticVertexAttributes.class)
+            .addAttributes(RotatingVertexAttributes.class)
+            .build();
 
     private byte rotationAxisX;
     private byte rotationAxisY;

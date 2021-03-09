@@ -1,10 +1,7 @@
 package me.pepperbell.simplenetworking;
 
-import java.lang.reflect.Constructor;
-
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -23,153 +20,153 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
+import java.lang.reflect.Constructor;
+
 public class SimpleChannel {
-	private final Identifier channelName;
+    private final Identifier channelName;
+    private final BiMap<Integer, Class<?>> c2sIdMap = HashBiMap.create();
+    private final BiMap<Integer, Class<?>> s2cIdMap = HashBiMap.create();
+    private C2SHandler c2sHandler;
+    private S2CHandler s2cHandler;
 
-	private C2SHandler c2sHandler;
-	private final BiMap<Integer, Class<?>> c2sIdMap = HashBiMap.create();
+    public SimpleChannel(Identifier channelName) {
+        this.channelName = channelName;
+    }
 
-	private S2CHandler s2cHandler;
-	private final BiMap<Integer, Class<?>> s2cIdMap = HashBiMap.create();
+    public void initServerListener() {
+        c2sHandler = new C2SHandler();
+        ServerPlayNetworking.registerGlobalReceiver(channelName, c2sHandler);
+    }
 
-	public SimpleChannel(Identifier channelName) {
-		this.channelName = channelName;
-	}
+    public void initClientListener() {
+        s2cHandler = new S2CHandler();
+        ClientPlayNetworking.registerGlobalReceiver(channelName, s2cHandler);
+    }
 
-	public void initServerListener() {
-		c2sHandler = new C2SHandler();
-		ServerPlayNetworking.registerGlobalReceiver(channelName, c2sHandler);
-	}
+    /**
+     * An error will be thrown if the passed class does not define a public nullary constructor!
+     */
+    public <T extends C2SPacket> void registerC2SPacket(Class<T> clazz, int id) {
+        c2sIdMap.put(id, clazz);
+    }
 
-	public void initClientListener() {
-		s2cHandler = new S2CHandler();
-		ClientPlayNetworking.registerGlobalReceiver(channelName, s2cHandler);
-	}
+    /**
+     * An error will be thrown if the passed class does not define a public nullary constructor!
+     */
+    public <T extends S2CPacket> void registerS2CPacket(Class<T> clazz, int id) {
+        s2cIdMap.put(id, clazz);
+    }
 
-	/**
-	 * An error will be thrown if the passed class does not define a public nullary constructor!
-	 */
-	public <T extends C2SPacket> void registerC2SPacket(Class<T> clazz, int id) {
-		c2sIdMap.put(id, clazz);
-	}
+    private PacketByteBuf createBuf(C2SPacket packet) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeVarInt(c2sIdMap.inverse().get(packet.getClass()));
+        packet.write(buf);
+        return buf;
+    }
 
-	/**
-	 * An error will be thrown if the passed class does not define a public nullary constructor!
-	 */
-	public <T extends S2CPacket> void registerS2CPacket(Class<T> clazz, int id) {
-		s2cIdMap.put(id, clazz);
-	}
+    private PacketByteBuf createBuf(S2CPacket packet) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeVarInt(s2cIdMap.inverse().get(packet.getClass()));
+        packet.write(buf);
+        return buf;
+    }
 
-	private PacketByteBuf createBuf(C2SPacket packet) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeVarInt(c2sIdMap.inverse().get(packet.getClass()));
-		packet.write(buf);
-		return buf;
-	}
+    @Environment(EnvType.CLIENT)
+    public void sendToServer(C2SPacket packet) {
+        PacketByteBuf buf = createBuf(packet);
+        ClientPlayNetworking.send(channelName, buf);
+    }
 
-	private PacketByteBuf createBuf(S2CPacket packet) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeVarInt(s2cIdMap.inverse().get(packet.getClass()));
-		packet.write(buf);
-		return buf;
-	}
+    public void sendToClient(S2CPacket packet, ServerPlayerEntity player) {
+        PacketByteBuf buf = createBuf(packet);
+        ServerPlayNetworking.send(player, channelName, buf);
+    }
 
-	@Environment(EnvType.CLIENT)
-	public void sendToServer(C2SPacket packet) {
-		PacketByteBuf buf = createBuf(packet);
-		ClientPlayNetworking.send(channelName, buf);
-	}
+    public void sendToClientsInServer(S2CPacket packet, MinecraftServer server) {
+        PacketByteBuf buf = createBuf(packet);
+        for (ServerPlayerEntity player : PlayerLookup.all(server)) {
+            ServerPlayNetworking.send(player, channelName, buf);
+        }
+    }
 
-	public void sendToClient(S2CPacket packet, ServerPlayerEntity player) {
-		PacketByteBuf buf = createBuf(packet);
-		ServerPlayNetworking.send(player, channelName, buf);
-	}
+    public void sendToClientsInWorld(S2CPacket packet, ServerWorld world) {
+        PacketByteBuf buf = createBuf(packet);
+        for (ServerPlayerEntity player : PlayerLookup.world(world)) {
+            ServerPlayNetworking.send(player, channelName, buf);
+        }
+    }
 
-	public void sendToClientsInServer(S2CPacket packet, MinecraftServer server) {
-		PacketByteBuf buf = createBuf(packet);
-		for (ServerPlayerEntity player : PlayerLookup.all(server)) {
-			ServerPlayNetworking.send(player, channelName, buf);
-		}
-	}
+    public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3d pos, double radius) {
+        PacketByteBuf buf = createBuf(packet);
+        for (ServerPlayerEntity player : PlayerLookup.around(world, pos, radius)) {
+            ServerPlayNetworking.send(player, channelName, buf);
+        }
+    }
 
-	public void sendToClientsInWorld(S2CPacket packet, ServerWorld world) {
-		PacketByteBuf buf = createBuf(packet);
-		for (ServerPlayerEntity player : PlayerLookup.world(world)) {
-			ServerPlayNetworking.send(player, channelName, buf);
-		}
-	}
+    public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3i pos, double radius) {
+        PacketByteBuf buf = createBuf(packet);
+        for (ServerPlayerEntity player : PlayerLookup.around(world, pos, radius)) {
+            ServerPlayNetworking.send(player, channelName, buf);
+        }
+    }
 
-	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3d pos, double radius) {
-		PacketByteBuf buf = createBuf(packet);
-		for (ServerPlayerEntity player : PlayerLookup.around(world, pos, radius)) {
-			ServerPlayNetworking.send(player, channelName, buf);
-		}
-	}
+    @Environment(EnvType.CLIENT)
+    public void sendResponseToServer(ResponseTarget target, C2SPacket packet) {
+        PacketByteBuf buf = createBuf(packet);
+        target.sender.sendPacket(channelName, buf);
+    }
 
-	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3i pos, double radius) {
-		PacketByteBuf buf = createBuf(packet);
-		for (ServerPlayerEntity player : PlayerLookup.around(world, pos, radius)) {
-			ServerPlayNetworking.send(player, channelName, buf);
-		}
-	}
+    public void sendResponseToClient(ResponseTarget target, S2CPacket packet) {
+        PacketByteBuf buf = createBuf(packet);
+        target.sender.sendPacket(channelName, buf);
+    }
 
-	@Environment(EnvType.CLIENT)
-	public void sendResponseToServer(ResponseTarget target, C2SPacket packet) {
-		PacketByteBuf buf = createBuf(packet);
-		target.sender.sendPacket(channelName, buf);
-	}
+    public static class ResponseTarget {
+        private final PacketSender sender;
 
-	public void sendResponseToClient(ResponseTarget target, S2CPacket packet) {
-		PacketByteBuf buf = createBuf(packet);
-		target.sender.sendPacket(channelName, buf);
-	}
+        private ResponseTarget(PacketSender sender) {
+            this.sender = sender;
+        }
+    }
 
-	public static class ResponseTarget {
-		private PacketSender sender;
+    private class C2SHandler implements ServerPlayNetworking.PlayChannelHandler {
+        @Override
+        public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+            int id = buf.readVarInt();
+            C2SPacket packet = null;
+            try {
+                Class<?> clazz = c2sIdMap.get(id);
+                Constructor<?> ctor = clazz.getDeclaredConstructor();
+                ctor.setAccessible(true);
+                packet = (C2SPacket) ctor.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException("Could not create c2s packet in channel " + channelName + " with id " + id, e);
+            }
+            if (packet != null) {
+                packet.read(buf);
+                packet.handle(server, player, handler, new ResponseTarget(responseSender));
+            }
+        }
+    }
 
-		private ResponseTarget(PacketSender sender) {
-			this.sender = sender;
-		}
-	}
-
-	private class C2SHandler implements ServerPlayNetworking.PlayChannelHandler {
-		@Override
-		public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-			int id = buf.readVarInt();
-			C2SPacket packet = null;
-			try {
-				Class<?> clazz = c2sIdMap.get(id);
-				Constructor<?> ctor = clazz.getDeclaredConstructor();
-				ctor.setAccessible(true);
-				packet = (C2SPacket) ctor.newInstance();
-			} catch (Exception e) {
-				throw new RuntimeException("Could not create c2s packet in channel " + channelName + " with id " + String.valueOf(id), e);
-			}
-			if (packet != null) {
-				packet.read(buf);
-				packet.handle(server, player, handler, new ResponseTarget(responseSender));
-			}
-		}
-	}
-
-	@Environment(EnvType.CLIENT)
-	private class S2CHandler implements ClientPlayNetworking.PlayChannelHandler {
-		@Override
-		public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-			int id = buf.readVarInt();
-			S2CPacket packet = null;
-			try {
-				Class<?> clazz = s2cIdMap.get(id);
-				Constructor<?> ctor = clazz.getDeclaredConstructor();
-				ctor.setAccessible(true);
-				packet = (S2CPacket) ctor.newInstance();
-			} catch (Exception e) {
-				throw new RuntimeException("Could not create s2c packet in channel " + channelName + " with id " + String.valueOf(id), e);
-			}
-			if (packet != null) {
-				packet.read(buf);
-				packet.handle(client, handler, new ResponseTarget(responseSender));
-			}
-		}
-	}
+    @Environment(EnvType.CLIENT)
+    private class S2CHandler implements ClientPlayNetworking.PlayChannelHandler {
+        @Override
+        public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+            int id = buf.readVarInt();
+            S2CPacket packet = null;
+            try {
+                Class<?> clazz = s2cIdMap.get(id);
+                Constructor<?> ctor = clazz.getDeclaredConstructor();
+                ctor.setAccessible(true);
+                packet = (S2CPacket) ctor.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException("Could not create s2c packet in channel " + channelName + " with id " + id, e);
+            }
+            if (packet != null) {
+                packet.read(buf);
+                packet.handle(client, handler, new ResponseTarget(responseSender));
+            }
+        }
+    }
 }

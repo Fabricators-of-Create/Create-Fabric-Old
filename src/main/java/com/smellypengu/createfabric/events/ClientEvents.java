@@ -5,10 +5,10 @@ import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.KineticDebugger;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.item.BeltConnectorHandler;
+import com.smellypengu.createfabric.foundation.block.entity.behaviour.scrollvalue.ScrollValueRenderer;
 import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatcher;
 import com.smellypengu.createfabric.foundation.render.backend.RenderWork;
 import com.smellypengu.createfabric.foundation.renderState.SuperRenderTypeBuffer;
-import com.smellypengu.createfabric.foundation.block.entity.behaviour.scrollvalue.ScrollValueRenderer;
 import com.smellypengu.createfabric.foundation.utility.AnimationTickHolder;
 import com.smellypengu.createfabric.foundation.utility.placement.PlacementHelpers;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -28,8 +28,8 @@ public class ClientEvents {
     }
 
     public static void onTick(MinecraftClient client) {
-    	if (!isGameActive())
-			return;
+        if (!isGameActive())
+            return;
 
         AnimationTickHolder.tick();
         FastRenderDispatcher.tick();
@@ -80,7 +80,7 @@ public class ClientEvents {
     }
 
     protected static boolean isGameActive() {
-		return !(MinecraftClient.getInstance().world == null || MinecraftClient.getInstance().player == null);
-	}
+        return !(MinecraftClient.getInstance().world == null || MinecraftClient.getInstance().player == null);
+    }
 
 }

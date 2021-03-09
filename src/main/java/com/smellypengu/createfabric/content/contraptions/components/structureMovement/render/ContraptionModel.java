@@ -1,7 +1,5 @@
 package com.smellypengu.createfabric.content.contraptions.components.structureMovement.render;
 
-import java.nio.ByteBuffer;
-
 import com.smellypengu.createfabric.foundation.render.backend.BufferedModel;
 import com.smellypengu.createfabric.foundation.render.backend.gl.GlBuffer;
 import com.smellypengu.createfabric.foundation.render.backend.gl.GlPrimitiveType;
@@ -11,10 +9,12 @@ import net.minecraft.client.render.LightmapTextureManager;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 
+import java.nio.ByteBuffer;
+
 public class ContraptionModel extends BufferedModel {
     public static final VertexFormat FORMAT = VertexFormat.builder()
-                                                             .addAttributes(ContraptionVertexAttributes.class)
-                                                             .build();
+            .addAttributes(ContraptionVertexAttributes.class)
+            .build();
 
     protected GlPrimitiveType eboIndexType;
     protected GlBuffer ebo;

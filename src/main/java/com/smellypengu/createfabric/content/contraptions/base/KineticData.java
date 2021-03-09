@@ -1,12 +1,12 @@
 package com.smellypengu.createfabric.content.contraptions.base;
 
-import java.nio.ByteBuffer;
-
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstanceData;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.InstancedModel;
 import com.smellypengu.createfabric.foundation.utility.ColorHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3f;
+
+import java.nio.ByteBuffer;
 
 public class KineticData<D extends KineticData<D>> extends InstanceData {
     private float x;
@@ -28,7 +28,7 @@ public class KineticData<D extends KineticData<D>> extends InstanceData {
         setPosition(be.getPos());
         if (be.hasSource()) {
             setColor(be.network);
-        }else {
+        } else {
             setColor(0xFF, 0xFF, 0x00);
         }
         return (D) this;
@@ -46,8 +46,8 @@ public class KineticData<D extends KineticData<D>> extends InstanceData {
         BlockPos origin = owner.renderer.getOriginCoordinate();
 
         return setPosition((float) (x - origin.getX()),
-                           (float) (y - origin.getY()),
-                           (float) (z - origin.getZ()));
+                (float) (y - origin.getY()),
+                (float) (z - origin.getZ()));
     }
 
     public D setPosition(float x, float y, float z) {

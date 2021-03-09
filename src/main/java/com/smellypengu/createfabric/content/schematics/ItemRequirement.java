@@ -20,114 +20,112 @@ import java.util.List;
 
 public class ItemRequirement {
 
-	public enum ItemUseType {
-		CONSUME, DAMAGE
-	}
+    public static ItemRequirement INVALID = new ItemRequirement();
+    public static ItemRequirement NONE = new ItemRequirement();
+    ItemUseType usage;
+    List<ItemStack> requiredItems;
+    private ItemRequirement() {
+    }
 
-	ItemUseType usage;
-	List<ItemStack> requiredItems;
+    public ItemRequirement(ItemUseType usage, Item item) {
+        this(usage, Arrays.asList(new ItemStack(item)));
+    }
 
-	public static ItemRequirement INVALID = new ItemRequirement();
-	public static ItemRequirement NONE = new ItemRequirement();
+    public ItemRequirement(ItemUseType usage, List<ItemStack> requiredItems) {
+        this.usage = usage;
+        this.requiredItems = requiredItems;
+    }
 
-	private ItemRequirement() {
-	}
+    public static ItemRequirement of(BlockState state) {
+        Block block = state.getBlock();
+        if (block == Blocks.AIR)
+            return NONE;
+        if (block instanceof ISpecialBlockItemRequirement)
+            return ((ISpecialBlockItemRequirement) block).getRequiredItems(state);
 
-	public ItemRequirement(ItemUseType usage, Item item) {
-		this(usage, Arrays.asList(new ItemStack(item)));
-	}
+        Item item = BlockItem.BLOCK_ITEMS.getOrDefault(state.getBlock(), Items.AIR);
 
-	public ItemRequirement(ItemUseType usage, List<ItemStack> requiredItems) {
-		this.usage = usage;
-		this.requiredItems = requiredItems;
-	}
+        // double slab needs two items
+        if (state.contains(Properties.SLAB_TYPE) && state.get(Properties.SLAB_TYPE) == SlabType.DOUBLE)
+            return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, 2)));
+        if (block instanceof TurtleEggBlock)
+            return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(TurtleEggBlock.EGGS).intValue())));
+        if (block instanceof SeaPickleBlock)
+            return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(SeaPickleBlock.PICKLES).intValue())));
+        if (block instanceof SnowBlock)
+            return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(SnowBlock.LAYERS).intValue())));
+        if (block instanceof DirtPathBlock) // TODO MIGHT BE WRONG
+            return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(Items.GRASS_BLOCK)));
+        if (block instanceof FarmlandBlock)
+            return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(Items.DIRT)));
 
-	public static ItemRequirement of(BlockState state) {
-		Block block = state.getBlock();
-		if (block == Blocks.AIR)
-			return NONE;
-		if (block instanceof ISpecialBlockItemRequirement)
-			return ((ISpecialBlockItemRequirement) block).getRequiredItems(state);
+        return item == Items.AIR ? INVALID : new ItemRequirement(ItemUseType.CONSUME, item);
+    }
 
-		Item item = BlockItem.BLOCK_ITEMS.getOrDefault(state.getBlock(), Items.AIR);
+    public static ItemRequirement of(Entity entity) {
+        EntityType<?> type = entity.getType();
 
-		// double slab needs two items
-		if (state.contains(Properties.SLAB_TYPE) && state.get(Properties.SLAB_TYPE) == SlabType.DOUBLE)
-			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, 2)));
-		if (block instanceof TurtleEggBlock)
-			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(TurtleEggBlock.EGGS).intValue())));
-		if (block instanceof SeaPickleBlock)
-			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(SeaPickleBlock.PICKLES).intValue())));
-		if (block instanceof SnowBlock)
-			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(SnowBlock.LAYERS).intValue())));
-		if (block instanceof DirtPathBlock) // TODO MIGHT BE WRONG
-			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(Items.GRASS_BLOCK)));
-		if (block instanceof FarmlandBlock)
-			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(Items.DIRT)));
+        if (entity instanceof ISpecialEntityItemRequirement)
+            return ((ISpecialEntityItemRequirement) entity).getRequiredItems();
 
-		return item == Items.AIR ? INVALID : new ItemRequirement(ItemUseType.CONSUME, item);
-	}
+        if (type == EntityType.ITEM_FRAME) {
+            ItemFrameEntity ife = (ItemFrameEntity) entity;
+            ItemStack frame = new ItemStack(Items.ITEM_FRAME);
+            ItemStack displayedItem = ife.getHeldItemStack();
+            if (displayedItem.isEmpty())
+                return new ItemRequirement(ItemUseType.CONSUME, Items.ITEM_FRAME);
+            return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(frame, displayedItem));
+        }
 
-	public static ItemRequirement of(Entity entity) {
-		EntityType<?> type = entity.getType();
+        if (type == EntityType.PAINTING)
+            return new ItemRequirement(ItemUseType.CONSUME, Items.PAINTING);
 
-		if (entity instanceof ISpecialEntityItemRequirement)
-			return ((ISpecialEntityItemRequirement) entity).getRequiredItems();
+        if (type == EntityType.ARMOR_STAND) {
+            List<ItemStack> requirements = new ArrayList<>();
+            ArmorStandEntity armorStandEntity = (ArmorStandEntity) entity;
+            armorStandEntity.getItemsEquipped().forEach(requirements::add);
+            requirements.add(new ItemStack(Items.ARMOR_STAND));
+            return new ItemRequirement(ItemUseType.CONSUME, requirements);
+        }
 
-		if (type == EntityType.ITEM_FRAME) {
-			ItemFrameEntity ife = (ItemFrameEntity) entity;
-			ItemStack frame = new ItemStack(Items.ITEM_FRAME);
-			ItemStack displayedItem = ife.getHeldItemStack();
-			if (displayedItem.isEmpty())
-				return new ItemRequirement(ItemUseType.CONSUME, Items.ITEM_FRAME);
-			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(frame, displayedItem));
-		}
+        if (entity instanceof AbstractMinecartEntity) {
+            AbstractMinecartEntity minecartEntity = (AbstractMinecartEntity) entity;
+            return new ItemRequirement(ItemUseType.CONSUME, (List<ItemStack>) minecartEntity.getItemsEquipped()); // TODO COULD BE WRONG minecartEntity CHECK
+        }
 
-		if (type == EntityType.PAINTING)
-			return new ItemRequirement(ItemUseType.CONSUME, Items.PAINTING);
+        if (entity instanceof BoatEntity) {
+            BoatEntity boatEntity = (BoatEntity) entity;
+            return new ItemRequirement(ItemUseType.CONSUME, boatEntity.asItem());
+        }
 
-		if (type == EntityType.ARMOR_STAND) {
-			List<ItemStack> requirements = new ArrayList<>();
-			ArmorStandEntity armorStandEntity = (ArmorStandEntity) entity;
-			armorStandEntity.getItemsEquipped().forEach(requirements::add);
-			requirements.add(new ItemStack(Items.ARMOR_STAND));
-			return new ItemRequirement(ItemUseType.CONSUME, requirements);
-		}
+        if (type == EntityType.END_CRYSTAL)
+            return new ItemRequirement(ItemUseType.CONSUME, Items.END_CRYSTAL);
 
-		if (entity instanceof AbstractMinecartEntity) {
-			AbstractMinecartEntity minecartEntity = (AbstractMinecartEntity) entity;
-			return new ItemRequirement(ItemUseType.CONSUME, (List<ItemStack>) minecartEntity.getItemsEquipped()); // TODO COULD BE WRONG minecartEntity CHECK
-		}
+        return INVALID;
+    }
 
-		if (entity instanceof BoatEntity) {
-			BoatEntity boatEntity = (BoatEntity) entity;
-			return new ItemRequirement(ItemUseType.CONSUME, boatEntity.asItem());
-		}
+    public static boolean validate(ItemStack required, ItemStack present) {
+        return required.isEmpty() || required.getItem() == present.getItem();
+    }
 
-		if (type == EntityType.END_CRYSTAL)
-			return new ItemRequirement(ItemUseType.CONSUME, Items.END_CRYSTAL);
+    public boolean isEmpty() {
+        return NONE == this;
+    }
 
-		return INVALID;
-	}
+    public boolean isInvalid() {
+        return INVALID == this;
+    }
 
-	public boolean isEmpty() {
-		return NONE == this;
-	}
+    public List<ItemStack> getRequiredItems() {
+        return requiredItems;
+    }
 
-	public boolean isInvalid() {
-		return INVALID == this;
-	}
+    public ItemUseType getUsage() {
+        return usage;
+    }
 
-	public List<ItemStack> getRequiredItems() {
-		return requiredItems;
-	}
-
-	public ItemUseType getUsage() {
-		return usage;
-	}
-
-	public static boolean validate(ItemStack required, ItemStack present) {
-		return required.isEmpty() || required.getItem() == present.getItem();
-	}
+    public enum ItemUseType {
+        CONSUME, DAMAGE
+    }
 
 }

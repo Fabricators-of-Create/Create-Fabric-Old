@@ -35,14 +35,10 @@ import java.util.List;
 import java.util.Random;
 
 public class RenderedContraption {
-    private final HashMap<RenderLayer, ContraptionModel> renderLayers = new HashMap<>();
-
     public final PlacementSimulationWorld renderWorld;
-
-    private final ContraptionLighter<?> lighter;
-
     public final ContraptionKineticRenderer kinetics;
-
+    private final HashMap<RenderLayer, ContraptionModel> renderLayers = new HashMap<>();
+    private final ContraptionLighter<?> lighter;
     public Contraption contraption;
 
     private Matrix4f model;
@@ -59,6 +55,61 @@ public class RenderedContraption {
             buildInstancedTiles();
             buildActors();
         }
+    }
+
+    private static ContraptionModel buildStructureModel(PlacementSimulationWorld renderWorld, Contraption c, RenderLayer layer) {
+        BufferBuilder builder = buildStructure(renderWorld, c, layer);
+        return new ContraptionModel(builder);
+    }
+
+    private static PlacementSimulationWorld setupRenderWorld(World world, Contraption c) {
+        PlacementSimulationWorld renderWorld = new PlacementSimulationWorld(world);
+
+        renderWorld.setBlockEntities(c.presentBlockEntities.values());
+
+        for (Structure.StructureBlockInfo info : c.getBlocks()
+                .values())
+            renderWorld.setBlockState(info.pos, info.state);
+
+        LightingProvider lighter = renderWorld.lighter;
+
+        renderWorld.chunkProvider.getLightSources().forEach((pos) -> lighter.addLightSource(pos, renderWorld.getLuminance(pos)));
+
+        lighter.doLightUpdates(Integer.MAX_VALUE, true, false);
+
+        return renderWorld;
+    }
+
+    private static BufferBuilder buildStructure(PlacementSimulationWorld renderWorld, Contraption c, RenderLayer layer) {
+
+        BlockRenderLayerMap.INSTANCE.putBlocks(layer); // TODO COULD BE WRONG VERY VERY IMPORTANT
+        MatrixStack ms = new MatrixStack();
+        BlockRenderManager dispatcher = MinecraftClient.getInstance()
+                .getBlockRenderManager();
+        BlockModelRenderer blockRenderer = dispatcher.getModelRenderer();
+        Random random = new Random();
+        BufferBuilder builder = new BufferBuilder(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL.getVertexSizeInteger());
+        builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL); // TODO COULD BE WRONG DRAWMODE
+
+        for (Structure.StructureBlockInfo info : c.getBlocks()
+                .values()) {
+            BlockState state = info.state;
+
+            if (state.getRenderType() == BlockRenderType.ENTITYBLOCK_ANIMATED)
+                continue;
+            /**if (!RenderLayers.canRenderInLayer(state, layer)) TODO canRenderInLayer CHECK
+             continue;*/
+
+            BakedModel originalModel = dispatcher.getModel(state);
+            ms.push();
+            ms.translate(info.pos.getX(), info.pos.getY(), info.pos.getZ());
+            blockRenderer.render(renderWorld, originalModel, state, info.pos, ms, builder, true, random, 42,
+                    OverlayTexture.DEFAULT_UV);
+            ms.pop();
+        }
+
+        builder.end(); // TODO MIGHT BE WRONG
+        return builder;
     }
 
     public int getEntityId() {
@@ -97,7 +148,7 @@ public class RenderedContraption {
         double z = MathHelper.lerp(pt, entity.lastRenderZ, entity.getZ()) - camZ;
         stack.translate(x, y, z);
 
-        entity.doLocalTransforms(pt, new MatrixStack[]{ stack });
+        entity.doLocalTransforms(pt, new MatrixStack[]{stack});
 
         model = stack.peek().getModel();
 
@@ -169,60 +220,5 @@ public class RenderedContraption {
                 movementBehaviour.addInstance(this, context);
             }
         }
-    }
-
-    private static ContraptionModel buildStructureModel(PlacementSimulationWorld renderWorld, Contraption c, RenderLayer layer) {
-        BufferBuilder builder = buildStructure(renderWorld, c, layer);
-        return new ContraptionModel(builder);
-    }
-
-    private static PlacementSimulationWorld setupRenderWorld(World world, Contraption c) {
-        PlacementSimulationWorld renderWorld = new PlacementSimulationWorld(world);
-
-        renderWorld.setBlockEntities(c.presentBlockEntities.values());
-
-        for (Structure.StructureBlockInfo info : c.getBlocks()
-                                        .values())
-            renderWorld.setBlockState(info.pos, info.state);
-
-        LightingProvider lighter = renderWorld.lighter;
-
-        renderWorld.chunkProvider.getLightSources().forEach((pos) -> lighter.addLightSource(pos, renderWorld.getLuminance(pos)));
-
-        lighter.doLightUpdates(Integer.MAX_VALUE, true, false);
-
-        return renderWorld;
-    }
-
-    private static BufferBuilder buildStructure(PlacementSimulationWorld renderWorld, Contraption c, RenderLayer layer) {
-
-        BlockRenderLayerMap.INSTANCE.putBlocks(layer); // TODO COULD BE WRONG VERY VERY IMPORTANT
-        MatrixStack ms = new MatrixStack();
-        BlockRenderManager dispatcher = MinecraftClient.getInstance()
-                                                      .getBlockRenderManager();
-        BlockModelRenderer blockRenderer = dispatcher.getModelRenderer();
-        Random random = new Random();
-        BufferBuilder builder = new BufferBuilder(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL.getVertexSizeInteger());
-        builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL); // TODO COULD BE WRONG DRAWMODE
-
-        for (Structure.StructureBlockInfo info : c.getBlocks()
-                                        .values()) {
-            BlockState state = info.state;
-
-            if (state.getRenderType() == BlockRenderType.ENTITYBLOCK_ANIMATED)
-                continue;
-            /**if (!RenderLayers.canRenderInLayer(state, layer)) TODO canRenderInLayer CHECK
-                continue;*/
-
-            BakedModel originalModel = dispatcher.getModel(state);
-            ms.push();
-            ms.translate(info.pos.getX(), info.pos.getY(), info.pos.getZ());
-            blockRenderer.render(renderWorld, originalModel, state, info.pos, ms, builder, true, random, 42,
-                                      OverlayTexture.DEFAULT_UV);
-            ms.pop();
-        }
-
-        builder.end(); // TODO MIGHT BE WRONG
-        return builder;
     }
 }

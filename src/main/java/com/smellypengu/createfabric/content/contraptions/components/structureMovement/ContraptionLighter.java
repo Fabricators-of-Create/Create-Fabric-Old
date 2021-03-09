@@ -3,12 +3,10 @@ package com.smellypengu.createfabric.content.contraptions.components.structureMo
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.render.RenderedContraption;
 import com.smellypengu.createfabric.foundation.render.backend.light.GridAlignedBB;
 import com.smellypengu.createfabric.foundation.render.backend.light.LightVolume;
-import net.minecraft.util.math.Box;
 
 public abstract class ContraptionLighter<C extends Contraption> {
-    protected final C contraption;
     public final LightVolume lightVolume;
-
+    protected final C contraption;
     protected GridAlignedBB bounds;
 
     protected boolean scheduleRebuild;

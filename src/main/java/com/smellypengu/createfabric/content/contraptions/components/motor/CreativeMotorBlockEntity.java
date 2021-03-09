@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions.components.motor;
 
-import com.smellypengu.createfabric.AllBlocks;
 import com.smellypengu.createfabric.AllBlockEntities;
+import com.smellypengu.createfabric.AllBlocks;
 import com.smellypengu.createfabric.content.contraptions.base.GeneratingKineticBlockEntity;
 import com.smellypengu.createfabric.foundation.block.entity.BlockEntityBehaviour;
 import com.smellypengu.createfabric.foundation.block.entity.behaviour.CenteredSideValueBoxTransform;
@@ -14,61 +14,61 @@ import java.util.List;
 
 public class CreativeMotorBlockEntity extends GeneratingKineticBlockEntity {
 
-	public static final int DEFAULT_SPEED = 16;
-	protected ScrollValueBehaviour generatedSpeed;
+    public static final int DEFAULT_SPEED = 16;
+    protected ScrollValueBehaviour generatedSpeed;
 
-	public CreativeMotorBlockEntity(BlockPos pos, BlockState state) {
-		super(AllBlockEntities.MOTOR, pos, state);
-	}
+    public CreativeMotorBlockEntity(BlockPos pos, BlockState state) {
+        super(AllBlockEntities.MOTOR, pos, state);
+    }
 
-	@Override
-	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-		super.addBehaviours(behaviours);
-		Integer max = 256; //AllConfigs.SERVER.kinetics.maxMotorSpeed.get(); TODO CONFIG maxMotorSpeed
+    public static int step(ScrollValueBehaviour.StepContext context) {
+        int current = context.currentValue;
+        int step = 1;
 
-		CenteredSideValueBoxTransform slot = new CenteredSideValueBoxTransform(
-			(motor, side) -> motor.get(CreativeMotorBlock.FACING) == side.getOpposite());
+        if (!context.shift) {
+            int magnitude = Math.abs(current) - (context.forward == current > 0 ? 0 : 1);
 
-		generatedSpeed = new ScrollValueBehaviour(Lang.translate("generic.speed"), this, slot);
-		generatedSpeed.between(-max, max);
-		generatedSpeed.value = DEFAULT_SPEED;
-		generatedSpeed.scrollableValue = DEFAULT_SPEED;
-		generatedSpeed.withUnit(i -> Lang.translate("generic.unit.rpm"));
-		generatedSpeed.withCallback(i -> this.updateGeneratedRotation());
-		generatedSpeed.withStepFunction(CreativeMotorBlockEntity::step);
-		behaviours.add(generatedSpeed);
-	}
+            if (magnitude >= 4)
+                step *= 4;
+            if (magnitude >= 32)
+                step *= 4;
+            if (magnitude >= 128)
+                step *= 4;
+        }
 
-	@Override
-	public void initialize() {
-		super.initialize();
-		if (!hasSource() || getGeneratedSpeed() > getTheoreticalSpeed())
-			updateGeneratedRotation();
-	}
+        return current + (context.forward ? step : -step) == 0 ? step + 1 : step;
+    }
 
-	@Override
-	public float getGeneratedSpeed() {
-		if (!AllBlocks.CREATIVE_MOTOR.getStateManager().getStates().contains(getCachedState()))
-			return 0;
-		return convertToDirection(generatedSpeed.getValue(), getCachedState().get(CreativeMotorBlock.FACING));
-	}
+    @Override
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+        super.addBehaviours(behaviours);
+        Integer max = 256; //AllConfigs.SERVER.kinetics.maxMotorSpeed.get(); TODO CONFIG maxMotorSpeed
 
-	public static int step(ScrollValueBehaviour.StepContext context) {
-		int current = context.currentValue;
-		int step = 1;
+        CenteredSideValueBoxTransform slot = new CenteredSideValueBoxTransform(
+                (motor, side) -> motor.get(CreativeMotorBlock.FACING) == side.getOpposite());
 
-		if (!context.shift) {
-			int magnitude = Math.abs(current) - (context.forward == current > 0 ? 0 : 1);
+        generatedSpeed = new ScrollValueBehaviour(Lang.translate("generic.speed"), this, slot);
+        generatedSpeed.between(-max, max);
+        generatedSpeed.value = DEFAULT_SPEED;
+        generatedSpeed.scrollableValue = DEFAULT_SPEED;
+        generatedSpeed.withUnit(i -> Lang.translate("generic.unit.rpm"));
+        generatedSpeed.withCallback(i -> this.updateGeneratedRotation());
+        generatedSpeed.withStepFunction(CreativeMotorBlockEntity::step);
+        behaviours.add(generatedSpeed);
+    }
 
-			if (magnitude >= 4)
-				step *= 4;
-			if (magnitude >= 32)
-				step *= 4;
-			if (magnitude >= 128)
-				step *= 4;
-		}
+    @Override
+    public void initialize() {
+        super.initialize();
+        if (!hasSource() || getGeneratedSpeed() > getTheoreticalSpeed())
+            updateGeneratedRotation();
+    }
 
-		return (int) (current + (context.forward ? step : -step) == 0 ? step + 1 : step);
-	}
+    @Override
+    public float getGeneratedSpeed() {
+        if (!AllBlocks.CREATIVE_MOTOR.getStateManager().getStates().contains(getCachedState()))
+            return 0;
+        return convertToDirection(generatedSpeed.getValue(), getCachedState().get(CreativeMotorBlock.FACING));
+    }
 
 }

@@ -15,29 +15,34 @@ public abstract class KineticBlockInstance<T extends KineticBlockEntity> extends
         super(modelManager, tile);
     }
 
+    public static BlockState shaft(Direction.Axis axis) {
+        return AllBlocks.SHAFT.getDefaultState()
+                .with(ShaftBlock.AXIS, axis);
+    }
+
     protected final void updateRotation(InstanceKey<RotatingData> key, Direction.Axis axis) {
         key.modifyInstance(data -> {
             data.setColor(tile.network)
-                .setRotationalSpeed(tile.getSpeed())
-                .setRotationOffset(getRotationOffset(axis))
-                .setRotationAxis(axis);
+                    .setRotationalSpeed(tile.getSpeed())
+                    .setRotationOffset(getRotationOffset(axis))
+                    .setRotationAxis(axis);
         });
     }
 
     protected final Consumer<RotatingData> setupFunc(float speed, Direction.Axis axis) {
         return data -> {
             data.setBlockLight(world.getLightLevel(LightType.BLOCK, pos))
-                .setSkyLight(world.getLightLevel(LightType.SKY, pos))
-                .setBlockEntity(tile)
-                .setRotationalSpeed(speed)
-                .setRotationOffset(getRotationOffset(axis))
-                .setRotationAxis(axis);
+                    .setSkyLight(world.getLightLevel(LightType.SKY, pos))
+                    .setBlockEntity(tile)
+                    .setRotationalSpeed(speed)
+                    .setRotationOffset(getRotationOffset(axis))
+                    .setRotationAxis(axis);
         };
     }
 
     protected final void relight(KineticData<?> data) {
         data.setBlockLight(world.getLightLevel(LightType.BLOCK, pos))
-            .setSkyLight(world.getLightLevel(LightType.SKY, pos));
+                .setSkyLight(world.getLightLevel(LightType.SKY, pos));
     }
 
     protected float getRotationOffset(final Direction.Axis axis) {
@@ -48,11 +53,6 @@ public abstract class KineticBlockInstance<T extends KineticBlockEntity> extends
             offset = 22.5f;
         }
         return offset;
-    }
-
-    public static BlockState shaft(Direction.Axis axis) {
-        return AllBlocks.SHAFT.getDefaultState()
-                              .with(ShaftBlock.AXIS, axis);
     }
 
     public Direction.Axis getRotationAxis() {

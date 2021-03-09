@@ -9,54 +9,54 @@ import java.util.function.Supplier;
 
 public enum AllToolTiers implements ToolMaterial {
 
-	RADIANT(4, 1024, 16.0F, 3.5F, 10, () -> {
-		return Ingredient.ofItems(AllItems.REFINED_RADIANCE);
-	}),
+    RADIANT(4, 1024, 16.0F, 3.5F, 10, () -> {
+        return Ingredient.ofItems(AllItems.REFINED_RADIANCE);
+    }),
 
-	;
-	
-	private final int harvestLevel;
-	private final int maxUses;
-	private final float efficiency;
-	private final float attackDamage;
-	private final int enchantability;
-	private final Lazy<Ingredient> repairMaterial;
+    ;
 
-	private AllToolTiers(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn,
-			int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
-		this.harvestLevel = harvestLevelIn;
-		this.maxUses = maxUsesIn;
-		this.efficiency = efficiencyIn;
-		this.attackDamage = attackDamageIn;
-		this.enchantability = enchantabilityIn;
-		this.repairMaterial = new Lazy<>(repairMaterialIn);
-	}
+    private final int harvestLevel;
+    private final int maxUses;
+    private final float efficiency;
+    private final float attackDamage;
+    private final int enchantability;
+    private final Lazy<Ingredient> repairMaterial;
 
-	@Override
-	public int getDurability() {
-		return this.maxUses;
-	}
+    AllToolTiers(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn,
+                 int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
+        this.harvestLevel = harvestLevelIn;
+        this.maxUses = maxUsesIn;
+        this.efficiency = efficiencyIn;
+        this.attackDamage = attackDamageIn;
+        this.enchantability = enchantabilityIn;
+        this.repairMaterial = new Lazy<>(repairMaterialIn);
+    }
 
-	@Override
-	public float getMiningSpeedMultiplier() {
-		return this.efficiency;
-	}
+    @Override
+    public int getDurability() {
+        return this.maxUses;
+    }
 
-	public float getAttackDamage() {
-		return this.attackDamage;
-	}
+    @Override
+    public float getMiningSpeedMultiplier() {
+        return this.efficiency;
+    }
 
-	@Override
-	public int getMiningLevel() {
-		return this.harvestLevel;
-	}
+    public float getAttackDamage() {
+        return this.attackDamage;
+    }
 
-	public int getEnchantability() {
-		return this.enchantability;
-	}
+    @Override
+    public int getMiningLevel() {
+        return this.harvestLevel;
+    }
 
-	@Override
-	public Ingredient getRepairIngredient() {
-		return this.repairMaterial.get();
-	}
+    public int getEnchantability() {
+        return this.enchantability;
+    }
+
+    @Override
+    public Ingredient getRepairIngredient() {
+        return this.repairMaterial.get();
+    }
 }

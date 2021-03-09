@@ -11,44 +11,45 @@ import net.minecraft.world.WorldView;
 
 public class CreativeMotorBlock extends DirectionalKineticBlock {
 
-	public CreativeMotorBlock(Settings properties) {
-		super(properties);
-	}
+    public CreativeMotorBlock(Settings properties) {
+        super(properties);
+    }
 
-	/**@Override
-	public VoxelShape getShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
-		return AllShapes.MOTOR_BLOCK.get(state.get(FACING));
-	}*/
+    /**
+     * @Override public VoxelShape getShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
+     * return AllShapes.MOTOR_BLOCK.get(state.get(FACING));
+     * }
+     */
 
-	@Override
-	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-		return AllBlockEntities.MOTOR.instantiate(pos, state);
-	}
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return AllBlockEntities.MOTOR.instantiate(pos, state);
+    }
 
-	@Override
-	public BlockState getPlacementState(ItemPlacementContext context) {
-		Direction preferred = getPreferredFacing(context);
-		if ((context.getPlayer() != null && context.getPlayer()
-				.isSneaking()) || preferred == null)
-			return super.getPlacementState(context);
-		return getDefaultState().with(FACING, preferred);
-	}
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext context) {
+        Direction preferred = getPreferredFacing(context);
+        if ((context.getPlayer() != null && context.getPlayer()
+                .isSneaking()) || preferred == null)
+            return super.getPlacementState(context);
+        return getDefaultState().with(FACING, preferred);
+    }
 
-	// IRotate:
+    // IRotate:
 
-	@Override
-	public boolean hasShaftTowards(WorldView world, BlockPos pos, BlockState state, Direction face) {
-		return face == state.get(FACING);
-	}
+    @Override
+    public boolean hasShaftTowards(WorldView world, BlockPos pos, BlockState state, Direction face) {
+        return face == state.get(FACING);
+    }
 
-	@Override
-	public Direction.Axis getRotationAxis(BlockState state) {
-		return state.get(FACING)
-			.getAxis();
-	}
+    @Override
+    public Direction.Axis getRotationAxis(BlockState state) {
+        return state.get(FACING)
+                .getAxis();
+    }
 
-	@Override
-	public boolean hideStressImpact() {
-		return true;
-	}
+    @Override
+    public boolean hideStressImpact() {
+        return true;
+    }
 }

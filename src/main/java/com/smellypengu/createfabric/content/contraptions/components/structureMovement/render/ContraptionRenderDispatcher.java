@@ -163,7 +163,7 @@ public class ContraptionRenderDispatcher {
     }
 
     public static void renderStructure(World world, Contraption c, MatrixStack ms, MatrixStack msLocal,
-                                          VertexConsumerProvider buffer) {
+                                       VertexConsumerProvider buffer) {
         SuperByteBufferCache bufferCache = CreateClient.bufferCache;
         List<RenderLayer> blockLayers = RenderLayer.getBlockLayers();
 
@@ -175,9 +175,9 @@ public class ContraptionRenderDispatcher {
             if (contraptionBuffer.isEmpty())
                 continue;
             Matrix4f model = msLocal.peek()
-                .getModel();
+                    .getModel();
             contraptionBuffer.light(model)
-                .renderInto(ms, buffer.getBuffer(layer));
+                    .renderInto(ms, buffer.getBuffer(layer));
         }
     }
 
@@ -193,7 +193,7 @@ public class ContraptionRenderDispatcher {
         //ForgeHooksClient.setRenderLayer(layer);
         MatrixStack ms = new MatrixStack();
         BlockRenderManager dispatcher = MinecraftClient.getInstance()
-                                                      .getBlockRenderManager();
+                .getBlockRenderManager();
         BlockModelRenderer blockRenderer = dispatcher.getModelRenderer();
         Random random = new Random();
         BufferBuilder builder = new BufferBuilder(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL.getVertexSizeInteger());
@@ -201,23 +201,23 @@ public class ContraptionRenderDispatcher {
         renderWorld.setBlockEntities(c.presentBlockEntities.values());
 
         for (Structure.StructureBlockInfo info : c.getBlocks()
-                                        .values())
+                .values())
             renderWorld.setBlockState(info.pos, info.state);
 
         for (Structure.StructureBlockInfo info : c.getBlocks()
-                                        .values()) {
+                .values()) {
             BlockState state = info.state;
 
             if (state.getRenderType() == BlockRenderType.ENTITYBLOCK_ANIMATED)
                 continue;
             /**if (!RenderLayer.canRenderInLayer(state, layer)) TODO canRenderInLayer CHECK
-                continue;*/
+             continue;*/
 
             BakedModel originalModel = dispatcher.getModel(state);
             ms.push();
             ms.translate(info.pos.getX(), info.pos.getY(), info.pos.getZ());
             blockRenderer.render(renderWorld, originalModel, state, info.pos, ms, builder, true, random, 42,
-                                      OverlayTexture.DEFAULT_UV);
+                    OverlayTexture.DEFAULT_UV);
             ms.pop();
         }
 
@@ -229,7 +229,7 @@ public class ContraptionRenderDispatcher {
 
     protected static void renderActors(World world, Contraption c, MatrixStack ms, MatrixStack msLocal,
                                        VertexConsumerProvider buffer) {
-        MatrixStack[] matrixStacks = new MatrixStack[] { ms, msLocal };
+        MatrixStack[] matrixStacks = new MatrixStack[]{ms, msLocal};
         for (Pair<Structure.StructureBlockInfo, MovementContext> actor : c.getActors()) {
             MovementContext context = actor.getRight();
             if (context == null)
@@ -240,7 +240,7 @@ public class ContraptionRenderDispatcher {
             for (MatrixStack m : matrixStacks) {
                 m.push();
                 MatrixStacker.of(m)
-                             .translate(blockInfo.pos);
+                        .translate(blockInfo.pos);
             }
 
             MovementBehaviour movementBehaviour = AllMovementBehaviours.of(blockInfo.state);

@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions;
 
-import com.smellypengu.createfabric.content.contraptions.base.Rotating;
 import com.smellypengu.createfabric.content.contraptions.base.KineticBlockEntity;
+import com.smellypengu.createfabric.content.contraptions.base.Rotating;
 import com.smellypengu.createfabric.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -17,131 +17,131 @@ import static net.minecraft.state.property.Properties.AXIS;
 
 public class RotationPropagator {
 
-	private static final int MAX_FLICKER_SCORE = 128;
+    private static final int MAX_FLICKER_SCORE = 128;
 
-	/**
-	 * Determines the change in rotation between two attached kinetic entities. For
-	 * instance, an axis connection returns 1 while a 1-to-1 gear connection
-	 * reverses the rotation and therefore returns -1.
-	 * 
-	 * @param from
-	 * @param to
-	 * @return
-	 */
-	private static float getRotationSpeedModifier(KineticBlockEntity from, KineticBlockEntity to) {
-		final BlockState stateFrom = from.getCachedState();
-		final BlockState stateTo = to.getCachedState();
+    /**
+     * Determines the change in rotation between two attached kinetic entities. For
+     * instance, an axis connection returns 1 while a 1-to-1 gear connection
+     * reverses the rotation and therefore returns -1.
+     *
+     * @param from
+     * @param to
+     * @return
+     */
+    private static float getRotationSpeedModifier(KineticBlockEntity from, KineticBlockEntity to) {
+        final BlockState stateFrom = from.getCachedState();
+        final BlockState stateTo = to.getCachedState();
 
-		Block fromBlock = stateFrom.getBlock();
-		Block toBlock = stateTo.getBlock();
-		if (!(fromBlock instanceof Rotating && toBlock instanceof Rotating))
-			return 0;
+        Block fromBlock = stateFrom.getBlock();
+        Block toBlock = stateTo.getBlock();
+        if (!(fromBlock instanceof Rotating && toBlock instanceof Rotating))
+            return 0;
 
-		final Rotating definitionFrom = (Rotating) fromBlock;
-		final Rotating definitionTo = (Rotating) toBlock;
-		final BlockPos diff = to.getPos()
-			.subtract(from.getPos());
-		final Direction direction = Direction.getFacing(diff.getX(), diff.getY(), diff.getZ());
-		final World world = from.getWorld();
+        final Rotating definitionFrom = (Rotating) fromBlock;
+        final Rotating definitionTo = (Rotating) toBlock;
+        final BlockPos diff = to.getPos()
+                .subtract(from.getPos());
+        final Direction direction = Direction.getFacing(diff.getX(), diff.getY(), diff.getZ());
+        final World world = from.getWorld();
 
-		boolean alignedAxes = true;
-		for (Direction.Axis axis : Direction.Axis.values())
-			if (axis != direction.getAxis())
-				if (axis.choose(diff.getX(), diff.getY(), diff.getZ()) != 0)
-					alignedAxes = false;
+        boolean alignedAxes = true;
+        for (Direction.Axis axis : Direction.Axis.values())
+            if (axis != direction.getAxis())
+                if (axis.choose(diff.getX(), diff.getY(), diff.getZ()) != 0)
+                    alignedAxes = false;
 
-		boolean connectedByAxis =
-			alignedAxes && definitionFrom.hasShaftTowards(world, from.getPos(), stateFrom, direction)
-				&& definitionTo.hasShaftTowards(world, to.getPos(), stateTo, direction.getOpposite());
+        boolean connectedByAxis =
+                alignedAxes && definitionFrom.hasShaftTowards(world, from.getPos(), stateFrom, direction)
+                        && definitionTo.hasShaftTowards(world, to.getPos(), stateTo, direction.getOpposite());
 
-		boolean connectedByGears = definitionFrom.hasIntegratedCogwheel(world, from.getPos(), stateFrom)
-			&& definitionTo.hasIntegratedCogwheel(world, to.getPos(), stateTo);
+        boolean connectedByGears = definitionFrom.hasIntegratedCogwheel(world, from.getPos(), stateFrom)
+                && definitionTo.hasIntegratedCogwheel(world, to.getPos(), stateTo);
 
-		float custom = from.propagateRotationTo(to, stateFrom, stateTo, diff, connectedByAxis, connectedByGears);
-		if (custom != 0)
-			return custom;
+        float custom = from.propagateRotationTo(to, stateFrom, stateTo, diff, connectedByAxis, connectedByGears);
+        if (custom != 0)
+            return custom;
 
-		// Axis <-> Axis
-		/**if (connectedByAxis) { TODO AXIS <-> AXIS
-			float axisModifier = getAxisModifier(to, direction.getOpposite());
-			if (axisModifier != 0)
-				axisModifier = 1 / axisModifier;
-			return getAxisModifier(from, direction) * axisModifier;
-		}*/
+        // Axis <-> Axis
+        /**if (connectedByAxis) { TODO AXIS <-> AXIS
+         float axisModifier = getAxisModifier(to, direction.getOpposite());
+         if (axisModifier != 0)
+         axisModifier = 1 / axisModifier;
+         return getAxisModifier(from, direction) * axisModifier;
+         }*/
 
-		// Attached Encased Belts
-		/**if (fromBlock instanceof EncasedBeltBlock && toBlock instanceof EncasedBeltBlock) { TODO ENCASED BELT BLOCK
-			boolean connected = EncasedBeltBlock.areBlocksConnected(stateFrom, stateTo, direction);
-			return connected ? EncasedBeltBlock.getRotationSpeedModifier(from, to) : 0;
-		}*/
+        // Attached Encased Belts
+        /**if (fromBlock instanceof EncasedBeltBlock && toBlock instanceof EncasedBeltBlock) { TODO ENCASED BELT BLOCK
+         boolean connected = EncasedBeltBlock.areBlocksConnected(stateFrom, stateTo, direction);
+         return connected ? EncasedBeltBlock.getRotationSpeedModifier(from, to) : 0;
+         }*/
 
-		// Large Gear <-> Large Gear
-		if (isLargeToLargeGear(stateFrom, stateTo, diff)) {
-			Direction.Axis sourceAxis = stateFrom.get(AXIS);
-			Direction.Axis targetAxis = stateTo.get(AXIS);
-			int sourceAxisDiff = sourceAxis.choose(diff.getX(), diff.getY(), diff.getZ());
-			int targetAxisDiff = targetAxis.choose(diff.getX(), diff.getY(), diff.getZ());
+        // Large Gear <-> Large Gear
+        if (isLargeToLargeGear(stateFrom, stateTo, diff)) {
+            Direction.Axis sourceAxis = stateFrom.get(AXIS);
+            Direction.Axis targetAxis = stateTo.get(AXIS);
+            int sourceAxisDiff = sourceAxis.choose(diff.getX(), diff.getY(), diff.getZ());
+            int targetAxisDiff = targetAxis.choose(diff.getX(), diff.getY(), diff.getZ());
 
-			return sourceAxisDiff > 0 ^ targetAxisDiff > 0 ? -1 : 1;
-		}
+            return sourceAxisDiff > 0 ^ targetAxisDiff > 0 ? -1 : 1;
+        }
 
-		// Gear <-> Large Gear
-		/**if (isLargeCog(stateFrom) && definitionTo.hasIntegratedCogwheel(world, to.getPos(), stateTo))
-			if (isLargeToSmallCog(stateFrom, stateTo, definitionTo, diff))
-				return -2f;
-		if (isLargeCog(stateTo) && definitionFrom.hasIntegratedCogwheel(world, from.getPos(), stateFrom))
-			if (isLargeToSmallCog(stateTo, stateFrom, definitionFrom, diff))
-				return -.5f;*/
+        // Gear <-> Large Gear
+        /**if (isLargeCog(stateFrom) && definitionTo.hasIntegratedCogwheel(world, to.getPos(), stateTo))
+         if (isLargeToSmallCog(stateFrom, stateTo, definitionTo, diff))
+         return -2f;
+         if (isLargeCog(stateTo) && definitionFrom.hasIntegratedCogwheel(world, from.getPos(), stateFrom))
+         if (isLargeToSmallCog(stateTo, stateFrom, definitionFrom, diff))
+         return -.5f;*/
 
-		// Gear <-> Gear
-		if (connectedByGears) {
-			if (diff.getManhattanDistance(BlockPos.ZERO) != 1)
-				return 0;
-			/**if (isLargeCog(stateTo))
-				return 0;*/
-			if (direction.getAxis() == definitionFrom.getRotationAxis(stateFrom))
-				return 0;
-			if (definitionFrom.getRotationAxis(stateFrom) == definitionTo.getRotationAxis(stateTo))
-				return -1;
-		}
+        // Gear <-> Gear
+        if (connectedByGears) {
+            if (diff.getManhattanDistance(BlockPos.ZERO) != 1)
+                return 0;
+            /**if (isLargeCog(stateTo))
+             return 0;*/
+            if (direction.getAxis() == definitionFrom.getRotationAxis(stateFrom))
+                return 0;
+            if (definitionFrom.getRotationAxis(stateFrom) == definitionTo.getRotationAxis(stateTo))
+                return -1;
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
-	private static float getConveyedSpeed(KineticBlockEntity from, KineticBlockEntity to) {
-		final BlockState stateFrom = from.getCachedState();
-		final BlockState stateTo = to.getCachedState();
+    private static float getConveyedSpeed(KineticBlockEntity from, KineticBlockEntity to) {
+        final BlockState stateFrom = from.getCachedState();
+        final BlockState stateTo = to.getCachedState();
 
-		// Rotation Speed Controller <-> Large Gear
-		/**if (isLargeCogToSpeedController(stateFrom, stateTo, to.getPos() TODO SPEED CONTROLLER CHECK THING
-			.subtract(from.getPos())))
-			return SpeedControllerTileEntity.getConveyedSpeed(from, to, true);
-		if (isLargeCogToSpeedController(stateTo, stateFrom, from.getPos()
-			.subtract(to.getPos())))
-			return SpeedControllerTileEntity.getConveyedSpeed(to, from, false);*/
+        // Rotation Speed Controller <-> Large Gear
+        /**if (isLargeCogToSpeedController(stateFrom, stateTo, to.getPos() TODO SPEED CONTROLLER CHECK THING
+         .subtract(from.getPos())))
+         return SpeedControllerTileEntity.getConveyedSpeed(from, to, true);
+         if (isLargeCogToSpeedController(stateTo, stateFrom, from.getPos()
+         .subtract(to.getPos())))
+         return SpeedControllerTileEntity.getConveyedSpeed(to, from, false);*/
 
-		float rotationSpeedModifier = getRotationSpeedModifier(from, to);
-		return from.getTheoreticalSpeed() * rotationSpeedModifier;
-	}
+        float rotationSpeedModifier = getRotationSpeedModifier(from, to);
+        return from.getTheoreticalSpeed() * rotationSpeedModifier;
+    }
 
-	private static boolean isLargeToLargeGear(BlockState from, BlockState to, BlockPos diff) {
-		/**if (!isLargeCog(from) || !isLargeCog(to))
-			return false;*/
-		Direction.Axis fromAxis = from.get(AXIS);
-		Direction.Axis toAxis = to.get(AXIS);
-		if (fromAxis == toAxis)
-			return false;
-		for (Direction.Axis axis : Direction.Axis.values()) {
-			int axisDiff = axis.choose(diff.getX(), diff.getY(), diff.getZ());
-			if (axis == fromAxis || axis == toAxis) {
-				if (axisDiff == 0)
-					return false;
+    private static boolean isLargeToLargeGear(BlockState from, BlockState to, BlockPos diff) {
+        /**if (!isLargeCog(from) || !isLargeCog(to))
+         return false;*/
+        Direction.Axis fromAxis = from.get(AXIS);
+        Direction.Axis toAxis = to.get(AXIS);
+        if (fromAxis == toAxis)
+            return false;
+        for (Direction.Axis axis : Direction.Axis.values()) {
+            int axisDiff = axis.choose(diff.getX(), diff.getY(), diff.getZ());
+            if (axis == fromAxis || axis == toAxis) {
+                if (axisDiff == 0)
+                    return false;
 
-			} else if (axisDiff != 0)
-				return false;
-		}
-		return true;
-	}
+            } else if (axisDiff != 0)
+                return false;
+        }
+        return true;
+    }
 
 	/*private static float getAxisModifier(KineticTileEntity te, Direction direction) {
 		if (!te.hasSource() || !(te instanceof DirectionalShaftHalvesTileEntity))
@@ -158,20 +158,20 @@ public class RotationPropagator {
 		return 1;
 	}*/
 
-	private static boolean isLargeToSmallCog(BlockState from, BlockState to, Rotating defTo, BlockPos diff) {
-		Direction.Axis axisFrom = from.get(AXIS);
-		if (axisFrom != defTo.getRotationAxis(to))
-			return false;
-		if (axisFrom.choose(diff.getX(), diff.getY(), diff.getZ()) != 0)
-			return false;
-		for (Direction.Axis axis : Direction.Axis.values()) {
-			if (axis == axisFrom)
-				continue;
-			if (Math.abs(axis.choose(diff.getX(), diff.getY(), diff.getZ())) != 1)
-				return false;
-		}
-		return true;
-	}
+    private static boolean isLargeToSmallCog(BlockState from, BlockState to, Rotating defTo, BlockPos diff) {
+        Direction.Axis axisFrom = from.get(AXIS);
+        if (axisFrom != defTo.getRotationAxis(to))
+            return false;
+        if (axisFrom.choose(diff.getX(), diff.getY(), diff.getZ()) != 0)
+            return false;
+        for (Direction.Axis axis : Direction.Axis.values()) {
+            if (axis == axisFrom)
+                continue;
+            if (Math.abs(axis.choose(diff.getX(), diff.getY(), diff.getZ())) != 1)
+                return false;
+        }
+        return true;
+    }
 
 	/*private static boolean isLargeCogToSpeedController(BlockState from, BlockState to, BlockPos diff) {
 		if (!isLargeCog(from) || !AllBlocks.ROTATION_SPEED_CONTROLLER.has(to))
@@ -186,226 +186,226 @@ public class RotationPropagator {
 		return true;
 	}*/
 
-	/**
-	 * Insert the added position to the kinetic network.
-	 * 
-	 * @param worldIn
-	 * @param pos
-	 */
-	public static void handleAdded(World worldIn, BlockPos pos, KineticBlockEntity addedTE) {
-		if (worldIn.isClient)
-			return;
-		if (!worldIn.canSetBlock(pos))
-			return;
-		propagateNewSource(addedTE);
-	}
+    /**
+     * Insert the added position to the kinetic network.
+     *
+     * @param worldIn
+     * @param pos
+     */
+    public static void handleAdded(World worldIn, BlockPos pos, KineticBlockEntity addedTE) {
+        if (worldIn.isClient)
+            return;
+        if (!worldIn.canSetBlock(pos))
+            return;
+        propagateNewSource(addedTE);
+    }
 
-	/**
-	 * Search for sourceless networks attached to the given entity and update them.
-	 * 
-	 * @param currentTE
-	 */
-	private static void propagateNewSource(KineticBlockEntity currentTE) {
-		BlockPos pos = currentTE.getPos();
-		World world = currentTE.getWorld();
+    /**
+     * Search for sourceless networks attached to the given entity and update them.
+     *
+     * @param currentTE
+     */
+    private static void propagateNewSource(KineticBlockEntity currentTE) {
+        BlockPos pos = currentTE.getPos();
+        World world = currentTE.getWorld();
 
-		for (KineticBlockEntity neighbourTE : getConnectedNeighbours(currentTE)) {
-			float speedOfCurrent = currentTE.getTheoreticalSpeed();
-			float speedOfNeighbour = neighbourTE.getTheoreticalSpeed();
-			float newSpeed = getConveyedSpeed(currentTE, neighbourTE);
-			float oppositeSpeed = getConveyedSpeed(neighbourTE, currentTE);
+        for (KineticBlockEntity neighbourTE : getConnectedNeighbours(currentTE)) {
+            float speedOfCurrent = currentTE.getTheoreticalSpeed();
+            float speedOfNeighbour = neighbourTE.getTheoreticalSpeed();
+            float newSpeed = getConveyedSpeed(currentTE, neighbourTE);
+            float oppositeSpeed = getConveyedSpeed(neighbourTE, currentTE);
 
-			if (newSpeed == 0 && oppositeSpeed == 0)
-				continue;
-			
-			boolean incompatible =
-				Math.signum(newSpeed) != Math.signum(speedOfNeighbour) && (newSpeed != 0 && speedOfNeighbour != 0);
+            if (newSpeed == 0 && oppositeSpeed == 0)
+                continue;
 
-			boolean tooFast = Math.abs(newSpeed) > 1000; // TODO MAX ROTATION SPEED CONFIG AllConfigs.SERVER.kinetics.maxRotationSpeed.get();
-			boolean speedChangedTooOften = currentTE.getFlickerScore() > MAX_FLICKER_SCORE;
-			if (tooFast || speedChangedTooOften) {
-				world.removeBlock(pos, true);
-				return;
-			}
+            boolean incompatible =
+                    Math.signum(newSpeed) != Math.signum(speedOfNeighbour) && (newSpeed != 0 && speedOfNeighbour != 0);
 
-			// Opposite directions
-			if (incompatible) {
-				world.removeBlock(pos, true);
-				return;
+            boolean tooFast = Math.abs(newSpeed) > 1000; // TODO MAX ROTATION SPEED CONFIG AllConfigs.SERVER.kinetics.maxRotationSpeed.get();
+            boolean speedChangedTooOften = currentTE.getFlickerScore() > MAX_FLICKER_SCORE;
+            if (tooFast || speedChangedTooOften) {
+                world.removeBlock(pos, true);
+                return;
+            }
 
-				// Same direction: overpower the slower speed
-			} else {
+            // Opposite directions
+            if (incompatible) {
+                world.removeBlock(pos, true);
+                return;
 
-				// Neighbour faster, overpower the incoming tree
-				if (Math.abs(oppositeSpeed) > Math.abs(speedOfCurrent)) {
-					float prevSpeed = currentTE.getSpeed();
-					currentTE.setSource(neighbourTE.getPos());
-					currentTE.setSpeed(getConveyedSpeed(neighbourTE, currentTE));
-					currentTE.onSpeedChanged(prevSpeed);
-					currentTE.sendData();
+                // Same direction: overpower the slower speed
+            } else {
 
-					propagateNewSource(currentTE);
-					return;
-				}
+                // Neighbour faster, overpower the incoming tree
+                if (Math.abs(oppositeSpeed) > Math.abs(speedOfCurrent)) {
+                    float prevSpeed = currentTE.getSpeed();
+                    currentTE.setSource(neighbourTE.getPos());
+                    currentTE.setSpeed(getConveyedSpeed(neighbourTE, currentTE));
+                    currentTE.onSpeedChanged(prevSpeed);
+                    currentTE.sendData();
 
-				// Current faster, overpower the neighbours' tree
-				if (Math.abs(newSpeed) >= Math.abs(speedOfNeighbour)) {
+                    propagateNewSource(currentTE);
+                    return;
+                }
 
-					// Do not overpower you own network -> cycle
-					if (!currentTE.hasNetwork() || currentTE.network.equals(neighbourTE.network)) {
-						float epsilon = Math.abs(speedOfNeighbour) / 256f / 256f;
-						if (Math.abs(newSpeed) > Math.abs(speedOfNeighbour) + epsilon)
-							world.removeBlock(pos, true);
-						continue;
-					}
+                // Current faster, overpower the neighbours' tree
+                if (Math.abs(newSpeed) >= Math.abs(speedOfNeighbour)) {
 
-					if (currentTE.hasSource() && currentTE.source.equals(neighbourTE.getPos()))
-						currentTE.removeSource();
+                    // Do not overpower you own network -> cycle
+                    if (!currentTE.hasNetwork() || currentTE.network.equals(neighbourTE.network)) {
+                        float epsilon = Math.abs(speedOfNeighbour) / 256f / 256f;
+                        if (Math.abs(newSpeed) > Math.abs(speedOfNeighbour) + epsilon)
+                            world.removeBlock(pos, true);
+                        continue;
+                    }
 
-					float prevSpeed = neighbourTE.getSpeed();
-					neighbourTE.setSource(currentTE.getPos());
-					neighbourTE.setSpeed(getConveyedSpeed(currentTE, neighbourTE));
-					neighbourTE.onSpeedChanged(prevSpeed);
-					neighbourTE.sendData();
-					propagateNewSource(neighbourTE);
-					continue;
-				}
-			}
+                    if (currentTE.hasSource() && currentTE.source.equals(neighbourTE.getPos()))
+                        currentTE.removeSource();
 
-			if (neighbourTE.getTheoreticalSpeed() == newSpeed)
-				continue;
+                    float prevSpeed = neighbourTE.getSpeed();
+                    neighbourTE.setSource(currentTE.getPos());
+                    neighbourTE.setSpeed(getConveyedSpeed(currentTE, neighbourTE));
+                    neighbourTE.onSpeedChanged(prevSpeed);
+                    neighbourTE.sendData();
+                    propagateNewSource(neighbourTE);
+                    continue;
+                }
+            }
 
-			float prevSpeed = neighbourTE.getSpeed();
-			neighbourTE.setSpeed(newSpeed);
-			neighbourTE.setSource(currentTE.getPos());
-			neighbourTE.onSpeedChanged(prevSpeed);
-			neighbourTE.sendData();
-			propagateNewSource(neighbourTE);
+            if (neighbourTE.getTheoreticalSpeed() == newSpeed)
+                continue;
 
-		}
-	}
+            float prevSpeed = neighbourTE.getSpeed();
+            neighbourTE.setSpeed(newSpeed);
+            neighbourTE.setSource(currentTE.getPos());
+            neighbourTE.onSpeedChanged(prevSpeed);
+            neighbourTE.sendData();
+            propagateNewSource(neighbourTE);
 
-	/**
-	 * Remove the given entity from the network.
-	 * 
-	 * @param world
-	 * @param pos
-	 * @param removedTE
-	 */
-	public static void handleRemoved(World world, BlockPos pos, KineticBlockEntity removedTE) {
-		if (world.isClient) return;
-		if (removedTE == null) return;
-		if (removedTE.getTheoreticalSpeed() == 0) return;
+        }
+    }
 
-		for (BlockPos neighbourPos : getPotentialNeighbourLocations(removedTE)) {
-			BlockState neighbourState = world.getBlockState(neighbourPos);
-			if (!(neighbourState.getBlock() instanceof Rotating)) continue;
-			BlockEntity blockEntity = world.getBlockEntity(neighbourPos);
-			if (!(blockEntity instanceof KineticBlockEntity)) continue;
+    /**
+     * Remove the given entity from the network.
+     *
+     * @param world
+     * @param pos
+     * @param removedTE
+     */
+    public static void handleRemoved(World world, BlockPos pos, KineticBlockEntity removedTE) {
+        if (world.isClient) return;
+        if (removedTE == null) return;
+        if (removedTE.getTheoreticalSpeed() == 0) return;
 
-			final KineticBlockEntity neighbourBe = (KineticBlockEntity) blockEntity;
-			if (!neighbourBe.hasSource() || !neighbourBe.source.equals(pos)) continue;
+        for (BlockPos neighbourPos : getPotentialNeighbourLocations(removedTE)) {
+            BlockState neighbourState = world.getBlockState(neighbourPos);
+            if (!(neighbourState.getBlock() instanceof Rotating)) continue;
+            BlockEntity blockEntity = world.getBlockEntity(neighbourPos);
+            if (!(blockEntity instanceof KineticBlockEntity)) continue;
 
-			propagateMissingSource(neighbourBe);
-		}
+            final KineticBlockEntity neighbourBe = (KineticBlockEntity) blockEntity;
+            if (!neighbourBe.hasSource() || !neighbourBe.source.equals(pos)) continue;
 
-	}
+            propagateMissingSource(neighbourBe);
+        }
 
-	/**
-	 * Clear the entire subnetwork depending on the given entity and find a new
-	 * source
-	 * 
-	 * @param updateTE
-	 */
-	private static void propagateMissingSource(KineticBlockEntity updateTE) {
-		final World world = updateTE.getWorld();
+    }
 
-		List<KineticBlockEntity> potentialNewSources = new LinkedList<>();
-		List<BlockPos> frontier = new LinkedList<>();
-		frontier.add(updateTE.getPos());
-		BlockPos missingSource = updateTE.hasSource() ? updateTE.source : null;
+    /**
+     * Clear the entire subnetwork depending on the given entity and find a new
+     * source
+     *
+     * @param updateTE
+     */
+    private static void propagateMissingSource(KineticBlockEntity updateTE) {
+        final World world = updateTE.getWorld();
 
-		while (!frontier.isEmpty()) {
-			final BlockPos pos = frontier.remove(0);
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (!(blockEntity instanceof KineticBlockEntity))
-				continue;
-			final KineticBlockEntity currentTE = (KineticBlockEntity) blockEntity;
+        List<KineticBlockEntity> potentialNewSources = new LinkedList<>();
+        List<BlockPos> frontier = new LinkedList<>();
+        frontier.add(updateTE.getPos());
+        BlockPos missingSource = updateTE.hasSource() ? updateTE.source : null;
 
-			currentTE.removeSource();
-			currentTE.sendData();
+        while (!frontier.isEmpty()) {
+            final BlockPos pos = frontier.remove(0);
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (!(blockEntity instanceof KineticBlockEntity))
+                continue;
+            final KineticBlockEntity currentTE = (KineticBlockEntity) blockEntity;
 
-			for (KineticBlockEntity neighbourBe : getConnectedNeighbours(currentTE)) {
-				if (neighbourBe.getPos().equals(missingSource)) continue;
-				if (!neighbourBe.hasSource()) continue;
+            currentTE.removeSource();
+            currentTE.sendData();
 
-				if (!neighbourBe.source.equals(pos)) {
-					potentialNewSources.add(neighbourBe);
-					continue;
-				}
+            for (KineticBlockEntity neighbourBe : getConnectedNeighbours(currentTE)) {
+                if (neighbourBe.getPos().equals(missingSource)) continue;
+                if (!neighbourBe.hasSource()) continue;
 
-				if (neighbourBe.isSource()) potentialNewSources.add(neighbourBe);
+                if (!neighbourBe.source.equals(pos)) {
+                    potentialNewSources.add(neighbourBe);
+                    continue;
+                }
 
-				frontier.add(neighbourBe.getPos());
-			}
-		}
+                if (neighbourBe.isSource()) potentialNewSources.add(neighbourBe);
 
-		for (KineticBlockEntity newSource : potentialNewSources) {
-			if (newSource.hasSource() || newSource.isSource()) {
-				propagateNewSource(newSource);
-				return;
-			}
-		}
-	}
+                frontier.add(neighbourBe.getPos());
+            }
+        }
 
-	private static KineticBlockEntity findConnectedNeighbour(KineticBlockEntity currentTE, BlockPos neighbourPos) {
-		BlockState neighbourState = currentTE.getWorld().getBlockState(neighbourPos);
-		if (!(neighbourState.getBlock() instanceof Rotating)) return null;
-		if (!neighbourState.hasBlockEntity()) return null;
-		BlockEntity neighbourTE = currentTE.getWorld().getBlockEntity(neighbourPos);
-		if (!(neighbourTE instanceof KineticBlockEntity)) return null;
-		KineticBlockEntity neighbourKbe = (KineticBlockEntity) neighbourTE;
-		if (!(neighbourKbe.getCachedState().getBlock() instanceof Rotating))return null;
-		if (!isConnected(currentTE, neighbourKbe) && !isConnected(neighbourKbe, currentTE)) return null;
-		return neighbourKbe;
-	}
+        for (KineticBlockEntity newSource : potentialNewSources) {
+            if (newSource.hasSource() || newSource.isSource()) {
+                propagateNewSource(newSource);
+                return;
+            }
+        }
+    }
 
-	public static boolean isConnected(KineticBlockEntity from, KineticBlockEntity to) {
-		final BlockState stateFrom = from.getCachedState();
-		final BlockState stateTo = to.getCachedState();
-		return false; /*isLargeCogToSpeedController(stateFrom, stateTo, to.getPos() TODO IS LARGE COG TO SPEED CONTROLLER CHECK
+    private static KineticBlockEntity findConnectedNeighbour(KineticBlockEntity currentTE, BlockPos neighbourPos) {
+        BlockState neighbourState = currentTE.getWorld().getBlockState(neighbourPos);
+        if (!(neighbourState.getBlock() instanceof Rotating)) return null;
+        if (!neighbourState.hasBlockEntity()) return null;
+        BlockEntity neighbourTE = currentTE.getWorld().getBlockEntity(neighbourPos);
+        if (!(neighbourTE instanceof KineticBlockEntity)) return null;
+        KineticBlockEntity neighbourKbe = (KineticBlockEntity) neighbourTE;
+        if (!(neighbourKbe.getCachedState().getBlock() instanceof Rotating)) return null;
+        if (!isConnected(currentTE, neighbourKbe) && !isConnected(neighbourKbe, currentTE)) return null;
+        return neighbourKbe;
+    }
+
+    public static boolean isConnected(KineticBlockEntity from, KineticBlockEntity to) {
+        final BlockState stateFrom = from.getCachedState();
+        final BlockState stateTo = to.getCachedState();
+        return false; /*isLargeCogToSpeedController(stateFrom, stateTo, to.getPos() TODO IS LARGE COG TO SPEED CONTROLLER CHECK
 			.subtract(from.getPos())) || getRotationSpeedModifier(from, to) != 0
 			|| from.isCustomConnection(to, stateFrom, stateTo);*/
-	}
+    }
 
-	private static List<KineticBlockEntity> getConnectedNeighbours(KineticBlockEntity be) {
-		List<KineticBlockEntity> neighbours = new LinkedList<>();
-		for (BlockPos neighbourPos : getPotentialNeighbourLocations(be)) {
-			final KineticBlockEntity neighbourTE = findConnectedNeighbour(be, neighbourPos);
-			if (neighbourTE == null)
-				continue;
+    private static List<KineticBlockEntity> getConnectedNeighbours(KineticBlockEntity be) {
+        List<KineticBlockEntity> neighbours = new LinkedList<>();
+        for (BlockPos neighbourPos : getPotentialNeighbourLocations(be)) {
+            final KineticBlockEntity neighbourTE = findConnectedNeighbour(be, neighbourPos);
+            if (neighbourTE == null)
+                continue;
 
-			neighbours.add(neighbourTE);
-		}
-		return neighbours;
-	}
+            neighbours.add(neighbourTE);
+        }
+        return neighbours;
+    }
 
-	private static List<BlockPos> getPotentialNeighbourLocations(KineticBlockEntity be) {
-		List<BlockPos> neighbours = new LinkedList<>();
+    private static List<BlockPos> getPotentialNeighbourLocations(KineticBlockEntity be) {
+        List<BlockPos> neighbours = new LinkedList<>();
 
-		if (!be.getWorld()
-			.isRegionLoaded(be.getPos(), BlockPos.fromLong(1))) // TODO COULD BE COMPLETELY WRONG
-			return neighbours;
+        if (!be.getWorld()
+                .isRegionLoaded(be.getPos(), BlockPos.fromLong(1))) // TODO COULD BE COMPLETELY WRONG
+            return neighbours;
 
-		for (Direction facing : Iterate.directions)
-			neighbours.add(be.getPos()
-				.offset(facing));
+        for (Direction facing : Iterate.directions)
+            neighbours.add(be.getPos()
+                    .offset(facing));
 
-		BlockState blockState = be.getCachedState();
-		if (!(blockState.getBlock() instanceof Rotating))
-			return neighbours;
-		Rotating block = (Rotating) blockState.getBlock();
-		return be.addPropagationLocations(block, blockState, neighbours);
-	}
+        BlockState blockState = be.getCachedState();
+        if (!(blockState.getBlock() instanceof Rotating))
+            return neighbours;
+        Rotating block = (Rotating) blockState.getBlock();
+        return be.addPropagationLocations(block, blockState, neighbours);
+    }
 
 }

@@ -1,8 +1,8 @@
 package com.smellypengu.createfabric.content.contraptions.components.structureMovement;
 
 import com.smellypengu.createfabric.AllEntityTypes;
-import com.smellypengu.createfabric.foundation.utility.MatrixStacker;
 import com.smellypengu.createfabric.foundation.utility.CNBTHelper;
+import com.smellypengu.createfabric.foundation.utility.MatrixStacker;
 import com.smellypengu.createfabric.foundation.utility.VecHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,209 +27,211 @@ import static com.smellypengu.createfabric.foundation.utility.AngleHelper.angleL
  */
 public class ControlledContraptionEntity extends AbstractContraptionEntity {
 
-	protected BlockPos controllerPos;
-	protected Direction.Axis rotationAxis;
-	protected float prevAngle;
-	protected float angle;
+    protected BlockPos controllerPos;
+    protected Direction.Axis rotationAxis;
+    protected float prevAngle;
+    protected float angle;
 
-	public ControlledContraptionEntity(EntityType<?> type, World world) {
-		super(type, world);
-	}
+    public ControlledContraptionEntity(EntityType<?> type, World world) {
+        super(type, world);
+    }
 
-	public static ControlledContraptionEntity create(World world, IControlContraption controller,
-		Contraption contraption) {
-		ControlledContraptionEntity entity =
-			new ControlledContraptionEntity(AllEntityTypes.CONTROLLED_CONTRAPTION, world);
-		entity.controllerPos = controller.getBlockPosition();
-		entity.setContraption(contraption);
-		return entity;
-	}
+    public static ControlledContraptionEntity create(World world, IControlContraption controller,
+                                                     Contraption contraption) {
+        ControlledContraptionEntity entity =
+                new ControlledContraptionEntity(AllEntityTypes.CONTROLLED_CONTRAPTION, world);
+        entity.controllerPos = controller.getBlockPosition();
+        entity.setContraption(contraption);
+        return entity;
+    }
 
-	@Override
-		public Vec3d getContactPointMotion(Vec3d globalContactPoint) {
-			if (contraption instanceof TranslatingContraption)
-				return getVelocity();
-			return super.getContactPointMotion(globalContactPoint);
-		}
+    @Override
+    public Vec3d getContactPointMotion(Vec3d globalContactPoint) {
+        if (contraption instanceof TranslatingContraption)
+            return getVelocity();
+        return super.getContactPointMotion(globalContactPoint);
+    }
 
-	@Override
-	protected void setContraption(Contraption contraption) {
-		super.setContraption(contraption);
-		/**if (contraption instanceof BearingContraption) TODO BearingContraption CHECK
-			rotationAxis = ((BearingContraption) contraption).getFacing()
-				.getAxis();*/
+    @Override
+    protected void setContraption(Contraption contraption) {
+        super.setContraption(contraption);
+        /**if (contraption instanceof BearingContraption) TODO BearingContraption CHECK
+         rotationAxis = ((BearingContraption) contraption).getFacing()
+         .getAxis();*/
 
-	}
+    }
 
-	@Override
-	protected void readAdditional(CompoundTag compound, boolean spawnPacket) {
-		super.readAdditional(compound, spawnPacket);
-		controllerPos = NbtHelper.toBlockPos(compound.getCompound("Controller"));
-		if (compound.contains("Axis"))
-			rotationAxis = CNBTHelper.readEnum(compound, "Axis", Direction.Axis.class);
-		angle = compound.getFloat("Angle");
-	}
+    @Override
+    protected void readAdditional(CompoundTag compound, boolean spawnPacket) {
+        super.readAdditional(compound, spawnPacket);
+        controllerPos = NbtHelper.toBlockPos(compound.getCompound("Controller"));
+        if (compound.contains("Axis"))
+            rotationAxis = CNBTHelper.readEnum(compound, "Axis", Direction.Axis.class);
+        angle = compound.getFloat("Angle");
+    }
 
-	@Override
-	protected void writeAdditional(CompoundTag compound, boolean spawnPacket) {
-		super.writeAdditional(compound, spawnPacket);
-		compound.put("Controller", NbtHelper.fromBlockPos(controllerPos));
-		if (rotationAxis != null)
-			CNBTHelper.writeEnum(compound, "Axis", rotationAxis);
-		compound.putFloat("Angle", angle);
-	}
+    @Override
+    protected void writeAdditional(CompoundTag compound, boolean spawnPacket) {
+        super.writeAdditional(compound, spawnPacket);
+        compound.put("Controller", NbtHelper.fromBlockPos(controllerPos));
+        if (rotationAxis != null)
+            CNBTHelper.writeEnum(compound, "Axis", rotationAxis);
+        compound.putFloat("Angle", angle);
+    }
 
-	@Override
-	public ContraptionRotationState getRotationState() {
-		ContraptionRotationState crs = new ContraptionRotationState();
-		if (rotationAxis == Direction.Axis.X)
-			crs.xRotation = angle;
-		if (rotationAxis == Direction.Axis.Y)
-			crs.yRotation = angle;
-		if (rotationAxis == Direction.Axis.Z)
-			crs.zRotation = angle;
-		return crs;
-	}
+    @Override
+    public ContraptionRotationState getRotationState() {
+        ContraptionRotationState crs = new ContraptionRotationState();
+        if (rotationAxis == Direction.Axis.X)
+            crs.xRotation = angle;
+        if (rotationAxis == Direction.Axis.Y)
+            crs.yRotation = angle;
+        if (rotationAxis == Direction.Axis.Z)
+            crs.zRotation = angle;
+        return crs;
+    }
 
-	@Override
-	public Vec3d applyRotation(Vec3d localPos, float partialTicks) {
-		localPos = VecHelper.rotate(localPos, getAngle(partialTicks), rotationAxis);
-		return localPos;
-	}
+    @Override
+    public Vec3d applyRotation(Vec3d localPos, float partialTicks) {
+        localPos = VecHelper.rotate(localPos, getAngle(partialTicks), rotationAxis);
+        return localPos;
+    }
 
-	@Override
-	public Vec3d reverseRotation(Vec3d localPos, float partialTicks) {
-		localPos = VecHelper.rotate(localPos, -getAngle(partialTicks), rotationAxis);
-		return localPos;
-	}
+    @Override
+    public Vec3d reverseRotation(Vec3d localPos, float partialTicks) {
+        localPos = VecHelper.rotate(localPos, -getAngle(partialTicks), rotationAxis);
+        return localPos;
+    }
 
-	public void setAngle(float angle) {
-		this.angle = angle;
-	}
+    public void setAngle(float angle) {
+        this.angle = angle;
+    }
 
-	public float getAngle(float partialTicks) {
-		return partialTicks == 1.0F ? angle : angleLerp(partialTicks, prevAngle, angle);
-	}
+    public float getAngle(float partialTicks) {
+        return partialTicks == 1.0F ? angle : angleLerp(partialTicks, prevAngle, angle);
+    }
 
-	public void setRotationAxis(Direction.Axis rotationAxis) {
-		this.rotationAxis = rotationAxis;
-	}
+    public Direction.Axis getRotationAxis() {
+        return rotationAxis;
+    }
 
-	public Direction.Axis getRotationAxis() {
-		return rotationAxis;
-	}
+    public void setRotationAxis(Direction.Axis rotationAxis) {
+        this.rotationAxis = rotationAxis;
+    }
 
-	@Override
-	public void requestTeleport(double p_70634_1_, double p_70634_3_, double p_70634_5_) {}
+    @Override
+    public void requestTeleport(double p_70634_1_, double p_70634_3_, double p_70634_5_) {
+    }
 
-	@Override
-	@Environment(EnvType.CLIENT)
-	public void updateTrackedPositionAndAngles(double x, double y, double z, float yw, float pt, int inc, boolean t) {}
+    @Override
+    @Environment(EnvType.CLIENT)
+    public void updateTrackedPositionAndAngles(double x, double y, double z, float yw, float pt, int inc, boolean t) {
+    }
 
-	protected void tickContraption() {
-		prevAngle = angle;
-		tickActors();
-		
-		if (controllerPos == null)
-			return;
-		if (!world.canSetBlock(controllerPos))
-			return;
-		IControlContraption controller = getController();
-		if (controller == null) {
-			remove(RemovalReason.DISCARDED);
-			return;
-		}
-		if (!controller.isAttachedTo(this)) {
-			controller.attach(this);
-			if (world.isClient)
-				setPosition(getX(), getY(), getZ());
-		}
+    protected void tickContraption() {
+        prevAngle = angle;
+        tickActors();
 
-		Vec3d motion = getVelocity();
-		move(motion.x, motion.y, motion.z);
-		/**if (ContraptionCollider.collideBlocks(this)) TODO COLLISION CHECK
-			getController().collided();*/
-	}
+        if (controllerPos == null)
+            return;
+        if (!world.canSetBlock(controllerPos))
+            return;
+        IControlContraption controller = getController();
+        if (controller == null) {
+            remove(RemovalReason.DISCARDED);
+            return;
+        }
+        if (!controller.isAttachedTo(this)) {
+            controller.attach(this);
+            if (world.isClient)
+                setPosition(getX(), getY(), getZ());
+        }
 
-	@Override
-	protected boolean shouldActorTrigger(MovementContext context, Structure.StructureBlockInfo blockInfo, MovementBehaviour actor,
-										 Vec3d actorPosition, BlockPos gridPosition) {
-		if (super.shouldActorTrigger(context, blockInfo, actor, actorPosition, gridPosition))
-			return true;
+        Vec3d motion = getVelocity();
+        move(motion.x, motion.y, motion.z);
+        /**if (ContraptionCollider.collideBlocks(this)) TODO COLLISION CHECK
+         getController().collided();*/
+    }
 
-		// Special activation timer for actors in the center of a bearing contraption
-		/**if (!(contraption instanceof BearingContraption)) TODO BearingContraption CHECK
-			return false;
-		BearingContraption bc = (BearingContraption) contraption;
-		Direction facing = bc.getFacing();
-		Vec3d activeAreaOffset = actor.getActiveAreaOffset(context);
-		if (!activeAreaOffset.multiply(VecHelper.axisAlingedPlaneOf(new Vec3d(facing.getDirectionVec())))
-			.equals(Vec3d.ZERO))
-			return false;
-		if (!VecHelper.onSameAxis(blockInfo.pos, (BlockPos) BlockPos.ZERO, facing.getAxis()))
-			return false;
-		context.motion = new Vec3d(facing.getDirectionVec()).scale(angle - prevAngle);
-		context.relativeMotion = context.motion;
-		int timer = context.data.getInt("StationaryTimer");
-		if (timer > 0) {
-			context.data.putInt("StationaryTimer", timer - 1);
-			return false;
-		}
+    @Override
+    protected boolean shouldActorTrigger(MovementContext context, Structure.StructureBlockInfo blockInfo, MovementBehaviour actor,
+                                         Vec3d actorPosition, BlockPos gridPosition) {
+        if (super.shouldActorTrigger(context, blockInfo, actor, actorPosition, gridPosition))
+            return true;
 
-		context.data.putInt("StationaryTimer", 20);*/
-		return true;
-	}
+        // Special activation timer for actors in the center of a bearing contraption
+        /**if (!(contraption instanceof BearingContraption)) TODO BearingContraption CHECK
+         return false;
+         BearingContraption bc = (BearingContraption) contraption;
+         Direction facing = bc.getFacing();
+         Vec3d activeAreaOffset = actor.getActiveAreaOffset(context);
+         if (!activeAreaOffset.multiply(VecHelper.axisAlingedPlaneOf(new Vec3d(facing.getDirectionVec())))
+         .equals(Vec3d.ZERO))
+         return false;
+         if (!VecHelper.onSameAxis(blockInfo.pos, (BlockPos) BlockPos.ZERO, facing.getAxis()))
+         return false;
+         context.motion = new Vec3d(facing.getDirectionVec()).scale(angle - prevAngle);
+         context.relativeMotion = context.motion;
+         int timer = context.data.getInt("StationaryTimer");
+         if (timer > 0) {
+         context.data.putInt("StationaryTimer", timer - 1);
+         return false;
+         }
 
-	protected IControlContraption getController() {
-		if (controllerPos == null)
-			return null;
-		if (!world.canSetBlock(controllerPos))
-			return null;
-		BlockEntity te = world.getBlockEntity(controllerPos);
-		if (!(te instanceof IControlContraption))
-			return null;
-		return (IControlContraption) te;
-	}
+         context.data.putInt("StationaryTimer", 20);*/
+        return true;
+    }
 
-	@Override
-	protected StructureTransform makeStructureTransform() {
-		BlockPos offset = new BlockPos(getAnchorVec().add(.5, .5, .5));
-		float xRot = rotationAxis == Direction.Axis.X ? angle : 0;
-		float yRot = rotationAxis == Direction.Axis.Y ? angle : 0;
-		float zRot = rotationAxis == Direction.Axis.Z ? angle : 0;
-		return new StructureTransform(offset, xRot, yRot, zRot);
-	}
+    protected IControlContraption getController() {
+        if (controllerPos == null)
+            return null;
+        if (!world.canSetBlock(controllerPos))
+            return null;
+        BlockEntity te = world.getBlockEntity(controllerPos);
+        if (!(te instanceof IControlContraption))
+            return null;
+        return (IControlContraption) te;
+    }
 
-	@Override
-	protected void onContraptionStalled() {
-		IControlContraption controller = getController();
-		if (controller != null)
-			controller.onStall();
-		super.onContraptionStalled();
-	}
+    @Override
+    protected StructureTransform makeStructureTransform() {
+        BlockPos offset = new BlockPos(getAnchorVec().add(.5, .5, .5));
+        float xRot = rotationAxis == Direction.Axis.X ? angle : 0;
+        float yRot = rotationAxis == Direction.Axis.Y ? angle : 0;
+        float zRot = rotationAxis == Direction.Axis.Z ? angle : 0;
+        return new StructureTransform(offset, xRot, yRot, zRot);
+    }
 
-	@Override
-	protected float getStalledAngle() {
-		return angle;
-	}
+    @Override
+    protected void onContraptionStalled() {
+        IControlContraption controller = getController();
+        if (controller != null)
+            controller.onStall();
+        super.onContraptionStalled();
+    }
 
-	@Override
-	protected void handleStallInformation(float x, float y, float z, float angle) {
-		setPos(x, y, z);
-		this.angle = angle;
-	}
+    @Override
+    protected float getStalledAngle() {
+        return angle;
+    }
 
-	@Override
-	@Environment(EnvType.CLIENT)
-	public void doLocalTransforms(float partialTicks, MatrixStack[] matrixStacks) {
-		float angle = getAngle(partialTicks);
-		Direction.Axis axis = getRotationAxis();
+    @Override
+    protected void handleStallInformation(float x, float y, float z, float angle) {
+        setPos(x, y, z);
+        this.angle = angle;
+    }
 
-		for (MatrixStack stack : matrixStacks)
-			MatrixStacker.of(stack)
-						 .nudge(getId())
-						 .centre()
-						 .rotate(angle, axis)
-						 .unCentre();
-	}
+    @Override
+    @Environment(EnvType.CLIENT)
+    public void doLocalTransforms(float partialTicks, MatrixStack[] matrixStacks) {
+        float angle = getAngle(partialTicks);
+        Direction.Axis axis = getRotationAxis();
+
+        for (MatrixStack stack : matrixStacks)
+            MatrixStacker.of(stack)
+                    .nudge(getId())
+                    .centre()
+                    .rotate(angle, axis)
+                    .unCentre();
+    }
 }

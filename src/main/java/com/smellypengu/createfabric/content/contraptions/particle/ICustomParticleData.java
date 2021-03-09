@@ -11,26 +11,26 @@ import net.minecraft.particle.ParticleType;
 
 public interface ICustomParticleData<T extends ParticleEffect> {
 
-	Factory<T> getDeserializer();
+    Factory<T> getDeserializer();
 
-	Codec<T> getCodec(ParticleType<T> type); 
-	
-	public default ParticleType<T> createType() {
-		return new ParticleType<T>(false, getDeserializer()) {
+    Codec<T> getCodec(ParticleType<T> type);
 
-			@Override
-			public Codec<T> getCodec() {
-				return ICustomParticleData.this.getCodec(this);
-			}
-		};
-	}
-	
-	@Environment(EnvType.CLIENT)
-	public ParticleFactory<T> getFactory();
-	
-	@Environment(EnvType.CLIENT)
-	public default void register(ParticleType<T> type, ParticleManager particles) {
-		particles.registerFactory(type, getFactory());
-	}
-	
+    default ParticleType<T> createType() {
+        return new ParticleType<T>(false, getDeserializer()) {
+
+            @Override
+            public Codec<T> getCodec() {
+                return ICustomParticleData.this.getCodec(this);
+            }
+        };
+    }
+
+    @Environment(EnvType.CLIENT)
+    ParticleFactory<T> getFactory();
+
+    @Environment(EnvType.CLIENT)
+    default void register(ParticleType<T> type, ParticleManager particles) {
+        particles.registerFactory(type, getFactory());
+    }
+
 }

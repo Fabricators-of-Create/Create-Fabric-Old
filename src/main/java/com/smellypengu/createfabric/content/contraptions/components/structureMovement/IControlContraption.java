@@ -1,78 +1,78 @@
 package com.smellypengu.createfabric.content.contraptions.components.structureMovement;
 
-import com.smellypengu.createfabric.foundation.gui.AllIcons;
 import com.smellypengu.createfabric.foundation.block.entity.behaviour.scrollvalue.NamedIconOptions;
+import com.smellypengu.createfabric.foundation.gui.AllIcons;
 import com.smellypengu.createfabric.foundation.utility.Lang;
 import net.minecraft.util.math.BlockPos;
 
 public interface IControlContraption {
 
-	public boolean isAttachedTo(AbstractContraptionEntity contraption);
-	
-	public void attach(ControlledContraptionEntity contraption);
+    boolean isAttachedTo(AbstractContraptionEntity contraption);
 
-	public void onStall();
+    void attach(ControlledContraptionEntity contraption);
 
-	public boolean isValid();
-	
-	public void collided();
-	
-	public BlockPos getBlockPosition();
+    void onStall();
 
-	static enum MovementMode implements NamedIconOptions {
+    boolean isValid();
 
-		MOVE_PLACE(AllIcons.I_MOVE_PLACE),
-		MOVE_PLACE_RETURNED(AllIcons.I_MOVE_PLACE_RETURNED),
-		MOVE_NEVER_PLACE(AllIcons.I_MOVE_NEVER_PLACE),
+    void collided();
 
-		;
+    BlockPos getBlockPosition();
 
-		private String translationKey;
-		private AllIcons icon;
+    enum MovementMode implements NamedIconOptions {
 
-		private MovementMode(AllIcons icon) {
-			this.icon = icon;
-			translationKey = "contraptions.movement_mode." + Lang.asId(name());
-		}
+        MOVE_PLACE(AllIcons.I_MOVE_PLACE),
+        MOVE_PLACE_RETURNED(AllIcons.I_MOVE_PLACE_RETURNED),
+        MOVE_NEVER_PLACE(AllIcons.I_MOVE_NEVER_PLACE),
 
-		@Override
-		public AllIcons getIcon() {
-			return icon;
-		}
+        ;
 
-		@Override
-		public String getTranslationKey() {
-			return translationKey;
-		}
+        private final String translationKey;
+        private final AllIcons icon;
 
-	}
+        MovementMode(AllIcons icon) {
+            this.icon = icon;
+            translationKey = "contraptions.movement_mode." + Lang.asId(name());
+        }
 
-	static enum RotationMode implements NamedIconOptions {
+        @Override
+        public AllIcons getIcon() {
+            return icon;
+        }
 
-		ROTATE_PLACE(AllIcons.I_ROTATE_PLACE),
-		ROTATE_PLACE_RETURNED(AllIcons.I_ROTATE_PLACE_RETURNED),
-		ROTATE_NEVER_PLACE(AllIcons.I_ROTATE_NEVER_PLACE),
+        @Override
+        public String getTranslationKey() {
+            return translationKey;
+        }
 
-		;
+    }
 
-		private String translationKey;
-		private AllIcons icon;
+    enum RotationMode implements NamedIconOptions {
 
-		private RotationMode(AllIcons icon) {
-			this.icon = icon;
-			translationKey = "contraptions.movement_mode." + Lang.asId(name());
-		}
+        ROTATE_PLACE(AllIcons.I_ROTATE_PLACE),
+        ROTATE_PLACE_RETURNED(AllIcons.I_ROTATE_PLACE_RETURNED),
+        ROTATE_NEVER_PLACE(AllIcons.I_ROTATE_NEVER_PLACE),
 
-		@Override
-		public AllIcons getIcon() {
-			return icon;
-		}
+        ;
 
-		@Override
-		public String getTranslationKey() {
-			return translationKey;
-		}
+        private final String translationKey;
+        private final AllIcons icon;
 
-	}
+        RotationMode(AllIcons icon) {
+            this.icon = icon;
+            translationKey = "contraptions.movement_mode." + Lang.asId(name());
+        }
+
+        @Override
+        public AllIcons getIcon() {
+            return icon;
+        }
+
+        @Override
+        public String getTranslationKey() {
+            return translationKey;
+        }
+
+    }
 
 }

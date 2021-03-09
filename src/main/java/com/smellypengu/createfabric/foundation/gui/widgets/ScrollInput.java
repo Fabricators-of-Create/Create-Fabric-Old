@@ -13,132 +13,132 @@ import java.util.function.Function;
 
 public class ScrollInput extends AbstractSimiWidget {
 
-	protected Consumer<Integer> onScroll;
-	protected int state;
-	protected String title = Lang.translate("gui.scrollInput.defaultTitle");
-	protected final String scrollToModify = Lang.translate("gui.scrollInput.scrollToModify");
-	protected final String shiftScrollsFaster = Lang.translate("gui.scrollInput.shiftScrollsFaster");
-	protected Label displayLabel;
+    protected Consumer<Integer> onScroll;
+    protected int state;
+    protected String title = Lang.translate("gui.scrollInput.defaultTitle");
+    protected final String scrollToModify = Lang.translate("gui.scrollInput.scrollToModify");
+    protected final String shiftScrollsFaster = Lang.translate("gui.scrollInput.shiftScrollsFaster");
+    protected Label displayLabel;
 
-	protected int min, max;
-	protected int shiftStep;
-	Function<ScrollValueBehaviour.StepContext, Integer> step;
+    protected int min, max;
+    protected int shiftStep;
+    Function<ScrollValueBehaviour.StepContext, Integer> step;
 
-	public ScrollInput(int xIn, int yIn, int widthIn, int heightIn) {
-		super(xIn, yIn, widthIn, heightIn);
-		state = 0;
-		min = 0;
-		max = 1;
-		shiftStep = 5;
-		step = standardStep();
-	}
+    public ScrollInput(int xIn, int yIn, int widthIn, int heightIn) {
+        super(xIn, yIn, widthIn, heightIn);
+        state = 0;
+        min = 0;
+        max = 1;
+        shiftStep = 5;
+        step = standardStep();
+    }
 
-	public Function<ScrollValueBehaviour.StepContext, Integer> standardStep() {
-		return c -> c.shift ? shiftStep : 1;
-	}
+    public Function<ScrollValueBehaviour.StepContext, Integer> standardStep() {
+        return c -> c.shift ? shiftStep : 1;
+    }
 
-	public ScrollInput withRange(int min, int max) {
-		this.min = min;
-		this.max = max;
-		return this;
-	}
+    public ScrollInput withRange(int min, int max) {
+        this.min = min;
+        this.max = max;
+        return this;
+    }
 
-	public ScrollInput calling(Consumer<Integer> onScroll) {
-		this.onScroll = onScroll;
-		return this;
-	}
-	
-	public ScrollInput removeCallback() {
-		this.onScroll = null;
-		return this;
-	}
+    public ScrollInput calling(Consumer<Integer> onScroll) {
+        this.onScroll = onScroll;
+        return this;
+    }
 
-	public ScrollInput titled(MutableText title) {
-		this.title = title.getString();
-		updateTooltip();
-		return this;
-	}
+    public ScrollInput removeCallback() {
+        this.onScroll = null;
+        return this;
+    }
 
-	public ScrollInput withStepFunction(Function<ScrollValueBehaviour.StepContext, Integer> step) {
-		this.step = step;
-		return this;
-	}
+    public ScrollInput titled(MutableText title) {
+        this.title = title.getString();
+        updateTooltip();
+        return this;
+    }
 
-	public ScrollInput writingTo(Label label) {
-		this.displayLabel = label;
-		writeToLabel();
-		return this;
-	}
+    public ScrollInput withStepFunction(Function<ScrollValueBehaviour.StepContext, Integer> step) {
+        this.step = step;
+        return this;
+    }
 
-	public int getState() {
-		return state;
-	}
+    public ScrollInput writingTo(Label label) {
+        this.displayLabel = label;
+        writeToLabel();
+        return this;
+    }
 
-	public ScrollInput setState(int state) {
-		this.state = state;
-		clampState();
-		updateTooltip();
-		if (displayLabel != null)
-			writeToLabel();
-		return this;
-	}
+    public int getState() {
+        return state;
+    }
 
-	public ScrollInput withShiftStep(int step) {
-		shiftStep = step;
-		return this;
-	}
+    public ScrollInput setState(int state) {
+        this.state = state;
+        clampState();
+        updateTooltip();
+        if (displayLabel != null)
+            writeToLabel();
+        return this;
+    }
 
-	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-		if (!hovered)
-			return false;
+    public ScrollInput withShiftStep(int step) {
+        shiftStep = step;
+        return this;
+    }
 
-		ScrollValueBehaviour.StepContext context = new ScrollValueBehaviour.StepContext();
-		context.control = AllKeys.ctrlDown();
-		context.shift = AllKeys.shiftDown();
-		context.currentValue = state;
-		context.forward = delta > 0;
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (!hovered)
+            return false;
 
-		int priorState = state;
-		boolean shifted = AllKeys.shiftDown();
-		int step = (int) Math.signum(delta) * this.step.apply(context);
+        ScrollValueBehaviour.StepContext context = new ScrollValueBehaviour.StepContext();
+        context.control = AllKeys.ctrlDown();
+        context.shift = AllKeys.shiftDown();
+        context.currentValue = state;
+        context.forward = delta > 0;
 
-		state += step;
-		if (shifted)
-			state -= state % shiftStep;
+        int priorState = state;
+        boolean shifted = AllKeys.shiftDown();
+        int step = (int) Math.signum(delta) * this.step.apply(context);
 
-		clampState();
+        state += step;
+        if (shifted)
+            state -= state % shiftStep;
 
-		if (priorState != state)
-			onChanged();
+        clampState();
 
-		return priorState != state;
-	}
+        if (priorState != state)
+            onChanged();
 
-	protected void clampState() {
-		if (state >= max)
-			state = max - 1;
-		if (state < min)
-			state = min;
-	}
+        return priorState != state;
+    }
 
-	public void onChanged() {
-		if (displayLabel != null)
-			writeToLabel();
-		if (onScroll != null)
-			onScroll.accept(state);
-		updateTooltip();
-	}
+    protected void clampState() {
+        if (state >= max)
+            state = max - 1;
+        if (state < min)
+            state = min;
+    }
 
-	protected void writeToLabel() {
-		displayLabel.text = new LiteralText(String.valueOf(state));
-	}
+    public void onChanged() {
+        if (displayLabel != null)
+            writeToLabel();
+        if (onScroll != null)
+            onScroll.accept(state);
+        updateTooltip();
+    }
 
-	protected void updateTooltip() {
-		toolTip.clear();
-		toolTip.add(Text.of(title).copy().formatted(Formatting.BLUE));
-		toolTip.add(Text.of(scrollToModify).copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
-		toolTip.add(Text.of(shiftScrollsFaster).copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
-	}
+    protected void writeToLabel() {
+        displayLabel.text = new LiteralText(String.valueOf(state));
+    }
+
+    protected void updateTooltip() {
+        toolTip.clear();
+        toolTip.add(Text.of(title).copy().formatted(Formatting.BLUE));
+        toolTip.add(Text.of(scrollToModify).copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
+        toolTip.add(Text.of(shiftScrollsFaster).copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
+    }
 
 }

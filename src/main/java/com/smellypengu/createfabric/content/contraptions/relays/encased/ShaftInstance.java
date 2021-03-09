@@ -9,18 +9,18 @@ import net.minecraft.block.entity.BlockEntityType;
 
 public class ShaftInstance extends SingleRotatingInstance {
 
-	public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
-		/**DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->*/
-				InstancedTileRenderRegistry.instance.register(type, ShaftInstance::new);
-	}
+    public ShaftInstance(InstancedTileRenderer dispatcher, KineticBlockEntity tile) {
+        super(dispatcher, tile);
+    }
 
-	public ShaftInstance(InstancedTileRenderer dispatcher, KineticBlockEntity tile) {
-		super(dispatcher, tile);
-	}
+    public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
+        /**DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->*/
+        InstancedTileRenderRegistry.instance.register(type, ShaftInstance::new);
+    }
 
-	@Override
-	protected BlockState getRenderedBlockState() {
-		return shaft(getRotationAxis());
-	}
+    @Override
+    protected BlockState getRenderedBlockState() {
+        return shaft(getRotationAxis());
+    }
 
 }
