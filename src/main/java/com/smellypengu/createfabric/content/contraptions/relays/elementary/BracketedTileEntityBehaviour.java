@@ -3,7 +3,7 @@ package com.smellypengu.createfabric.content.contraptions.relays.elementary;
 import com.smellypengu.createfabric.foundation.tileEntity.SmartTileEntity;
 import com.smellypengu.createfabric.foundation.tileEntity.TileEntityBehaviour;
 import com.smellypengu.createfabric.foundation.tileEntity.behaviour.BehaviourType;
-import com.smellypengu.createfabric.foundation.utility.NBTHelperC;
+import com.smellypengu.createfabric.foundation.utility.CNBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -82,7 +82,7 @@ public class BracketedTileEntityBehaviour extends TileEntityBehaviour {
 	public void write(CompoundTag nbt, boolean clientPacket) {
 		bracket.ifPresent(p -> nbt.put("Bracket", NbtHelper.fromBlockState(p)));
 		if (clientPacket && reRender) {
-			NBTHelperC.putMarker(nbt, "Redraw");
+			CNBTHelper.putMarker(nbt, "Redraw");
 			reRender = false;
 		}
 		super.write(nbt, clientPacket);

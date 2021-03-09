@@ -2,7 +2,7 @@ package com.smellypengu.createfabric.content.contraptions.components.structureMo
 
 import com.smellypengu.createfabric.AllEntityTypes;
 import com.smellypengu.createfabric.foundation.utility.MatrixStacker;
-import com.smellypengu.createfabric.foundation.utility.NBTHelperC;
+import com.smellypengu.createfabric.foundation.utility.CNBTHelper;
 import com.smellypengu.createfabric.foundation.utility.VecHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -66,7 +66,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 		super.readAdditional(compound, spawnPacket);
 		controllerPos = NbtHelper.toBlockPos(compound.getCompound("Controller"));
 		if (compound.contains("Axis"))
-			rotationAxis = NBTHelperC.readEnum(compound, "Axis", Direction.Axis.class);
+			rotationAxis = CNBTHelper.readEnum(compound, "Axis", Direction.Axis.class);
 		angle = compound.getFloat("Angle");
 	}
 
@@ -75,7 +75,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 		super.writeAdditional(compound, spawnPacket);
 		compound.put("Controller", NbtHelper.fromBlockPos(controllerPos));
 		if (rotationAxis != null)
-			NBTHelperC.writeEnum(compound, "Axis", rotationAxis);
+			CNBTHelper.writeEnum(compound, "Axis", rotationAxis);
 		compound.putFloat("Angle", angle);
 	}
 

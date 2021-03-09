@@ -1,14 +1,14 @@
 package com.smellypengu.createfabric.foundation.utility;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.UnaryOperator;
-
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.UnaryOperator;
 
 public final class NBTProcessors {
 
@@ -27,14 +27,14 @@ public final class NBTProcessors {
 		addProcessor(BlockEntityType.SIGN, data -> {
 			for (int i = 0; i < 4; ++i) {
 				String s = data.getString("Text" + (i + 1));
-				TranslatableText textcomponent = (TranslatableText) TranslatableText.Serializer.fromJson(s.isEmpty() ? "\"\"" : s);
+				Text textcomponent = Text.Serializer.fromJson(s.isEmpty() ? "\"\"" : s);
 				if (textcomponent != null && textcomponent.getStyle() != null
 						&& textcomponent.getStyle().getClickEvent() != null)
 					return null;
 			}
 			return data;
 		});
-		/*addSurvivalProcessor(AllTileEntities.FUNNEL.get(), data -> { // TODO FUNNEL / FILTER PROCESSOR
+		/**addSurvivalProcessor(AllTileEntities.FUNNEL.get(), data -> { TODO FUNNEL AND FILTER CHECK
 			if (data.contains("Filter")) {
 				ItemStack filter = ItemStack.read(data.getCompound("Filter"));
 				if (filter.getItem() instanceof FilterItem)

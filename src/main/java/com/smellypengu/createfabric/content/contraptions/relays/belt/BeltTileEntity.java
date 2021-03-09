@@ -4,7 +4,7 @@ import com.smellypengu.createfabric.AllTileEntities;
 import com.smellypengu.createfabric.content.contraptions.base.IRotate;
 import com.smellypengu.createfabric.content.contraptions.base.KineticTileEntity;
 import com.smellypengu.createfabric.content.contraptions.relays.belt.transport.BeltInventory;
-import com.smellypengu.createfabric.foundation.utility.NBTHelperC;
+import com.smellypengu.createfabric.foundation.utility.CNBTHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -162,10 +162,10 @@ public class BeltTileEntity extends KineticTileEntity {
 		compound.putBoolean("IsController", isController());
 		compound.putInt("Length", beltLength);
 		compound.putInt("Index", index);
-		NBTHelperC.writeEnum(compound, "Casing", casing);
+		CNBTHelper.writeEnum(compound, "Casing", casing);
 
 		if (color.isPresent())
-			NBTHelperC.writeEnum(compound, "Dye", color.get());
+			CNBTHelper.writeEnum(compound, "Dye", color.get());
 
 		if (isController())
 			compound.put("Inventory", getInventory().write());

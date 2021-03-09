@@ -1,9 +1,5 @@
 package com.smellypengu.createfabric.foundation.utility.worldWrappers;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Predicate;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -26,10 +22,15 @@ import net.minecraft.world.TickScheduler;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkManager;
+import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.chunk.light.LightingProvider;
 import net.minecraft.world.entity.EntityLookup;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class WrappedWorld extends World {
 
@@ -49,6 +50,11 @@ public class WrappedWorld extends World {
 	@Override
 	public LightingProvider getLightingProvider() {
 		return super.getLightingProvider();
+	}
+
+	@Override
+	public WorldChunk getChunk(int i, int j) {
+		return world.getChunk(i, j); // TODO I hope this is a fitting replacement for the commented method below
 	}
 
 	/**@Override

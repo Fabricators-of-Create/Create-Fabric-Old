@@ -11,7 +11,7 @@ import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.math.Box;
 
-public class NBTHelperC {
+public class CNBTHelper {
 
 	public static void putMarker(CompoundTag nbt, String marker) {
 		nbt.putBoolean(marker, true);

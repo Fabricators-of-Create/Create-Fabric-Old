@@ -4,7 +4,7 @@ import com.smellypengu.createfabric.AllEntityTypes;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 import com.smellypengu.createfabric.foundation.utility.AngleHelper;
 import com.smellypengu.createfabric.foundation.utility.MatrixStacker;
-import com.smellypengu.createfabric.foundation.utility.NBTHelperC;
+import com.smellypengu.createfabric.foundation.utility.CNBTHelper;
 import com.smellypengu.createfabric.foundation.utility.VecHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -138,7 +138,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 		super.readAdditional(compound, spawnPacket);
 
 		if (compound.contains("InitialOrientation"))
-			setInitialOrientation(NBTHelperC.readEnum(compound, "InitialOrientation", Direction.class));
+			setInitialOrientation(CNBTHelper.readEnum(compound, "InitialOrientation", Direction.class));
 		if (compound.contains("ForceYaw"))
 			startAtYaw(compound.getFloat("ForceYaw"));
 
@@ -168,7 +168,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 		Direction optional = dataTracker.get(INITIAL_ORIENTATION);
 		if (optional.getAxis()
 			.isHorizontal())
-			NBTHelperC.writeEnum(compound, "InitialOrientation", optional);
+			CNBTHelper.writeEnum(compound, "InitialOrientation", optional);
 		if (forceAngle) {
 			compound.putFloat("ForceYaw", yaw);
 			forceAngle = false;
