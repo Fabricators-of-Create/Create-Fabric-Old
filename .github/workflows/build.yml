@@ -11,6 +11,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Set up Java
+              uses: actions/setup-java@v1
               with:
                   java-version: ${{ matrix.java_version }}
             - name: Grant execute permission for the Gradle wrapper
