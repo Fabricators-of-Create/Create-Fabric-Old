@@ -7,15 +7,13 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import com.smellypengu.createfabric.foundation.tileEntity.behaviour.BehaviourType;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 
-public abstract class SmartTileEntity extends SyncedTileEntity implements BlockEntityRenderer<SyncedTileEntity> {
+public abstract class SmartTileEntity extends SyncedTileEntity implements ITickableTileEntity {
 
 	private Map<BehaviourType<?>, TileEntityBehaviour> behaviours;
 	private boolean initialized;
@@ -44,7 +42,7 @@ public abstract class SmartTileEntity extends SyncedTileEntity implements BlockE
 	public void addBehavioursDeferred(List<TileEntityBehaviour> behaviours) {}
 
 	@Override
-	public void render(SyncedTileEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void tick() {
 		if (!initialized && hasWorld()) {
 			initialize();
 			initialized = true;

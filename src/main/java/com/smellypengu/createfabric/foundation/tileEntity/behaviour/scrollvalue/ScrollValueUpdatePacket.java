@@ -9,7 +9,9 @@ import net.minecraft.util.math.BlockPos;
 public class ScrollValueUpdatePacket extends TileEntityConfigurationPacket<SmartTileEntity> {
 
 	int value;
-	
+
+	public ScrollValueUpdatePacket() {}
+
 	public ScrollValueUpdatePacket(BlockPos pos, int amount) {
 		super(pos);
 		this.value = amount;

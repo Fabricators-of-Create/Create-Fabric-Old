@@ -1,5 +1,12 @@
 package com.smellypengu.createfabric.content.contraptions.base;
 
+import static net.minecraft.util.Formatting.GOLD;
+import static net.minecraft.util.Formatting.GRAY;
+
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.smellypengu.createfabric.Create;
 import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.KineticNetwork;
@@ -10,28 +17,20 @@ import com.smellypengu.createfabric.foundation.item.TooltipHelper;
 import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatcher;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.IInstanceRendered;
 import com.smellypengu.createfabric.foundation.tileEntity.SmartTileEntity;
-import com.smellypengu.createfabric.foundation.tileEntity.SyncedTileEntity;
 import com.smellypengu.createfabric.foundation.tileEntity.TileEntityBehaviour;
 import com.smellypengu.createfabric.foundation.utility.Lang;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-
-import static net.minecraft.util.Formatting.GOLD;
-import static net.minecraft.util.Formatting.GRAY;
 
 public abstract class KineticTileEntity extends SmartTileEntity
 	implements IHaveGoggleInformation, IHaveHoveringInformation, IInstanceRendered {
@@ -77,11 +76,11 @@ public abstract class KineticTileEntity extends SmartTileEntity
 	}
 
 	@Override
-	public void render(SyncedTileEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void tick() {
 		if (!world.isClient && needsSpeedUpdate())
 			attachKinetics();
 
-		super.render(entity, tickDelta, matrices, vertexConsumers, light, overlay); // TODO DONT KNOW ABOUT THIS ONE
+		super.tick();
 		effects.tick();
 
 		if (world.isClient)

@@ -46,10 +46,16 @@ public class SimpleChannel {
 		ClientPlayNetworking.registerGlobalReceiver(channelName, s2cHandler);
 	}
 
+	/**
+	 * An error will be thrown if the passed class does not define a public nullary constructor!
+	 */
 	public <T extends C2SPacket> void registerC2SPacket(Class<T> clazz, int id) {
 		c2sIdMap.put(id, clazz);
 	}
 
+	/**
+	 * An error will be thrown if the passed class does not define a public nullary constructor!
+	 */
 	public <T extends S2CPacket> void registerS2CPacket(Class<T> clazz, int id) {
 		s2cIdMap.put(id, clazz);
 	}

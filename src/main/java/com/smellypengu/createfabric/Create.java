@@ -2,6 +2,7 @@ package com.smellypengu.createfabric;
 
 import com.smellypengu.createfabric.content.contraptions.TorquePropagator;
 import com.smellypengu.createfabric.content.palettes.AllPaletteBlocks;
+import com.smellypengu.createfabric.events.CommonEvents;
 import com.smellypengu.createfabric.foundation.networking.AllPackets;
 import com.smellypengu.createfabric.foundation.worldgen.AllWorldFeatures;
 import net.devtech.arrp.api.RRPCallback;
@@ -38,6 +39,8 @@ public class Create implements ModInitializer  {
         AllMovementBehaviours.register();
 
         AllPackets.registerPackets();
+        
+        CommonEvents.register();
 
         AllWorldFeatures.reload();
 

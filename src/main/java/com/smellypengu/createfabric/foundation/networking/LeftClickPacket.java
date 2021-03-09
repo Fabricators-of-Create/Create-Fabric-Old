@@ -9,8 +9,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class LeftClickPacket implements C2SPacket {
 
-	public LeftClickPacket() {
-	}
+	public LeftClickPacket() {}
 
 	@Override
 	public void read(PacketByteBuf buffer) {

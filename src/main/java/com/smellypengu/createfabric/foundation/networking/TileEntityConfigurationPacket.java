@@ -15,7 +15,9 @@ import net.minecraft.world.World;
 public abstract class TileEntityConfigurationPacket<TE extends SyncedTileEntity> implements C2SPacket {
 
 	protected BlockPos pos;
-	
+
+	protected TileEntityConfigurationPacket() {}
+
 	public TileEntityConfigurationPacket(BlockPos pos) {
 		this.pos = pos;
 	}

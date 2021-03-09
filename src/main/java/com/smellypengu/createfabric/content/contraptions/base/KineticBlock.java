@@ -1,17 +1,22 @@
 package com.smellypengu.createfabric.content.contraptions.base;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.smellypengu.createfabric.foundation.item.ItemDescription;
+import com.smellypengu.createfabric.foundation.tileEntity.ITickableTileEntity;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class KineticBlock extends Block implements BlockEntityProvider, IRotate {
 
@@ -64,6 +69,15 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 
 	@Override
 	public abstract BlockEntity createBlockEntity(BlockPos pos, BlockState state);
+
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		return (world1, pos, state1, blockEntity) -> {
+			if (blockEntity instanceof ITickableTileEntity) {
+				((ITickableTileEntity) blockEntity).tick();
+			}
+		};
+	}
 
 	@Override
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
