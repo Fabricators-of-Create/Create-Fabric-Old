@@ -10,6 +10,7 @@ import com.smellypengu.createfabric.foundation.block.render.CustomBlockModels;
 import com.smellypengu.createfabric.foundation.block.render.SpriteShifter;
 import com.smellypengu.createfabric.foundation.item.CustomItemModels;
 import com.smellypengu.createfabric.foundation.item.CustomRenderedItems;
+import com.smellypengu.createfabric.foundation.networking.AllPackets;
 import com.smellypengu.createfabric.foundation.render.KineticRenderer;
 import com.smellypengu.createfabric.foundation.render.SuperByteBufferCache;
 import com.smellypengu.createfabric.foundation.render.backend.Backend;
@@ -53,6 +54,8 @@ public class CreateClient implements ClientModInitializer {
         AllTileEntities.registerRenderers();
         AllEntityTypes.registerRenderers();
         AllFluids.registerRenderers();
+
+        AllPackets.clientInit();
 
         ResourceManager resourceManager = MinecraftClient.getInstance()
                 .getResourceManager();

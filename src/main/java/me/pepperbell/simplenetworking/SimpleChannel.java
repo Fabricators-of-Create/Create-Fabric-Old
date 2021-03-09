@@ -1,8 +1,12 @@
 package me.pepperbell.simplenetworking;
 
+import java.lang.reflect.Constructor;
+
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -22,15 +26,23 @@ import net.minecraft.util.math.Vec3i;
 public class SimpleChannel {
 	private final Identifier channelName;
 
-	private final C2SHandler c2sHandler = new C2SHandler();
+	private C2SHandler c2sHandler;
 	private final BiMap<Integer, Class<?>> c2sIdMap = HashBiMap.create();
 
-	private final S2CHandler s2cHandler = new S2CHandler();
+	private S2CHandler s2cHandler;
 	private final BiMap<Integer, Class<?>> s2cIdMap = HashBiMap.create();
 
 	public SimpleChannel(Identifier channelName) {
 		this.channelName = channelName;
+	}
+
+	public void initServerListener() {
+		c2sHandler = new C2SHandler();
 		ServerPlayNetworking.registerGlobalReceiver(channelName, c2sHandler);
+	}
+
+	public void initClientListener() {
+		s2cHandler = new S2CHandler();
 		ClientPlayNetworking.registerGlobalReceiver(channelName, s2cHandler);
 	}
 
@@ -56,6 +68,7 @@ public class SimpleChannel {
 		return buf;
 	}
 
+	@Environment(EnvType.CLIENT)
 	public void sendToServer(C2SPacket packet) {
 		PacketByteBuf buf = createBuf(packet);
 		ClientPlayNetworking.send(channelName, buf);
@@ -94,6 +107,7 @@ public class SimpleChannel {
 		}
 	}
 
+	@Environment(EnvType.CLIENT)
 	public void sendResponseToServer(ResponseTarget target, C2SPacket packet) {
 		PacketByteBuf buf = createBuf(packet);
 		target.sender.sendPacket(channelName, buf);
@@ -119,7 +133,9 @@ public class SimpleChannel {
 			C2SPacket packet = null;
 			try {
 				Class<?> clazz = c2sIdMap.get(id);
-				packet = (C2SPacket) clazz.getDeclaredConstructor().newInstance();
+				Constructor<?> ctor = clazz.getDeclaredConstructor();
+				ctor.setAccessible(true);
+				packet = (C2SPacket) ctor.newInstance();
 			} catch (Exception e) {
 				throw new RuntimeException("Could not create c2s packet in channel " + channelName + " with id " + String.valueOf(id), e);
 			}
@@ -130,6 +146,7 @@ public class SimpleChannel {
 		}
 	}
 
+	@Environment(EnvType.CLIENT)
 	private class S2CHandler implements ClientPlayNetworking.PlayChannelHandler {
 		@Override
 		public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
@@ -137,7 +154,9 @@ public class SimpleChannel {
 			S2CPacket packet = null;
 			try {
 				Class<?> clazz = s2cIdMap.get(id);
-				packet = (S2CPacket) clazz.getDeclaredConstructor().newInstance();
+				Constructor<?> ctor = clazz.getDeclaredConstructor();
+				ctor.setAccessible(true);
+				packet = (S2CPacket) ctor.newInstance();
 			} catch (Exception e) {
 				throw new RuntimeException("Could not create s2c packet in channel " + channelName + " with id " + String.valueOf(id), e);
 			}
