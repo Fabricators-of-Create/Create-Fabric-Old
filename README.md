@@ -2,6 +2,6 @@
 
 A Fabric port of Create.
 
-Create Fabric Discord: https://discord.gg/CRHCqEDT7a
+Create Discord: https://discord.gg/AjRTh6B
 
 Original Repository: https://github.com/Creators-of-Create/Create/
