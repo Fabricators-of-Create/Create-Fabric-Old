@@ -1,4 +1,4 @@
-package com.smellypengu.createfabric.foundation.mixins;
+package com.smellypengu.createfabric.foundation.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

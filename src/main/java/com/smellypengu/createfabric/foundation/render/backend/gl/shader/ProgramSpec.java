@@ -1,11 +1,11 @@
 package com.smellypengu.createfabric.foundation.render.backend.gl.shader;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.smellypengu.createfabric.Create;
 import com.smellypengu.createfabric.foundation.render.backend.gl.attrib.IVertexAttrib;
 import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ProgramSpec<P extends GlProgram> {
 
@@ -49,7 +49,7 @@ public class ProgramSpec<P extends GlProgram> {
     public static class Builder<P extends GlProgram> {
         private Identifier vert;
         private Identifier frag;
-        private ShaderConstants defines = null;
+        private ShaderConstants defines = ShaderConstants.EMPTY;
 
         private final Identifier name;
         private final GlProgram.ProgramFactory<P> factory;

@@ -7,3 +7,13 @@ accessible class net/minecraft/client/MinecraftClient
 accessible class net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
 accessible class net/minecraft/client/render/model/BakedModelManager
 accessible method net/minecraft/item/Item isIn (Lnet/minecraft/item/ItemGroup;)Z
+
+accessible method net/minecraft/client/render/GameRenderer bobViewWhenHurt (Lnet/minecraft/client/util/math/MatrixStack;F)V
+accessible method net/minecraft/client/render/GameRenderer bobView (Lnet/minecraft/client/util/math/MatrixStack;F)V
+accessible field net/minecraft/client/render/GameRenderer ticks I
+accessible method net/minecraft/client/render/GameRenderer getFov (Lnet/minecraft/client/render/Camera;FZ)D
+
+accessible method net/minecraft/client/particle/ParticleManager registerFactory (Lnet/minecraft/particle/ParticleType;Lnet/minecraft/client/particle/ParticleManager$SpriteAwareFactory;)V
+accessible method net/minecraft/client/particle/ParticleManager registerFactory (Lnet/minecraft/particle/ParticleType;Lnet/minecraft/client/particle/ParticleFactory;)V
+
+accessible class net/minecraft/client/particle/ParticleManager$SpriteAwareFactory

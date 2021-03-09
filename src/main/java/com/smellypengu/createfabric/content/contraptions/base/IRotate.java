@@ -34,7 +34,7 @@ public interface IRotate extends IWrenchable {
 		public static SpeedLevel of(float speed) {
 			speed = Math.abs(speed);
 
-			/*if (speed >= AllConfigs.SERVER.kinetics.fastSpeed.get()) {
+			/**if (speed >= AllConfigs.SERVER.kinetics.fastSpeed.get()) {
 				return FAST;
 			} else if (speed >= AllConfigs.SERVER.kinetics.mediumSpeed.get()) {
 				return MEDIUM;
@@ -44,7 +44,7 @@ public interface IRotate extends IWrenchable {
 
 		public float getSpeedValue() {
 			switch (this) {
-			/*case FAST:
+			/**case FAST:
 				return AllConfigs.SERVER.kinetics.fastSpeed.get().floatValue();
 			case MEDIUM:
 				return AllConfigs.SERVER.kinetics.mediumSpeed.get().floatValue();
@@ -99,7 +99,7 @@ public interface IRotate extends IWrenchable {
 		}
 		// TODO CONFIG
 		public static boolean isEnabled() {
-			return true; //!AllConfigs.SERVER.kinetics.disableStress.get();
+			return true; /**!AllConfigs.SERVER.kinetics.disableStress.get();*/
 		}
 
 		public static String getFormattedStressText(double stressPercent){

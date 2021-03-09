@@ -1,4 +1,4 @@
-package com.smellypengu.createfabric.foundation.mixins;
+package com.smellypengu.createfabric.foundation.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

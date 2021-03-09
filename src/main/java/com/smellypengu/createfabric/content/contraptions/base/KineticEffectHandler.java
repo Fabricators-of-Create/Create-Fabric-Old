@@ -1,7 +1,5 @@
 package com.smellypengu.createfabric.content.contraptions.base;
 
-import java.util.Random;
-
 import com.smellypengu.createfabric.foundation.utility.VecHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class KineticEffectHandler {
 
@@ -98,8 +98,8 @@ public class KineticEffectHandler {
 		particleSpeed *= Math.signum(speed);
 
 		if (world instanceof ServerWorld) {
-			//AllTriggers.triggerForNearbyPlayers(AllTriggers.ROTATION, world, pos, 5); // TODO FIX TRIGGER FOR ADVANCEMENT
-			/*RotationIndicatorParticleData particleData = // TODO ROTATION INDICATOR PARTICLE
+			/**AllTriggers.triggerForNearbyPlayers(AllTriggers.ROTATION, world, pos, 5); TODO FIX TRIGGER FOR ADVANCEMENT
+			RotationIndicatorParticleData particleData = // TODO ROTATION INDICATOR PARTICLE
 				new RotationIndicatorParticleData(color, particleSpeed, radius1, radius2, 10, axisChar);
 			((ServerWorld) world).spawnParticles(particleData, vec.x, vec.y, vec.z, 20, 0, 0, 0, 1);*/
 		}

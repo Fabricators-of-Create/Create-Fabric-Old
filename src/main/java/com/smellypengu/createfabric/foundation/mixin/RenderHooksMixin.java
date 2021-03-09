@@ -1,4 +1,4 @@
-package com.smellypengu.createfabric.foundation.mixins;
+package com.smellypengu.createfabric.foundation.mixin;
 
 import com.smellypengu.createfabric.CreateClient;
 import com.smellypengu.createfabric.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
@@ -34,7 +34,7 @@ public class RenderHooksMixin {
         if (!Backend.available()) return;
 
         Matrix4f viewProjection = stack.peek().getModel().copy();
-        //viewProjection.multiplyBackward(FastRenderDispatcher.getProjectionMatrix());
+        viewProjection.multiplyBackward(FastRenderDispatcher.getProjectionMatrix());
 
         FastRenderDispatcher.renderLayer(type, viewProjection, camX, camY, camZ);
 
@@ -47,9 +47,9 @@ public class RenderHooksMixin {
     private void refresh(CallbackInfo ci) {
         CreateClient.kineticRenderer.invalidate();
         ContraptionRenderDispatcher.invalidateAll();
-        //OptifineHandler.refresh();
-        //Backend.refresh();
+        /**OptifineHandler.refresh();
+        Backend.refresh();
 
-        //if (Backend.canUseInstancing() && world != null) world.loadedTileEntityList.forEach(CreateClient.kineticRenderer::add);
+        if (Backend.canUseInstancing() && world != null) world.loadedTileEntityList.forEach(CreateClient.kineticRenderer::add);*/
     }
 }

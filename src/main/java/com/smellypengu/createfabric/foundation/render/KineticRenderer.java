@@ -37,7 +37,7 @@ public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
         super.tick();
 
         MinecraftClient mc = MinecraftClient.getInstance();
-        Entity renderViewEntity = mc.targetedEntity; //TODO IDK IF THIS IS RIGHT PLS EXPLAIN MY GOD renderViewEntity
+        Entity renderViewEntity = mc.targetedEntity; //TODO COULD BE WRONG renderViewEntity
 
         if (renderViewEntity == null) return;
 
@@ -69,7 +69,7 @@ public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
 
         Matrix4f translate = Matrix4f.translate((float) -camX, (float) -camY, (float) -camZ);
 
-        translate.multiply(viewProjection); // TODO MIGHT BE WRONG. ORIGINAL multiplyBackward
+        translate.multiplyBackward(viewProjection);
 
         super.render(layer, translate, camX, camY, camZ, callback);
     }

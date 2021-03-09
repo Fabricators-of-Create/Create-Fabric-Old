@@ -67,8 +67,6 @@ public class CreateClient implements ClientModInitializer {
 
         ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlas, registry) -> SpriteShifter.getAllTargetSprites().forEach(registry::register));
 
-
-
         BlockRenderLayerMap.INSTANCE.putBlock(AllPaletteBlocks.TILED_GLASS, RenderLayer.getCutout());
     }
 

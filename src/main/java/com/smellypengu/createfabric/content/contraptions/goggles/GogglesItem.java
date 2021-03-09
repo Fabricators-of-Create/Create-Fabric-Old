@@ -1,8 +1,11 @@
 package com.smellypengu.createfabric.content.contraptions.goggles;
 
+import com.smellypengu.createfabric.AllItems;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class GogglesItem extends Item {
 
@@ -24,11 +27,11 @@ public class GogglesItem extends Item {
 		}
 	}*/
 
-	/**public static boolean canSeeParticles(PlayerEntity player) {
+	public static boolean canSeeParticles(PlayerEntity player) {
 		for (ItemStack itemStack : player.getArmorItems())
-			if (AllItems.GOGGLES.isIn(itemStack))
+			if (itemStack.isItemEqualIgnoreDamage(AllItems.GOGGLES.getDefaultStack()))
 				return true;
 		return false;
-	}*/
+	}
 
 }

@@ -1,4 +1,4 @@
-package com.smellypengu.createfabric.foundation.mixins;
+package com.smellypengu.createfabric.foundation.mixin;
 
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexFormat;

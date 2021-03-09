@@ -1,4 +1,4 @@
-package com.smellypengu.createfabric.foundation.mixins;
+package com.smellypengu.createfabric.foundation.mixin;
 
 import com.smellypengu.createfabric.AllBlockPartials;
 import net.minecraft.block.Block;

@@ -1,4 +1,4 @@
-package com.smellypengu.createfabric.foundation.mixins;
+package com.smellypengu.createfabric.foundation.mixin;
 
 import com.smellypengu.createfabric.foundation.render.backend.FastRenderDispatcher;
 import com.smellypengu.createfabric.foundation.render.backend.instancing.IInstanceRendered;

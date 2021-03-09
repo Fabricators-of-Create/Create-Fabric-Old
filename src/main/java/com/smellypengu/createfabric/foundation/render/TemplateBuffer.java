@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.foundation.render;
 
 import com.mojang.datafixers.util.Pair;
-import com.smellypengu.createfabric.foundation.mixins.BufferBuilderAccessor;
+import com.smellypengu.createfabric.foundation.mixin.BufferBuilderAccessor;
 import net.minecraft.client.render.BufferBuilder;
 
 import java.nio.ByteBuffer;

@@ -1,6 +1,7 @@
 package com.smellypengu.createfabric.foundation.render.backend.gl;
 
-import com.smellypengu.createfabric.foundation.mixins.GlStateManagerAccessor;
+import com.smellypengu.createfabric.foundation.mixin.GlStateManagerAccessor;
+import org.lwjgl.opengl.GL11;
 
 public class GlFog {
     public static float[] FOG_COLOR = new float[] {0, 0, 0, 0};
@@ -9,7 +10,7 @@ public class GlFog {
         return true; // GlStateManagerAccessor.getFog().capState.state; TODO PLS FIX FOG
     }
 
-    public static int getFogMode() {
+    public static int getFogModeGlEnum() {
         return GlStateManagerAccessor.getFog().mode;
     }
 
@@ -23,5 +24,23 @@ public class GlFog {
 
     public static float getFogStart() {
         return GlStateManagerAccessor.getFog().start;
+    }
+
+    public static GlFogMode getFogMode() {
+        if (!fogEnabled()) {
+            return GlFogMode.NONE;
+        }
+
+        int mode = getFogModeGlEnum();
+
+        switch (mode) {
+            case GL11.GL_EXP2:
+            case GL11.GL_EXP:
+                return GlFogMode.EXP2;
+            case GL11.GL_LINEAR:
+                return GlFogMode.LINEAR;
+            default:
+                throw new UnsupportedOperationException("Unknown fog mode: " + mode);
+        }
     }
 }

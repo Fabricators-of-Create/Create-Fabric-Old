@@ -125,7 +125,7 @@ public class Matrix3d {
 
     float[] conversionBuffer = new float[16];
 
-    /* TODO: FIX @Environment(EnvType.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Matrix4f getAsMatrix4f() {
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++)
@@ -142,6 +142,6 @@ public class Matrix3d {
         conversionBuffer[10] = (float) m22;
 
         return new Matrix4f(conversionBuffer);
-    }*/
+    }
 
 }

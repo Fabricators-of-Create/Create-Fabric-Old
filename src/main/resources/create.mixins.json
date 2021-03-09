@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.smellypengu.createfabric.foundation.mixins",
+  "package": "com.smellypengu.createfabric.foundation.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BakedModelManagerMixin",

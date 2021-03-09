@@ -1,12 +1,10 @@
 package com.smellypengu.createfabric.content.contraptions.relays.elementary;
 
 import com.smellypengu.createfabric.AllBlocks;
-import com.smellypengu.createfabric.AllShapes;
 import com.smellypengu.createfabric.foundation.utility.placement.IPlacementHelper;
 import com.smellypengu.createfabric.foundation.utility.placement.PlacementHelpers;
 import com.smellypengu.createfabric.foundation.utility.placement.util.PoleHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -16,8 +14,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -34,10 +30,10 @@ public class ShaftBlock extends AbstractShaftBlock {
 		return AllBlocks.SHAFT.stateManager.getStates().contains(state);
 	}
 
-	@Override
-	public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+	/**@Override
+	public VoxelShape getShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return AllShapes.SIX_VOXEL_POLE.get(state.get(AXIS));
-	}
+	}*/
 
 	@Override
 	public float getParticleTargetRadius() {

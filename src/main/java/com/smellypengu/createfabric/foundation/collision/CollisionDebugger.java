@@ -1,12 +1,11 @@
 package com.smellypengu.createfabric.foundation.collision;
 
-import com.simibubi.create.AllSpecialTextures;
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.foundation.collision.ContinuousOBBCollider.ContinuousSeparationManifold;
-import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.outliner.AABBOutline;
+import com.smellypengu.createfabric.AllSpecialTextures;
+import com.smellypengu.createfabric.CreateClient;
+import com.smellypengu.createfabric.foundation.renderState.SuperRenderTypeBuffer;
+import com.smellypengu.createfabric.foundation.utility.AngleHelper;
+import com.smellypengu.createfabric.foundation.utility.MatrixStacker;
+import com.smellypengu.createfabric.foundation.utility.outliner.AABBOutline;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.hit.BlockHitResult;
@@ -21,7 +20,7 @@ public class CollisionDebugger {
 	public static Box AABB = new Box(BlockPos.ORIGIN.up(10));
 	public static OrientedBB OBB = new OrientedBB(new Box(BlockPos.ORIGIN));
 	public static Vec3d motion = Vec3d.ZERO;
-	static ContinuousSeparationManifold seperation;
+	static ContinuousOBBCollider.ContinuousSeparationManifold seperation;
 	static double angle = 0;
 	static AABBOutline outline;
 

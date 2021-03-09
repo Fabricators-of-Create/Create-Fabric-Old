@@ -1,4 +1,4 @@
-package com.smellypengu.createfabric.foundation.mixins;
+package com.smellypengu.createfabric.foundation.mixin;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.smellypengu.createfabric.foundation.render.backend.gl.GlFog;

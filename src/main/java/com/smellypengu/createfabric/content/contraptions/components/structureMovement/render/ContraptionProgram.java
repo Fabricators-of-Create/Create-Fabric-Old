@@ -1,7 +1,7 @@
 package com.smellypengu.createfabric.content.contraptions.components.structureMovement.render;
 
 import com.smellypengu.createfabric.foundation.render.backend.gl.BasicProgram;
-import net.minecraft.client.gl.GlProgram;
+import com.smellypengu.createfabric.foundation.render.backend.gl.shader.ProgramFogMode;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Matrix4f;
@@ -14,8 +14,8 @@ public class ContraptionProgram extends BasicProgram {
 
     protected int uLightVolume;
 
-    public ContraptionProgram(Identifier name, int handle) {
-        super(name, handle);
+    public ContraptionProgram(Identifier name, int handle, ProgramFogMode.Factory fogFactory) {
+        super(name, handle, fogFactory);
         uLightBoxSize = getUniformLocation("uLightBoxSize");
         uLightBoxMin = getUniformLocation("uLightBoxMin");
         uModel = getUniformLocation("uModel");
