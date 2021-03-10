@@ -63,5 +63,4 @@ public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 	public BakedModel getPartial(String name) {
 		return partials.get(name);
 	}
-
 }

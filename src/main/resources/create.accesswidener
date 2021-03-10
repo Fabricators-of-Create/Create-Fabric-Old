@@ -16,3 +16,5 @@ accessible method net/minecraft/client/particle/ParticleManager registerFactory 
 accessible method net/minecraft/client/particle/ParticleManager registerFactory (Lnet/minecraft/particle/ParticleType;Lnet/minecraft/client/particle/ParticleFactory;)V
 
 accessible class net/minecraft/client/particle/ParticleManager$SpriteAwareFactory
+
+accessible method net/minecraft/client/render/item/ItemRenderer renderBakedItemQuads (Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Ljava/util/List;Lnet/minecraft/item/ItemStack;II)V

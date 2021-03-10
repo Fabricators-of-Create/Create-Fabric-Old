@@ -36,7 +36,7 @@ public class WrappedBakedModel implements BakedModel {
 
 	@Override
 	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
-		return getQuads(state, side, rand);
+		return template.getQuads(state, side, rand);
 	}
 
 	@Override
