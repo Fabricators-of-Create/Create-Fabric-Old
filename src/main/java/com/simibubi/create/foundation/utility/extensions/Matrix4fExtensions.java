@@ -6,9 +6,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public interface Matrix4fExtensions {
-    void setFrom(@NotNull Matrix4f other);
+    void create$set(@NotNull Matrix4f other);
 
     @ApiStatus.Internal
 	@Contract(mutates = "this")
-    void fromFloatArray(float[] floats);
+    void create$fromFloatArray(float[] floats);
 }

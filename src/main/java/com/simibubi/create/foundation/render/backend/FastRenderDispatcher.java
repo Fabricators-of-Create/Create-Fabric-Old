@@ -88,9 +88,9 @@ public class FastRenderDispatcher {
 		matrixstack.peek()
 			.getModel()
 			.multiply(gameRenderer.getBasicProjectionMatrix(gameRenderer.getCamera(), partialTicks, true));
-		gra.callBobViewWhenHurt(matrixstack, partialTicks);
+		gra.create$bobViewWhenHurt(matrixstack, partialTicks);
 		if (mc.options.bobView) {
-			gra.callBobView(matrixstack, partialTicks);
+			gra.create$bobView(matrixstack, partialTicks);
 		}
 
 		float portalTime = MathHelper.lerp(partialTicks, player.lastNauseaStrength, player.nextNauseaStrength);
@@ -103,9 +103,9 @@ public class FastRenderDispatcher {
 			float f1 = 5.0F / (portalTime * portalTime + 5.0F) - portalTime * 0.04F;
 			f1 = f1 * f1;
 			Vector3f vector3f = new Vector3f(0.0F, MathHelper.SQUARE_ROOT_OF_TWO / 2.0F, MathHelper.SQUARE_ROOT_OF_TWO / 2.0F);
-			matrixstack.multiply(vector3f.getDegreesQuaternion(((float)gra.getTicks() + partialTicks) * (float)i));
+			matrixstack.multiply(vector3f.getDegreesQuaternion(((float)gra.create$ticks() + partialTicks) * (float)i));
 			matrixstack.scale(1.0F / f1, 1.0F, 1.0F);
-			float f2 = -((float)gra.getTicks() + partialTicks) * (float)i;
+			float f2 = -((float)gra.create$ticks() + partialTicks) * (float)i;
 			matrixstack.multiply(vector3f.getDegreesQuaternion(f2));
 		}
 

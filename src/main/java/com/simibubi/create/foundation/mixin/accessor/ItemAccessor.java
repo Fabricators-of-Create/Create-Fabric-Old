@@ -7,5 +7,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Item.class)
 public interface ItemAccessor {
-	@Invoker("isIn") boolean callIsIn(ItemGroup group);
+	@Invoker("isIn") boolean create$isIn(ItemGroup group);
 }

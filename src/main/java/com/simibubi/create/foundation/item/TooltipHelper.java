@@ -131,7 +131,7 @@ public class TooltipHelper {
 	public static boolean hasTooltip(ItemStack stack, PlayerEntity player) {
 		checkLocale();
 
-		boolean hasGlasses = MixinHelper.<ItemAccessor>cast(AllItems.GOGGLES).callIsIn(player.getEquippedStack(EquipmentSlot.HEAD).getItem().getGroup());
+		boolean hasGlasses = MixinHelper.<ItemAccessor>cast(AllItems.GOGGLES).create$isIn(player.getEquippedStack(EquipmentSlot.HEAD).getItem().getGroup());
 
 		if (hasGlasses != gogglesMode) {
 			gogglesMode = hasGlasses;

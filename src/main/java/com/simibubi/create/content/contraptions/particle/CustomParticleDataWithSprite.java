@@ -1,8 +1,7 @@
 package com.simibubi.create.content.contraptions.particle;
 
 import com.mojang.serialization.Codec;
-import com.simibubi.create.foundation.mixin.accessor.ParticleManagerAccessor;
-import com.simibubi.create.foundation.utility.MixinHelper;
+import com.simibubi.create.foundation.utility.extensions.ParticleManagerUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.ParticleFactory;
@@ -37,6 +36,6 @@ public interface CustomParticleDataWithSprite<T extends ParticleEffect> extends 
 	@Override
 	@Environment(EnvType.CLIENT)
 	default void register(ParticleType<T> type, ParticleManager particles) {
-		MixinHelper.<ParticleManagerAccessor>cast(particles).callRegisterFactory(type, getMetaFactory());
+		ParticleManagerUtils.registerFactory(particles, type, getMetaFactory());
 	}
 }

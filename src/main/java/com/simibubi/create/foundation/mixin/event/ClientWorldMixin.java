@@ -1,5 +1,6 @@
 package com.simibubi.create.foundation.mixin.event;
 
+import com.simibubi.create.foundation.utility.MixinHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.asm.mixin.Final;
@@ -21,8 +22,8 @@ public class ClientWorldMixin {
 	@Final
 	private MinecraftClient client;
 
-	@Inject(at = @At("TAIL"), method = "<init>()V")
+	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/client/network/ClientPlayNetworkHandler;Lnet/minecraft/client/world/ClientWorld$Properties;Lnet/minecraft/util/registry/RegistryKey;Lnet/minecraft/world/dimension/DimensionType;ILjava/util/function/Supplier;Lnet/minecraft/client/render/WorldRenderer;ZJ)V")
 	public void onTailInit(CallbackInfo ci) {
-		ClientWorldEvents.LOAD.invoker().onWorldLoad(client, (ClientWorld) (Object) this);
+		ClientWorldEvents.LOAD.invoker().onWorldLoad(client, MixinHelper.cast(this));
 	}
 }

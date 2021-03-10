@@ -45,7 +45,7 @@ public abstract class Matrix4fMixin implements Matrix4fExtensions {
 	protected float a33;
 
 	@Override
-	public void setFrom(@NotNull Matrix4f other) {
+	public void create$set(@NotNull Matrix4f other) {
 		Matrix4fMixin o = MixinHelper.cast(other); // This will look weird in the merged class
 
 		a00 = o.a00;
@@ -72,7 +72,7 @@ public abstract class Matrix4fMixin implements Matrix4fExtensions {
 	@ApiStatus.Internal
 	@Override
 	@Contract(mutates = "this")
-	public void fromFloatArray(float[] floats) {
+	public void create$fromFloatArray(float[] floats) {
 		a00 = floats[0];
 		a01 = floats[1];
 		a02 = floats[2];

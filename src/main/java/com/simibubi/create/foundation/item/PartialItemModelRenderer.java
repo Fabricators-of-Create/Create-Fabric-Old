@@ -83,11 +83,11 @@ public class PartialItemModelRenderer {
 
 		for (Direction direction : Iterate.directions) {
 			random.setSeed(42L);
-			ir.callRenderBakedItemQuads(ms, vertices, model.getQuads(null, direction, random), stack, light, overlay);
+			ir.create$renderBakedItemQuads(ms, vertices, model.getQuads(null, direction, random), stack, light, overlay);
 		}
 
 		random.setSeed(42L);
-		ir.callRenderBakedItemQuads(ms, vertices, model.getQuads(null, null, random), stack, light, overlay);
+		ir.create$renderBakedItemQuads(ms, vertices, model.getQuads(null, null, random), stack, light, overlay);
 	}
 
 }

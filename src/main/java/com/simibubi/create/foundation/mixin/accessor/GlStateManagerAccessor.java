@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(GlStateManager.class)
 public interface GlStateManagerAccessor {
 	@Accessor("FOG")
-	static GlStateManager.FogState getFog() {
-		throw new AssertionError();
+	static GlStateManager.FogState create$FOG() {
+		throw new AssertionError("Mixin didn't merge, very funni");
 	}
 }

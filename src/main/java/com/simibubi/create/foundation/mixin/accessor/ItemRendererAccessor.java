@@ -13,5 +13,5 @@ import java.util.List;
 @Mixin(ItemRenderer.class)
 public interface ItemRendererAccessor {
 	@Invoker("renderBakedItemQuads")
-	void callRenderBakedItemQuads(MatrixStack matrices, VertexConsumer vertices, List<BakedQuad> quads, ItemStack stack, int light, int overlay);
+	void create$renderBakedItemQuads(MatrixStack matrices, VertexConsumer vertices, List<BakedQuad> quads, ItemStack stack, int light, int overlay);
 }

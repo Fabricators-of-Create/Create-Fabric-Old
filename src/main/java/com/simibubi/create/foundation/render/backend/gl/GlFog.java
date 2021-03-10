@@ -11,19 +11,19 @@ public class GlFog {
 	}
 
 	public static int getFogModeGlEnum() {
-		return GlStateManagerAccessor.getFog().mode;
+		return GlStateManagerAccessor.create$FOG().mode;
 	}
 
 	public static float getFogDensity() {
-		return GlStateManagerAccessor.getFog().density;
+		return GlStateManagerAccessor.create$FOG().density;
 	}
 
 	public static float getFogEnd() {
-		return GlStateManagerAccessor.getFog().end;
+		return GlStateManagerAccessor.create$FOG().end;
 	}
 
 	public static float getFogStart() {
-		return GlStateManagerAccessor.getFog().start;
+		return GlStateManagerAccessor.create$FOG().start;
 	}
 
 	public static GlFogMode getFogMode() {
