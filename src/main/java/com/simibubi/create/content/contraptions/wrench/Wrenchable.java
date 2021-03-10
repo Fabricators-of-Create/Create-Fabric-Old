@@ -22,8 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public interface IWrenchable {
-
+public interface Wrenchable {
 	default ActionResult onWrenched(BlockState state, ItemUsageContext context) {
 		World world = context.getWorld();
 		BlockState rotated = getRotatedBlockState(state, context.getSide());

@@ -3,7 +3,7 @@ package com.simibubi.create.foundation.render.backend.gl.shader;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.gl.GlFogMode;
 import com.simibubi.create.foundation.render.backend.gl.GlObject;
-import com.simibubi.create.foundation.render.backend.gl.attrib.IVertexAttrib;
+import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL20;
 
@@ -91,7 +91,7 @@ public abstract class GlProgram extends GlObject {
 			return this;
 		}
 
-		public <A extends IVertexAttrib> Builder addAttribute(A attrib) {
+		public <A extends VertexAttrib> Builder addAttribute(A attrib) {
 			GL20.glBindAttribLocation(this.program, attributeIndex, attrib.attribName());
 			attributeIndex += attrib.attribSpec().getAttributeCount();
 			return this;

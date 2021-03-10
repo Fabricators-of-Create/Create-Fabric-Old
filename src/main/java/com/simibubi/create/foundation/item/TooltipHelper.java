@@ -4,7 +4,7 @@ import com.google.common.base.Strings;
 import com.mojang.bridge.game.Language;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.content.curiosities.tools.AllToolTiers;
 import com.simibubi.create.foundation.mixin.accessor.ItemAccessor;
 import com.simibubi.create.foundation.utility.Lang;
@@ -38,7 +38,7 @@ public class TooltipHelper {
 	}
 
 	public static void addHint(List<String> tooltip, String hintKey, Object... messageParams) {
-		String spacing = IHaveGoggleInformation.spacing;
+		String spacing = GoggleInformationProvider.spacing;
 		tooltip.add(spacing + GOLD + Lang.translate(hintKey + ".title"));
 		String hint = Lang.translate(hintKey);
 		List<String> cutString = TooltipHelper.cutString(spacing + hint, GRAY, WHITE);

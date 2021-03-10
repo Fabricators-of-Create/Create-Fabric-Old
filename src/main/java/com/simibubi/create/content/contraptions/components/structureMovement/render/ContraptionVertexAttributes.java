@@ -1,10 +1,10 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.render;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.CommonAttributes;
-import com.simibubi.create.foundation.render.backend.gl.attrib.IVertexAttrib;
+import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttribSpec;
 
-public enum ContraptionVertexAttributes implements IVertexAttrib {
+public enum ContraptionVertexAttributes implements VertexAttrib {
 	VERTEX_POSITION("aPos", CommonAttributes.VEC3),
 	NORMAL("aNormal", CommonAttributes.NORMAL),
 	TEXTURE("aTexCoords", CommonAttributes.UV),

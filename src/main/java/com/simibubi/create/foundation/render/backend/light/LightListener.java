@@ -1,5 +1,5 @@
 package com.simibubi.create.foundation.render.backend.light;
 
-public interface ILightListener {
+public interface LightListener {
 	void onChunkLightUpdate();
 }

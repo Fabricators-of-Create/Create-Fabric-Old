@@ -1,10 +1,10 @@
 package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.CommonAttributes;
-import com.simibubi.create.foundation.render.backend.gl.attrib.IVertexAttrib;
+import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttribSpec;
 
-public enum KineticVertexAttributes implements IVertexAttrib {
+public enum KineticVertexAttributes implements VertexAttrib {
 	INSTANCE_POSITION("aInstancePos", CommonAttributes.VEC3),
 	LIGHT("aLight", CommonAttributes.LIGHT),
 	NETWORK_COLOR("aNetworkTint", CommonAttributes.RGB),

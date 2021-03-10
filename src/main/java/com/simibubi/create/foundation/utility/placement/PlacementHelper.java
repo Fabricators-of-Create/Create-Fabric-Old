@@ -20,8 +20,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public interface IPlacementHelper {
-
+public interface PlacementHelper {
 	/**
 	 * used as an identifier in SuperGlueHandler to skip blocks placed by helpers
 	 */

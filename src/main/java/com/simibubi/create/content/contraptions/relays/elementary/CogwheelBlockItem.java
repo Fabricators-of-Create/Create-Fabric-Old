@@ -6,7 +6,7 @@ import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
+import com.simibubi.create.foundation.utility.placement.PlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.PlacementOffset;
 import com.smellypengu.registrate.util.nullness.MethodsReturnNonnullByDefault;
@@ -50,7 +50,7 @@ public class CogwheelBlockItem extends BlockItem {
 		BlockPos pos = context.getBlockPos();
 		BlockState state = world.getBlockState(pos);
 
-		IPlacementHelper helper = PlacementHelpers.get(placementHelperId);
+		PlacementHelper helper = PlacementHelpers.get(placementHelperId);
 		PlayerEntity player = context.getPlayer();
 		BlockHitResult ray = new BlockHitResult(context.getHitPos(), context.getSide(), pos, true);
 		if (helper.matchesState(state) && player != null && !player.isSneaking()) {
@@ -123,7 +123,7 @@ public class CogwheelBlockItem extends BlockItem {
 
 			if (!((CogWheelBlock) state.getBlock()).isLarge) {
 				List<Direction> directions =
-					IPlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(), state.get(AXIS));
+					PlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(), state.get(AXIS));
 
 				for (Direction dir : directions) {
 					BlockPos newPos = pos.offset(dir);
@@ -170,10 +170,10 @@ public class CogwheelBlockItem extends BlockItem {
 				return PlacementOffset.fail();
 
 			if (((CogWheelBlock) state.getBlock()).isLarge) {
-				Direction side = IPlacementHelper.orderedByDistanceOnlyAxis(pos, ray.getPos(), state.get(AXIS))
+				Direction side = PlacementHelper.orderedByDistanceOnlyAxis(pos, ray.getPos(), state.get(AXIS))
 					.get(0);
 				List<Direction> directions =
-					IPlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(), state.get(AXIS));
+					PlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(), state.get(AXIS));
 				for (Direction dir : directions) {
 					BlockPos newPos = pos.offset(dir)
 						.offset(side);
@@ -193,7 +193,7 @@ public class CogwheelBlockItem extends BlockItem {
 	}
 
 	@MethodsReturnNonnullByDefault
-	public abstract static class DiagonalCogHelper implements IPlacementHelper {
+	public abstract static class DiagonalCogHelper implements PlacementHelper {
 
 		@Override
 		public Predicate<BlockState> getStatePredicate() {
@@ -203,9 +203,9 @@ public class CogwheelBlockItem extends BlockItem {
 		@Override
 		public PlacementOffset getOffset(World world, BlockState state, BlockPos pos, BlockHitResult ray) {
 			// diagonal gears of different size
-			Direction closest = IPlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(), state.get(AXIS))
+			Direction closest = PlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(), state.get(AXIS))
 				.get(0);
-			List<Direction> directions = IPlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(),
+			List<Direction> directions = PlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(),
 				state.get(AXIS), d -> d.getAxis() != closest.getAxis());
 
 			for (Direction dir : directions) {
@@ -268,7 +268,7 @@ public class CogwheelBlockItem extends BlockItem {
 	}
 
 	@MethodsReturnNonnullByDefault
-	public static class IntegratedCogHelper implements IPlacementHelper {
+	public static class IntegratedCogHelper implements PlacementHelper {
 
 		@Override
 		public Predicate<ItemStack> getItemPredicate() {
@@ -299,7 +299,7 @@ public class CogwheelBlockItem extends BlockItem {
 				return PlacementOffset.fail();
 
 			List<Direction> directions =
-				IPlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(), face.getAxis(), newAxis);
+				PlacementHelper.orderedByDistanceExceptAxis(pos, ray.getPos(), face.getAxis(), newAxis);
 
 			for (Direction d : directions) {
 				BlockPos newPos = pos.offset(face)

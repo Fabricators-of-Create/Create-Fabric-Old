@@ -1,9 +1,7 @@
 package com.simibubi.create.content.schematics;
 
-public interface ISpecialEntityItemRequirement {
-
+public interface SpecialEntityItemRequirement {
 	default ItemRequirement getRequiredItems() {
 		return ItemRequirement.INVALID;
 	}
-
 }

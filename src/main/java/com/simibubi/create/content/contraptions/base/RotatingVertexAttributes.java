@@ -1,10 +1,10 @@
 package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.CommonAttributes;
-import com.simibubi.create.foundation.render.backend.gl.attrib.IVertexAttrib;
+import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttribSpec;
 
-public enum RotatingVertexAttributes implements IVertexAttrib {
+public enum RotatingVertexAttributes implements VertexAttrib {
 	AXIS("aAxis", CommonAttributes.NORMAL),
 	;
 

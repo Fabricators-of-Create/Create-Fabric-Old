@@ -1,7 +1,7 @@
 package com.simibubi.create.foundation.render.backend.gl.shader;
 
 import com.simibubi.create.Create;
-import com.simibubi.create.foundation.render.backend.gl.attrib.IVertexAttrib;
+import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ public class ProgramSpec<P extends GlProgram> {
 
 	public final GlProgram.ProgramFactory<P> factory;
 
-	public final ArrayList<IVertexAttrib> attributes;
+	public final ArrayList<VertexAttrib> attributes;
 
-	public ProgramSpec(Identifier name, Identifier vert, Identifier frag, GlProgram.ProgramFactory<P> factory, ShaderConstants defines, ArrayList<IVertexAttrib> attributes) {
+	public ProgramSpec(Identifier name, Identifier vert, Identifier frag, GlProgram.ProgramFactory<P> factory, ShaderConstants defines, ArrayList<VertexAttrib> attributes) {
 		this.name = name;
 		this.vert = vert;
 		this.frag = frag;
@@ -49,7 +49,7 @@ public class ProgramSpec<P extends GlProgram> {
 	public static class Builder<P extends GlProgram> {
 		private final Identifier name;
 		private final GlProgram.ProgramFactory<P> factory;
-		private final ArrayList<IVertexAttrib> attributes;
+		private final ArrayList<VertexAttrib> attributes;
 		private Identifier vert;
 		private Identifier frag;
 		private ShaderConstants defines = ShaderConstants.EMPTY;
@@ -75,7 +75,7 @@ public class ProgramSpec<P extends GlProgram> {
 			return this;
 		}
 
-		public <A extends Enum<A> & IVertexAttrib> Builder<P> addAttributes(Class<A> attributeEnum) {
+		public <A extends Enum<A> & VertexAttrib> Builder<P> addAttributes(Class<A> attributeEnum) {
 			attributes.addAll(Arrays.asList(attributeEnum.getEnumConstants()));
 			return this;
 		}

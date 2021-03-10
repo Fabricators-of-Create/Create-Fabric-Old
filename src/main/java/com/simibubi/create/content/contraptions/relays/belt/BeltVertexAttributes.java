@@ -1,10 +1,10 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.CommonAttributes;
-import com.simibubi.create.foundation.render.backend.gl.attrib.IVertexAttrib;
+import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttribSpec;
 
-public enum BeltVertexAttributes implements IVertexAttrib {
+public enum BeltVertexAttributes implements VertexAttrib {
 	INSTANCE_ROTATION("aInstanceRot", CommonAttributes.VEC3),
 	SOURCE_TEX("aSourceTexture", CommonAttributes.UV),
 	SCROLL_TEX("aScrollTexture", CommonAttributes.VEC4),

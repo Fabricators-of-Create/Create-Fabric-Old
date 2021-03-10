@@ -1,7 +1,7 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.contraptions.wrench.IWrenchable;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.block.BlockState;
@@ -14,7 +14,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.WorldView;
 
-public interface Rotating extends IWrenchable {
+public interface Rotating extends Wrenchable {
 	enum SpeedLevel {
 		NONE,
 		MEDIUM,
@@ -66,7 +66,7 @@ public interface Rotating extends IWrenchable {
 			if (speedLevel == SpeedLevel.FAST)
 				level.append(Lang.translate("tooltip.speedRequirement.high"));
 
-			level.append(" (" + IHaveGoggleInformation.format(Math.abs(speed))).append(Lang.translate("generic.unit.rpm")).append(") ");
+			level.append(" (" + GoggleInformationProvider.format(Math.abs(speed))).append(Lang.translate("generic.unit.rpm")).append(") ");
 
 			if (overstressed)
 				level.formatted(Formatting.DARK_GRAY, Formatting.STRIKETHROUGH);

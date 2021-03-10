@@ -16,18 +16,18 @@ import java.util.stream.Collectors;
 
 public class PlacementHelpers {
 
-	private static final List<IPlacementHelper> helpers = new ArrayList<>();
+	private static final List<PlacementHelper> helpers = new ArrayList<>();
 	private static int animationTick = 0;
 	/**private static final InterpolatedChasingValue angle = new InterpolatedChasingAngle().withSpeed(0.25f);*/
 	private static BlockPos target = null;
 	private static BlockPos lastTarget = null;
 
-	public static int register(IPlacementHelper helper) {
+	public static int register(PlacementHelper helper) {
 		helpers.add(helper);
 		return helpers.size() - 1;
 	}
 
-	public static IPlacementHelper get(int id) {
+	public static PlacementHelper get(int id) {
 		if (id < 0 || id >= helpers.size())
 			throw new ArrayIndexOutOfBoundsException("id " + id + " for placement helper not known");
 
@@ -73,19 +73,19 @@ public class PlacementHelpers {
 		for (Hand hand : Hand.values()) {
 
 			ItemStack heldItem = mc.player.getStackInHand(hand);
-			List<IPlacementHelper> filteredForHeldItem = helpers.stream().filter(helper -> helper.matchesItem(heldItem)).collect(Collectors.toList());
+			List<PlacementHelper> filteredForHeldItem = helpers.stream().filter(helper -> helper.matchesItem(heldItem)).collect(Collectors.toList());
 			if (filteredForHeldItem.isEmpty())
 				continue;
 
 			BlockPos pos = ray.getBlockPos();
 			BlockState state = world.getBlockState(pos);
 
-			List<IPlacementHelper> filteredForState = filteredForHeldItem.stream().filter(helper -> helper.matchesState(state)).collect(Collectors.toList());
+			List<PlacementHelper> filteredForState = filteredForHeldItem.stream().filter(helper -> helper.matchesState(state)).collect(Collectors.toList());
 			if (filteredForState.isEmpty())
 				continue;
 
 			boolean atLeastOneMatch = false;
-			for (IPlacementHelper h : filteredForState) {
+			for (PlacementHelper h : filteredForState) {
 				PlacementOffset offset = h.getOffset(world, state, pos, ray, heldItem);
 
 				if (offset.isSuccessful()) {

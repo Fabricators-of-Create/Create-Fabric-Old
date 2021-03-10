@@ -2,7 +2,6 @@ package com.simibubi.create.content.contraptions.relays.elementary;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
-import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
 import net.minecraft.block.BlockState;
@@ -74,7 +73,7 @@ public class ShaftBlock extends AbstractShaftBlock {
 		 return ActionResult.SUCCESS;
 		 }*/
 
-		IPlacementHelper helper = PlacementHelpers.get(placementHelperId);
+		com.simibubi.create.foundation.utility.placement.PlacementHelper helper = PlacementHelpers.get(placementHelperId);
 		if (helper.matchesItem(heldItem))
 			return helper.getOffset(world, state, pos, ray).placeInWorld(world, (BlockItem) heldItem.getItem(), player, hand, ray);
 

@@ -30,9 +30,9 @@ public class WrenchItem extends Item {
 
 		BlockState state = context.getWorld()
 			.getBlockState(context.getBlockPos());
-		if (!(state.getBlock() instanceof IWrenchable))
+		if (!(state.getBlock() instanceof Wrenchable))
 			return super.useOnBlock(context);
-		IWrenchable actor = (IWrenchable) state.getBlock();
+		Wrenchable actor = (Wrenchable) state.getBlock();
 
 		if (player.isSneaking())
 			return actor.onSneakWrenched(state, context);

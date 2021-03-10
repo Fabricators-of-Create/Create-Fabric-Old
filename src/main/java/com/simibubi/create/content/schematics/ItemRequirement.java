@@ -41,8 +41,8 @@ public class ItemRequirement {
 		Block block = state.getBlock();
 		if (block == Blocks.AIR)
 			return NONE;
-		if (block instanceof ISpecialBlockItemRequirement)
-			return ((ISpecialBlockItemRequirement) block).getRequiredItems(state);
+		if (block instanceof SpecialBlockItemRequirement)
+			return ((SpecialBlockItemRequirement) block).getRequiredItems(state);
 
 		Item item = BlockItem.BLOCK_ITEMS.getOrDefault(state.getBlock(), Items.AIR);
 
@@ -66,8 +66,8 @@ public class ItemRequirement {
 	public static ItemRequirement of(Entity entity) {
 		EntityType<?> type = entity.getType();
 
-		if (entity instanceof ISpecialEntityItemRequirement)
-			return ((ISpecialEntityItemRequirement) entity).getRequiredItems();
+		if (entity instanceof SpecialEntityItemRequirement)
+			return ((SpecialEntityItemRequirement) entity).getRequiredItems();
 
 		if (type == EntityType.ITEM_FRAME) {
 			ItemFrameEntity ife = (ItemFrameEntity) entity;

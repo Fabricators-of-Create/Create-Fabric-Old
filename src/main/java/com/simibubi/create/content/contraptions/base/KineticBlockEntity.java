@@ -4,8 +4,8 @@ import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticNetwork;
 import com.simibubi.create.content.contraptions.RotationPropagator;
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.contraptions.goggles.IHaveHoveringInformation;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
+import com.simibubi.create.content.contraptions.goggles.HoveringInformationProvider;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.item.TooltipHelper;
@@ -31,7 +31,7 @@ import static net.minecraft.util.Formatting.GOLD;
 import static net.minecraft.util.Formatting.GRAY;
 
 public abstract class KineticBlockEntity extends SmartBlockEntity
-	implements IHaveGoggleInformation, IHaveHoveringInformation, InstanceRendered {
+	implements GoggleInformationProvider, HoveringInformationProvider, InstanceRendered {
 
 	public @Nullable Long network;
 	public @Nullable BlockPos source;
@@ -425,7 +425,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			String stressString =
 				spacing + "%s%s" + Lang.translate("generic.unit.stress") + " " + Formatting.DARK_GRAY + "%s";
 			tooltip.add(" " + String.format(stressString, Formatting.AQUA,
-				IHaveGoggleInformation.format(stressTotal), Lang.translate("gui.goggles.at_current_speed")));
+				GoggleInformationProvider.format(stressTotal), Lang.translate("gui.goggles.at_current_speed")));
 
 			added = true;
 		}

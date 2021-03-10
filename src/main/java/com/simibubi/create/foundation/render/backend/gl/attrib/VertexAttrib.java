@@ -1,7 +1,6 @@
 package com.simibubi.create.foundation.render.backend.gl.attrib;
 
-public interface IVertexAttrib {
-
+public interface VertexAttrib {
 	String attribName();
 
 	VertexAttribSpec attribSpec();

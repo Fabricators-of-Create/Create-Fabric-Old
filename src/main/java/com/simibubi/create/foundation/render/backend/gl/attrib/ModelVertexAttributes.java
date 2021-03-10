@@ -1,6 +1,6 @@
 package com.simibubi.create.foundation.render.backend.gl.attrib;
 
-public enum ModelVertexAttributes implements IVertexAttrib {
+public enum ModelVertexAttributes implements VertexAttrib {
 	VERTEX_POSITION("aPos", CommonAttributes.VEC3),
 	NORMAL("aNormal", CommonAttributes.NORMAL),
 	TEXTURE("aTexCoords", CommonAttributes.UV),

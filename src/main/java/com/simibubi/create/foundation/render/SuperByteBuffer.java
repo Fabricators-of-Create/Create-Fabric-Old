@@ -20,8 +20,8 @@ import net.minecraft.world.World;
 
 public class SuperByteBuffer extends TemplateBuffer {
 
-	public interface IVertexLighter {
-		public int getPackedLight(float x, float y, float z);
+	public interface VertexLighter {
+		int getPackedLight(float x, float y, float z);
 	}
 
 	// Vertex Position

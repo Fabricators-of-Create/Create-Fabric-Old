@@ -3,7 +3,7 @@ package com.simibubi.create.content.contraptions.base;
 import java.util.List;
 
 import com.simibubi.create.content.contraptions.KineticNetwork;
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.foundation.utility.Lang;
 
 import net.minecraft.block.entity.BlockEntity;
@@ -67,7 +67,7 @@ public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 
 			String stressString =
 				spacing + "%s%s" + Lang.translate("generic.unit.stress") + " " + Formatting.DARK_GRAY + "%s";
-			tooltip.add(" " + String.format(stressString, Formatting.AQUA, IHaveGoggleInformation.format(stressTotal),
+			tooltip.add(" " + String.format(stressString, Formatting.AQUA, GoggleInformationProvider.format(stressTotal),
 				Lang.translate("gui.goggles.at_current_speed")));
 
 			added = true;

@@ -23,7 +23,7 @@ import static com.simibubi.create.foundation.utility.AngleHelper.angleLerp;
  * Ex: Pistons, bearings <br>
  * Controlled Contraption Entities can rotate around one axis and translate.
  * <br>
- * They are bound to an {@link IControlContraption}
+ * They are bound to an {@link ControlContraption}
  */
 public class ControlledContraptionEntity extends AbstractContraptionEntity {
 
@@ -36,7 +36,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 		super(type, world);
 	}
 
-	public static ControlledContraptionEntity create(World world, IControlContraption controller,
+	public static ControlledContraptionEntity create(World world, ControlContraption controller,
 													 Contraption contraption) {
 		ControlledContraptionEntity entity =
 			new ControlledContraptionEntity(AllEntityTypes.CONTROLLED_CONTRAPTION, world);
@@ -136,7 +136,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 			return;
 		if (!world.canSetBlock(controllerPos))
 			return;
-		IControlContraption controller = getController();
+		ControlContraption controller = getController();
 		if (controller == null) {
 			remove();
 			return;
@@ -182,15 +182,15 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 		return true;
 	}
 
-	protected IControlContraption getController() {
+	protected ControlContraption getController() {
 		if (controllerPos == null)
 			return null;
 		if (!world.canSetBlock(controllerPos))
 			return null;
 		BlockEntity te = world.getBlockEntity(controllerPos);
-		if (!(te instanceof IControlContraption))
+		if (!(te instanceof ControlContraption))
 			return null;
-		return (IControlContraption) te;
+		return (ControlContraption) te;
 	}
 
 	@Override
@@ -204,7 +204,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 
 	@Override
 	protected void onContraptionStalled() {
-		IControlContraption controller = getController();
+		ControlContraption controller = getController();
 		if (controller != null)
 			controller.onStall();
 		super.onContraptionStalled();

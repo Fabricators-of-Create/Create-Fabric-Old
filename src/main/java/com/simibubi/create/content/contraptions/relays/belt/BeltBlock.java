@@ -7,7 +7,7 @@ import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
-import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
+import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
 
@@ -40,7 +40,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEntity>, ISpecialBlockItemRequirement {
+public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEntity>, SpecialBlockItemRequirement {
 	public static final Property<BeltSlope> SLOPE = EnumProperty.of("slope", BeltSlope.class);
 	public static final Property<BeltPart> PART = EnumProperty.of("part", BeltPart.class);
 	public static final BooleanProperty CASING = BooleanProperty.of("casing");

@@ -1,10 +1,10 @@
 package com.simibubi.create.content.contraptions.components.actors;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.CommonAttributes;
-import com.simibubi.create.foundation.render.backend.gl.attrib.IVertexAttrib;
+import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttribSpec;
 
-public enum ActorVertexAttributes implements IVertexAttrib {
+public enum ActorVertexAttributes implements VertexAttrib {
 	INSTANCE_POSITION("aInstancePos", CommonAttributes.VEC3),
 	LIGHT("aModelLight", CommonAttributes.LIGHT),
 	OFFSET("aOffset", CommonAttributes.FLOAT),

@@ -1,6 +1,6 @@
 package com.simibubi.create.foundation.utility.placement.util;
 
-import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
+import com.simibubi.create.foundation.utility.placement.PlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementOffset;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.property.Property;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public abstract class PoleHelper<T extends Comparable<T>> implements IPlacementHelper {
+public abstract class PoleHelper<T extends Comparable<T>> implements PlacementHelper {
 
 	protected final Predicate<BlockState> statePredicate;
 	protected final Property<T> property;
@@ -51,7 +51,7 @@ public abstract class PoleHelper<T extends Comparable<T>> implements IPlacementH
 
 	@Override
 	public PlacementOffset getOffset(World world, BlockState state, BlockPos pos, BlockHitResult ray) {
-		List<Direction> directions = IPlacementHelper.orderedByDistance(pos, ray.getPos(), dir -> dir.getAxis() == axisFunction.apply(state));
+		List<Direction> directions = PlacementHelper.orderedByDistance(pos, ray.getPos(), dir -> dir.getAxis() == axisFunction.apply(state));
 		for (Direction dir : directions) {
 			int poles = attachedPoles(world, pos, dir);
 			BlockPos newPos = pos.offset(dir, poles + 1);

@@ -1,6 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.util.Formatting;
@@ -10,8 +10,7 @@ import java.util.List;
 
 import static net.minecraft.util.Formatting.GRAY;
 
-public interface IDisplayAssemblyExceptions {
-
+public interface DisplayAssemblyExceptionsProvider {
 	default boolean addExceptionToTooltip(List<String> tooltip) {
 		AssemblyException e = getLastAssemblyException();
 		if (e == null)
@@ -20,8 +19,8 @@ public interface IDisplayAssemblyExceptions {
 		if (!tooltip.isEmpty())
 			tooltip.add("");
 
-		String spacing = IHaveGoggleInformation.spacing;
-		tooltip.add(IHaveGoggleInformation.spacing + Formatting.GOLD + Lang.translate("gui.assembly.exception"));
+		String spacing = GoggleInformationProvider.spacing;
+		tooltip.add(GoggleInformationProvider.spacing + Formatting.GOLD + Lang.translate("gui.assembly.exception"));
 
 		Arrays.stream(e.getFormattedText()
 			.split("\n"))

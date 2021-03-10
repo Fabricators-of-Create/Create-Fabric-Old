@@ -3,7 +3,7 @@ package com.simibubi.create.content.contraptions.goggles;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.contraptions.components.structureMovement.IDisplayAssemblyExceptions;
+import com.simibubi.create.content.contraptions.components.structureMovement.DisplayAssemblyExceptionsProvider;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBox;
 import com.simibubi.create.foundation.gui.GuiGameElement;
 import com.simibubi.create.foundation.utility.outliner.Outline;
@@ -51,8 +51,8 @@ public class GoggleOverlayRenderer {
 
 		boolean wearingGoggles = headSlot.isItemEqualIgnoreDamage(AllItems.GOGGLES.getDefaultStack());
 
-		boolean hasGoggleInformation = te instanceof IHaveGoggleInformation;
-		boolean hasHoveringInformation = te instanceof IHaveHoveringInformation;
+		boolean hasGoggleInformation = te instanceof GoggleInformationProvider;
+		boolean hasHoveringInformation = te instanceof HoveringInformationProvider;
 
 		boolean goggleAddedInformation = false;
 		boolean hoverAddedInformation = false;
@@ -60,22 +60,22 @@ public class GoggleOverlayRenderer {
 		List<String> tooltip = new ArrayList<>();
 
 		if (hasGoggleInformation && wearingGoggles) {
-			IHaveGoggleInformation gte = (IHaveGoggleInformation) te;
+			GoggleInformationProvider gte = (GoggleInformationProvider) te;
 			goggleAddedInformation = gte.addToGoggleTooltip(tooltip, mc.player.isSneaking());
 		}
 
 		if (hasHoveringInformation) {
 			if (!tooltip.isEmpty())
 				tooltip.add("");
-			IHaveHoveringInformation hte = (IHaveHoveringInformation) te;
+			HoveringInformationProvider hte = (HoveringInformationProvider) te;
 			hoverAddedInformation = hte.addToTooltip(tooltip, mc.player.isSneaking());
 
 			if (goggleAddedInformation && !hoverAddedInformation)
 				tooltip.remove(tooltip.size() - 1);
 		}
 
-		if (te instanceof IDisplayAssemblyExceptions) {
-			boolean exceptionAdded = ((IDisplayAssemblyExceptions) te).addExceptionToTooltip(tooltip);
+		if (te instanceof DisplayAssemblyExceptionsProvider) {
+			boolean exceptionAdded = ((DisplayAssemblyExceptionsProvider) te).addExceptionToTooltip(tooltip);
 			if (exceptionAdded) {
 				hasHoveringInformation = true;
 				hoverAddedInformation = true;

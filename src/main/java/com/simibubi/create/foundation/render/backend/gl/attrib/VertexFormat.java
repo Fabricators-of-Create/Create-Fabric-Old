@@ -5,16 +5,16 @@ import java.util.Arrays;
 
 public class VertexFormat {
 
-	private final ArrayList<IVertexAttrib> allAttributes;
+	private final ArrayList<VertexAttrib> allAttributes;
 
 	private final int numAttributes;
 	private final int stride;
 
-	public VertexFormat(ArrayList<IVertexAttrib> allAttributes) {
+	public VertexFormat(ArrayList<VertexAttrib> allAttributes) {
 		this.allAttributes = allAttributes;
 
 		int numAttributes = 0, stride = 0;
-		for (IVertexAttrib attrib : allAttributes) {
+		for (VertexAttrib attrib : allAttributes) {
 			VertexAttribSpec spec = attrib.attribSpec();
 			numAttributes += spec.getAttributeCount();
 			stride += spec.getSize();
@@ -37,7 +37,7 @@ public class VertexFormat {
 
 	public void vertexAttribPointers(int index) {
 		int offset = 0;
-		for (IVertexAttrib attrib : this.allAttributes) {
+		for (VertexAttrib attrib : this.allAttributes) {
 			VertexAttribSpec spec = attrib.attribSpec();
 			spec.vertexAttribPointer(stride, index, offset);
 			index += spec.getAttributeCount();
@@ -46,13 +46,13 @@ public class VertexFormat {
 	}
 
 	public static class Builder {
-		private final ArrayList<IVertexAttrib> allAttributes;
+		private final ArrayList<VertexAttrib> allAttributes;
 
 		public Builder() {
 			allAttributes = new ArrayList<>();
 		}
 
-		public <A extends Enum<A> & IVertexAttrib> Builder addAttributes(Class<A> attribEnum) {
+		public <A extends Enum<A> & VertexAttrib> Builder addAttributes(Class<A> attribEnum) {
 			allAttributes.addAll(Arrays.asList(attribEnum.getEnumConstants()));
 			return this;
 		}

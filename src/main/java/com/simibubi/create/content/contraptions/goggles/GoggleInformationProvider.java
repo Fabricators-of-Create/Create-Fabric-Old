@@ -6,7 +6,7 @@ import java.util.List;
 /*
  * Implement this Interface in the TileEntity class that wants to add info to the screen
  * */
-public interface IHaveGoggleInformation {
+public interface GoggleInformationProvider {
 
 	DecimalFormat decimalFormat = new DecimalFormat("#.##");
 	String spacing = "    ";

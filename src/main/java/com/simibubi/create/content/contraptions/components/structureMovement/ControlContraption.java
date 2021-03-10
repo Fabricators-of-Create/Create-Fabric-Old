@@ -5,8 +5,7 @@ import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.util.math.BlockPos;
 
-public interface IControlContraption {
-
+public interface ControlContraption {
 	boolean isAttachedTo(AbstractContraptionEntity contraption);
 
 	void attach(ControlledContraptionEntity contraption);

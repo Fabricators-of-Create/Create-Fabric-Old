@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
-import com.simibubi.create.content.contraptions.wrench.IWrenchableWithBracket;
+import com.simibubi.create.content.contraptions.wrench.WrenchableWithBracket;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 
 import net.minecraft.block.Block;
@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock implements Waterloggable, IWrenchableWithBracket {
+public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock implements Waterloggable, WrenchableWithBracket {
 
 	public AbstractShaftBlock(Settings properties) {
 		super(properties);
@@ -38,7 +38,7 @@ public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock imple
 	
 	@Override
 	public ActionResult onWrenched(BlockState state, ItemUsageContext context) {
-		return IWrenchableWithBracket.super.onWrenched(state, context);
+		return WrenchableWithBracket.super.onWrenched(state, context);
 	}
 
 	@Override

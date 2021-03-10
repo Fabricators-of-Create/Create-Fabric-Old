@@ -11,15 +11,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public interface IWrenchableWithBracket extends IWrenchable {
-
-	public Optional<ItemStack> removeBracket(BlockView world, BlockPos pos, boolean inOnReplacedContext);
+public interface WrenchableWithBracket extends Wrenchable {
+	Optional<ItemStack> removeBracket(BlockView world, BlockPos pos, boolean inOnReplacedContext);
 
 	@Override
 	default ActionResult onWrenched(BlockState state, ItemUsageContext context) {
 		if (tryRemoveBracket(context))
 			return ActionResult.SUCCESS;
-		return IWrenchable.super.onWrenched(state, context);
+		return Wrenchable.super.onWrenched(state, context);
 	}
 
 	default boolean tryRemoveBracket(ItemUsageContext context) {
