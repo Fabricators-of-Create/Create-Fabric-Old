@@ -22,7 +22,8 @@ public class AllShapes {
 		CASING_12PX = shape(0, 0, 0, 16, 12, 16).forDirectional(),
 		CASING_11PX = shape(0, 0, 0, 16, 11, 16).forDirectional(),
 		MOTOR_BLOCK = shape(3, 0, 3, 13, 14, 13).forDirectional(),
-		FOUR_VOXEL_POLE = shape(6, 0, 6, 10, 16, 10).forAxis(), SIX_VOXEL_POLE = shape(5, 0, 5, 11, 16, 11).forAxis(),
+		FOUR_VOXEL_POLE = shape(6, 0, 6, 10, 16, 10).forAxis(),
+		SIX_VOXEL_POLE = shape(5, 0, 5, 11f, 16, 11).forAxis(),
 		EIGHT_VOXEL_POLE = shape(4, 0, 4, 12, 16, 12).forAxis(),
 		FURNACE_ENGINE = shape(1, 1, 0, 15, 15, 16).add(0, 0, 9, 16, 16, 14)
 			.forHorizontal(Direction.SOUTH),

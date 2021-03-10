@@ -1,10 +1,12 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -14,6 +16,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -30,11 +34,12 @@ public class ShaftBlock extends AbstractShaftBlock {
 		return AllBlocks.SHAFT.stateManager.getStates().contains(state);
 	}
 
-	/**
-	 * @Override public VoxelShape getShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-	 * return AllShapes.SIX_VOXEL_POLE.get(state.get(AXIS));
-	 * }
-	 */
+
+	 @Override
+	 public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+	 return AllShapes.SIX_VOXEL_POLE.get(state.get(AXIS));
+	 }
+
 
 	@Override
 	public float getParticleTargetRadius() {
@@ -53,7 +58,7 @@ public class ShaftBlock extends AbstractShaftBlock {
 			return ActionResult.PASS;
 
 		ItemStack heldItem = player.getStackInHand(hand);
-		/**for (EncasedShaftBlock encasedShaft : new EncasedShaftBlock[] { AllBlocks.ANDESITE_ENCASED_SHAFT.get(), TODO EncasedShaft CHECK
+		/*for (EncasedShaftBlock encasedShaft : new EncasedShaftBlock[] { AllBlocks.ANDESITE_ENCASED_SHAFT.get(), TODO EncasedShaft CHECK
 		 AllBlocks.BRASS_ENCASED_SHAFT.get() }) {
 
 		 if (!encasedShaft.getCasing()
