@@ -1,7 +1,13 @@
 package me.pepperbell.simplenetworking;
 
+import java.lang.reflect.Constructor;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -20,9 +26,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
-import java.lang.reflect.Constructor;
-
 public class SimpleChannel {
+	private static final Logger LOGGER = LogManager.getLogger("Simple Networking API");
+
 	private final Identifier channelName;
 	private final BiMap<Integer, Class<?>> c2sIdMap = HashBiMap.create();
 	private final BiMap<Integer, Class<?>> s2cIdMap = HashBiMap.create();
@@ -58,32 +64,45 @@ public class SimpleChannel {
 	}
 
 	private PacketByteBuf createBuf(C2SPacket packet) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeVarInt(c2sIdMap.inverse().get(packet.getClass()));
-		packet.write(buf);
-		return buf;
+		Integer id = c2sIdMap.inverse().get(packet.getClass());
+		if (id != null) {
+			PacketByteBuf buf = PacketByteBufs.create();
+			buf.writeVarInt(id);
+			packet.write(buf);
+			return buf;
+		}
+		LOGGER.error("Could not get id for c2s packet " + packet.toString() + " in channel " + channelName);
+		return null;
 	}
 
 	private PacketByteBuf createBuf(S2CPacket packet) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeVarInt(s2cIdMap.inverse().get(packet.getClass()));
-		packet.write(buf);
-		return buf;
+		Integer id = s2cIdMap.inverse().get(packet.getClass());
+		if (id != null) {
+			PacketByteBuf buf = PacketByteBufs.create();
+			buf.writeVarInt(id);
+			packet.write(buf);
+			return buf;
+		}
+		LOGGER.error("Could not get id for s2c packet " + packet.toString() + " in channel " + channelName);
+		return null;
 	}
 
 	@Environment(EnvType.CLIENT)
 	public void sendToServer(C2SPacket packet) {
 		PacketByteBuf buf = createBuf(packet);
+		if (buf == null) return;
 		ClientPlayNetworking.send(channelName, buf);
 	}
 
 	public void sendToClient(S2CPacket packet, ServerPlayerEntity player) {
 		PacketByteBuf buf = createBuf(packet);
+		if (buf == null) return;
 		ServerPlayNetworking.send(player, channelName, buf);
 	}
 
 	public void sendToClientsInServer(S2CPacket packet, MinecraftServer server) {
 		PacketByteBuf buf = createBuf(packet);
+		if (buf == null) return;
 		for (ServerPlayerEntity player : PlayerLookup.all(server)) {
 			ServerPlayNetworking.send(player, channelName, buf);
 		}
@@ -91,6 +110,7 @@ public class SimpleChannel {
 
 	public void sendToClientsInWorld(S2CPacket packet, ServerWorld world) {
 		PacketByteBuf buf = createBuf(packet);
+		if (buf == null) return;
 		for (ServerPlayerEntity player : PlayerLookup.world(world)) {
 			ServerPlayNetworking.send(player, channelName, buf);
 		}
@@ -98,6 +118,7 @@ public class SimpleChannel {
 
 	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3d pos, double radius) {
 		PacketByteBuf buf = createBuf(packet);
+		if (buf == null) return;
 		for (ServerPlayerEntity player : PlayerLookup.around(world, pos, radius)) {
 			ServerPlayNetworking.send(player, channelName, buf);
 		}
@@ -105,6 +126,7 @@ public class SimpleChannel {
 
 	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3i pos, double radius) {
 		PacketByteBuf buf = createBuf(packet);
+		if (buf == null) return;
 		for (ServerPlayerEntity player : PlayerLookup.around(world, pos, radius)) {
 			ServerPlayNetworking.send(player, channelName, buf);
 		}
@@ -113,11 +135,13 @@ public class SimpleChannel {
 	@Environment(EnvType.CLIENT)
 	public void sendResponseToServer(ResponseTarget target, C2SPacket packet) {
 		PacketByteBuf buf = createBuf(packet);
+		if (buf == null) return;
 		target.sender.sendPacket(channelName, buf);
 	}
 
 	public void sendResponseToClient(ResponseTarget target, S2CPacket packet) {
 		PacketByteBuf buf = createBuf(packet);
+		if (buf == null) return;
 		target.sender.sendPacket(channelName, buf);
 	}
 
@@ -140,7 +164,7 @@ public class SimpleChannel {
 				ctor.setAccessible(true);
 				packet = (C2SPacket) ctor.newInstance();
 			} catch (Exception e) {
-				throw new RuntimeException("Could not create c2s packet in channel " + channelName + " with id " + id, e);
+				LOGGER.error("Could not create c2s packet in channel " + channelName + " with id " + id, e);
 			}
 			if (packet != null) {
 				packet.read(buf);
@@ -161,7 +185,7 @@ public class SimpleChannel {
 				ctor.setAccessible(true);
 				packet = (S2CPacket) ctor.newInstance();
 			} catch (Exception e) {
-				throw new RuntimeException("Could not create s2c packet in channel " + channelName + " with id " + id, e);
+				LOGGER.error("Could not create s2c packet in channel " + channelName + " with id " + id, e);
 			}
 			if (packet != null) {
 				packet.read(buf);
