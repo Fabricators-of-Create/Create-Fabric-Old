@@ -3,5 +3,3 @@ accessWidener v1 named
 accessible class com/mojang/blaze3d/platform/GlStateManager$FogState
 
 accessible class net/minecraft/client/particle/ParticleManager$SpriteAwareFactory
-
-accessible method net/minecraft/client/render/item/ItemRenderer renderBakedItemQuads (Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Ljava/util/List;Lnet/minecraft/item/ItemStack;II)V
