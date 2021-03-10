@@ -19,10 +19,11 @@
     "ChunkBuilder$ChunkDataMixin",
     "OnRemoveTileMixin",
     "RenderHooksMixin",
-    "event.ClientWorldMixin"
+    "event.ClientWorldMixin",
+    "event.MinecraftClientMixin"
   ],
   "server": [
-		"Vec3dMixin"
+    "Vec3dMixin"
   ],
   "injectors": {
     "defaultRequire": 1
