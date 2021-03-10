@@ -9,7 +9,6 @@
     "Matrix4fMixin",
     "MouseMixin",
     "ParticleManagerMixin",
-    "Vec3dMixin",
     "accessor.BufferBuilderAccessor",
     "accessor.GameRendererAccessor",
     "accessor.GlStateManagerAccessor",
@@ -23,6 +22,7 @@
     "event.ClientWorldMixin"
   ],
   "server": [
+		"Vec3dMixin"
   ],
   "injectors": {
     "defaultRequire": 1
