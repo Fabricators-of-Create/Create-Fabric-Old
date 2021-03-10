@@ -10,9 +10,9 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 
 public class AllIcons {
 
@@ -151,7 +151,7 @@ public class AllIcons {
 		int j = i >> 16 & '\uffff';
 		int k = i & '\uffff';
 		MatrixStack.Entry peek = ms.peek();
-		Vec3f rgb = ColorHelper.getRGB(color);
+		Vector3f rgb = ColorHelper.getRGB(color);
 
 		Vec3d vec4 = new Vec3d(1, 1, 0);
 		Vec3d vec3 = new Vec3d(0, 1, 0);
@@ -170,7 +170,7 @@ public class AllIcons {
 	}
 
 	@Environment(EnvType.CLIENT)
-	private void vertex(MatrixStack.Entry peek, VertexConsumer builder, int j, int k, Vec3f rgb, Vec3d vec, float u, float v) {
+	private void vertex(MatrixStack.Entry peek, VertexConsumer builder, int j, int k, Vector3f rgb, Vec3d vec, float u, float v) {
 		builder.vertex(peek.getModel(), (float) vec.x, (float) vec.y, (float) vec.z)
 			.color(rgb.getX(), rgb.getY(), rgb.getZ(), 1)
 			.texture(u, v)

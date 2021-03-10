@@ -1,21 +1,21 @@
 package com.simibubi.create.content.contraptions.base;
 
+import java.util.List;
+
 import com.simibubi.create.content.contraptions.KineticNetwork;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.utility.Lang;
-import net.minecraft.block.BlockState;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.List;
-
 public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 	public boolean reActivateSource;
 
-	public GeneratingKineticBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
-		super(typeIn, pos, state);
+	public GeneratingKineticBlockEntity(BlockEntityType<?> typeIn) {
+		super(typeIn);
 	}
 
 	protected void notifyStressCapacityChange(float capacity) {

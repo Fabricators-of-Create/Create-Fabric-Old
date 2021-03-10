@@ -61,7 +61,7 @@ public class NbtPacket implements C2SPacket {
 				return;
 			}
 			
-			ItemStack heldInSlot = player.getInventory().getStack(slot);
+			ItemStack heldInSlot = player.inventory.getStack(slot);
 			if (heldInSlot.getItem() == stack.getItem()) {
 				heldInSlot.setTag(stack.getTag());
 			}

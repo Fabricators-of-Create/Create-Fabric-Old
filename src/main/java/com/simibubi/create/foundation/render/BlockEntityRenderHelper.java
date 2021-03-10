@@ -1,22 +1,24 @@
 package com.simibubi.create.foundation.render;
 
+import java.util.Iterator;
+
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
+
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vector4f;
 import net.minecraft.world.World;
-
-import java.util.Iterator;
 
 public class BlockEntityRenderHelper {
 
@@ -36,7 +38,7 @@ public class BlockEntityRenderHelper {
 			BlockEntity blockEntity = iterator.next();
 			//if (blockEntity instanceof IInstanceRendered) continue; // TODO: some things still need to render
 
-			BlockEntityRenderer<BlockEntity> renderer = MinecraftClient.getInstance().getBlockEntityRenderDispatcher().get(blockEntity); // TODO I THINK THIS IS RIGHT
+			BlockEntityRenderer<BlockEntity> renderer = BlockEntityRenderDispatcher.INSTANCE.get(blockEntity);
 			if (renderer == null) {
 				iterator.remove();
 				continue;
@@ -60,14 +62,14 @@ public class BlockEntityRenderHelper {
 			} catch (Exception e) {
 				iterator.remove();
 				
-				String message = "BlockEntity " + blockEntity.getType()
-					.toString() + " didn't want to render while moved.\n";
-				/**if (AllConfigs.CLIENT.explainRenderErrors.get()) { TODO FIX CONFIG
-					Create.logger.error(message, e);
-					continue;
-				}*/
+				String message = "BlockEntity " + BlockEntityType.getId(blockEntity.getType()).toString()
+						+ " didn't want to render while moved.\n";
+//				if (AllConfigs.CLIENT.explainRenderErrors.get()) { TODO FIX CONFIG
+//					Create.logger.error(message, e);
+//					continue;
+//				}
 				
-				Create.logger.error(message, e); /** SHOULD BE Create.logger.error(message);*/
+				Create.logger.error(message);
 				continue;
 			}
 		}

@@ -12,6 +12,8 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.*;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
@@ -56,7 +58,7 @@ public class SuperByteBuffer extends TemplateBuffer {
 	private static final Long2DoubleMap skyLightCache = new Long2DoubleOpenHashMap();
 	private static final Long2DoubleMap blockLightCache = new Long2DoubleOpenHashMap();
 	Vector4f pos = new Vector4f();
-	Vec3f normal = new Vec3f();
+	Vector3f normal = new Vector3f();
 	Vector4f lightPos = new Vector4f();
 
 	float diffuseLight(float x, float y, float z) {

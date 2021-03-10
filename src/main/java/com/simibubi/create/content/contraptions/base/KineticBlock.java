@@ -1,20 +1,19 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.foundation.block.entity.TickableBlockEntity;
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.foundation.item.ItemDescription;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class KineticBlock extends Block implements BlockEntityProvider, Rotating {
 
@@ -38,7 +37,7 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 
 			if (oldState.getBlock() != state.getBlock())
 				return;
-			if (state.hasBlockEntity() != oldState.hasBlockEntity())
+			if (state.getBlock().hasBlockEntity() != oldState.getBlock().hasBlockEntity())
 				return;
 			if (!areStatesKineticallyEquivalent(oldState, state))
 				return;
@@ -63,18 +62,6 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 
 	protected boolean areStatesKineticallyEquivalent(BlockState oldState, BlockState newState) {
 		return getRotationAxis(newState) == getRotationAxis(oldState);
-	}
-
-	@Override
-	public abstract BlockEntity createBlockEntity(BlockPos pos, BlockState state);
-
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return (world1, pos, state1, blockEntity) -> {
-			if (blockEntity instanceof TickableBlockEntity) {
-				((TickableBlockEntity) blockEntity).tick();
-			}
-		};
 	}
 
 	@Override

@@ -361,7 +361,7 @@ public class RotationPropagator {
 	private static KineticBlockEntity findConnectedNeighbour(KineticBlockEntity currentTE, BlockPos neighbourPos) {
 		BlockState neighbourState = currentTE.getWorld().getBlockState(neighbourPos);
 		if (!(neighbourState.getBlock() instanceof Rotating)) return null;
-		if (!neighbourState.hasBlockEntity()) return null;
+		if (!neighbourState.getBlock().hasBlockEntity()) return null;
 		BlockEntity neighbourTE = currentTE.getWorld().getBlockEntity(neighbourPos);
 		if (!(neighbourTE instanceof KineticBlockEntity)) return null;
 		KineticBlockEntity neighbourKbe = (KineticBlockEntity) neighbourTE;

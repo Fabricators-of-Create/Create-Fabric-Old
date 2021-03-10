@@ -42,8 +42,8 @@ public class BeltBlockEntity extends KineticBlockEntity {
 	protected BlockPos controller;
 	protected BeltInventory inventory;
 
-	public BeltBlockEntity(BlockPos pos, BlockState state) {
-		super(AllBlockEntities.BELT, pos, state);
+	public BeltBlockEntity() {
+		super(AllBlockEntities.BELT);
 		controller = BlockPos.ORIGIN;
 		/**itemHandler = LazyOptional.empty();*/
 		casing = CasingType.NONE;
@@ -156,7 +156,7 @@ public class BeltBlockEntity extends KineticBlockEntity {
 	 */
 
 	@Override
-	public void write(CompoundTag compound, boolean clientPacket) {
+	public void toTag(CompoundTag compound, boolean clientPacket) {
 		if (controller != null)
 			compound.put("Controller", NbtHelper.fromBlockPos(controller));
 		compound.putBoolean("IsController", isController());
@@ -169,12 +169,12 @@ public class BeltBlockEntity extends KineticBlockEntity {
 
 		if (isController())
 			compound.put("Inventory", getInventory().write());
-		super.write(compound, clientPacket);
+		super.toTag(compound, clientPacket);
 	}
 
 	@Override
-	protected void read(CompoundTag compound, boolean clientPacket) {
-		super.read(compound, clientPacket);
+	protected void fromTag(BlockState state, CompoundTag compound, boolean clientPacket) {
+		super.fromTag(state, compound, clientPacket);
 
 		/**if (compound.getBoolean("IsController"))
 		 controller = pos;

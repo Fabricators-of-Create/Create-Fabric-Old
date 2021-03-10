@@ -1,39 +1,51 @@
 package com.simibubi.create.foundation.block.entity;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.util.math.BlockPos;
 
-public abstract class SyncedBlockEntity extends BlockEntity {
+public abstract class SyncedBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
 
-	public SyncedBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-		super(type, pos, state);
-	}
-
-	public void sendData() {
-		world.updateListeners(getPos(), getCachedState(), getCachedState(), 2 | 4 | 16);
-	}
-
-	public void causeBlockUpdate() {
-		world.updateListeners(getPos(), getCachedState(), getCachedState(), 1);
+	public SyncedBlockEntity(BlockEntityType<?> blockEntityTypeIn) {
+		super(blockEntityTypeIn);
 	}
 
 	@Override
-	public BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return new BlockEntityUpdateS2CPacket(getPos(), 1, writeToClient(new CompoundTag()));
+	public void fromClientTag(CompoundTag tag) {
+		readClientUpdate(getCachedState(), tag);
+	}
+
+	@Override
+	public CompoundTag toClientTag(CompoundTag tag) {
+		writeToClient(tag);
+		return tag;
+	}
+
+	@Override
+	public CompoundTag toInitialChunkDataTag() {
+		return toTag(new CompoundTag());
+	}
+
+	public void sendData() {
+		if (world != null)
+			world.updateListeners(getPos(), getCachedState(), getCachedState(), 2 | 4 | 16);
+	}
+
+	public void causeBlockUpdate() {
+		if (world != null)
+			world.updateListeners(getPos(), getCachedState(), getCachedState(), 1);
 	}
 
 	// Special handling for client update packets
-	public void readClientUpdate(CompoundTag tag) {
-		readNbt(tag);
+	public void readClientUpdate(BlockState state, CompoundTag tag) {
+		fromTag(state, tag);
 	}
 
 	// Special handling for client update packets
 	public CompoundTag writeToClient(CompoundTag tag) {
-		return writeNbt(tag);
+		return toTag(tag);
 	}
 
 	public void notifyUpdate() {

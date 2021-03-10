@@ -1,9 +1,12 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
+import java.util.Optional;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
 import com.simibubi.create.content.contraptions.wrench.IWrenchableWithBracket;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,17 +18,16 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.state.StateManager;
+import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-
-import java.util.Optional;
 
 public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock implements Waterloggable, IWrenchableWithBracket {
 
@@ -33,7 +35,7 @@ public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock imple
 		super(properties);
 		setDefaultState(super.getDefaultState().with(Properties.WATERLOGGED, false));
 	}
-
+	
 	@Override
 	public ActionResult onWrenched(BlockState state, ItemUsageContext context) {
 		return IWrenchableWithBracket.super.onWrenched(state, context);
@@ -45,19 +47,18 @@ public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock imple
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-		return AllBlockEntities.SIMPLE_KINETIC.instantiate(pos, state);
+	public BlockEntity createBlockEntity(BlockView world) {
+		return AllBlockEntities.SIMPLE_KINETIC.instantiate();
 	}
 
 	@Override
-	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (state != newState && !moved)
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state != newState && !isMoving)
 			removeBracket(world, pos, true).ifPresent(stack -> Block.dropStack(world, pos, stack));
-		super.onStateReplaced(state, world, pos, newState, moved);
+		super.onStateReplaced(state, world, pos, newState, isMoving);
 	}
-
+	
 	// IRotate:
-
 
 	@Override
 	public boolean hasShaftTowards(WorldView world, BlockPos pos, BlockState state, Direction face) {
@@ -65,7 +66,7 @@ public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock imple
 	}
 
 	@Override
-	public Direction.Axis getRotationAxis(BlockState state) {
+	public Axis getRotationAxis(BlockState state) {
 		return state.get(AXIS);
 	}
 
@@ -76,13 +77,14 @@ public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock imple
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+	protected void appendProperties(Builder<Block, BlockState> builder) {
 		builder.add(Properties.WATERLOGGED);
 		super.appendProperties(builder);
 	}
 
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbourState,
+		WorldAccess world, BlockPos pos, BlockPos neighbourPos) {
 		if (state.get(Properties.WATERLOGGED)) {
 			world.getFluidTickScheduler()
 				.schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));

@@ -138,13 +138,13 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 			return;
 		IControlContraption controller = getController();
 		if (controller == null) {
-			remove(RemovalReason.DISCARDED);
+			remove();
 			return;
 		}
 		if (!controller.isAttachedTo(this)) {
 			controller.attach(this);
 			if (world.isClient)
-				setPosition(getX(), getY(), getZ());
+				updatePosition(getX(), getY(), getZ());
 		}
 
 		Vec3d motion = getVelocity();
@@ -229,7 +229,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 
 		for (MatrixStack stack : matrixStacks)
 			MatrixStacker.of(stack)
-				.nudge(getId())
+				.nudge(getEntityId())
 				.centre()
 				.rotate(angle, axis)
 				.unCentre();

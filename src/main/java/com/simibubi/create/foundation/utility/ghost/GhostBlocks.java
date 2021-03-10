@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
+import com.simibubi.create.foundation.utility.ghost.GhostBlocks.Entry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;

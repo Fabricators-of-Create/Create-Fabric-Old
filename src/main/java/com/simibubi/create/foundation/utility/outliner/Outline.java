@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -122,7 +123,7 @@ public abstract class Outline {
 		int j = i >> 16 & '\uffff';
 		int k = i & '\uffff';
 		MatrixStack.Entry peek = ms.peek();
-		Vec3f rgb = params.rgb;
+		Vector3f rgb = params.rgb;
 		if (transformNormals == null)
 			transformNormals = peek.getNormal();
 
@@ -162,7 +163,7 @@ public abstract class Outline {
 		protected boolean disableNormals;
 		protected float alpha;
 		protected int lightMapU, lightMapV;
-		protected Vec3f rgb;
+		protected Vector3f rgb;
 		private float lineWidth;
 
 		public OutlineParams() {

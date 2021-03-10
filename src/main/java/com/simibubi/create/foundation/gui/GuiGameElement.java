@@ -13,13 +13,13 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.Nullable;
 
 public class GuiGameElement {
@@ -161,7 +161,7 @@ public class GuiGameElement {
 		protected void renderModel(BlockRenderManager blockRenderer, VertexConsumerProvider.Immediate buffer,
 								   RenderLayer renderType, VertexConsumer vb, MatrixStack ms) {
 			int color = MinecraftClient.getInstance().getBlockColors().getColor(blockState, null, null, 0);
-			Vec3f rgb = ColorHelper.getRGB(color == -1 ? this.color : color);
+			Vector3f rgb = ColorHelper.getRGB(color == -1 ? this.color : color);
 			blockRenderer.getModelRenderer()
 				.render(ms.peek(), vb, blockState, blockmodel, rgb.getX(), rgb.getY(), rgb.getZ(),
 					0xF000F0, OverlayTexture.DEFAULT_UV);

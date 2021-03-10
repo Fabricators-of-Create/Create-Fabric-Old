@@ -3,9 +3,8 @@ package com.simibubi.create.content.contraptions.components.actors;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceData;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3f;
-
 import java.nio.ByteBuffer;
 
 public class ContraptionActorData extends InstanceData {
@@ -56,7 +55,7 @@ public class ContraptionActorData extends InstanceData {
 		return this;
 	}
 
-	public ContraptionActorData setRotationAxis(Vec3f axis) {
+	public ContraptionActorData setRotationAxis(Vector3f axis) {
 		setRotationAxis(axis.getX(), axis.getY(), axis.getZ());
 		return this;
 	}
@@ -68,7 +67,7 @@ public class ContraptionActorData extends InstanceData {
 		return this;
 	}
 
-	public ContraptionActorData setRotationCenter(Vec3f axis) {
+	public ContraptionActorData setRotationCenter(Vector3f axis) {
 		setRotationCenter(axis.getX(), axis.getY(), axis.getZ());
 		return this;
 	}
@@ -80,7 +79,7 @@ public class ContraptionActorData extends InstanceData {
 		return this;
 	}
 
-	public ContraptionActorData setLocalRotation(Vec3f axis) {
+	public ContraptionActorData setLocalRotation(Vector3f axis) {
 		setLocalRotation(axis.getX(), axis.getY(), axis.getZ());
 		return this;
 	}

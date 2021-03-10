@@ -9,13 +9,14 @@ import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.ColorHelper;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +28,8 @@ public class KineticBlockEntityRenderer extends SafeBlockEntityRenderer<KineticB
 	public static final Compartment<BlockState> KINETIC_TILE = new Compartment<>();
 	public static boolean rainbowMode = false;
 
-	public KineticBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+	public KineticBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
+		super(dispatcher);
 	}
 
 	public static void renderRotatingKineticBlock(KineticBlockEntity te, BlockState renderedState, MatrixStack ms,

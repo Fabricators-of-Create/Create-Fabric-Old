@@ -1,9 +1,21 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.render;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.lwjgl.opengl.GL11;
+
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.components.actors.ContraptionActorData;
-import com.simibubi.create.content.contraptions.components.structureMovement.*;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
+import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
+import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
@@ -11,28 +23,26 @@ import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
 import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.block.BlockModelRenderer;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.structure.Structure;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.light.LightingProvider;
-import org.apache.commons.lang3.tuple.MutablePair;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
 public class RenderedContraption {
 	public final PlacementSimulationWorld renderWorld;
@@ -82,14 +92,14 @@ public class RenderedContraption {
 
 	private static BufferBuilder buildStructure(PlacementSimulationWorld renderWorld, Contraption c, RenderLayer layer) {
 
-		BlockRenderLayerMap.INSTANCE.putBlocks(layer); // TODO COULD BE WRONG VERY VERY IMPORTANT
+//		ForgeHooksClient.setRenderLayer(layer);
 		MatrixStack ms = new MatrixStack();
 		BlockRenderManager dispatcher = MinecraftClient.getInstance()
 			.getBlockRenderManager();
 		BlockModelRenderer blockRenderer = dispatcher.getModelRenderer();
 		Random random = new Random();
 		BufferBuilder builder = new BufferBuilder(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL.getVertexSizeInteger());
-		builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL); // TODO COULD BE WRONG DRAWMODE
+		builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
 
 		for (Structure.StructureBlockInfo info : c.getBlocks()
 			.values()) {
@@ -97,8 +107,8 @@ public class RenderedContraption {
 
 			if (state.getRenderType() == BlockRenderType.ENTITYBLOCK_ANIMATED)
 				continue;
-			/**if (!RenderLayers.canRenderInLayer(state, layer)) TODO canRenderInLayer CHECK
-			 continue;*/
+//			if (!RenderLayers.canRenderInLayer(state, layer)) // TODO canRenderInLayer CHECK
+//				continue;
 
 			BakedModel originalModel = dispatcher.getModel(state);
 			ms.push();
@@ -113,7 +123,7 @@ public class RenderedContraption {
 	}
 
 	public int getEntityId() {
-		return contraption.entity.getId();
+		return contraption.entity.getEntityId();
 	}
 
 	public boolean isDead() {
@@ -193,19 +203,19 @@ public class RenderedContraption {
 	}
 
 	private void buildInstancedTiles() {
-		Collection<BlockEntity> blockEntities = contraption.maybeInstancedBlockEntities;
-		if (!blockEntities.isEmpty()) {
-			for (BlockEntity be : blockEntities) {
-				if (be instanceof InstanceRendered) {
-					World world = be.getWorld();
-					be.setWorld(renderWorld);
-					kinetics.add(be);
-					be.setWorld(world);
-					// TODO setWorld IS PROBABLY THE CORRECT SOLUTION
-				}
-			}
-		}
-	}
+        Collection<BlockEntity> blockEntities = contraption.maybeInstancedBlockEntities;
+        if (!blockEntities.isEmpty()) {
+            for (BlockEntity te : blockEntities) {
+                if (te instanceof InstanceRendered) {
+                    World world = te.getWorld();
+                    BlockPos pos = te.getPos();
+                    te.setLocation(renderWorld, pos);
+                    kinetics.add(te);
+                    te.setLocation(world, pos);
+                }
+            }
+        }
+    }
 
 	private void buildActors() {
 		List<MutablePair<Structure.StructureBlockInfo, MovementContext>> actors = contraption.getActors();

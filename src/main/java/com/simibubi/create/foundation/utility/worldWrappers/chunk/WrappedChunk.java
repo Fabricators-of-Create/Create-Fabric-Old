@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
+
 import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.shorts.ShortList;
 import net.minecraft.block.Block;
@@ -26,7 +29,6 @@ import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.UpgradeData;
 import net.minecraft.world.gen.feature.StructureFeature;
-import org.jetbrains.annotations.Nullable;
 
 public class WrappedChunk implements Chunk {
 
@@ -60,7 +62,7 @@ public class WrappedChunk implements Chunk {
                 .filter(it -> {
                     BlockPos blockPos = it.getKey();
                     boolean chunkContains = blockPos.getX() >> 4 == x && blockPos.getZ() >> 4 == z;
-                    return chunkContains && it.getValue().getLuminance() != 0; // TODO MIGHT BE WRONG
+                    return chunkContains && it.getValue().getLuminance() != 0;
                 })
                 .map(Map.Entry::getKey);
     }
@@ -77,7 +79,7 @@ public class WrappedChunk implements Chunk {
     }
 
     @Override
-    public void setBlockEntity(BlockEntity blockEntity) {
+    public void setBlockEntity(BlockPos p_177426_1_, BlockEntity p_177426_2_) {
 
     }
 
@@ -107,7 +109,7 @@ public class WrappedChunk implements Chunk {
     }
 
     @Override
-    public int sampleHeightmap(Heightmap.Type type, int x, int z) {
+    public int sampleHeightmap(Heightmap.Type p_201576_1_, int p_201576_2_, int p_201576_3_) {
         return 0;
     }
 
@@ -116,18 +118,8 @@ public class WrappedChunk implements Chunk {
         return null;
     }
 
-    /**@Override
-    public void setLastSaveTime(long p_177432_1_) { TODO NOT SURE WHAT TO DO ABOUT THIS ONE
-
-    }*/
-
     @Override
-    public Map<StructureFeature<?>, StructureStart<?>> getStructureStarts() {
-        return null;
-    }
-
-    @Override
-    public void setStructureStarts(Map<StructureFeature<?>, StructureStart<?>> structureStarts) {
+    public void setLastSaveTime(long p_177432_1_) {
 
     }
 
@@ -164,13 +156,13 @@ public class WrappedChunk implements Chunk {
 
     @Nullable
     @Override
-    public CompoundTag getBlockEntityNbt(BlockPos pos) {
+    public CompoundTag getBlockEntityTag(BlockPos p_201579_1_) {
         return null;
     }
 
     @Nullable
     @Override
-    public CompoundTag getPackedBlockEntityNbt(BlockPos pos) {
+    public CompoundTag getPackedBlockEntityTag(BlockPos p_223134_1_) {
         return null;
     }
 
@@ -220,49 +212,49 @@ public class WrappedChunk implements Chunk {
         return world.getBlockState(pos);
     }
 
-    @Override
-    public FluidState getFluidState(BlockPos pos) {
-        return null;
-    }
+	@Override
+	public FluidState getFluidState(BlockPos p_204610_1_) {
+		return null;
+	}
 
-    @Nullable
-    @Override
-    public StructureStart<?> getStructureStart(StructureFeature<?> structure) {
-        return null;
-    }
+	@Override
+	public void addStructureReference(StructureFeature<?> arg0, long arg1) {
+		
+	}
 
-    @Override
-    public void setStructureStart(StructureFeature<?> structure, StructureStart<?> start) {
+	@Override
+	public Map<StructureFeature<?>, LongSet> getStructureReferences() {
+		return null;
+	}
 
-    }
+	@Override
+	public LongSet getStructureReferences(StructureFeature<?> arg0) {
+		return null;
+	}
 
-    @Override
-    public LongSet getStructureReferences(StructureFeature<?> structure) {
-        return null;
-    }
+	@Override
+	public StructureStart<?> getStructureStart(StructureFeature<?> arg0) {
+		return null;
+	}
 
-    @Override
-    public void addStructureReference(StructureFeature<?> structure, long reference) {
+	@Override
+	public void setStructureReferences(Map<StructureFeature<?>, LongSet> arg0) {
+		
+	}
 
-    }
+	@Override
+	public void setStructureStart(StructureFeature<?> arg0, StructureStart<?> arg1) {
+		
+	}
 
-    @Override
-    public Map<StructureFeature<?>, LongSet> getStructureReferences() {
-        return null;
-    }
+	@Override
+	public void setStructureStarts(Map<StructureFeature<?>, StructureStart<?>> p_201612_1_) {
+		
+	}
 
-    @Override
-    public void setStructureReferences(Map<StructureFeature<?>, LongSet> structureReferences) {
+	@Override
+	public Map<StructureFeature<?>, StructureStart<?>> getStructureStarts() {
+		return null;
+	}
 
-    }
-
-    @Override
-    public int getHeight() {
-        return 0;
-    }
-
-    @Override
-    public int getBottomY() {
-        return 0;
-    }
 }

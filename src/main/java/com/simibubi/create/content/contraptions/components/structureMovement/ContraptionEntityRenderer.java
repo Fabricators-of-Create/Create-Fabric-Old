@@ -2,18 +2,20 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
+
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 public class ContraptionEntityRenderer<C extends AbstractContraptionEntity> extends EntityRenderer<C> {
 
-	public ContraptionEntityRenderer(EntityRendererFactory.Context ctx) {
-		super(ctx);
+	public ContraptionEntityRenderer(EntityRenderDispatcher dispatcher, EntityRendererRegistry.Context context) {
+		super(dispatcher);
 	}
 
 	@Override

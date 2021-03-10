@@ -54,7 +54,7 @@ public class CNBTHelper {
 	}*/
 
 	public static List<ItemStack> readItemList(ListTag stacks) {
-		return readCompoundList(stacks, ItemStack::fromNbt);
+		return readCompoundList(stacks, ItemStack::fromTag);
 	}
 	
 	public static ListTag writeAABB(Box bb) {

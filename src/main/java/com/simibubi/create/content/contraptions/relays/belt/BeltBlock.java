@@ -1,5 +1,8 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -7,6 +10,7 @@ import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -35,9 +39,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEntity>, ISpecialBlockItemRequirement {
 	public static final Property<BeltSlope> SLOPE = EnumProperty.of("slope", BeltSlope.class);
@@ -444,8 +445,8 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-		return AllBlockEntities.BELT.instantiate(pos, state);
+	public BlockEntity createBlockEntity(BlockView world) {
+		return AllBlockEntities.BELT.instantiate();
 	}
 
 	@Override

@@ -11,11 +11,12 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Direction;
@@ -24,7 +25,8 @@ import net.minecraft.util.math.Vec3i;
 
 public class BeltRenderer extends SafeBlockEntityRenderer<BeltBlockEntity> {
 
-	public BeltRenderer(BlockEntityRendererFactory.Context ctx) {
+	public BeltRenderer(BlockEntityRenderDispatcher dispatcher) {
+		super(dispatcher);
 	}
 
 	public static SpriteShiftEntry getSpriteShiftEntry(DyeColor color, boolean diagonal, boolean bottom) {

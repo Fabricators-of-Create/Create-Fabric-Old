@@ -50,7 +50,7 @@ abstract class CreateFluid extends FlowableFluid  {
 
     @Override
     protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
-        final BlockEntity blockEntity = state.getBlock().getDefaultState().hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        final BlockEntity blockEntity = state.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
         Block.dropStacks(state, world, pos, blockEntity);
     }
 
@@ -108,7 +108,7 @@ public class AllFluids {
 
         @Override
         protected BlockState toBlockState(FluidState fluidState) {
-            return CHOCOLATE.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(fluidState));
+            return CHOCOLATE.getDefaultState().with(Properties.LEVEL_15, method_15741(fluidState));
         }
 
         public static class Flowing extends ChocolateFluid {
@@ -168,7 +168,7 @@ public class AllFluids {
 
         @Override
         protected BlockState toBlockState(FluidState fluidState) {
-            return HONEY.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(fluidState));
+            return HONEY.getDefaultState().with(Properties.LEVEL_15, method_15741(fluidState));
         }
 
         public static class Flowing extends HoneyFluid {

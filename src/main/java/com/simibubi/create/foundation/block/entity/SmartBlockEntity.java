@@ -1,18 +1,19 @@
 package com.simibubi.create.foundation.block.entity;
 
-import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.math.BlockPos;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public abstract class SmartBlockEntity extends SyncedBlockEntity implements TickableBlockEntity {
+import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Tickable;
+
+public abstract class SmartBlockEntity extends SyncedBlockEntity implements Tickable {
 
 	private final Map<BehaviourType<?>, BlockEntityBehaviour> behaviours;
 	private boolean initialized;
@@ -20,8 +21,8 @@ public abstract class SmartBlockEntity extends SyncedBlockEntity implements Tick
 	private int lazyTickRate;
 	private int lazyTickCounter;
 
-	public SmartBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
-		super(blockEntityType, pos, state);
+	public SmartBlockEntity(BlockEntityType<?> blockEntityTypeIn) {
+		super(blockEntityTypeIn);
 		behaviours = new HashMap<>();
 		initialized = false;
 		firstNbtRead = true;
@@ -64,38 +65,38 @@ public abstract class SmartBlockEntity extends SyncedBlockEntity implements Tick
 	}
 
 	@Override
-	public final CompoundTag writeNbt(CompoundTag compound) {
-		write(compound, false);
-		return compound;
-	}
-
-	@Override
 	public final CompoundTag writeToClient(CompoundTag compound) {
-		write(compound, true);
+		toTag(compound, true);
 		return compound;
 	}
 
 	@Override
-	public final void readClientUpdate(CompoundTag tag) {
-		read(tag, true);
+	public final CompoundTag toTag(CompoundTag compound) {
+		toTag(compound, false);
+		return compound;
 	}
 
 	@Override
-	public final void readNbt(CompoundTag tag) {
-		read(tag, false);
+	public final void readClientUpdate(BlockState state, CompoundTag tag) {
+		fromTag(state, tag, true);
+	}
+
+	@Override
+	public final void fromTag(BlockState state, CompoundTag tag) {
+		fromTag(state, tag, false);
 	}
 
 	/**
 	 * Hook only these in future subclasses of STE
 	 */
-	protected void read(CompoundTag compound, boolean clientPacket) {
+	protected void fromTag(BlockState state, CompoundTag compound, boolean clientPacket) {
 		if (firstNbtRead) {
 			firstNbtRead = false;
 			ArrayList<BlockEntityBehaviour> list = new ArrayList<>();
 			addBehavioursDeferred(list);
 			list.forEach(b -> behaviours.put(b.getType(), b));
 		}
-		super.readNbt(compound);
+		super.fromTag(state, compound);
 		behaviours.values()
 			.forEach(tb -> tb.read(compound, clientPacket));
 	}
@@ -103,8 +104,8 @@ public abstract class SmartBlockEntity extends SyncedBlockEntity implements Tick
 	/**
 	 * Hook only these in future subclasses of STE
 	 */
-	protected void write(CompoundTag compound, boolean clientPacket) {
-		super.writeNbt(compound);
+	protected void toTag(CompoundTag compound, boolean clientPacket) {
+		super.toTag(compound);
 		behaviours.values()
 			.forEach(tb -> tb.write(compound, clientPacket));
 	}
@@ -146,13 +147,13 @@ public abstract class SmartBlockEntity extends SyncedBlockEntity implements Tick
 			return (T) behaviours.get(type);
 		return null;
 	}
-	//TODO AAAAAA
-	/*protected boolean isItemHandlerCap(Capability<?> cap) {
-		return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
-	}
-	
-	protected boolean isFluidHandlerCap(Capability<?> cap) {
-		return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
-	}*/
+
+//	protected boolean isItemHandlerCap(Capability<?> cap) {
+//		return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+//	}
+//	
+//	protected boolean isFluidHandlerCap(Capability<?> cap) {
+//		return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
+//	}
 
 }

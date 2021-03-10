@@ -1,10 +1,8 @@
 package com.simibubi.create.foundation.utility;
 
 import java.util.UUID;
-
+import net.minecraft.client.util.math.Vector3f;
 import com.mojang.blaze3d.systems.RenderSystem;
-
-import net.minecraft.util.math.Vec3f;
 
 public class ColorHelper {
 
@@ -56,12 +54,12 @@ public class ColorHelper {
 		RenderSystem.color4f(1, 1, 1, 1);
 	}
 
-	public static Vec3f getRGB(int color) {
+	public static Vector3f getRGB(int color) {
 		int r = (color >> 16);
 		int g = (color >> 8) & 0xFF;
 		int b = color & 0xFF;
 
-		Vec3f v = new Vec3f(r, g, b);
+		Vector3f v = new Vector3f(r, g, b);
 		v.scale(1 / 256f);
 		return v; // TODO: ?????
 	}

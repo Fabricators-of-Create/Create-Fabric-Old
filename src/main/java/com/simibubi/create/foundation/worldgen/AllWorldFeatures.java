@@ -40,21 +40,21 @@ public enum AllWorldFeatures {
     }
 
     public static void reload() {
-        for (AllWorldFeatures entry : AllWorldFeatures.values()) {
-            for (Biome biome : BuiltinRegistries.BIOME) {
-                if (biome.getCategory() == Biome.Category.THEEND || biome.getCategory() == Biome.Category.NETHER) continue;
-                if (entry.featureInstances.containsKey(biome.getCategory())) continue;
-
-                Optional<ConfiguredFeature<?, ?>> createFeature = entry.feature.createFeature(biome);
-                if (!createFeature.isPresent()) continue;
-
-                RegistryKey<ConfiguredFeature<?, ?>> x = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, new Identifier("create", entry.name().toLowerCase()  + "_" + biome.getCategory().toString().toLowerCase()));
-                Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, x.getValue(), createFeature.get());
-
-                entry.featureInstances.put(biome.getCategory(), createFeature.get());
-                BiomeModifications.addFeature(BiomeSelectors.categories(biome.getCategory()), GenerationStep.Feature.UNDERGROUND_ORES, x);
-            }
-        }
+//        for (AllWorldFeatures entry : AllWorldFeatures.values()) {
+//            for (Biome biome : BuiltinRegistries.BIOME) {
+//                if (biome.getCategory() == Biome.Category.THEEND || biome.getCategory() == Biome.Category.NETHER) continue;
+//                if (entry.featureInstances.containsKey(biome.getCategory())) continue;
+//
+//                Optional<ConfiguredFeature<?, ?>> createFeature = entry.feature.createFeature(biome);
+//                if (!createFeature.isPresent()) continue;
+//
+//                RegistryKey<ConfiguredFeature<?, ?>> x = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, new Identifier("create", entry.name().toLowerCase()  + "_" + biome.getCategory().toString().toLowerCase()));
+//                Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, x.getValue(), createFeature.get());
+//
+//                entry.featureInstances.put(biome.getCategory(), createFeature.get());
+//                BiomeModifications.addFeature(BiomeSelectors.categories(biome.getCategory()), GenerationStep.Feature.UNDERGROUND_ORES, x);
+//            }
+//        }
     }
 
 }

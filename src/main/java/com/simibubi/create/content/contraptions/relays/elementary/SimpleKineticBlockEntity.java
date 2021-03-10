@@ -11,8 +11,8 @@ import java.util.List;
 
 public class SimpleKineticBlockEntity extends KineticBlockEntity {
 
-	public SimpleKineticBlockEntity(BlockPos pos, BlockState state) {
-		super(AllBlockEntities.SIMPLE_KINETIC, pos, state);
+	public SimpleKineticBlockEntity() {
+		super(AllBlockEntities.SIMPLE_KINETIC);
 	}
 
 	@Override

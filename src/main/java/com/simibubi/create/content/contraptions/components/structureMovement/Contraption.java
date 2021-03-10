@@ -1,20 +1,49 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.foundation.render.backend.light.EmptyLighter;
-import com.simibubi.create.foundation.utility.*;
+import com.simibubi.create.foundation.utility.BlockFace;
+import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.NBTProcessors;
+import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.state.property.Properties;
 import net.minecraft.structure.Structure;
 import net.minecraft.util.BlockRotation;
@@ -23,12 +52,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.*;
-import java.util.function.BiConsumer;
 
 public abstract class Contraption {
 	/**
@@ -159,7 +182,7 @@ public abstract class Contraption {
 			OrientedContraptionEntity movedContraption =
 				OrientedContraptionEntity.create(world, subContraption, Optional.of(face));
 			BlockPos anchor = blockFace.getConnectedPos();
-			movedContraption.setPosition(anchor.getX() + .5f, anchor.getY(), anchor.getZ() + .5f);
+			movedContraption.updatePosition(anchor.getX() + .5f, anchor.getY(), anchor.getZ() + .5f);
 			world.spawnEntity(movedContraption);
 			stabilizedSubContraptions.put(movedContraption.getUuid(), new BlockFace(toLocalPos(pos), face));
 		}
@@ -364,7 +387,7 @@ public abstract class Contraption {
 			return false;
 		visited.add(pos);
 
-		if (world.isOutOfHeightLimit(pos))
+		if (World.isOutOfBuildLimitVertically(pos))
 			return true;
 		if (!world.canSetBlock(pos))
 			throw AssemblyException.unloadedChunk(pos);
@@ -540,7 +563,7 @@ public abstract class Contraption {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity == null)
 			return null;
-		CompoundTag nbt = blockEntity.writeNbt(new CompoundTag());
+		CompoundTag nbt = blockEntity.toTag(new CompoundTag());
 		nbt.remove("x");
 		nbt.remove("y");
 		nbt.remove("z");
@@ -776,7 +799,7 @@ public abstract class Contraption {
 				tag.putInt("y", info.pos.getY());
 				tag.putInt("z", info.pos.getZ());
 
-				BlockEntity be = BlockEntity.createFromNbt(info.pos, info.state, tag);
+				BlockEntity be = BlockEntity.createFromTag(info.state, tag);
 				if (be == null)
 					return;
 				/**be.setLocation(new WrappedWorld(world) { //TODO POSITION THING IDK IF CORRECT
@@ -910,7 +933,7 @@ public abstract class Contraption {
 					 if (blockEntity instanceof FluidTankTileEntity && tag.contains("LastKnownPos"))
 					 tag.put("LastKnownPos", NbtHelper.fromBlockPos((BlockPos) BlockPos.ZERO.down()));*/
 
-					blockEntity.readNbt(tag);
+					blockEntity.fromTag(state, tag);
 
 					/**if (storage.containsKey(block.pos)) {
 					 MountedStorage mountedStorage = storage.get(block.pos);

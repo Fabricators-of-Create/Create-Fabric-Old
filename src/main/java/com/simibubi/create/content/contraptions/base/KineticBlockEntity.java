@@ -52,8 +52,8 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	private float lastStressApplied;
 	private float lastCapacityProvided;
 
-	public KineticBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
-		super(typeIn, pos, state);
+	public KineticBlockEntity(BlockEntityType<?> typeIn) {
+		super(typeIn);
 		effects = new KineticEffectHandler(this);
 		updateSpeed = true;
 	}
@@ -207,7 +207,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	}
 
 	@Override
-	protected void write(CompoundTag compound, boolean clientPacket) {
+	protected void toTag(CompoundTag compound, boolean clientPacket) {
 		compound.putFloat("Speed", speed);
 
 		if (needsSpeedUpdate())
@@ -231,7 +231,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			compound.put("Network", networkTag);
 		}
 
-		super.write(compound, clientPacket);
+		super.toTag(compound, clientPacket);
 	}
 
 	public boolean needsSpeedUpdate() {
@@ -239,13 +239,13 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	}
 
 	@Override
-	protected void read(CompoundTag compound, boolean clientPacket) {
+	protected void fromTag(BlockState state, CompoundTag compound, boolean clientPacket) {
 		boolean overStressedBefore = overStressed;
 		clearKineticInformation();
 
 		// DO NOT READ kinetic information when placed after movement
 		if (wasMoved) {
-			super.read(compound, clientPacket);
+			super.fromTag(state, compound, clientPacket);
 			return;
 		}
 
@@ -265,7 +265,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			overStressed = capacity < stress && Rotating.StressImpact.isEnabled();
 		}
 
-		super.read(compound, clientPacket);
+		super.fromTag(state, compound, clientPacket);
 
 		if (clientPacket && overStressedBefore != overStressed && speed != 0)
 			effects.triggerOverStressedEffect();

@@ -1,22 +1,41 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.render;
 
+import java.util.List;
+import java.util.Random;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL40;
+
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
-import com.simibubi.create.foundation.render.*;
+import com.simibubi.create.foundation.render.AllProgramSpecs;
+import com.simibubi.create.foundation.render.BlockEntityRenderHelper;
+import com.simibubi.create.foundation.render.Compartment;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.render.SuperByteBufferCache;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
+
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.LightmapTextureManager;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.block.BlockModelRenderer;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
@@ -27,13 +46,6 @@ import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL40;
-
-import java.util.List;
-import java.util.Random;
 
 public class ContraptionRenderDispatcher {
 	public static final Int2ObjectMap<RenderedContraption> renderers = new Int2ObjectOpenHashMap<>();
@@ -77,7 +89,7 @@ public class ContraptionRenderDispatcher {
 	}
 
 	private static RenderedContraption getRenderer(World world, Contraption c) {
-		int entityId = c.entity.getId();
+		int entityId = c.entity.getEntityId();
 		RenderedContraption contraption = renderers.get(entityId);
 
 		if (contraption == null) {
@@ -187,17 +199,17 @@ public class ContraptionRenderDispatcher {
 	}
 
 	public static BufferBuilder buildStructure(Contraption c, RenderLayer layer) {
-		if (renderWorld == null || renderWorld.world != MinecraftClient.getInstance().world)
+		if (renderWorld == null || renderWorld.getWorld() != MinecraftClient.getInstance().world)
 			renderWorld = new PlacementSimulationWorld(MinecraftClient.getInstance().world);
 
-		//ForgeHooksClient.setRenderLayer(layer);
+//		ForgeHooksClient.setRenderLayer(layer);
 		MatrixStack ms = new MatrixStack();
 		BlockRenderManager dispatcher = MinecraftClient.getInstance()
 			.getBlockRenderManager();
 		BlockModelRenderer blockRenderer = dispatcher.getModelRenderer();
 		Random random = new Random();
 		BufferBuilder builder = new BufferBuilder(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL.getVertexSizeInteger());
-		builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL); // TODO MIGHT BE WRONG DRAWMODE
+		builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
 		renderWorld.setBlockEntities(c.presentBlockEntities.values());
 
 		for (Structure.StructureBlockInfo info : c.getBlocks()
@@ -221,7 +233,7 @@ public class ContraptionRenderDispatcher {
 			ms.pop();
 		}
 
-		builder.end(); // TODO end INSTEAD OF finishDrawing COULD BE WRONG
+		builder.end();
 		renderWorld.clear();
 		renderWorld = null;
 		return builder;
@@ -288,7 +300,7 @@ public class ContraptionRenderDispatcher {
 	}
 
 	public static int getLightOnContraption(MovementContext context) {
-		int entityId = context.contraption.entity.getId();
+		int entityId = context.contraption.entity.getEntityId();
 
 		RenderedContraption renderedContraption = renderers.get(entityId);
 		if (renderedContraption != null) {

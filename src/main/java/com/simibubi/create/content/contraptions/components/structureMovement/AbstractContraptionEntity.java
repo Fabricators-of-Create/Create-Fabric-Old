@@ -1,9 +1,20 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.UUID;
+
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.tuple.MutablePair;
+
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.foundation.collision.Matrix3d;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.piston.PistonBehavior;
@@ -25,11 +36,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.lang3.tuple.MutablePair;
-
-import java.util.*;
-import java.util.Map.Entry;
 
 public abstract class AbstractContraptionEntity extends Entity {
 
@@ -94,7 +100,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 		if (world.isClient)
 			return;
 		if (transformedVector != null)
-			passenger.writeNbt((CompoundTag) new CompoundTag().put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector))); // TODO COULD BE WRONG
+			passenger.toTag((CompoundTag) new CompoundTag().put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector))); // TODO COULD BE WRONG
 		contraption.getSeatMapping()
 			.remove(passenger.getUuid());
 		/**AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
@@ -198,7 +204,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 	@Override
 	public final void tick() {
 		if (contraption == null) {
-			remove(RemovalReason.KILLED);
+			remove();
 			return;
 		}
 
@@ -315,7 +321,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 	}
 
 	public void move(double x, double y, double z) {
-		setPosition(getX() + x, getY() + y, getZ() + z);
+		updatePosition(getX() + x, getY() + y, getZ() + z);
 	}
 
 	public Vec3d getAnchorVec() {
@@ -327,8 +333,8 @@ public abstract class AbstractContraptionEntity extends Entity {
 	}
 
 	@Override
-	public void setPosition(double x, double y, double z) {
-		super.setPosition(x, y, z);
+	public void updatePosition(double x, double y, double z) {
+		super.updatePosition(x, y, z);
 		if (contraption == null)
 			return;
 		Box cbox = contraption.bounds;
@@ -349,7 +355,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 	}
 
 	@Override
-	protected void writeCustomDataToNbt(CompoundTag tag) {
+	protected void writeCustomDataToTag(CompoundTag tag) {
 		writeAdditional(tag, false);
 	}
 
@@ -361,12 +367,12 @@ public abstract class AbstractContraptionEntity extends Entity {
 	}
 
 	@Override
-	protected void readCustomDataFromNbt(CompoundTag tag) {
+	protected void readCustomDataFromTag(CompoundTag tag) {
 		readAdditional(tag, true); // TODO PROBABLY RIGHT
 	}
 
 	@Override
-	public final void readNbt(CompoundTag compound) {
+	public final void fromTag(CompoundTag compound) {
 		readAdditional(compound, false); // TODO PROBABLY RIGHT
 	}
 
@@ -383,7 +389,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 		if (contraption == null)
 			return;
 
-		remove(RemovalReason.KILLED);
+		remove();
 
 		StructureTransform transform = makeStructureTransform();
 		/**AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
@@ -400,7 +406,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 				continue;
 			BlockPos transformed = transform.apply(contraption.stabilizedSubContraptions.get(id)
 				.getConnectedPos());
-			entity.setPosition(transformed.getX(), transformed.getY(), transformed.getZ());
+			entity.updatePosition(transformed.getX(), transformed.getY(), transformed.getZ());
 			((AbstractContraptionEntity) entity).disassemble();
 		}
 
@@ -413,7 +419,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 			Vec3d localVec = toLocalVector(entity.getPos(), 0);
 			Vec3d transformed = transform.apply(localVec);
 			if (world.isClient)
-				entity.setPosition(transformed.x, transformed.y + 1 / 16f, transformed.z);
+				entity.updatePosition(transformed.x, transformed.y + 1 / 16f, transformed.z);
 			else
 				entity.requestTeleport(transformed.x, transformed.y + 1 / 16f, transformed.z);
 		}
@@ -428,14 +434,14 @@ public abstract class AbstractContraptionEntity extends Entity {
 	}
 
 	@Override
-	public void remove(RemovalReason reason) {
-		if (!world.isClient && !isRemoved() && contraption != null) {
+	public void remove() {
+		if (!world.isClient && !removed && contraption != null) {
 			if (!ticking)
 				contraption.stop(world);
 		}
 
 		removeAllPassengers();
-		super.remove(reason);
+		super.remove();
 	}
 
 	/**
@@ -492,7 +498,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public CompoundTag writeNbt(CompoundTag nbt) {
+	public CompoundTag toTag(CompoundTag nbt) {
 		Vec3d vec = getPos();
 		List<Entity> passengers = getPassengerList();
 
@@ -509,7 +515,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 			//entity.removed = false;
 		}
 
-		CompoundTag tag = super.writeNbt(nbt);
+		CompoundTag tag = super.toTag(nbt);
 		return tag;
 	}
 

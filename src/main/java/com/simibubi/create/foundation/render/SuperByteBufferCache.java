@@ -1,13 +1,22 @@
 package com.simibubi.create.foundation.render;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.opengl.GL11;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.simibubi.create.AllBlockPartials;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.block.BlockModelRenderer;
 import net.minecraft.client.render.block.BlockRenderManager;
@@ -15,13 +24,6 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 public class SuperByteBufferCache {
 
@@ -109,9 +111,9 @@ public class SuperByteBufferCache {
 		BlockModelRenderer blockRenderer = dispatcher.getModelRenderer();
 		BufferBuilder builder = new BufferBuilder(512);
 
-		builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL); // TODO ? GL11.GL_QUADS, DefaultVertexFormats.BLOCK
-		blockRenderer.render(mc.world, model, referenceState, BlockPos.ORIGIN.up(255), ms, builder, true, mc.world.getRandom(), 42, OverlayTexture.DEFAULT_UV); // TODO ? VirtualEmptyModelData.INSTANCE
-		builder.end(); //TODO dont know if this is correct
+		builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+		blockRenderer.render(mc.world, model, referenceState, BlockPos.ORIGIN.up(255), ms, builder, true, mc.world.random, 42, OverlayTexture.DEFAULT_UV);
+		builder.end();
 		return builder;
 	}
 

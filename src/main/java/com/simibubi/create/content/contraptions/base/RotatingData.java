@@ -2,9 +2,8 @@ package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3f;
-
 import java.nio.ByteBuffer;
 
 public class RotatingData extends KineticData<RotatingData> {
@@ -27,7 +26,7 @@ public class RotatingData extends KineticData<RotatingData> {
 		return this;
 	}
 
-	public RotatingData setRotationAxis(Vec3f axis) {
+	public RotatingData setRotationAxis(Vector3f axis) {
 		setRotationAxis(axis.getX(), axis.getY(), axis.getZ());
 		return this;
 	}

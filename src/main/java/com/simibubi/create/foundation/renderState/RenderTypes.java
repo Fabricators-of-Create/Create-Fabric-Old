@@ -1,11 +1,11 @@
 package com.simibubi.create.foundation.renderState;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.opengl.GL11;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllSpecialTextures;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
-import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
@@ -25,11 +25,11 @@ public class RenderTypes extends RenderPhase {
 			.overlay(ENABLE_OVERLAY_COLOR)
 			.build(true);
 		return RenderLayer.of("outline_translucent" + (cull ? "_cull" : ""),
-			VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS, 256, true, true, rendertype$state);
+			VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, GL11.GL_QUADS, 256, true, true, rendertype$state);
 	}
 
 	private static final RenderLayer OUTLINE_SOLID =
-			RenderLayer.of("outline_solid", VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS, 256, true,
+		RenderLayer.of("outline_solid", VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, GL11.GL_QUADS, 256, true,
 			false, RenderLayer.MultiPhaseParameters.builder()
 				.texture(new RenderPhase.Texture(AllSpecialTextures.BLANK.getLocation(), false, false))
 				.transparency(NO_TRANSPARENCY)
@@ -46,7 +46,7 @@ public class RenderTypes extends RenderPhase {
 			.lightmap(ENABLE_LIGHTMAP)
 			.overlay(ENABLE_OVERLAY_COLOR)
 			.build(true);
-		return RenderLayer.of("glowing_solid", VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS, 256,
+		return RenderLayer.of("glowing_solid", VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, GL11.GL_QUADS, 256,
 			true, false, rendertype$state);
 	}
 
@@ -60,7 +60,7 @@ public class RenderTypes extends RenderPhase {
 			.lightmap(ENABLE_LIGHTMAP)
 			.overlay(ENABLE_OVERLAY_COLOR)
 			.build(true);
-		return RenderLayer.of("glowing_translucent", VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS,
+		return RenderLayer.of("glowing_translucent", VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, GL11.GL_QUADS,
 			256, true, true, rendertype$state);
 	}
 
@@ -69,7 +69,7 @@ public class RenderTypes extends RenderPhase {
 		RenderTypes.getGlowingTranslucent(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE);
 
 	private static final RenderLayer ITEM_PARTIAL_SOLID =
-			RenderLayer.of("item_solid", VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS, 256, true,
+		RenderLayer.of("item_solid", VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, GL11.GL_QUADS, 256, true,
 			false, RenderLayer.MultiPhaseParameters.builder()
 				.texture(new RenderPhase.Texture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, false, false))
 				.transparency(NO_TRANSPARENCY)
@@ -79,7 +79,7 @@ public class RenderTypes extends RenderPhase {
 				.build(true));
 
 	private static final RenderLayer ITEM_PARTIAL_TRANSLUCENT = RenderLayer.of("entity_translucent",
-		VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS, 256, true, true, RenderLayer.MultiPhaseParameters.builder()
+		VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, GL11.GL_QUADS, 256, true, true, RenderLayer.MultiPhaseParameters.builder()
 			.texture(new RenderPhase.Texture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, false, false))
 			.transparency(TRANSLUCENT_TRANSPARENCY)
 			.diffuseLighting(ENABLE_DIFFUSE_LIGHTING)

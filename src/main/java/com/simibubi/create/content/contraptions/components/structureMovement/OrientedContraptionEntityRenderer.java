@@ -1,19 +1,23 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.render.Frustum;
-import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 
 public class OrientedContraptionEntityRenderer extends ContraptionEntityRenderer<OrientedContraptionEntity> {
 
-	public OrientedContraptionEntityRenderer(EntityRendererFactory.Context ctx) {
-		super(ctx);
+	public OrientedContraptionEntityRenderer(EntityRenderDispatcher dispatcher, EntityRendererRegistry.Context context) {
+		super(dispatcher, context);
 	}
 
 	@Override
 	public boolean shouldRender(OrientedContraptionEntity entity, Frustum frustum, double x, double y, double z) {
-		return super.shouldRender(entity, frustum, x, y, z);
-		/**if (entity.getContraption()
-		 .getType() == ContraptionType.MOUNTED && entity.getRidingEntity() == null) TODO ContraptionType.MOUNTED CHECK
-		 return false;*/
+		if (!super.shouldRender(entity, frustum, x, y, z))
+			return false;
+//		if (entity.getContraption()
+//				  .getType() == ContraptionType.MOUNTED && entity.getVehicle() == null)
+//			return false;
+		return true;
 	}
+
 }

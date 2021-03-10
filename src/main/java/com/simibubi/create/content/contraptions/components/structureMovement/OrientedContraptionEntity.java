@@ -451,17 +451,17 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 	 */
 
 	@Override
-	public CompoundTag writeNbt(CompoundTag nbt) {
-		return isSerializingFurnaceCart ? nbt : super.writeNbt(nbt);
+	public CompoundTag toTag(CompoundTag nbt) {
+		return isSerializingFurnaceCart ? nbt : super.toTag(nbt);
 	}
 
 	@Override
-	protected void readCustomDataFromNbt(CompoundTag tag) {
+	protected void readCustomDataFromTag(CompoundTag tag) {
 
 	}
 
 	@Override
-	protected void writeCustomDataToNbt(CompoundTag tag) {
+	protected void writeCustomDataToTag(CompoundTag tag) {
 
 	}
 
@@ -518,7 +518,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 
 		for (MatrixStack stack : matrixStacks)
 			MatrixStacker.of(stack)
-				.nudge(getId())
+				.nudge(getEntityId())
 				.centre()
 				.rotateY(angleYaw)
 				.rotateZ(anglePitch)

@@ -1,8 +1,15 @@
 package com.simibubi.create.content.contraptions.wrench;
 
-import com.simibubi.create.content.contraptions.base.*;
+import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
+import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
+import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.DirectionHelper;
 import com.simibubi.create.foundation.utility.VoxelShaper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -27,11 +34,11 @@ public interface IWrenchable {
 
 		BlockEntity te = context.getWorld()
 			.getBlockEntity(context.getBlockPos());
-		/**if (te != null) TODO MIGHT BE VERY IMPORTANT IWRENCHABLE!!!!!!
-		 te.updateContainingBlockInfo();*/
-		/**if (te instanceof GeneratingKineticTileEntity) { TODO GeneratingKineticTileEntity CHECK
-		 ((GeneratingKineticTileEntity) te).updateGeneratedRotation();
-		 }*/
+		if (te != null)
+			te.resetBlock();
+		if (te instanceof GeneratingKineticBlockEntity) {
+			((GeneratingKineticBlockEntity) te).updateGeneratedRotation();
+		}
 
 		return ActionResult.SUCCESS;
 	}
@@ -49,10 +56,10 @@ public interface IWrenchable {
 			if (player != null && !player.isCreative())
 				Block.getDroppedStacks(state, (ServerWorld) world, pos, world.getBlockEntity(pos), player, context.getStack())
 					.forEach(itemStack -> {
-						player.getInventory().offerOrDrop(itemStack);
+						player.inventory.offerOrDrop(world, itemStack);
 					});
 			state.onStacksDropped((ServerWorld) world, pos, ItemStack.EMPTY);
-			world.removeBlock(pos, false);
+			world.breakBlock(pos, false);
 		}
 		return ActionResult.SUCCESS;
 	}
@@ -61,31 +68,31 @@ public interface IWrenchable {
 		BlockState newState = originalState;
 
 		if (targetedFace.getAxis() == Direction.Axis.Y) {
-			/**if (originalState.contains(HorizontalAxisKineticBlock.HORIZONTAL_AXIS)) TODO HorizontalAxisKineticBlock CHECK
-			 return originalState.with(HorizontalAxisKineticBlock.HORIZONTAL_AXIS, DirectionHelper
-			 .rotateAround(VoxelShaper.axisAsFace(originalState.get(HorizontalAxisKineticBlock.HORIZONTAL_AXIS)),
-			 targetedFace.getAxis())
-			 .getAxis());*/
-			if (originalState.contains(HorizontalKineticBlock.HORIZONTAL_FACING))
+//			if (BlockHelper.hasBlockStateProperty(originalState, HorizontalAxisKineticBlock.HORIZONTAL_AXIS))
+//				return originalState.with(HorizontalAxisKineticBlock.HORIZONTAL_AXIS, DirectionHelper
+//					.rotateAround(VoxelShaper.axisAsFace(originalState.get(HorizontalAxisKineticBlock.HORIZONTAL_AXIS)),
+//						targetedFace.getAxis())
+//					.getAxis());
+			if (BlockHelper.hasBlockStateProperty(originalState, HorizontalKineticBlock.HORIZONTAL_FACING))
 				return originalState.with(HorizontalKineticBlock.HORIZONTAL_FACING, DirectionHelper
 					.rotateAround(originalState.get(HorizontalKineticBlock.HORIZONTAL_FACING), targetedFace.getAxis()));
 		}
 
-		if (originalState.contains(RotatedPillarKineticBlock.AXIS))
+		if (BlockHelper.hasBlockStateProperty(originalState, RotatedPillarKineticBlock.AXIS))
 			return originalState.with(RotatedPillarKineticBlock.AXIS,
 				DirectionHelper
 					.rotateAround(VoxelShaper.axisAsFace(originalState.get(RotatedPillarKineticBlock.AXIS)),
 						targetedFace.getAxis())
 					.getAxis());
 
-		if (!originalState.contains(DirectionalKineticBlock.FACING))
+		if (!BlockHelper.hasBlockStateProperty(originalState, DirectionalKineticBlock.FACING))
 			return originalState;
 
 		Direction stateFacing = originalState.get(DirectionalKineticBlock.FACING);
 
 		if (stateFacing.getAxis()
 			.equals(targetedFace.getAxis())) {
-			if (originalState.contains(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE))
+			if (BlockHelper.hasBlockStateProperty(originalState, DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE))
 				return originalState.cycle(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE);
 			else
 				return originalState;
@@ -94,7 +101,7 @@ public interface IWrenchable {
 				newState = newState.with(DirectionalKineticBlock.FACING,
 					DirectionHelper.rotateAround(newState.get(DirectionalKineticBlock.FACING), targetedFace.getAxis()));
 				if (targetedFace.getAxis() == Direction.Axis.Y
-					&& newState.contains(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE))
+					&& BlockHelper.hasBlockStateProperty(newState, DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE))
 					newState = newState.cycle(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE);
 			} while (newState.get(DirectionalKineticBlock.FACING)
 				.getAxis()
@@ -102,4 +109,5 @@ public interface IWrenchable {
 		}
 		return newState;
 	}
+
 }

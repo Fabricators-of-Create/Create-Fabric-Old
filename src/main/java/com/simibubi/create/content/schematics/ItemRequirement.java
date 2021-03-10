@@ -55,7 +55,7 @@ public class ItemRequirement {
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(SeaPickleBlock.PICKLES).intValue())));
 		if (block instanceof SnowBlock)
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(SnowBlock.LAYERS).intValue())));
-		if (block instanceof DirtPathBlock) // TODO MIGHT BE WRONG
+		if (block instanceof GrassPathBlock) // TODO MIGHT BE WRONG
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(Items.GRASS_BLOCK)));
 		if (block instanceof FarmlandBlock)
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(Items.DIRT)));
