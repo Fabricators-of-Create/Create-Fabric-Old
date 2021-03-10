@@ -19,8 +19,7 @@ public abstract class SyncedBlockEntity extends BlockEntity implements BlockEnti
 
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
-		writeToClient(tag);
-		return tag;
+		return writeToClient(tag);
 	}
 
 	@Override
