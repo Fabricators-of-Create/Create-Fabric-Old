@@ -1,11 +1,19 @@
 package com.simibubi.create.content.contraptions.wrench;
 
+import com.simibubi.create.AllItems;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class WrenchItem extends Item {
 
@@ -31,18 +39,15 @@ public class WrenchItem extends Item {
 		return actor.onWrenched(state, context);
 	}
 	
-	/*public static void wrenchInstaKillsMinecarts(AttackEntityEvent event) {
-		Entity target = event.getTarget();
-		if (!(target instanceof AbstractMinecartEntity))
+	public static void wrenchInstaKillsMinecarts(PlayerEntity playerEntity, World world, Hand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
+		if (!(entity instanceof AbstractMinecartEntity))
 			return;
-		PlayerEntity player = event.getPlayer();
-		ItemStack heldItem = player.getMainHandStack();
-		if (!AllItems.WRENCH.isIn(heldItem))
+		if (!playerEntity.isHolding(AllItems.WRENCH))
 			return;
-		if (player.isCreative())
+		if (playerEntity.isCreative())
 			return;
-		AbstractMinecartEntity minecart = (AbstractMinecartEntity) target;
-		minecart.damage(DamageSource.player(player), 100);
-	}*/
+		AbstractMinecartEntity minecart = (AbstractMinecartEntity) entity;
+		minecart.damage(DamageSource.player(playerEntity), 100);
+	}
 	
 }
