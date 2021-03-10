@@ -2,8 +2,9 @@ package com.simibubi.create;
 
 import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlockEntity;
-import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
+import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
+import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticBlockEntity;
 import com.simibubi.create.content.contraptions.relays.encased.ShaftInstance;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
@@ -18,8 +19,11 @@ public class AllBlockEntities {
 
 	public static BlockEntityType<CreativeMotorBlockEntity> MOTOR = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "motor"), BlockEntityType.Builder.create(CreativeMotorBlockEntity::new, AllBlocks.CREATIVE_MOTOR).build(null));
 
+	public static BlockEntityType<WaterWheelBlockEntity> WATER_WHEEL = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "water_wheel"), BlockEntityType.Builder.create(WaterWheelBlockEntity::new, AllBlocks.WATER_WHEEL).build(null));
+
 	public static void registerRenderers() {
 		BlockEntityRendererRegistry.INSTANCE.register(BELT, BeltRenderer::new);
+		//BlockEntityRendererRegistry.INSTANCE.register(WATER_WHEEL, KineticBlockEntityRenderer::new);
 
 		HalfShaftInstance.register(MOTOR);
 		ShaftInstance.register(SIMPLE_KINETIC);

@@ -1,6 +1,7 @@
 package com.simibubi.create;
 
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlock;
+import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
@@ -57,6 +58,12 @@ public class AllBlocks {
 		.sounds(BlockSoundGroup.WOOD)
 		.nonOpaque());
 
+	public static final WaterWheelBlock WATER_WHEEL = new WaterWheelBlock(Block.Settings
+		.of(Material.STONE)
+		.strength(0.8f, 0.8f)
+		.sounds(BlockSoundGroup.WOOD)
+		.nonOpaque());
+
     public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_block"), ZINC_BLOCK);
@@ -76,6 +83,8 @@ public class AllBlocks {
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "large_cogwheel"), LARGE_COGWHEEL);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "large_cogwheel"), new CogwheelBlockItem(LARGE_COGWHEEL, new Item.Settings().group(Create.baseCreativeTab)));
 
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "water_wheel"), WATER_WHEEL);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "water_wheel"), new BlockItem(WATER_WHEEL, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }

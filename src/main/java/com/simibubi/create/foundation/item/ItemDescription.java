@@ -2,6 +2,7 @@ package com.simibubi.create.foundation.item;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
@@ -64,15 +65,15 @@ public class ItemDescription {
 
 	public ItemDescription withKineticStats(Block block) { // TODO FIX CONFIGS
 
-		boolean isEngine = false /**block instanceof EngineBlock*/;
-		/**CKinetics config = AllConfigs.SERVER.kinetics;*/
+		boolean isEngine = false /*block instanceof EngineBlock*/;
+		/*CKinetics config = AllConfigs.SERVER.kinetics;*/
 		Rotating.SpeedLevel minimumRequiredSpeedLevel =
 			isEngine ? Rotating.SpeedLevel.NONE : ((Rotating) block).getMinimumRequiredSpeedLevel();
 		boolean hasSpeedRequirement = minimumRequiredSpeedLevel != Rotating.SpeedLevel.NONE;
 		MutableText id = block.getName();
-		/**Map<Identifier, ConfigValue<Double>> impacts = config.stressValues.getImpacts();
+		/*Map<Identifier, ConfigValue<Double>> impacts = config.stressValues.getImpacts();
 		 Map<Identifier, ConfigValue<Double>> capacities = config.stressValues.getCapacities();*/
-		/**boolean hasStressImpact = impacts.containsKey(id) && impacts.get(id)
+		/*boolean hasStressImpact = impacts.containsKey(id) && impacts.get(id)
 		 .get() > 0 && IRotate.StressImpact.isEnabled();
 		 boolean hasStressCapacity = capacities.containsKey(id) && IRotate.StressImpact.isEnabled();*/
 		boolean hasGlasses = AllItems.GOGGLES.getDefaultStack().getItem() == MinecraftClient.getInstance().player.getEquippedStack(EquipmentSlot.HEAD)
@@ -92,33 +93,33 @@ public class ItemDescription {
 			add(linesOnShift, level);
 		}
 
-		if (/**hasStressImpact &&*/!(!isEngine && ((Rotating) block).hideStressImpact())) {
+		if (/*hasStressImpact &&*/!(!isEngine && ((Rotating) block).hideStressImpact())) {
 			List<String> stressLevels = Lang.translatedOptions("tooltip.stressImpact", "low", "medium", "high");
-			double impact = /**impacts.get(id).get()*/0;
+			double impact = /*impacts.get(id).get()*/0;
 			Rotating.StressImpact impactId = impact >= /**config.highStressImpact.get()*/0 ? Rotating.StressImpact.HIGH
-				: (impact >= /**config.mediumStressImpact.get()*/0 ? Rotating.StressImpact.MEDIUM : Rotating.StressImpact.LOW);
+				: (impact >= /*config.mediumStressImpact.get()*/0 ? Rotating.StressImpact.MEDIUM : Rotating.StressImpact.LOW);
 			int index = impactId.ordinal();
 			String level = impactId.getAbsoluteColor() + makeProgressBar(3, index) + stressLevels.get(index);
 
 			if (hasGlasses)
-				level += " (" + /**impacts.get(id).get()*/4 + "x " + rpmUnit + ")";
+				level += " (" + /*impacts.get(id).get()*/4 + "x " + rpmUnit + ")";
 
 			add(linesOnShift, GRAY + Lang.translate("tooltip.stressImpact"));
 			add(linesOnShift, level);
 		}
 
-		if (/**hasStressCapacity*/true) {
+		if (/*hasStressCapacity*/true) {
 			List<String> stressCapacityLevels =
 				Lang.translatedOptions("tooltip.capacityProvided", "low", "medium", "high");
-			/**double capacity = capacities.get(id)
+			/*double capacity = capacities.get(id)
 			 .get();
 			 IRotate.StressImpact impactId = capacity >= config.highCapacity.get() ? IRotate.StressImpact.LOW
 			 : (capacity >= config.mediumCapacity.get() ? IRotate.StressImpact.MEDIUM : IRotate.StressImpact.HIGH);
 			 int index = IRotate.StressImpact.values().length - 2 - impactId.ordinal();*/
-			String level = /**impactId.getAbsoluteColor() +*/makeProgressBar(3, /**index*/4) + stressCapacityLevels.get(/**index*/4);
+			String level = /*impactId.getAbsoluteColor() +*/makeProgressBar(3, /**index*/4) + stressCapacityLevels.get(/**index*/4);
 
 			if (hasGlasses)
-				level += " (" + /**capacity*/4 + "x " + rpmUnit + ")";
+				level += " (" + /*capacity*/4 + "x " + rpmUnit + ")";
 			if (!isEngine && ((Rotating) block).showCapacityWithAnnotation())
 				level +=
 					" " + DARK_GRAY + Formatting.ITALIC + Lang.translate("tooltip.capacityProvided.asGenerator");
@@ -238,20 +239,17 @@ public class ItemDescription {
 	private String generatorSpeed(Block block, String unitRPM) {
 		String value = "";
 
-		/**if (block instanceof WaterWheelBlock) { TODO WaterWheelBlock EncasedFanBlock FurnaceEngineBlock CHECK
-		 int baseSpeed = AllConfigs.SERVER.kinetics.waterWheelBaseSpeed.get();
-		 int speedmod = AllConfigs.SERVER.kinetics.waterWheelFlowSpeed.get();
-		 value = (speedmod + baseSpeed) + "-" + (baseSpeed + (speedmod * 3));
-		 }
-
-		 else if (block instanceof EncasedFanBlock)
-		 value = AllConfigs.SERVER.kinetics.generatingFanSpeed.get()
-		 .toString();
-
-		 else if (block instanceof FurnaceEngineBlock) {
-		 int baseSpeed = AllConfigs.SERVER.kinetics.furnaceEngineSpeed.get();
-		 value = baseSpeed + "-" + (baseSpeed * 2);
-		 }*/
+		if (block instanceof WaterWheelBlock) {
+			int baseSpeed = 4/*AllConfigs.SERVER.kinetics.waterWheelBaseSpeed.get()*/;
+			int speedmod = 4/*AllConfigs.SERVER.kinetics.waterWheelFlowSpeed.get()*/;
+		 	value = (speedmod + baseSpeed) + "-" + (baseSpeed + (speedmod * 3));
+		} /*else if (block instanceof EncasedFanBlock)
+	 		value = AllConfigs.SERVER.kinetics.generatingFanSpeed.get()
+	 		.toString();
+		} else if (block instanceof FurnaceEngineBlock) {
+			int baseSpeed = AllConfigs.SERVER.kinetics.furnaceEngineSpeed.get();
+		 	value = baseSpeed + "-" + (baseSpeed * 2);
+		}*/
 
 		return !value.equals("") ? Lang.translate("tooltip.generationSpeed", value, unitRPM) : "";
 	}
