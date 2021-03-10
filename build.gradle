@@ -19,12 +19,11 @@ repositories {
 		url = "https://jitpack.io"
 	}
 	maven {
-		url = 'https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/'
-
-	}
-	maven {
 		name = 'TerraformersMC'
 		url = 'https://maven.terraformersmc.com/'
+	}
+	maven {
+		url "https://maven.shedaniel.me/"
 	}
 	jcenter()
 }
