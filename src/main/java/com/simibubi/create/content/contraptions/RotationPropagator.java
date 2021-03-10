@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock.isLargeCog;
 import static net.minecraft.state.property.Properties.AXIS;
 
 public class RotationPropagator {
@@ -86,19 +87,19 @@ public class RotationPropagator {
 		}
 
 		// Gear <-> Large Gear
-		/**if (isLargeCog(stateFrom) && definitionTo.hasIntegratedCogwheel(world, to.getPos(), stateTo))
+		if (isLargeCog(stateFrom) && definitionTo.hasIntegratedCogwheel(world, to.getPos(), stateTo))
 		 if (isLargeToSmallCog(stateFrom, stateTo, definitionTo, diff))
 		 return -2f;
 		 if (isLargeCog(stateTo) && definitionFrom.hasIntegratedCogwheel(world, from.getPos(), stateFrom))
 		 if (isLargeToSmallCog(stateTo, stateFrom, definitionFrom, diff))
-		 return -.5f;*/
+		 return -.5f;
 
 		// Gear <-> Gear
 		if (connectedByGears) {
 			if (diff.getManhattanDistance(BlockPos.ZERO) != 1)
 				return 0;
-			/**if (isLargeCog(stateTo))
-			 return 0;*/
+			if (isLargeCog(stateTo))
+			 return 0;
 			if (direction.getAxis() == definitionFrom.getRotationAxis(stateFrom))
 				return 0;
 			if (definitionFrom.getRotationAxis(stateFrom) == definitionTo.getRotationAxis(stateTo))
@@ -125,8 +126,8 @@ public class RotationPropagator {
 	}
 
 	private static boolean isLargeToLargeGear(BlockState from, BlockState to, BlockPos diff) {
-		/**if (!isLargeCog(from) || !isLargeCog(to))
-		 return false;*/
+		if (!isLargeCog(from) || !isLargeCog(to))
+		 return false;
 		Direction.Axis fromAxis = from.get(AXIS);
 		Direction.Axis toAxis = to.get(AXIS);
 		if (fromAxis == toAxis)

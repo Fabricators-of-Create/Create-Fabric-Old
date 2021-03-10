@@ -3,13 +3,13 @@ package com.simibubi.create.content.contraptions.base;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
+import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.render.Compartment;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.ColorHelper;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -82,7 +82,7 @@ public class KineticBlockEntityRenderer extends SafeBlockEntityRenderer<KineticB
 	}
 
 	protected static float getRotationOffsetForPosition(KineticBlockEntity te, final BlockPos pos, final Direction.Axis axis) {
-		float offset = /**CogWheelBlock.isLargeCog(te.getCachedState()) ? 11.25f :*/0;
+		float offset = CogWheelBlock.isLargeCog(te.getCachedState()) ? 11.25f : 0;
 		double d = (((axis == Direction.Axis.X) ? 0 : pos.getX()) + ((axis == Direction.Axis.Y) ? 0 : pos.getY())
 			+ ((axis == Direction.Axis.Z) ? 0 : pos.getZ())) % 2;
 		if (d == 0) {
