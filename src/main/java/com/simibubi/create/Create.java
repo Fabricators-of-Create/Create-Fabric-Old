@@ -24,7 +24,7 @@ public class Create implements ModInitializer  {
 
     public static TorquePropagator torquePropagator;
 
-    public static final ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "base"), () -> new ItemStack(AllItems.ZINC_BLOCK));
+    public static final ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "base"), () -> new ItemStack(AllBlocks.COGWHEEL));
     public static final ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "palettes"), () -> new ItemStack(AllItems.ZINC_BLOCK));
 
     public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID);
