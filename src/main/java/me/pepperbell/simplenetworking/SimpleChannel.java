@@ -2,6 +2,7 @@ package me.pepperbell.simplenetworking;
 
 import java.lang.reflect.Constructor;
 
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +45,7 @@ public class SimpleChannel {
 		ServerPlayNetworking.registerGlobalReceiver(channelName, c2sHandler);
 	}
 
+	@Environment(EnvType.CLIENT)
 	public void initClientListener() {
 		s2cHandler = new S2CHandler();
 		ClientPlayNetworking.registerGlobalReceiver(channelName, s2cHandler);

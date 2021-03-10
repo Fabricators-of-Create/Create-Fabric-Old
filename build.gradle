@@ -1,5 +1,3 @@
-import net.fabricmc.loom.configuration.ide.RunConfigSettings
-
 plugins {
 	id("fabric-loom") version "0.6-SNAPSHOT"
 	id("maven-publish")
@@ -25,47 +23,53 @@ dependencies {
 	modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
+	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
+		exclude(module: "fabric-biomes-v1")
+	}
 
 	modImplementation("net.devtech:arrp:${project.arrp_version}")
 	include("net.devtech:arrp:${project.arrp_version}")
 }
 
-loom {
-	accessWidener = file("src/main/resources/create.accesswidener")
-
-	//////////// Gradle Properties ////////////
-
+//////////// Gradle Properties ////////////
+Closure properties = {
 	final String createPrefix = "create."
-	Map<String, Closure<RunConfigSettings>> map = new HashMap<>()
+	Map<String, Closure<Project>> map = new HashMap<>()
 
 	/**
-	 * Should be configured in `gradle.properties` like so:
-	 * <code>
-	 *     create.debug_logs=true
-	 *     create.mixin_export=true
-	 * </code>
-	 */
+	* Should be configured in {@code gradle.properties} like so:
+	* <code>
+	*     create.debug_logs=true
+	*     create.mixin_export=true
+	* </code>
+	*/
 
-	map.put("debug_logs") {
-		property("fabric.log.level", "debug")
-	}
-	map.put("mixin_export") {
-		property("mixin.debug.export", "true")
-	}
-
-	runConfigs.configureEach {
-		map.forEach { str, clr ->
-			if (project.hasProperty(createPrefix + str) && (
-				project.property(createPrefix + str) != null &&
-					project.property(createPrefix + str) != false &&
-					project.property(createPrefix + str) != "false"
-			)) {
-				clr.delegate = it
-				clr()
-			}
+	map["debug_logs"] = {
+		loom.runConfigs.configureEach {
+			property("fabric.log.level", "debug")
 		}
 	}
+
+	map["mixin_export"] = {
+		loom.runConfigs.configureEach {
+			property("mixin.debug.export", "true")
+		}
+	}
+
+	map.forEach { str, clr ->
+		if (project.hasProperty(createPrefix + str) && (
+			project.property(createPrefix + str) != null &&
+				project.property(createPrefix + str) != false &&
+				project.property(createPrefix + str) != "false"
+		)) {
+			clr.delegate = project
+			clr()
+		}
+	}
+}; properties() // Sadly we don't have IIFEs in Groovy
+
+loom {
+	accessWidener = file("src/main/resources/create.accesswidener")
 }
 
 processResources {

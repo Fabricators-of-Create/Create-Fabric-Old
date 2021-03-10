@@ -1,7 +1,7 @@
 package com.simibubi.create;
 
 import com.simibubi.create.content.contraptions.particle.CubeParticleData;
-import com.simibubi.create.content.contraptions.particle.ICustomParticleData;
+import com.simibubi.create.content.contraptions.particle.CustomParticleData;
 import com.simibubi.create.content.contraptions.particle.RotationIndicatorParticleData;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.particle.ParticleEffect;
@@ -24,7 +24,7 @@ public enum AllParticleTypes {
 
 	/**private ParticleEntry<?> entry;*/
 
-	<D extends ParticleEffect> AllParticleTypes(Supplier<? extends ICustomParticleData<D>> typeFactory) {
+	<D extends ParticleEffect> AllParticleTypes(Supplier<? extends CustomParticleData<D>> typeFactory) {
 		String asId = Lang.asId(this.name());
 		/**entry = new ParticleEntry<>(new Identifier(Create.ID, asId), typeFactory);*/
 	}

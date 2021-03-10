@@ -14,8 +14,7 @@ import net.minecraft.particle.ParticleType;
 
 import java.util.Locale;
 
-public class CubeParticleData implements ParticleEffect, ICustomParticleData<CubeParticleData> {
-
+public class CubeParticleData implements ParticleEffect, CustomParticleData<CubeParticleData> {
 	public static final Codec<CubeParticleData> CODEC = RecordCodecBuilder.create(i ->
 		i.group(
 			Codec.FLOAT.fieldOf("r").forGetter(p -> p.r),

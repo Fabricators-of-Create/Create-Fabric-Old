@@ -4,7 +4,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
+import com.simibubi.create.foundation.mixin.accessor.GameRendererAccessor;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.foundation.utility.MixinHelper;
 import com.simibubi.create.foundation.utility.WorldAttached;
 
 import net.minecraft.block.entity.BlockEntity;
@@ -21,7 +23,6 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
 
 public class FastRenderDispatcher {
-
 	public static WorldAttached<ConcurrentHashMap.KeySetView<BlockEntity, Boolean>> queuedUpdates = new WorldAttached<>(ConcurrentHashMap::newKeySet);
 
 	private static Matrix4f projectionMatrixThisFrame = null;
@@ -40,12 +41,11 @@ public class FastRenderDispatcher {
 		CreateClient.kineticRenderer.tick();
 
 		ConcurrentHashMap.KeySetView<BlockEntity, Boolean> map = queuedUpdates.get(world);
-		map
-				.forEach(te -> {
-					map.remove(te);
+		map.forEach(be -> {
+			map.remove(be);
 
-					CreateClient.kineticRenderer.update(te);
-				});
+			CreateClient.kineticRenderer.update(be);
+		});
 	}
 
 	public static boolean available() {
@@ -81,15 +81,16 @@ public class FastRenderDispatcher {
 		float partialTicks = AnimationTickHolder.getPartialTicks();
 		MinecraftClient mc = MinecraftClient.getInstance();
 		GameRenderer gameRenderer = mc.gameRenderer;
+		GameRendererAccessor gra = MixinHelper.cast(gameRenderer);
 		ClientPlayerEntity player = mc.player;
 
 		MatrixStack matrixstack = new MatrixStack();
 		matrixstack.peek()
 			.getModel()
 			.multiply(gameRenderer.getBasicProjectionMatrix(gameRenderer.getCamera(), partialTicks, true));
-		gameRenderer.bobViewWhenHurt(matrixstack, partialTicks);
+		gra.callBobViewWhenHurt(matrixstack, partialTicks);
 		if (mc.options.bobView) {
-			gameRenderer.bobView(matrixstack, partialTicks);
+			gra.callBobView(matrixstack, partialTicks);
 		}
 
 		float portalTime = MathHelper.lerp(partialTicks, player.lastNauseaStrength, player.nextNauseaStrength);
@@ -102,9 +103,9 @@ public class FastRenderDispatcher {
 			float f1 = 5.0F / (portalTime * portalTime + 5.0F) - portalTime * 0.04F;
 			f1 = f1 * f1;
 			Vector3f vector3f = new Vector3f(0.0F, MathHelper.SQUARE_ROOT_OF_TWO / 2.0F, MathHelper.SQUARE_ROOT_OF_TWO / 2.0F);
-			matrixstack.multiply(vector3f.getDegreesQuaternion(((float)gameRenderer.ticks + partialTicks) * (float)i));
+			matrixstack.multiply(vector3f.getDegreesQuaternion(((float)gra.getTicks() + partialTicks) * (float)i));
 			matrixstack.scale(1.0F / f1, 1.0F, 1.0F);
-			float f2 = -((float)gameRenderer.ticks + partialTicks) * (float)i;
+			float f2 = -((float)gra.getTicks() + partialTicks) * (float)i;
 			matrixstack.multiply(vector3f.getDegreesQuaternion(f2));
 		}
 

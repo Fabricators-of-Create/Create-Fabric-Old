@@ -9,14 +9,15 @@ import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.SharedConstants;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.mixin.MixinEnvironment;
 
 public class Create implements ModInitializer  {
-
     public static final String ID = "create";
 
     public static Logger logger = LogManager.getLogger();
@@ -47,6 +48,8 @@ public class Create implements ModInitializer  {
         torquePropagator = new TorquePropagator();
 
         RRPCallback.EVENT.register(a -> a.add(RESOURCE_PACK));
+
+        if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
     }
 
     public static Identifier asResource(String path) {

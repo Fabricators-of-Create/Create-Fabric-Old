@@ -1,42 +1,36 @@
 package com.simibubi.create.content.contraptions.particle;
 
 import com.mojang.serialization.Codec;
+import com.simibubi.create.foundation.mixin.accessor.ParticleManagerAccessor;
+import com.simibubi.create.foundation.utility.MixinHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.particle.ParticleManager.SpriteAwareFactory;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleEffect.Factory;
 import net.minecraft.particle.ParticleType;
 
-public interface ICustomParticleDataWithSprite<T extends ParticleEffect> extends ICustomParticleData<T> {
-
+public interface CustomParticleData<T extends ParticleEffect> {
 	Factory<T> getDeserializer();
+
+	Codec<T> getCodec(ParticleType<T> type);
 
 	default ParticleType<T> createType() {
 		return new ParticleType<T>(false, getDeserializer()) {
 
 			@Override
 			public Codec<T> getCodec() {
-				return ICustomParticleDataWithSprite.this.getCodec(this);
+				return CustomParticleData.this.getCodec(this);
 			}
 		};
 	}
 
-	@Override
 	@Environment(EnvType.CLIENT)
-	default ParticleFactory<T> getFactory() {
-		throw new IllegalAccessError("This particle type uses a metaFactory!");
-	}
+	ParticleFactory<T> getFactory();
 
-	@Environment(EnvType.CLIENT)
-	SpriteAwareFactory<T> getMetaFactory();
-
-	@Override
 	@Environment(EnvType.CLIENT)
 	default void register(ParticleType<T> type, ParticleManager particles) {
-		particles.registerFactory(type, getMetaFactory());
+		MixinHelper.<ParticleManagerAccessor>cast(particles).callRegisterFactory(type, getFactory());
 	}
-
 }

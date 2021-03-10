@@ -3,7 +3,6 @@ package com.simibubi.create.foundation.networking;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueUpdatePacket;
-
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.Packet;
 import me.pepperbell.simplenetworking.S2CPacket;
@@ -56,7 +55,7 @@ public enum AllPackets {
 
 	private Class<?> type;
 
-	private <T extends Packet> AllPackets(Class<T> type) {
+	<T extends Packet> AllPackets(Class<T> type) {
 		this.type = type;
 	}
 
@@ -83,5 +82,4 @@ public enum AllPackets {
 	public static void clientInit() {
 		CHANNEL.initClientListener();
 	}
-
 }

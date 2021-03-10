@@ -5,7 +5,7 @@ import net.minecraft.util.math.Matrix4f;
 import org.jetbrains.annotations.Contract;
 
 public final class Matrix4fUtils {
-    @Contract(value = "_,_->_", mutates = "param1")
+    @Contract(mutates = "param1")
     public static void multiplyBackward(Matrix4f $this, Matrix4f other) {
         Matrix4f copy = other.copy();
         copy.multiply($this); // Uno reverse card

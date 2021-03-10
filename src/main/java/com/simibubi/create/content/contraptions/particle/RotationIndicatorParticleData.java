@@ -19,7 +19,7 @@ import net.minecraft.util.math.Direction.Axis;
 import java.util.Locale;
 
 public class RotationIndicatorParticleData
-	implements ParticleEffect, ICustomParticleDataWithSprite<RotationIndicatorParticleData> {
+	implements ParticleEffect, CustomParticleDataWithSprite<RotationIndicatorParticleData> {
 
 	// TODO 1.16 make this unnecessary
 	public static final PrimitiveCodec<Character> CHAR = new PrimitiveCodec<Character>() {
