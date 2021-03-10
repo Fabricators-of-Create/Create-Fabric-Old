@@ -59,9 +59,13 @@ public class AllBlocks {
 		.nonOpaque());
 
 	public static final WaterWheelBlock WATER_WHEEL = new WaterWheelBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.WOOD)
 		.strength(0.8f, 0.8f)
-		.sounds(BlockSoundGroup.WOOD)
+		.nonOpaque());
+
+	public static final WaterWheelBlock HAND_CRANK = new WaterWheelBlock(Block.Settings
+		.of(Material.WOOD)
+		.strength(0.8f, 0.8f)
 		.nonOpaque());
 
     public static void registerBlocks() {
@@ -85,6 +89,9 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "water_wheel"), WATER_WHEEL);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "water_wheel"), new BlockItem(WATER_WHEEL, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "hand_crank"), HAND_CRANK);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "hand_crank"), new BlockItem(HAND_CRANK, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }
