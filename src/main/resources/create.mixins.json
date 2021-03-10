@@ -13,6 +13,7 @@
 		"accessor.GameRendererAccessor",
 		"accessor.GlStateManagerAccessor",
 		"accessor.ItemAccessor",
+		"accessor.ItemRendererAccessor",
 		"accessor.ParticleManagerAccessor"
 	],
 	"client": [

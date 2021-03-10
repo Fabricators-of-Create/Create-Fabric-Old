@@ -1,7 +1,9 @@
 package com.simibubi.create.foundation.item;
 
+import com.simibubi.create.foundation.mixin.accessor.ItemRendererAccessor;
 import com.simibubi.create.foundation.renderState.RenderTypes;
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.MixinHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -44,15 +46,15 @@ public class PartialItemModelRenderer {
 	public void render(BakedModel model, int light) {
 		render(model, RenderTypes.getItemPartialTranslucent(), light);
 	}
-	
+
 	public void renderSolid(BakedModel model, int light) {
 		render(model, RenderTypes.getItemPartialSolid(), light);
 	}
-	
+
 	public void renderSolidGlowing(BakedModel model, int light) {
 		render(model, RenderTypes.getGlowingSolid(), light);
 	}
-	
+
 	public void renderGlowing(BakedModel model, int light) {
 		render(model, RenderTypes.getGlowingTranslucent(), light);
 	}
@@ -75,20 +77,17 @@ public class PartialItemModelRenderer {
 		ms.pop();
 	}
 
-	private void renderBakedItemModel(BakedModel model, int light, MatrixStack ms, VertexConsumer p_229114_6_) {
-		ItemRenderer ir = MinecraftClient.getInstance()
-			.getItemRenderer();
+	private void renderBakedItemModel(BakedModel model, int light, MatrixStack ms, VertexConsumer vertices) {
+		ItemRendererAccessor ir = MixinHelper.cast(MinecraftClient.getInstance().getItemRenderer());
 		Random random = new Random();
 
 		for (Direction direction : Iterate.directions) {
 			random.setSeed(42L);
-			ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, direction, random), stack,
-				light, overlay);
+			ir.callRenderBakedItemQuads(ms, vertices, model.getQuads(null, direction, random), stack, light, overlay);
 		}
 
 		random.setSeed(42L);
-		ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, null, random),
-			stack, light, overlay);
+		ir.callRenderBakedItemQuads(ms, vertices, model.getQuads(null, null, random), stack, light, overlay);
 	}
 
 }
