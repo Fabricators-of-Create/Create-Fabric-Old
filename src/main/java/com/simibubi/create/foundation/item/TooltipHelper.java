@@ -6,7 +6,9 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.curiosities.tools.AllToolTiers;
+import com.simibubi.create.foundation.mixin.accessor.ItemAccessor;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.MixinHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.resource.language.I18n;
@@ -129,7 +131,7 @@ public class TooltipHelper {
 	public static boolean hasTooltip(ItemStack stack, PlayerEntity player) {
 		checkLocale();
 
-		boolean hasGlasses = AllItems.GOGGLES.isIn(player.getEquippedStack(EquipmentSlot.HEAD).getItem().getGroup());
+		boolean hasGlasses = MixinHelper.<ItemAccessor>cast(AllItems.GOGGLES).callIsIn(player.getEquippedStack(EquipmentSlot.HEAD).getItem().getGroup());
 
 		if (hasGlasses != gogglesMode) {
 			gogglesMode = hasGlasses;

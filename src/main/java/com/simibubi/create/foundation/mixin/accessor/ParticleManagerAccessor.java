@@ -12,6 +12,6 @@ public interface ParticleManagerAccessor {
 	@Invoker("registerFactory")
 	<T extends ParticleEffect> void callRegisterFactory(ParticleType<T> particleType, ParticleManager.SpriteAwareFactory<T> spriteAwareFactory);
 
-	@Invoker
+	@Invoker("registerFactory")
 	<T extends ParticleEffect> void callRegisterFactory(ParticleType<T> type, ParticleFactory<T> factory);
 }
