@@ -11,7 +11,6 @@ import com.simibubi.create.foundation.render.backend.RenderWork;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
-
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
@@ -26,7 +25,6 @@ public class ClientEvents {
 	public static void register() {
 		ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onTick);
 		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
-		
 	}
 
 	public static void onTick(MinecraftClient client) {
