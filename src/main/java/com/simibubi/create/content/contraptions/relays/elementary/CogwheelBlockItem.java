@@ -4,7 +4,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
-import com.simibubi.create.content.contraptions.base.IRotate;
+import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
@@ -277,8 +277,8 @@ public class CogwheelBlockItem extends BlockItem {
 
 		@Override
 		public Predicate<BlockState> getStatePredicate() {
-			return s -> !AllBlocks.COGWHEEL.getStateManager().getStates().contains(s) && s.getBlock() instanceof IRotate
-				&& ((IRotate) s.getBlock()).hasIntegratedCogwheel(null, null, null);
+			return s -> !AllBlocks.COGWHEEL.getStateManager().getStates().contains(s) && s.getBlock() instanceof Rotating
+				&& ((Rotating) s.getBlock()).hasIntegratedCogwheel(null, null, null);
 		}
 
 		@Override

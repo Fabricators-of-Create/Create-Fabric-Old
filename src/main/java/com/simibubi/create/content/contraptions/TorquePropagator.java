@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.WorldHelper;
 import net.minecraft.world.WorldAccess;
 
 import java.util.HashMap;
@@ -13,18 +14,19 @@ public class TorquePropagator {
 
 	public void onLoadWorld(WorldAccess world) {
 		networks.put(world, new HashMap<>());
-		Create.logger.debug("Prepared Kinetic Network Space for " + world.getDimension()); // TODO COULD BE WRONG HERE
+		Create.logger.debug("Prepared Kinetic Network Space for " + WorldHelper.getDimensionID(world)/*world.getDimension()*/); // TODO COULD BE WRONG HERE
 	}
 
 	public void onUnloadWorld(WorldAccess world) {
 		networks.remove(world);
-		Create.logger.debug("Removed Kinetic Network Space for " + world.getDimension());
+		Create.logger.debug("Removed Kinetic Network Space for " + WorldHelper.getDimensionID(world)/*world.getDimension()*/);
 	}
 
 	public KineticNetwork getOrCreateNetworkFor(KineticBlockEntity te) {
 		Long id = te.network;
 		KineticNetwork network;
 		Map<Long, KineticNetwork> map = networks.get(te.getWorld());
+		System.out.println(networks.get(te.getWorld()));
 		if (id == null)
 			return null;
 

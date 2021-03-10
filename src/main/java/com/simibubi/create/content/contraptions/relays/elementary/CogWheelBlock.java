@@ -2,7 +2,7 @@ package com.simibubi.create.content.contraptions.relays.elementary;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.IRotate;
+import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -87,8 +87,8 @@ public class CogWheelBlock extends AbstractShaftBlock {
                     .with(AXIS, stateBelow.get(SpeedControllerBlock.HORIZONTAL_AXIS) == Axis.X ? Axis.Z : Axis.X);
         }*/
 
-        if (!(block instanceof IRotate)
-                || !(((IRotate) block).hasIntegratedCogwheel(world, placedOnPos, placedAgainst))) {
+        if (!(block instanceof Rotating)
+                || !(((Rotating) block).hasIntegratedCogwheel(world, placedOnPos, placedAgainst))) {
             Axis preferredAxis = getPreferredAxis(context);
             if (preferredAxis != null)
                 return this.getDefaultState()
@@ -99,7 +99,7 @@ public class CogWheelBlock extends AbstractShaftBlock {
                     .with(Properties.WATERLOGGED, FluidState.getFluid() == Fluids.WATER);
         }
 
-        return getDefaultState().with(AXIS, ((IRotate) block).getRotationAxis(placedAgainst));
+        return getDefaultState().with(AXIS, ((Rotating) block).getRotationAxis(placedAgainst));
     }
 
     @Override
