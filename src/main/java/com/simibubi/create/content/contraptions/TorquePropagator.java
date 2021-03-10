@@ -26,7 +26,6 @@ public class TorquePropagator {
 		Long id = te.network;
 		KineticNetwork network;
 		Map<Long, KineticNetwork> map = networks.get(te.getWorld());
-		System.out.println(networks.get(te.getWorld()));
 		if (id == null)
 			return null;
 

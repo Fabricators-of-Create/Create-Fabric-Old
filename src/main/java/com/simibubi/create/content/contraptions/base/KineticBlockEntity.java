@@ -92,7 +92,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 
 	@Override
 	public void initialize() {
-		if (hasNetwork()) {
+		if (hasNetwork() && !world.isClient) {
 			KineticNetwork network = getOrCreateNetwork();
 			if (!network.initialized)
 				network.initFromTE(capacity, stress, networkSize);
