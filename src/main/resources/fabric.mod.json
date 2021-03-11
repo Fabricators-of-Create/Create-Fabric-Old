@@ -22,7 +22,10 @@
     ],
     "client": [
       "com.simibubi.create.CreateClient"
-    ]
+    ],
+		"modmenu": [
+			"com.simibubi.create.foundation.config.ModMenuIntegration"
+		]
   },
   "mixins": [
     "create.mixins.json"

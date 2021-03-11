@@ -3,6 +3,7 @@ package com.simibubi.create;
 import com.simibubi.create.content.contraptions.TorquePropagator;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.events.CommonEvents;
+import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 import net.devtech.arrp.api.RRPCallback;
@@ -38,6 +39,7 @@ public class Create implements ModInitializer  {
         AllPaletteBlocks.registerBlocks();
         AllEntityTypes.register();
         AllMovementBehaviours.register();
+		AllConfigs.register();
 
         AllPackets.registerPackets();
         

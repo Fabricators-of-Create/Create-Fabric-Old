@@ -86,6 +86,7 @@ public class Create {
 		AllMovementBehaviours.register();
 		AllWorldFeatures.register();
 
+
 		modEventBus.addListener(Create::init);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, Create::onBiomeLoad);
 		modEventBus.addGenericListener(RecipeSerializer.class, AllRecipeTypes::register);

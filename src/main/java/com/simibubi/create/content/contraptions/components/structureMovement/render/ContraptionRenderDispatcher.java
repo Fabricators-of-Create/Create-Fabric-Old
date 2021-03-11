@@ -222,8 +222,8 @@ public class ContraptionRenderDispatcher {
 
 			if (state.getRenderType() == BlockRenderType.ENTITYBLOCK_ANIMATED)
 				continue;
-			/**if (!RenderLayer.canRenderInLayer(state, layer)) TODO canRenderInLayer CHECK
-			 continue;*/
+			/*if (!RenderLayer.canRenderInLayer(state, layer))
+			 continue;todo renderLayer*/
 
 			BakedModel originalModel = dispatcher.getModel(state);
 			ms.push();
