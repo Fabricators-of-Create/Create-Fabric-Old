@@ -1,7 +1,10 @@
 package com.simibubi.create.foundation.config;
 
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+
 public class CCommon {
-	boolean logBeErrors = false; // "Forward caught BlockEntityExceptions to the log at debug level."
+	@ConfigEntry.Gui.Tooltip
+	boolean logBeErrors = false;
 }
 
-//public CWorldGen worldGen = nested(0, CWorldGen::new, Comments.worldGen); "Modify Create's impact on your terrain" todo
+// TODO: public CWorldGen worldGen = nested(0, CWorldGen::new, Comments.worldGen); "Modify Create's impact on your terrain"

@@ -20,8 +20,9 @@ public final class EnUsTranslation extends CreateTranslation {
 		}
 
 		private static void addClient(JLang lang) {
-			// Option Names
 			text(lang, "client", "Client");
+
+			// Option Names
 			text(lang, "enableTooltips", "Enable Tooltips", "client");
 			text(lang, "enableOverstressedTooltip", "Enable Overstressed Tooltip", "client");
 			text(lang, "explainRenderErrors", "Explain Render Errors", "client");
@@ -46,6 +47,9 @@ public final class EnUsTranslation extends CreateTranslation {
 
 		private static void addCommon(JLang lang) {
 			text(lang, "common", "Common");
+
+			text(lang, "logBeErrors", "Log BE Errors", "common");
+			tooltip(lang, "logBeErrors", "Forward caught BlockEntityExceptions to the log at debug level.", "common");
 		}
 	}
 
