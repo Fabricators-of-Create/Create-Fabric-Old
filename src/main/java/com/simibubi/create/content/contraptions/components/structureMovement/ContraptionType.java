@@ -1,5 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 
 import java.util.HashMap;
@@ -11,13 +12,13 @@ public class ContraptionType {
 
 	public static Map<String, ContraptionType> entries = new HashMap<>();
 	public static ContraptionType
-		/*PISTON = register("piston", PistonContraption::new),
-		BEARING = register("bearing", BearingContraption::new), TODO DO THIS POGCHAMP
-		PULLEY = register("pulley", PulleyContraption::new),
+		//PISTON = register("piston", PistonContraption::new),
+		BEARING = register("bearing", BearingContraption::new),
+		/*PULLEY = register("pulley", PulleyContraption::new),
 		CLOCKWORK = register("clockwork", ClockworkContraption::new),
 		MOUNTED = register("mounted", MountedContraption::new),*/
-		STABILIZED = register("stabilized", StabilizedContraption::new);
-	//GANTRY = register("gantry", GantryContraption::new);
+		STABILIZED = register("stabilized",StabilizedContraption::new);
+		//GANTRY = register("gantry", GantryContraption::new);
 
 	Supplier<? extends Contraption> factory;
 	String id;

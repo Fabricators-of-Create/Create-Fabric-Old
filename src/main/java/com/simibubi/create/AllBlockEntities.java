@@ -8,6 +8,8 @@ import com.simibubi.create.content.contraptions.components.crank.HandCrankRender
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
@@ -31,6 +33,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<HandCrankBlockEntity> HAND_CRANK = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "hand_crank"), BlockEntityType.Builder.create(HandCrankBlockEntity::new, AllBlocks.HAND_CRANK).build(null));
 	public static final BlockEntityType<ChassisBlockEntity> CHASSIS = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "chassis"), BlockEntityType.Builder.create(ChassisBlockEntity::new, AllBlocks.RADIAL_CHASSIS, AllBlocks.LINEAR_CHASSIS, AllBlocks.SECONDARY_LINEAR_CHASSIS).build(null));
 	public static final BlockEntityType<NozzleBlockEntity> NOZZLE = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "nozzle"), BlockEntityType.Builder.create(NozzleBlockEntity::new, AllBlocks.NOZZLE).build(null));
+	public static final BlockEntityType<MechanicalBearingBlockEntity> MECHANICAL_BEARING = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "mechanical_bearing"), BlockEntityType.Builder.create(MechanicalBearingBlockEntity::new, AllBlocks.MECHANICAL_BEARING).build(null));
 
 	public static void registerRenderers() {
 		registerRenderer(BELT, BeltRenderer::new);
@@ -38,6 +41,7 @@ public class AllBlockEntities {
 		registerRenderer(HAND_CRANK, HandCrankRenderer::new);
 		registerRenderer(MOTOR, CreativeMotorRenderer::new);
 		registerRenderer(SIMPLE_KINETIC, KineticBlockEntityRenderer::new);
+		registerRenderer(MECHANICAL_BEARING, BearingRenderer::new);
 
 		HalfShaftInstance.register(MOTOR);
 		SingleRotatingInstance.register(SIMPLE_KINETIC);

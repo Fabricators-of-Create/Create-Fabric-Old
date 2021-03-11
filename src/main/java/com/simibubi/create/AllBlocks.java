@@ -2,6 +2,7 @@ package com.simibubi.create;
 
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.LinearChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.RadialChassisBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
@@ -84,9 +85,14 @@ public class AllBlocks {
 		.strength(0.8f, 0.8f));
 
 	public static final NozzleBlock NOZZLE = new NozzleBlock(Block.Settings
-		.of(Material.WOOD)
+		.of(Material.STONE)
 		.strength(0.8f, 0.8f)
 		.nonOpaque());
+
+	public static final MechanicalBearingBlock MECHANICAL_BEARING = new MechanicalBearingBlock(Block.Settings
+		.of(Material.STONE)
+		.strength(0.8f, 0.8f));
+
 
 	public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
@@ -124,6 +130,9 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "nozzle"), NOZZLE);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "nozzle"), new BlockItem(NOZZLE, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "mechanical_bearing"), MECHANICAL_BEARING);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "mechanical_bearing"), new BlockItem(MECHANICAL_BEARING, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }
