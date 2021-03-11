@@ -3,6 +3,7 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
@@ -394,14 +395,14 @@ public abstract class Contraption {
 		 moveGantryPinion(world, pos, frontier, visited, state);
 
 		 if (AllBlocks.GANTRY_SHAFT.has(state))
-		 moveGantryShaft(world, pos, frontier, visited, state);
+		 moveGantryShaft(world, pos, frontier, visited, state);*/
 
 		 // Bearings potentially create stabilized sub-contraptions
-		 if (AllBlocks.MECHANICAL_BEARING.has(state))
-		 moveBearing(pos, frontier, visited, state);
+		if (AllBlocks.MECHANICAL_BEARING.getStateManager().getStates().contains(state))
+			moveBearing(pos, frontier, visited, state);
 
 		 // Seats transfer their passenger to the contraption
-		 if (state.getBlock() instanceof SeatBlock)
+		 /*if (state.getBlock() instanceof SeatBlock)
 		 moveSeat(world, pos);
 
 		 // Pulleys drag their rope and their attached structure
@@ -485,18 +486,16 @@ public abstract class Contraption {
 		return state.getBlock() == Blocks.SLIME_BLOCK || state.getBlock() == Blocks.HONEY_BLOCK;
 	}
 
-	/*
-	 * private void moveBearing(BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited, BlockState state) {
-	 * Direction facing = state.get(MechanicalBearingBlock.FACING);
-	 * if (!canBeStabilized(facing, pos.subtract(anchor))) {
-	 * BlockPos offset = pos.offset(facing);
-	 * if (!visited.contains(offset))
-	 * frontier.add(offset);
-	 * return;
-	 * }
-	 * pendingSubContraptions.add(new BlockFace(pos, facing));
-	 * }
-	 */
+	private void moveBearing(BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited, BlockState state) {
+		Direction facing = state.get(MechanicalBearingBlock.FACING);
+		if (!canBeStabilized(facing, pos.subtract(anchor))) {
+			BlockPos offset = pos.offset(facing);
+			if (!visited.contains(offset))
+				frontier.add(offset);
+			return;
+		}
+		pendingSubContraptions.add(new BlockFace(pos, facing));
+	}
 
 	private void moveBelt(BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited, BlockState state) {
 		BlockPos nextPos = BeltBlock.nextSegmentPosition(state, pos, true);
