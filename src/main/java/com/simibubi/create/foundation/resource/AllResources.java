@@ -14,8 +14,9 @@ import static net.devtech.arrp.json.lang.JLang.lang;
 public final class AllResources {
 	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id(ID).toString());
 
-	private static JLang addTexts(JLang lang) {
+	private static JLang addLang(JLang lang) {
 		ConfigLang.addAll(lang);
+		BlockLang.addAll(lang);
 
 		return lang;
 	}
@@ -69,8 +70,47 @@ public final class AllResources {
 		}
 	}
 
+	private static final class BlockLang {
+		public static void addAll(JLang lang) {
+			lang.block(id("acacia_window"), "Acacia Window");
+			lang.block(id("acacia_window_pane"), "Acacia Window Pane");
+
+			// TODO: All other blocks
+		}
+	}
+
+	// Consider: The following? Will not be able to copy Forge Create lang when it updates
+
+	// TODO: Item lang
+	// TODO: Advancement lang
+	// TODO: Item group lang
+	// TODO: Death lang
+
+	// TODO: Create recipe lang
+	// TODO: Create generic lang
+	// TODO: Create action lang
+	// TODO: Create keyinfo lang
+	// TODO: Create GUI lang
+	// TODO: Create symmetry lang
+	// TODO: Create orientation lang
+	// TODO: Create terrainzapper lang
+	// TODO: Create blockzapper lang
+	// TODO: Create minecart coupling lang
+	// TODO: Create contraptions lang
+	// TODO: Create logistics lang
+	// TODO: Create schematic and quill lang
+	// TODO: Create schematic lang
+	// TODO: Create material checklist lang
+	// TODO: Create item attributes lang
+	// TODO: Create tooltip lang
+	// TODO: Create mechanical arm lang
+	// TODO: Create tunnel lang
+	// TODO: Create hint lang
+	// TODO: Create command lang
+	// TODO: Create subtitle l<ng
+
 	private static void addResources(RuntimeResourcePack pack) {
-		pack.addLang(id("en_us"), addTexts(lang()));
+		pack.addLang(id("en_us"), addLang(lang()));
 	}
 
 	public static void initialize() {
