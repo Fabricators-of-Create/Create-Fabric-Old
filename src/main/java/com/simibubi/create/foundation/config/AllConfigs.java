@@ -66,15 +66,14 @@ public class AllConfigs implements ConfigData {
 
 	@Override
 	public void validatePostLoad() throws ValidationException {
-		for (Field field : getClass().getDeclaredFields()) {
-			if (Validatable.class.isAssignableFrom(field.getType())) {
-				field.setAccessible(true);
-				try {
-					((Validatable) field.get(this)).validate();
-				} catch (IllegalAccessException e) {
-					throw new ValidationException("Failed to access entry!", e);
-				}
-			}
-		}
+		client.validate();
+		curiosities.validate();
+		fluids.validate();
+		kinetics.validate();
+		logistics.validate();
+		recipes.validate();
+		schematics.validate();
+		server.validate();
+		worldGen.validate();
 	}
 }
