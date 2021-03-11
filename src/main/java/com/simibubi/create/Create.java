@@ -5,7 +5,7 @@ import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.events.CommonEvents;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.resource.AllResources;
+import com.simibubi.create.foundation.resource.AllClientResources;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.ModInitializer;
@@ -45,7 +45,7 @@ public class Create implements ModInitializer {
 		AllWorldFeatures.reload();
 
 		torquePropagator = new TorquePropagator();
-		AllResources.initialize();
+		AllClientResources.initialize();
 
 		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
 	}

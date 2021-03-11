@@ -11,7 +11,7 @@ import static com.simibubi.create.Create.id;
 import static net.devtech.arrp.json.lang.JLang.lang;
 
 @SuppressWarnings("SameParameterValue")
-public final class AllResources {
+public final class AllClientResources { // Data packs in another class
 	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id(ID).toString());
 
 	private static final class TranslationHandler {
