@@ -1,7 +1,5 @@
 package com.simibubi.create;
 
-import java.util.function.Function;
-
 import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
@@ -9,11 +7,11 @@ import com.simibubi.create.content.contraptions.components.crank.HandCrankBlockE
 import com.simibubi.create.content.contraptions.components.crank.HandCrankRenderer;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticBlockEntity;
-
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -22,12 +20,15 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.util.function.Function;
+
 public class AllBlockEntities {
 	public static final BlockEntityType<BeltBlockEntity> BELT = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "belt"), BlockEntityType.Builder.create(BeltBlockEntity::new, AllBlocks.BELT).build(null));
 	public static final BlockEntityType<SimpleKineticBlockEntity> SIMPLE_KINETIC = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "simple_kinetic"), BlockEntityType.Builder.create(SimpleKineticBlockEntity::new, AllBlocks.SHAFT, AllBlocks.COGWHEEL, AllBlocks.LARGE_COGWHEEL).build(null));
 	public static final BlockEntityType<CreativeMotorBlockEntity> MOTOR = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "motor"), BlockEntityType.Builder.create(CreativeMotorBlockEntity::new, AllBlocks.CREATIVE_MOTOR).build(null));
 	public static final BlockEntityType<WaterWheelBlockEntity> WATER_WHEEL = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "water_wheel"), BlockEntityType.Builder.create(WaterWheelBlockEntity::new, AllBlocks.WATER_WHEEL).build(null));
 	public static final BlockEntityType<HandCrankBlockEntity> HAND_CRANK = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "hand_crank"), BlockEntityType.Builder.create(HandCrankBlockEntity::new, AllBlocks.HAND_CRANK).build(null));
+	public static final BlockEntityType<ChassisBlockEntity> CHASSIS = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "chassis"), BlockEntityType.Builder.create(ChassisBlockEntity::new, AllBlocks.RADIAL_CHASSIS, AllBlocks.LINEAR_CHASSIS, AllBlocks.SECONDARY_LINEAR_CHASSIS).build(null));
 
 	public static void registerRenderers() {
 		registerRenderer(BELT, BeltRenderer::new);

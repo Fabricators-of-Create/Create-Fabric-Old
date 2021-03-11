@@ -1,6 +1,8 @@
 package com.simibubi.create;
 
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.chassis.LinearChassisBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.chassis.RadialChassisBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
@@ -68,7 +70,19 @@ public class AllBlocks {
 		.strength(0.8f, 0.8f)
 		.nonOpaque());
 
-    public static void registerBlocks() {
+	public static final LinearChassisBlock LINEAR_CHASSIS = new LinearChassisBlock(Block.Settings
+		.of(Material.WOOD)
+		.strength(0.8f, 0.8f));
+
+	public static final LinearChassisBlock SECONDARY_LINEAR_CHASSIS = new LinearChassisBlock(Block.Settings
+		.of(Material.WOOD)
+		.strength(0.8f, 0.8f));
+
+	public static final RadialChassisBlock RADIAL_CHASSIS = new RadialChassisBlock(Block.Settings
+		.of(Material.WOOD)
+		.strength(0.8f, 0.8f));
+
+	public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_block"), ZINC_BLOCK);
 
@@ -92,6 +106,15 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "hand_crank"), HAND_CRANK);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "hand_crank"), new BlockItem(HAND_CRANK, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "linear_chassis"), LINEAR_CHASSIS);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "linear_chassis"), new BlockItem(LINEAR_CHASSIS, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "secondary_linear_chassis"), SECONDARY_LINEAR_CHASSIS);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "secondary_linear_chassis"), new BlockItem(SECONDARY_LINEAR_CHASSIS, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "radial_chassis"), RADIAL_CHASSIS);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "radial_chassis"), new BlockItem(RADIAL_CHASSIS, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }
