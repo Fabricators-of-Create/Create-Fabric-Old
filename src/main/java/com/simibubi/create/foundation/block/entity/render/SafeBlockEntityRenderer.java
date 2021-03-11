@@ -7,13 +7,13 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 
-public abstract class SafeBlockEntityRenderer<T extends BlockEntity> /*extends BlockEntityRenderer<T>*/ { //todo: they changed it from a class to an interface???
+public abstract class SafeBlockEntityRenderer<T extends BlockEntity> extends BlockEntityRenderer<T> {
 
 	public SafeBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
-		//super(dispatcher);
+		super(dispatcher);
 	}
 
-	//@Override
+	@Override
 	public final void render(T te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer, int light, int overlay) {
 		if (isInvalid(te))
 			return;

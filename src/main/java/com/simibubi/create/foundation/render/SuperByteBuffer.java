@@ -12,6 +12,8 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.*;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
@@ -56,7 +58,7 @@ public class SuperByteBuffer extends TemplateBuffer {
 	private static final Long2DoubleMap skyLightCache = new Long2DoubleOpenHashMap();
 	private static final Long2DoubleMap blockLightCache = new Long2DoubleOpenHashMap();
 	Vector4f pos = new Vector4f();
-	//Vector3f normal = new Vector3f(); todo
+	Vector3f normal = new Vector3f();
 	Vector4f lightPos = new Vector4f();
 
 	float diffuseLight(float x, float y, float z) {
@@ -102,11 +104,10 @@ public class SuperByteBuffer extends TemplateBuffer {
 			float normalZ = getNZ(buffer, i) / 127f;
 
 			float staticDiffuse = diffuseLight(normalX, normalY, normalZ);
-/*
 			normal.set(normalX, normalY, normalZ);
 			normal.transform(normalMat);
 			float instanceDiffuse = diffuseLight(normal.getX(), normal.getY(), normal.getZ());
-*/
+
 			pos.set(x, y, z, 1F);
 			pos.transform(modelMat);
 			builder.vertex(pos.getX(), pos.getY(), pos.getZ());
@@ -114,7 +115,6 @@ public class SuperByteBuffer extends TemplateBuffer {
 			//builder.color((byte) Math.max(0, normal.getX() * 255), (byte) Math.max(0, normal.getY() * 255), (byte) Math.max(0, normal.getZ() * 255), a);
 			if (shouldColor) {
 				//float lum = (r < 0 ? 255 + r : r) / 256f;
-				/*
 				int colorR = Math.min(255, (int) (((float) this.r) * instanceDiffuse));
 				int colorG = Math.min(255, (int) (((float) this.g) * instanceDiffuse));
 				int colorB = Math.min(255, (int) (((float) this.b) * instanceDiffuse));
@@ -125,7 +125,7 @@ public class SuperByteBuffer extends TemplateBuffer {
 				int colorG = Math.min(255, (int) (((float) Byte.toUnsignedInt(g)) * diffuseMult));
 				int colorB = Math.min(255, (int) (((float) Byte.toUnsignedInt(b)) * diffuseMult));
 				builder.color(colorR, colorG, colorB, a);
-			*/}
+			}
 
 			float u = getU(buffer, i);
 			float v = getV(buffer, i);
@@ -151,8 +151,8 @@ public class SuperByteBuffer extends TemplateBuffer {
 			} else
 				builder.light(getLight(buffer, i));
 
-			//builder.normal(normal.getX(), normal.getY(), normal.getZ())
-				//.next(); // TODO I THINK ITS .next INSTEAD OF .endVertex
+			builder.normal(normal.getX(), normal.getY(), normal.getZ())
+				.next(); // TODO I THINK ITS .next INSTEAD OF .endVertex
 		}
 
 		transforms = new MatrixStack();

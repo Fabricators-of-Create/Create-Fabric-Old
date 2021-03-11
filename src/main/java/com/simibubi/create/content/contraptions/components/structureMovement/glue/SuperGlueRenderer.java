@@ -1,5 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.glue;
-/*
+
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.utility.AngleHelper;
@@ -123,4 +123,3 @@ public class SuperGlueRenderer extends EntityRenderer<SuperGlueEntity> {
 	}
 
 }
-*/

@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Direction;
 import java.nio.ByteBuffer;
 
@@ -21,15 +22,15 @@ public class RotatingData extends KineticData<RotatingData> {
 
 	public RotatingData setRotationAxis(Direction.Axis axis) {
 		Direction orientation = Direction.get(Direction.AxisDirection.POSITIVE, axis);
-		//setRotationAxis(orientation.getUnitVector());
+		setRotationAxis(orientation.getUnitVector());
 		return this;
 	}
-/*
+
 	public RotatingData setRotationAxis(Vector3f axis) {
 		setRotationAxis(axis.getX(), axis.getY(), axis.getZ());
 		return this;
 	}
-*/
+
 	public RotatingData setRotationAxis(float rotationAxisX, float rotationAxisY, float rotationAxisZ) {
 		this.rotationAxisX = (byte) (rotationAxisX * 127);
 		this.rotationAxisY = (byte) (rotationAxisY * 127);

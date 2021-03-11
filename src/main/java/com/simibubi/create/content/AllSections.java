@@ -1,11 +1,6 @@
 package com.simibubi.create.content;
 
-import com.simibubi.create.Create;
 import com.simibubi.create.foundation.item.ItemDescription;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 public enum AllSections {
 
@@ -53,8 +48,8 @@ public enum AllSections {
 	public ItemDescription.Palette getTooltipPalette() {
 		return tooltipPalette;
 	}
-/* todo: registrate stuff
-	public static AllSections of(ItemStack stack) {
+
+	/**public static AllSections of(ItemStack stack) { TODO GOD HELP ME
 	 Item item = stack.getItem();
 	 if (item instanceof BlockItem)
 	 return ofBlock(((BlockItem) item).getBlock());
@@ -63,12 +58,12 @@ public enum AllSections {
 
 	 static AllSections ofItem(Item item) {
 	 return Create.com.smellypengu.registrate()
-		 .getSection(item);
+	 .getSection(item);
 	 }
 
 	 static AllSections ofBlock(Block block) {
 	 return Create.com.smellypengu.registrate()
-		 .getSection(block);
-	 }
-*/
+	 .getSection(block);
+	 }*/
+
 }

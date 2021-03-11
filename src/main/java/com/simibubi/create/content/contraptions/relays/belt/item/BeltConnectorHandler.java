@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.relays.belt.item;
 
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -55,11 +56,11 @@ public class BeltConnectorHandler {
 
 			HitResult rayTrace = MinecraftClient.getInstance().crosshairTarget;
 			if (rayTrace == null || !(rayTrace instanceof BlockHitResult)) {
-				if (r.nextInt(50) == 0) { //todo
-					/*world.addParticle(new DustParticleEffect(.3f, .9f, .5f, 1),
+				if (r.nextInt(50) == 0) {
+					world.addParticle(new DustParticleEffect(.3f, .9f, .5f, 1),
 						first.getX() + .5f + randomOffset(.25f), first.getY() + .5f + randomOffset(.25f),
 						first.getZ() + .5f + randomOffset(.25f), 0, 0, 0);
-				*/}
+				}
 				return;
 			}
 
@@ -123,9 +124,9 @@ public class BeltConnectorHandler {
 			for (float f = 0; f < length; f += .0625f) {
 				Vec3d position = start.add(step.multiply(f));
 				if (r.nextInt(10) == 0) {
-					/*world.addParticle(new DustParticleEffect(canConnect ? .3f : .9f, canConnect ? .9f : .3f, .5f, 1), todo
+					world.addParticle(new DustParticleEffect(canConnect ? .3f : .9f, canConnect ? .9f : .3f, .5f, 1),
 						position.x + .5f, position.y + .5f, position.z + .5f, 0, 0, 0);
-				*/}
+				}
 			}
 
 			return;

@@ -1,8 +1,11 @@
 package com.simibubi.create;
 
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.ControlledContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueRenderer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
@@ -66,16 +69,16 @@ public class AllEntityTypes {
 			})
 			.register();
 	}*/
-/*
+
 	@Environment(EnvType.CLIENT)
 	public static void registerRenderers() {
 		EntityRendererRegistry.INSTANCE.register(ORIENTED_CONTRAPTION, OrientedContraptionEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(CONTROLLED_CONTRAPTION, ContraptionEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(SUPER_GLUE, SuperGlueRenderer::new);
 
-		RenderingRegistry.registerEntityRenderingHandler(GANTRY_CONTRAPTION.get(),
+		/*RenderingRegistry.registerEntityRenderingHandler(GANTRY_CONTRAPTION.get(),
 			ContraptionEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(SUPER_GLUE.get(), SuperGlueRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(SEAT.get(), SeatEntity.Render::new);
-	}*/
+		RenderingRegistry.registerEntityRenderingHandler(SEAT.get(), SeatEntity.Render::new);*/
+	}
 }

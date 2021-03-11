@@ -24,7 +24,7 @@ public abstract class SyncedBlockEntity extends BlockEntity implements BlockEnti
 
 	@Override
 	public CompoundTag toInitialChunkDataTag() {
-		return writeNbt(new CompoundTag());
+		return toTag(new CompoundTag());
 	}
 
 	public void sendData() {
@@ -39,12 +39,12 @@ public abstract class SyncedBlockEntity extends BlockEntity implements BlockEnti
 
 	// Special handling for client update packets
 	public void readClientUpdate(BlockState state, CompoundTag tag) {
-		readNbt(state, tag);
+		fromTag(state, tag);
 	}
 
 	// Special handling for client update packets
 	public CompoundTag writeToClient(CompoundTag tag) {
-		return toClientTag(tag);
+		return toTag(tag);
 	}
 
 	public void notifyUpdate() {

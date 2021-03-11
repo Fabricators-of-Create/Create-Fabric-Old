@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -122,7 +123,7 @@ public abstract class Outline {
 		int j = i >> 16 & '\uffff';
 		int k = i & '\uffff';
 		MatrixStack.Entry peek = ms.peek();
-		//Vector3f rgb = params.rgb;
+		Vector3f rgb = params.rgb;
 		if (transformNormals == null)
 			transformNormals = peek.getNormal();
 
@@ -135,7 +136,7 @@ public abstract class Outline {
 			yOffset = normal.getOffsetY();
 			zOffset = normal.getOffsetZ();
 		}
-/*
+
 		builder.vertex(peek.getModel(), (float) pos.x, (float) pos.y, (float) pos.z)
 			.color(rgb.getX(), rgb.getY(), rgb.getZ(), params.alpha)
 			.texture(u, v)
@@ -143,7 +144,7 @@ public abstract class Outline {
 			.light(j, k)
 			.normal(peek.getNormal(), xOffset, yOffset, zOffset)
 			.next(); // TODO could be wrong?
-*/
+
 		transformNormals = null;
 	}
 
@@ -162,7 +163,7 @@ public abstract class Outline {
 		protected boolean disableNormals;
 		protected float alpha;
 		protected int lightMapU, lightMapV;
-		//protected Vector3f rgb;
+		protected Vector3f rgb;
 		private float lineWidth;
 
 		public OutlineParams() {
@@ -170,7 +171,7 @@ public abstract class Outline {
 			alpha = 1;
 			lineWidth = 1 / 32f;
 			fadeLineWidth = true;
-			//rgb = ColorHelper.getRGB(0xFFFFFF);
+			rgb = ColorHelper.getRGB(0xFFFFFF);
 
 			int i = 15 << 20 | 15 << 4;
 			lightMapU = i >> 16 & '\uffff';
@@ -180,7 +181,7 @@ public abstract class Outline {
 		// builder
 
 		public OutlineParams colored(int color) {
-			//rgb = ColorHelper.getRGB(color);
+			rgb = ColorHelper.getRGB(color);
 			return this;
 		}
 
