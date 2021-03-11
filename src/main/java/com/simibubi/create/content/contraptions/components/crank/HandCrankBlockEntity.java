@@ -74,7 +74,7 @@ public class HandCrankBlockEntity extends GeneratingKineticBlockEntity {
 	}
 
 	@Override
-	public boolean shouldRenderAsBe() {
+	public boolean shouldRenderAsBE() {
 		return true;
 	}
 }

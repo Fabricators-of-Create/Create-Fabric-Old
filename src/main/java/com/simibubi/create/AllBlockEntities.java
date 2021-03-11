@@ -10,6 +10,7 @@ import com.simibubi.create.content.contraptions.components.fan.NozzleBlockEntity
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
@@ -37,6 +38,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<NozzleBlockEntity> NOZZLE = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "nozzle"), BlockEntityType.Builder.create(NozzleBlockEntity::new, AllBlocks.NOZZLE).build(null));
 	public static final BlockEntityType<MechanicalBearingBlockEntity> MECHANICAL_BEARING = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "mechanical_bearing"), BlockEntityType.Builder.create(MechanicalBearingBlockEntity::new, AllBlocks.MECHANICAL_BEARING).build(null));
 	public static final BlockEntityType<WindmillBearingBlockEntity> WINDMILL_BEARING = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "windmill_bearing"), BlockEntityType.Builder.create(WindmillBearingBlockEntity::new, AllBlocks.WINDMILL_BEARING).build(null));
+	public static final BlockEntityType<ClockworkBearingBlockEntity> CLOCKWORK_BEARING = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "clockwork_bearing"), BlockEntityType.Builder.create(ClockworkBearingBlockEntity::new, AllBlocks.CLOCKWORK_BEARING).build(null));
 
 	public static void registerRenderers() {
 		registerRenderer(BELT, BeltRenderer::new);
@@ -46,6 +48,7 @@ public class AllBlockEntities {
 		registerRenderer(SIMPLE_KINETIC, KineticBlockEntityRenderer::new);
 		registerRenderer(MECHANICAL_BEARING, BearingRenderer::new);
 		registerRenderer(WINDMILL_BEARING, BearingRenderer::new);
+		registerRenderer(CLOCKWORK_BEARING, BearingRenderer::new);
 
 		HalfShaftInstance.register(MOTOR);
 		SingleRotatingInstance.register(SIMPLE_KINETIC);
@@ -53,6 +56,7 @@ public class AllBlockEntities {
 		SingleRotatingInstance.register(HAND_CRANK);
 		BackHalfShaftInstance.register(MECHANICAL_BEARING);
 		BackHalfShaftInstance.register(WINDMILL_BEARING);
+		BackHalfShaftInstance.register(CLOCKWORK_BEARING);
 	}
 
 	@SuppressWarnings("unchecked")

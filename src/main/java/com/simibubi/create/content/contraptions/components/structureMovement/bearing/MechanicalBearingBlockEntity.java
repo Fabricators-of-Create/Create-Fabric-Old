@@ -302,7 +302,7 @@ public class MechanicalBearingBlockEntity extends GeneratingKineticBlockEntity i
 	}
 
 	@Override
-	public boolean shouldRenderAsBe() {
+	public boolean shouldRenderAsBE() {
 		return true;
 	}
 }

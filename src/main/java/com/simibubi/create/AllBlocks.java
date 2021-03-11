@@ -2,6 +2,7 @@ package com.simibubi.create;
 
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.LinearChassisBlock;
@@ -98,6 +99,10 @@ public class AllBlocks {
 		.of(Material.STONE)
 		.strength(0.8f, 0.8f));
 
+	public static final ClockworkBearingBlock CLOCKWORK_BEARING = new ClockworkBearingBlock(Block.Settings
+		.of(Material.STONE)
+		.strength(0.8f, 0.8f));
+
 
 	public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
@@ -141,6 +146,9 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "windmill_bearing"), WINDMILL_BEARING);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "windmill_bearing"), new BlockItem(WINDMILL_BEARING, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "clockwork_bearing"), CLOCKWORK_BEARING);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "clockwork_bearing"), new BlockItem(CLOCKWORK_BEARING, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }

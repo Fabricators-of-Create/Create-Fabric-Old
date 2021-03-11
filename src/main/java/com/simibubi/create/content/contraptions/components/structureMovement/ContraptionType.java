@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 
 import java.util.HashMap;
@@ -14,9 +15,9 @@ public class ContraptionType {
 	public static ContraptionType
 		//PISTON = register("piston", PistonContraption::new),
 		BEARING = register("bearing", BearingContraption::new),
-		/*PULLEY = register("pulley", PulleyContraption::new),
+		//PULLEY = register("pulley", PulleyContraption::new),
 		CLOCKWORK = register("clockwork", ClockworkContraption::new),
-		MOUNTED = register("mounted", MountedContraption::new),*/
+		//MOUNTED = register("mounted", MountedContraption::new),
 		STABILIZED = register("stabilized",StabilizedContraption::new);
 		//GANTRY = register("gantry", GantryContraption::new);
 

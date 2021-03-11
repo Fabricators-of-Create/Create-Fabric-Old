@@ -28,7 +28,7 @@ public class ChunkBuilder$ChunkDataMixin {
 		if (FastRenderDispatcher.available()) {
 			List<BlockEntity> tiles = cir.getReturnValue();
 
-			tiles.removeIf(tile -> tile instanceof InstanceRendered && !((InstanceRendered) tile).shouldRenderAsBe());
+			tiles.removeIf(tile -> tile instanceof InstanceRendered && !((InstanceRendered) tile).shouldRenderAsBE());
 		}
 	}
 }

@@ -494,7 +494,7 @@ public class BeltBlockEntity extends KineticBlockEntity {
 	}
 
 	@Override
-	public boolean shouldRenderAsBe() {
+	public boolean shouldRenderAsBE() {
 		return isController();
 	}
 
