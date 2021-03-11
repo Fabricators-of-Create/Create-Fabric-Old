@@ -3,6 +3,7 @@ package com.simibubi.create.foundation.resource.translation;
 import com.simibubi.create.Create;
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.devtech.arrp.json.lang.JLang;
+import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -25,7 +26,9 @@ public class CreateTranslation {
 	public final void register(RuntimeResourcePack pack) {
 		JLang lang = JLang.lang();
 		register.accept(lang);
-		pack.addLang(Create.id(languageCode), lang);
+
+		// This ID is here to avoid conflicting with actual Json so everything can be used together.
+		pack.addLang(new Identifier(Create.ID + "_rrp", languageCode), lang);
 	}
 
 	protected static void text(JLang lang, String option, String name, String... parents) {

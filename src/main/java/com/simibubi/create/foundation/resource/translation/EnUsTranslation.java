@@ -17,6 +17,7 @@ public final class EnUsTranslation extends CreateTranslation {
 		public static void addAll(JLang lang) {
 			addClient(lang);
 			addCommon(lang);
+			addCuriosities(lang);
 		}
 
 		private static void addClient(JLang lang) {
@@ -50,6 +51,13 @@ public final class EnUsTranslation extends CreateTranslation {
 
 			text(lang, "logBeErrors", "Log BE Errors", "common");
 			tooltip(lang, "logBeErrors", "Forward caught BlockEntityExceptions to the log at debug level.", "common");
+		}
+
+		private static void addCuriosities(JLang lang) {
+			text(lang, "curiosities", "Curiosities");
+
+			text(lang, "maxSymmetryWandRange", "Max Symmetry Wand Range", "curiosities");
+			tooltip(lang, "maxSymmetryWandRange", "The Maximum Distance to an active mirror for the symmetry wand to trigger.", "curiosities");
 		}
 	}
 

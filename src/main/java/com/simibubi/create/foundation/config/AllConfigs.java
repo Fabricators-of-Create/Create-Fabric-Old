@@ -1,11 +1,14 @@
 package com.simibubi.create.foundation.config;
 
+import com.simibubi.create.foundation.config.util.Validatable;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.CollapsibleObject;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
+
+import java.lang.reflect.Field;
 
 @Config(name = "create")
 public class AllConfigs implements ConfigData {
@@ -60,4 +63,18 @@ public class AllConfigs implements ConfigData {
 
 	@CollapsibleObject
 	CWorldGen worldGen = new CWorldGen();
+
+	@Override
+	public void validatePostLoad() throws ValidationException {
+		for (Field field : getClass().getDeclaredFields()) {
+			if (Validatable.class.isAssignableFrom(field.getType())) {
+				field.setAccessible(true);
+				try {
+					((Validatable) field.get(this)).validate();
+				} catch (IllegalAccessException e) {
+					throw new ValidationException("Failed to access entry!", e);
+				}
+			}
+		}
+	}
 }

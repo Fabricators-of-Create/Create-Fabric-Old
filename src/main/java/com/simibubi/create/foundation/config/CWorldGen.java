@@ -1,9 +1,22 @@
 package com.simibubi.create.foundation.config;
 
+import com.simibubi.create.foundation.config.util.Validatable;
+import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import net.minecraft.util.math.MathHelper;
 
-public class CWorldGen {
+public class CWorldGen implements Validatable {
 	boolean disable = false; // "Prevents all worldgen added by Create from taking effect"
+
+	@Override
+	public void validate() throws ConfigData.ValidationException {
+		copperOreMinHeight = Math.max(copperOreMinHeight, 0);
+		copperOreMaxHeight = Math.max(copperOreMaxHeight, 0);
+		copperOreClusterSize = Math.max(copperOreClusterSize, 0);
+		copperOreFrequency = MathHelper.clamp(copperOreFrequency, 0f, 512f);
+		weatheredLimestoneMinHeight = Math.max(weatheredLimestoneMinHeight, 0);
+		// TODO: The rest of them
+	}
 
 	@ConfigEntry.Gui.PrefixText()
 	int copperOreMinHeight = 40; // min 0,
