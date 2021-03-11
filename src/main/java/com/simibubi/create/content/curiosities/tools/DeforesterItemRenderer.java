@@ -5,7 +5,6 @@ import com.simibubi.create.foundation.item.PartialItemModelRenderer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 
 public class DeforesterItemRenderer extends CustomRenderedItemModelRenderer<DeforesterModel> {
@@ -21,7 +20,7 @@ public class DeforesterItemRenderer extends CustomRenderedItemModelRenderer<Defo
 		renderer.renderGlowing(model.getPartial("core_glow"), maxLight);
 		
 		float angle = worldTime * -.5f % 360;
-		ms.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(angle));
+		//ms.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(angle));
 		renderer.renderSolid(model.getPartial("gear"), light);
 	}
 	

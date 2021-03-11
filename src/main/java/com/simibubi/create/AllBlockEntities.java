@@ -53,7 +53,7 @@ public class AllBlockEntities {
 		registerRenderer(WINDMILL_BEARING, BearingRenderer::new);
 		registerRenderer(CLOCKWORK_BEARING, BearingRenderer::new);
 		registerRenderer(ANALOG_LEVER, AnalogLeverRenderer::new);
-
+*/
 		HalfShaftInstance.register(MOTOR);
 		SingleRotatingInstance.register(SIMPLE_KINETIC);
 		SingleRotatingInstance.register(WATER_WHEEL);
@@ -65,6 +65,6 @@ public class AllBlockEntities {
 
 	@SuppressWarnings("unchecked")
 	private static void registerRenderer(BlockEntityType<?> type, Function<BlockEntityRenderDispatcher, BlockEntityRenderer<?>> factory) {
-		BlockEntityRendererRegistry.INSTANCE.register((BlockEntityType<BlockEntity>) type, (Function<BlockEntityRenderDispatcher, BlockEntityRenderer<BlockEntity>>) (Object) factory);
+		//BlockEntityRendererRegistry.INSTANCE.register((BlockEntityType<BlockEntity>) type, (Function<BlockEntityRenderDispatcher, BlockEntityRenderer<BlockEntity>>) (Object) factory);
 	}
 }

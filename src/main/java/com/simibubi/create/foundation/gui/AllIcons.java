@@ -10,7 +10,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
@@ -151,7 +150,7 @@ public class AllIcons {
 		int j = i >> 16 & '\uffff';
 		int k = i & '\uffff';
 		MatrixStack.Entry peek = ms.peek();
-		Vector3f rgb = ColorHelper.getRGB(color);
+		//Vector3f rgb = ColorHelper.getRGB(color); todo: yeah this is just gone
 
 		Vec3d vec4 = new Vec3d(1, 1, 0);
 		Vec3d vec3 = new Vec3d(0, 1, 0);
@@ -162,13 +161,14 @@ public class AllIcons {
 		float u2 = iconX / sheetSize;
 		float v1 = iconY / sheetSize;
 		float v2 = (iconY + 16) / sheetSize;
-
+/*
 		vertex(peek, builder, j, k, rgb, vec1, u1, v1);
 		vertex(peek, builder, j, k, rgb, vec2, u2, v1);
 		vertex(peek, builder, j, k, rgb, vec3, u2, v2);
 		vertex(peek, builder, j, k, rgb, vec4, u1, v2);
+	*/
 	}
-
+/*
 	@Environment(EnvType.CLIENT)
 	private void vertex(MatrixStack.Entry peek, VertexConsumer builder, int j, int k, Vector3f rgb, Vec3d vec, float u, float v) {
 		builder.vertex(peek.getModel(), (float) vec.x, (float) vec.y, (float) vec.z)
@@ -176,5 +176,5 @@ public class AllIcons {
 			.texture(u, v)
 			.light(j, k)
 			.next(); // TODO next INSTEAD OF end?
-	}
+	} */
 }

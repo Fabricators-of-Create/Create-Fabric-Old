@@ -3,7 +3,6 @@ package com.simibubi.create.content.contraptions.base;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceData;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.utility.ColorHelper;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import java.nio.ByteBuffer;
 
@@ -36,11 +35,11 @@ public class KineticData<D extends KineticData<D>> extends InstanceData {
 	public D setPosition(BlockPos pos) {
 		return setPosition(pos.getX(), pos.getY(), pos.getZ());
 	}
-
+/*
 	public D setPosition(Vector3f pos) {
 		return setPosition(pos.getX(), pos.getY(), pos.getZ());
 	}
-
+*/
 	public D setPosition(int x, int y, int z) {
 		BlockPos origin = owner.renderer.getOriginCoordinate();
 

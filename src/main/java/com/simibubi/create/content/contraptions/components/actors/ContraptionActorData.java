@@ -3,7 +3,6 @@ package com.simibubi.create.content.contraptions.components.actors;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceData;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import java.nio.ByteBuffer;
 
@@ -54,36 +53,36 @@ public class ContraptionActorData extends InstanceData {
 		this.rotationOffset = rotationOffset;
 		return this;
 	}
-
+/* todo: vector3f
 	public ContraptionActorData setRotationAxis(Vector3f axis) {
 		setRotationAxis(axis.getX(), axis.getY(), axis.getZ());
 		return this;
 	}
-
+*/
 	public ContraptionActorData setRotationAxis(float rotationAxisX, float rotationAxisY, float rotationAxisZ) {
 		this.rotationAxisX = (byte) (rotationAxisX * 127);
 		this.rotationAxisY = (byte) (rotationAxisY * 127);
 		this.rotationAxisZ = (byte) (rotationAxisZ * 127);
 		return this;
 	}
-
+/*
 	public ContraptionActorData setRotationCenter(Vector3f axis) {
 		setRotationCenter(axis.getX(), axis.getY(), axis.getZ());
 		return this;
 	}
-
+*/
 	public ContraptionActorData setRotationCenter(float rotationCenterX, float rotationCenterY, float rotationCenterZ) {
 		this.rotationCenterX = (byte) (rotationCenterX * 127);
 		this.rotationCenterY = (byte) (rotationCenterY * 127);
 		this.rotationCenterZ = (byte) (rotationCenterZ * 127);
 		return this;
 	}
-
+/*
 	public ContraptionActorData setLocalRotation(Vector3f axis) {
 		setLocalRotation(axis.getX(), axis.getY(), axis.getZ());
 		return this;
 	}
-
+*/
 	public ContraptionActorData setLocalRotation(float localRotationX, float localRotationY, float localRotationZ) {
 		this.localRotationX = localRotationX;
 		this.localRotationY = localRotationY;

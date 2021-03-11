@@ -1,5 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
-
+/*
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -21,3 +21,4 @@ public class OrientedContraptionEntityRenderer extends ContraptionEntityRenderer
 	}
 
 }
+*/

@@ -1,10 +1,10 @@
 package com.simibubi.create;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.KeyBinding;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.options.KeyBinding;
 
 public enum AllKeys {
 

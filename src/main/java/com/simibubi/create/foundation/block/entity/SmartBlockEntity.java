@@ -10,10 +10,10 @@ import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Tickable;
 
-public abstract class SmartBlockEntity extends SyncedBlockEntity implements Tickable {
+public abstract class SmartBlockEntity extends SyncedBlockEntity implements ClientPlayerTickable {
 
 	private final Map<BehaviourType<?>, BlockEntityBehaviour> behaviours;
 	private boolean initialized;

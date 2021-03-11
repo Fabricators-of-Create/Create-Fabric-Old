@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(GlStateManager.class)
 public interface GlStateManagerAccessor {
-	@Accessor("FOG")
+	/*@Accessor("FOG")
 	static GlStateManager.FogState create$FOG() {
 		throw new AssertionError("Mixin didn't merge, very funni");
-	}
+	}*/
 }
