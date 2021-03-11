@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TorquePropagator {
-
 	static Map<WorldAccess, Map<Long, KineticNetwork>> networks = new HashMap<>();
 
 	public void onLoadWorld(WorldAccess world) {

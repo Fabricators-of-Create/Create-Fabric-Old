@@ -16,7 +16,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class AllIcons {
 
-	public static final Identifier ICON_ATLAS = Create.asResource("textures/gui/icons.png");
+	public static final Identifier ICON_ATLAS = Create.id("textures/gui/icons.png");
 	private static int x = 0, y = -1;
 	public static final AllIcons
 		I_ADD = newRow(),

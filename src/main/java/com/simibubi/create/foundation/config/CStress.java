@@ -1,7 +1,7 @@
 package com.simibubi.create.foundation.config;
 
 public class CStress {
-	/* todo: oh no
+	/* TODO
 	private Map<Identifier, ConfigValue<Double>> capacities = new HashMap<>();
 	private Map<Identifier, ConfigValue<Double>> impacts = new HashMap<>();
 

@@ -3,16 +3,12 @@ package com.simibubi.create.foundation.config;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.CollapsibleObject;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigCategory;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.minecraft.text.TranslatableText;
 
 @Config(name = "create")
 public class AllConfigs implements ConfigData {
-
 	public static void register() {
 		AutoConfig.register(AllConfigs.class, Toml4jConfigSerializer::new);
 	}
@@ -31,26 +27,37 @@ public class AllConfigs implements ConfigData {
 	 */
 
 	// creating collapsible groups
-	@ConfigEntry.Gui.CollapsibleObject
+	@CollapsibleObject
+	@Tooltip
 	CClient client = new CClient();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CCommon common = new CCommon();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CCuriosities curiosities = new CCuriosities();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CFluids fluids = new CFluids();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CKinetics kinetics = new CKinetics();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CLogistics logistics = new CLogistics();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CRecipes recipes = new CRecipes();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CSchematics schematics = new CSchematics();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CServer server = new CServer();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CStress stress = new CStress();
-	@ConfigEntry.Gui.CollapsibleObject
+
+	@CollapsibleObject
 	CWorldGen worldGen = new CWorldGen();
 }
