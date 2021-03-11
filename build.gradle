@@ -56,8 +56,8 @@ dependencies {
 	include("net.devtech:arrp:${project.arrp_version}")
 
 	// DataBreaker
-	modRuntime ("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {
-		exclude module: "fabric-loader"
+	modRuntime("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {
+		exclude(module: "fabric-loader")
 	}
 
 	// ModMenu
