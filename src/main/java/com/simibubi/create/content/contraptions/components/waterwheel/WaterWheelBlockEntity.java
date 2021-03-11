@@ -6,6 +6,7 @@ import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntit
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
 import java.util.HashMap;
@@ -33,10 +34,10 @@ public class WaterWheelBlockEntity extends GeneratingKineticBlockEntity {
 		}
 	}
 
-	/*@Override
+	@Override
 	public Box makeRenderBoundingBox() {
 		return new Box(pos).expand(1);
-	}*/
+	}
 
 	@Override
 	protected void toTag(CompoundTag compound, boolean clientPacket) {

@@ -33,8 +33,6 @@ public class WaterWheelBlock extends HorizontalKineticBlock implements IBE<Water
 		super(properties);
 	}
 
-
-
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
 		return AllBlockEntities.WATER_WHEEL.instantiate();

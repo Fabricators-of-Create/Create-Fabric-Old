@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
 import com.simibubi.create.foundation.utility.Lang;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,6 +23,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -545,15 +548,17 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		CreateClient.kineticRenderer.onLightUpdate(this);
 	}
 
-	/**protected Box cachedBoundingBox;
-	 @Environment(EnvType.CLIENT) public Box getRenderBoundingBox() {
-	 if (cachedBoundingBox == null) {
-	 cachedBoundingBox = makeRenderBoundingBox();
-	 }
-	 return cachedBoundingBox;
-	 }
+	protected Box cachedBoundingBox;
 
-	 protected Box makeRenderBoundingBox() {
-	 return super.getRenderBoundingBox();
-	 }*/
+ 	@Environment(EnvType.CLIENT)
+	public Box getRenderBoundingBox() {
+ 		if (cachedBoundingBox == null) {
+			cachedBoundingBox = makeRenderBoundingBox();
+ 		}
+		return cachedBoundingBox;
+ 	}
+
+ 	protected Box makeRenderBoundingBox() {
+ 		return null; //super.getRenderBoundingBox();
+ 	}
 }
