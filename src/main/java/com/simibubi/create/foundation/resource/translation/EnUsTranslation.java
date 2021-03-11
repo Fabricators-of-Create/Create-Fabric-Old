@@ -1,27 +1,19 @@
 package com.simibubi.create.foundation.resource.translation;
 
-import net.devtech.arrp.api.RuntimeResourcePack;
 import net.devtech.arrp.json.lang.JLang;
 
-import java.util.Arrays;
-
-import static com.simibubi.create.Create.ID;
 import static com.simibubi.create.Create.id;
-import static net.devtech.arrp.json.lang.JLang.lang;
 
-public final class TranslationHandler {
-	public static void addLang(RuntimeResourcePack rp) {
-		rp.addLang(id("en_us"), addLang(lang()));
+public final class EnUsTranslation extends CreateTranslation {
+	public static final EnUsTranslation INSTANCE = new EnUsTranslation();
+	private EnUsTranslation() {
+		super("en_us", lang -> {
+			ConfigLang.addAll(lang);
+			BlockLang.addAll(lang);
+		});
 	}
 
-	private static JLang addLang(JLang lang) {
-		ConfigLang.addAll(lang);
-		BlockLang.addAll(lang);
-
-		return lang;
-	}
-
-	public static final class ConfigLang {
+	private static final class ConfigLang {
 		public static void addAll(JLang lang) {
 			addClient(lang);
 			addCommon(lang);
@@ -33,48 +25,27 @@ public final class TranslationHandler {
 			text(lang, "enableTooltips", "Enable Tooltips", "client");
 			text(lang, "enableOverstressedTooltip", "Enable Overstressed Tooltip", "client");
 			text(lang, "explainRenderErrors", "Explain Render Errors", "client");
+			text(lang, "fanParticleDensity", "Fan Particle Density", "client");
+			text(lang, "enableRainbowDebug", "Enable Rainbow Debug", "client");
+			text(lang, "experimentalRendering", "Experimental Rendering", "client");
+			text(lang, "overlayOffsetX", "Overlay Offset X", "client");
+			text(lang, "overlayOffsetY", "Overlay Offset Y", "client");
+			text(lang, "smoothPlacementIndicator", "Smooth Placement Indicator", "client");
 
 			// Tooltips
 			tooltip(lang, "client", "Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!");
 			tooltip(lang, "enableTooltips", "Show item descriptions on Shift and controls on Ctrl.", "client");
 			tooltip(lang, "enableOverstressedTooltip", "Display a tooltip when looking at overstressed components.", "client");
 			tooltip(lang, "explainRenderErrors", "Log a stack-trace when rendering issues happen within a moving contraption.", "client");
+			tooltip(lang, "enableRainbowDebug", "Show colourful debug information while the F3-Menu is open.", "client");
+			tooltip(lang, "experimentalRendering", "Use modern OpenGL features to drastically increase performance.", "client");
+			tooltip(lang, "overlayOffsetX", "Offset the overlay from goggle- and hover- information by this many pixels on the X axis; Use /create overlay", "client");
+			tooltip(lang, "overlayOffsetY", "Offset the overlay from goggle- and hover- information by this many pixels on the Y axis; Use /create overlay", "client");
+			tooltip(lang, "smoothPlacementIndicator", "Use an alternative indicator when showing where the assisted placement ends up relative to your crosshair", "client");
 		}
 
 		private static void addCommon(JLang lang) {
 			text(lang, "common", "Common");
-		}
-
-		private static String getOptionKey(String option, String... parents) {
-			StringBuilder str = new StringBuilder("text.autoconfig." + ID + ".option");
-			if (parents.length > 0) {
-				Arrays.stream(parents).forEach(parent -> str.append(".").append(parent));
-			}
-			str.append(".").append(option);
-
-			return str.toString();
-		}
-
-		public static void text(JLang lang, String option, String name, String... parents) {
-			lang.entry(getOptionKey(option, parents), name);
-		}
-
-		public static void tooltip(JLang lang, String option, String tooltip, String... parents) {
-			String key = getOptionKey(option, parents) + ".@Tooltip";
-
-			String[] split = tooltip.split("\n");
-			if (split.length == 1) {
-				lang.entry(key, split[0]);
-				return;
-			}
-
-			for (int i = 0; i < split.length; i++) {
-				lang.entry(key + "[" + i + "]", split[i]);
-			}
-		}
-
-		public static void prefixText(JLang lang, String option, String prefixText, String... parents) {
-			lang.entry(getOptionKey(option, parents) + ".@PrefixText", prefixText);
 		}
 	}
 
