@@ -3,6 +3,7 @@ package com.simibubi.create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
+import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.events.ClientEvents;
 import com.simibubi.create.foundation.ResourceReloadHandler;
@@ -20,6 +21,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -54,6 +56,8 @@ public class CreateClient implements ClientModInitializer {
         AllFluids.registerRenderers();
 
         AllPackets.clientInit();
+
+		PlayerBlockBreakEvents.AFTER.register(DeforesterItem::onBlockDestroyed);
 
         ResourceManager resourceManager = MinecraftClient.getInstance()
                 .getResourceManager();

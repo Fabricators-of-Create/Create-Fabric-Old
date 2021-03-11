@@ -24,6 +24,7 @@ public class AllItems {
 	public static final Item WRENCH = new WrenchItem(new FabricItemSettings().maxCount(1).group(Create.baseCreativeTab));
 	public static final Item SUPER_GLUE = new SuperGlueItem(new FabricItemSettings().maxCount(1).group(Create.baseCreativeTab));
 	public static final Item BUILDERS_TEA = new BuildersTeaItem(new FabricItemSettings().maxCount(16).group(Create.baseCreativeTab));
+	public static final Item DEFORESTER = new WrenchItem(new FabricItemSettings().maxCount(1).group(Create.baseCreativeTab));
 
     //Block Items
     public static final BlockItem ZINC_ORE = new BlockItem(AllBlocks.ZINC_ORE, new FabricItemSettings().group(Create.baseCreativeTab));
@@ -41,7 +42,9 @@ public class AllItems {
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "wrench"), WRENCH);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "super_glue"), SUPER_GLUE);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "builders_tea"), BUILDERS_TEA);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "deforester"), DEFORESTER);
 		//BuiltinItemRendererRegistry.INSTANCE.register(WRENCH, WrenchItemRenderer::render);
+		//BuiltinItemRendererRegistry.INSTANCE.register(DEFORESTER, DeforesterItemRenderer::render);
     }
 
 }
