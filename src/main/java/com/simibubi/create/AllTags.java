@@ -7,21 +7,21 @@ import net.minecraft.tag.BlockTags;
 
 // TODO FIX THIS WHOLE CLASS TAGS
 public class AllTags {
-	/**private static final CreateRegistrate REGISTRATE = Create.com.smellypengu.registrate()
+	/*private static final CreateRegistrate REGISTRATE = Create.com.smellypengu.registrate()
 		.itemGroup(() -> Create.baseCreativeTab);*/
 
-	/**public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, ItemBuilder<BlockItem, BlockBuilder<T, P>>> tagBlockAndItem(
+	/*public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, ItemBuilder<BlockItem, BlockBuilder<T, P>>> tagBlockAndItem(
 		String tagName) {
 		return b -> b.tag(forgeBlockTag(tagName))
 			.item()
 			.tag(forgeItemTag(tagName));
 	}*/
 
-	/**public static net.minecraft.tag.Tag.Identified<Block> forgeBlockTag(String name) {
+	/*public static net.minecraft.tag.Tag.Identified<Block> forgeBlockTag(String name) {
 		return forgeTag(BlockTags.getTagGroup(), name);
 	}*/
 
-	/**public static Tag<Item> forgeItemTag(String name) {
+	/*public static Tag<Item> forgeItemTag(String name) {
 		return forgeTag(ItemTags.getCollection(), name);
 	}
 
@@ -29,11 +29,11 @@ public class AllTags {
 		return forgeTag(FluidTags.getContainer(), name);
 	}*/
 
-	/**public static <T> net.minecraft.tag.Tag.Identified<T> forgeTag(TagGroup<T> collection, String name) {
+	/*public static <T> net.minecraft.tag.Tag.Identified<T> forgeTag(TagGroup<T> collection, String name) {
 		return tag(collection, "forge", name);
 	}*/
 
-	/**public static <T> net.minecraft.tag.Tag.Identified<T> tag(TagGroup<T> collection, String domain, String name) {
+	/*public static <T> net.minecraft.tag.Tag.Identified<T> tag(TagGroup<T> collection, String domain, String name) {
 		return collection.getOrCreate(new Identifier(domain, name));
 	}*/
 
@@ -49,7 +49,7 @@ public class AllTags {
 		}
 	}
 
-	/**public static enum AllItemTags {
+	/*public static enum AllItemTags {
 		CRUSHED_ORES(NameSpace.MOD),
 		SEATS(NameSpace.MOD),
 		VALVE_HANDLES(NameSpace.MOD),
@@ -129,7 +129,7 @@ public class AllTags {
 		}
 
 		private AllBlockTags(NameSpace namespace, String path) {
-			/**tag = new BlockTags.Wrapper(
+			/*tag = new BlockTags.Wrapper(
 				new Identifier(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())));*/
 		}
 
@@ -137,24 +137,24 @@ public class AllTags {
 			return tag.contains(block.getBlock());
 		}
 
-		/**public void includeIn(AllBlockTags parent) {
+		/*public void includeIn(AllBlockTags parent) {
 			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getBuilder(parent.tag)
 				.add(tag));
 		}*/
 
 		public void includeAll(net.minecraft.tag.Tag.Identified<Block> child) {
-			/**REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getBuilder(tag)
+			/*REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getBuilder(tag)
 				.add(child));*/
 		}
 
 		public void add(Block... values) {
-			/**REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getBuilder(tag)
+			/*REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getBuilder(tag)
 				.add(values));*/
 		}
 	}
 
 	public static void register() {
-		/**AllItemTags.CREATE_INGOTS.includeIn(AllItemTags.BEACON_PAYMENT);
+		/*AllItemTags.CREATE_INGOTS.includeIn(AllItemTags.BEACON_PAYMENT);
 		AllItemTags.CREATE_INGOTS.includeIn(AllItemTags.INGOTS);
 
 		AllItemTags.UPRIGHT_ON_BELT.add(Items.GLASS_BOTTLE, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION);*/
