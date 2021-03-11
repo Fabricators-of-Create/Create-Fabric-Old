@@ -67,7 +67,7 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 	public void onBroken(@Nullable Entity breaker) {
 		playSound(SoundEvents.ENTITY_SLIME_SQUISH_SMALL, 1.0F, 1.0F);
 		if (onValidSurface()) {
-			AllPackets.CHANNEL.sendToClientsInServer(new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), false), world.getServer());
+			AllPackets.CHANNEL.sendToClientsTracking(new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), false), this);
 			/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
 				new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), false));
 			playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.5F);*/
