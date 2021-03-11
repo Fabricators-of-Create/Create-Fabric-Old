@@ -18,6 +18,8 @@ import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheel
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticBlockEntity;
+import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
+import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -39,6 +41,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<MechanicalBearingBlockEntity> MECHANICAL_BEARING = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "mechanical_bearing"), BlockEntityType.Builder.create(MechanicalBearingBlockEntity::new, AllBlocks.MECHANICAL_BEARING).build(null));
 	public static final BlockEntityType<WindmillBearingBlockEntity> WINDMILL_BEARING = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "windmill_bearing"), BlockEntityType.Builder.create(WindmillBearingBlockEntity::new, AllBlocks.WINDMILL_BEARING).build(null));
 	public static final BlockEntityType<ClockworkBearingBlockEntity> CLOCKWORK_BEARING = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "clockwork_bearing"), BlockEntityType.Builder.create(ClockworkBearingBlockEntity::new, AllBlocks.CLOCKWORK_BEARING).build(null));
+	public static final BlockEntityType<AnalogLeverBlockEntity> ANALOG_LEVER = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Create.ID, "analog_lever"), BlockEntityType.Builder.create(AnalogLeverBlockEntity::new, AllBlocks.ANALOG_LEVER).build(null));
 
 	public static void registerRenderers() {
 		registerRenderer(BELT, BeltRenderer::new);
@@ -49,6 +52,7 @@ public class AllBlockEntities {
 		registerRenderer(MECHANICAL_BEARING, BearingRenderer::new);
 		registerRenderer(WINDMILL_BEARING, BearingRenderer::new);
 		registerRenderer(CLOCKWORK_BEARING, BearingRenderer::new);
+		registerRenderer(ANALOG_LEVER, AnalogLeverRenderer::new);
 
 		HalfShaftInstance.register(MOTOR);
 		SingleRotatingInstance.register(SIMPLE_KINETIC);

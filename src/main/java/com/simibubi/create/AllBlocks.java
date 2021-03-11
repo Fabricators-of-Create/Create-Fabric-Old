@@ -12,6 +12,7 @@ import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
+import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -103,6 +104,10 @@ public class AllBlocks {
 		.of(Material.STONE)
 		.strength(0.8f, 0.8f));
 
+	public static final AnalogLeverBlock ANALOG_LEVER = new AnalogLeverBlock(Block.Settings
+		.of(Material.STONE)
+		.strength(0.8f, 0.8f));
+
 
 	public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
@@ -149,6 +154,9 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "clockwork_bearing"), CLOCKWORK_BEARING);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "clockwork_bearing"), new BlockItem(CLOCKWORK_BEARING, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "analog_lever"), ANALOG_LEVER);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "analog_lever"), new BlockItem(ANALOG_LEVER, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }
