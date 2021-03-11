@@ -6,9 +6,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.content.curiosities.tools.AllToolTiers;
-import com.simibubi.create.foundation.mixin.accessor.ItemAccessor;
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.MixinHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.resource.language.I18n;
@@ -131,7 +129,7 @@ public class TooltipHelper {
 	public static boolean hasTooltip(ItemStack stack, PlayerEntity player) {
 		checkLocale();
 
-		boolean hasGlasses = MixinHelper.<ItemAccessor>cast(AllItems.GOGGLES).create$isIn(player.getEquippedStack(EquipmentSlot.HEAD).getItem().getGroup());
+		boolean hasGlasses = player.getEquippedStack(EquipmentSlot.HEAD).isItemEqualIgnoreDamage(AllItems.GOGGLES.getDefaultStack());
 
 		if (hasGlasses != gogglesMode) {
 			gogglesMode = hasGlasses;
@@ -166,12 +164,12 @@ public class TooltipHelper {
 	}
 
 	private static ItemDescription buildToolTip(String translationKey, ItemStack stack) {
-		/**AllSections module = AllSections.of(stack); TODO FIX THIS WHOLE FUNCTION
+		/*AllSections module = AllSections.of(stack);
 		 if (I18n.translate(translationKey)
 		 .equals("WIP"))
 		 return new WipScription(module.getTooltipPalette());*/
 
-		ItemDescription tooltip = new ItemDescription(null); /**new ItemDescription(module.getTooltipPalette());*/
+		ItemDescription tooltip = new ItemDescription(null); /*new ItemDescription(module.getTooltipPalette());*/
 		String summaryKey = translationKey + ".summary";
 
 		// Summary
@@ -181,7 +179,7 @@ public class TooltipHelper {
 		// Requirements
 		if (stack.getItem() instanceof BlockItem) {
 			BlockItem item = (BlockItem) stack.getItem();
-			if (item.getBlock() instanceof Rotating /**|| item.getBlock() instanceof EngineBlock*/) { // TODO EngineBlock CHECK
+			if (item.getBlock() instanceof Rotating /*|| item.getBlock() instanceof EngineBlock*/) { // TODO EngineBlock CHECK
 				tooltip = tooltip.withKineticStats(item.getBlock());
 			}
 		}

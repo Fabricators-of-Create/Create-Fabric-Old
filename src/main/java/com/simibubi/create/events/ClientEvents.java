@@ -1,6 +1,7 @@
 package com.simibubi.create.events;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
@@ -12,7 +13,6 @@ import com.simibubi.create.foundation.render.backend.RenderWork;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
-
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
@@ -22,11 +22,15 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;
 
 public class ClientEvents {
+	private static final String itemPrefix = "item." + Create.ID;
+	private static final String blockPrefix = "block." + Create.ID;
+
 	public static void register() {
 		ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onTick);
 		ClientWorldEvents.LOAD.register(ClientEvents::onLoadWorld);
 		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
 		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
+		//ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
 	}
 
 	public static void onTick(MinecraftClient client) {
@@ -76,6 +80,26 @@ public class ClientEvents {
 		RenderWork.runAll();
 		FastRenderDispatcher.endFrame();
 	}
+
+	/*public static void addToItemTooltip(ItemStack stack, TooltipContext context, List<Text> texts) {
+		if (!AllConfigs.CLIENT.tooltips.get())
+			return;
+		if (MinecraftClient.getInstance().player == null)
+			return;
+
+		String translationKey = stack.getItem()
+			.getTranslationKey(stack);
+		if (!translationKey.startsWith(itemPrefix) && !translationKey.startsWith(blockPrefix))
+			return;
+
+		if (TooltipHelper.hasTooltip(stack, MinecraftClient.getInstance().player)) {
+			List<Text> toolTip = new ArrayList<>();
+			toolTip.add(texts.remove(0));
+			TooltipHelper.getTooltip(stack)
+				.addInformation(toolTip);
+			texts.addAll(0, toolTip);
+		}
+	}*/
 
 	protected static boolean isGameActive() {
 		return !(MinecraftClient.getInstance().world == null || MinecraftClient.getInstance().player == null);

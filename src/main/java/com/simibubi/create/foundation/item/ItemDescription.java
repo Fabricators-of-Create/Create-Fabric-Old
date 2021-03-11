@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
@@ -209,7 +210,7 @@ public class ItemDescription {
 		return palette;
 	}
 
-	public List<LiteralText> addInformation(List<LiteralText> tooltip) {
+	public List<Text> addInformation(List<Text> tooltip) {
 		if (Screen.hasShiftDown()) {
 			tooltip.addAll(linesOnShift);
 			return tooltip;
