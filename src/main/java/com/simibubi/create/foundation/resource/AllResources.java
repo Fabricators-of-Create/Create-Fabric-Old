@@ -70,6 +70,8 @@ public final class AllResources {
 		}
 	}
 
+	// Consider: The following? Will not be able to copy Forge Create lang when it updates
+
 	private static final class BlockLang {
 		public static void addAll(JLang lang) {
 			lang.block(id("acacia_window"), "Acacia Window");
@@ -78,8 +80,6 @@ public final class AllResources {
 			// TODO: All other blocks
 		}
 	}
-
-	// Consider: The following? Will not be able to copy Forge Create lang when it updates
 
 	// TODO: Item lang
 	// TODO: Advancement lang
