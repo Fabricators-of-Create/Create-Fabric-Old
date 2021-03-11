@@ -51,7 +51,6 @@ public class CreateClient implements ClientModInitializer {
         Backend.init();
 
         AllKeys.register();
-        AllBlockEntities.registerRenderers();
         AllEntityTypes.registerRenderers();
         AllFluids.registerRenderers();
 

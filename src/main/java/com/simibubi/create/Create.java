@@ -40,6 +40,7 @@ public class Create implements ModInitializer  {
         AllEntityTypes.register();
         AllMovementBehaviours.register();
 		AllConfigs.register();
+		AllBlockEntities.register();
 
         AllPackets.registerPackets();
         
