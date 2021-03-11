@@ -1,5 +1,6 @@
 package com.simibubi.create;
 
+import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.LinearChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.RadialChassisBlock;
@@ -82,6 +83,11 @@ public class AllBlocks {
 		.of(Material.WOOD)
 		.strength(0.8f, 0.8f));
 
+	public static final NozzleBlock NOZZLE = new NozzleBlock(Block.Settings
+		.of(Material.WOOD)
+		.strength(0.8f, 0.8f)
+		.nonOpaque());
+
 	public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_block"), ZINC_BLOCK);
@@ -115,6 +121,9 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "radial_chassis"), RADIAL_CHASSIS);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "radial_chassis"), new BlockItem(RADIAL_CHASSIS, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "nozzle"), NOZZLE);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "nozzle"), new BlockItem(NOZZLE, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }
