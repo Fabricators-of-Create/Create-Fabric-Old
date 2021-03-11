@@ -1,5 +1,6 @@
 package com.simibubi.create;
 
+import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueItem;
 import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
@@ -25,6 +26,8 @@ public class AllItems {
 
 	public static final Item WRENCH = new WrenchItem(new FabricItemSettings().group(Create.baseCreativeTab));
 
+	public static final Item SUPER_GLUE = new SuperGlueItem(new FabricItemSettings().group(Create.baseCreativeTab));
+
     //Block Items
     public static final BlockItem ZINC_ORE = new BlockItem(AllBlocks.ZINC_ORE, new FabricItemSettings().group(Create.baseCreativeTab));
     public static final BlockItem ZINC_BLOCK = new BlockItem(AllBlocks.ZINC_BLOCK, new FabricItemSettings().group(Create.baseCreativeTab));
@@ -39,6 +42,7 @@ public class AllItems {
         Registry.register(Registry.ITEM, new Identifier(Create.ID, "belt_connector"), BELT_CONNECTOR);
         Registry.register(Registry.ITEM, new Identifier(Create.ID, "goggles"), GOGGLES);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "wrench"), WRENCH);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "super_glue"), SUPER_GLUE);
 		//BuiltinItemRendererRegistry.INSTANCE.register(WRENCH, WrenchItemRenderer::render);
     }
 
