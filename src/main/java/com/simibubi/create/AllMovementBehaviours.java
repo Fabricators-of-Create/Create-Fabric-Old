@@ -40,17 +40,17 @@ public class AllMovementBehaviours {
 		return movementBehaviours.containsKey(block.getName());
 	}
 
-	/**public static <B extends Block> NonNullConsumer<? super B> addMovementBehaviour(
+	/*public static <B extends Block> NonNullConsumer<? super B> addMovementBehaviour(
 		MovementBehaviour movementBehaviour) {
 		return b -> addMovementBehaviour(b.getRegistryName(), movementBehaviour);
 	}*/
 
 	static void register() {
-		/**addMovementBehaviour(Blocks.BELL, new BellMovementBehaviour()); TODO FIX MOVEMENT BEHAVIOURS
+		/*addMovementBehaviour(Blocks.BELL, new BellMovementBehaviour()); TODO FIX MOVEMENT BEHAVIOURS
 		addMovementBehaviour(Blocks.CAMPFIRE, new CampfireMovementBehaviour());*/
 
 		//DispenserMovementBehaviour.gatherMovedDispenseItemBehaviours();
-		/**addMovementBehaviour(Blocks.DISPENSER, new DispenserMovementBehaviour());
+		/*addMovementBehaviour(Blocks.DISPENSER, new DispenserMovementBehaviour());
 		addMovementBehaviour(Blocks.DROPPER, new DropperMovementBehaviour());*/
 	}
 }
