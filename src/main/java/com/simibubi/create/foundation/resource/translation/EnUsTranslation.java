@@ -2,15 +2,11 @@ package com.simibubi.create.foundation.resource.translation;
 
 import net.devtech.arrp.json.lang.JLang;
 
-import static com.simibubi.create.Create.id;
-
+@SuppressWarnings("CommentedOutCode")
 public final class EnUsTranslation extends CreateTranslation {
 	public static final EnUsTranslation INSTANCE = new EnUsTranslation();
 	private EnUsTranslation() {
-		super("en_us", lang -> {
-			ConfigLang.addAll(lang);
-			BlockLang.addAll(lang);
-		});
+		super("en_us", ConfigLang::addAll);
 	}
 
 	private static final class ConfigLang {
@@ -19,6 +15,7 @@ public final class EnUsTranslation extends CreateTranslation {
 			addCommon(lang);
 			addCuriosities(lang);
 			addFluids(lang);
+			addKinetics(lang);
 		}
 
 		private static void addClient(JLang lang) {
@@ -82,8 +79,46 @@ public final class EnUsTranslation extends CreateTranslation {
 			tooltip(lang, "hosePulleyBlockThreshold", "[In Blocks]\n[-1 to disable this behaviour] The minimum amount of fluid blocks the hose pulley needs to find before deeming it an infinite source.", FLUIDS);
 			tooltip(lang, "hosePulleyRange", "[In Blocks] The maximum distance a hose pulley can draw fluid blocks from.", FLUIDS);
 		}
+
+		private static void addKinetics(JLang lang) {
+			final String KINETICS = "kinetics";
+			text(lang, KINETICS, "Kinetics");
+
+			// Option Names
+			text(lang, "disableStress", "Disable Stress", KINETICS); // I don't want to stress
+			text(lang, "maxBeltLength", "Max Belt Length", KINETICS);
+			text(lang, "crushingDamage", "Crushing Damage", KINETICS);
+			text(lang, "maxMotorSpeed", "Max Motor Speed", KINETICS);
+			text(lang, "waterWheelBaseSpeed", "Water Wheel Base Speed", KINETICS);
+			text(lang, "waterWheelFlowSpeed", "Water Wheel Flow Speed", KINETICS);
+			text(lang, "furnaceEngineSpeed", "Furnace Engine Speed", KINETICS);
+			text(lang, "maxRotationSpeed", "Maximum Rotation Speed", KINETICS);
+			text(lang, "ignoreDeployerAttacks", "Ignore Deployer Attacks", KINETICS);
+			text(lang, "kineticValidationFrequency", "Kinetic Validation Frequency", KINETICS);
+			text(lang, "crankHungerMultiplier", "Crank Hunger Multiplier", KINETICS);
+			text(lang, "fanPushDistance", "Fan Push Distance", KINETICS);
+			text(lang, "fanPullDistance", "Fan Pull Distance", KINETICS);
+			text(lang, "fanBlockCheckRate", "Fan Block CheckRate", KINETICS);
+			text(lang, "fanRotationArgmax", "Fan Rotation Arg Max", KINETICS);
+			text(lang, "generatingFanSpeed", "Generating Fan Speed", KINETICS);
+			text(lang, "inWorldProcessingTime", "In-World Processing Time", KINETICS);
+			text(lang, "maxBlocksMoved", "Max Blocks Moved", KINETICS);
+			text(lang, "maxChassisRange", "Max Chassis Range", KINETICS);
+			text(lang, "maxPistonPoles", "Max Piston Poles", KINETICS);
+			text(lang, "maxRopeLength", "Max Rope Length", KINETICS);
+			text(lang, "maxCartCouplingLength", "Max Minecart Coupling Length", KINETICS);
+			text(lang, "mediumSpeed", "Medium Speed", KINETICS);
+			text(lang, "fastSpeed", "Fast Speed", KINETICS);
+			text(lang, "mediumStressImpact", "Medium Stress Impact", KINETICS);
+			text(lang, "highStressImpact", "High Stress Impact", KINETICS);
+			text(lang, "mediumCapacity", "Medium Capacity", KINETICS);
+			text(lang, "highCapacity", "High Capacity", KINETICS);
+
+			// Tooltips
+		}
 	}
 
+	/*
 	// Consider: The following? Will not be able to copy Forge Create lang when it updates
 
 	private static final class BlockLang {
@@ -122,4 +157,5 @@ public final class EnUsTranslation extends CreateTranslation {
 	// TODO: Create hint lang
 	// TODO: Create command lang
 	// TODO: Create subtitle lang
+	*/
 }

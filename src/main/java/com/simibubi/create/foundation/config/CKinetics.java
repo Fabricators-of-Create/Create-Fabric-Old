@@ -22,6 +22,7 @@ public class CKinetics implements Validatable {
 	int furnaceEngineSpeed = 16; // min 1, "[in Revolutions per Minute]" "Base rotation speed for the furnace engine generator"
 	@Tooltip
 	int maxRotationSpeed = 256; // min 64, "[in Revolutions per Minute]" "Maximum allowed rotation speed for any Kinetic Tile."
+	@Tooltip
 	DeployerAggroSetting ignoreDeployerAttacks = DeployerAggroSetting.CREEPERS; // "Select what mobs should ignore Deployers when attacked by them."
 	@Tooltip
 	int kineticValidationFrequency = 60; // min 5, "Game ticks between Kinetic Blocks checking whether their source is still valid."
