@@ -47,7 +47,6 @@ public enum AllWorldFeatures {
 
 				Optional<ConfiguredFeature<?, ?>> createFeature = entry.feature.createFeature(biome);
 				if (!createFeature.isPresent()) continue;
-				System.out.println("added worldgen");
 
 				RegistryKey<ConfiguredFeature<?, ?>> x = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, new Identifier("create", entry.name().toLowerCase()  + "_" + biome.getCategory().toString().toLowerCase()));
 			 	Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, x.getValue(), createFeature.get());
