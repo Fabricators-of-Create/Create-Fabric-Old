@@ -88,7 +88,8 @@ public class BlockMovementTraits {
 			return true;
 		if (block instanceof CarpetBlock)
 			return true;
-		return AllTags.AllBlockTags.BRITTLE.tag.contains(block);
+//		return AllTags.AllBlockTags.BRITTLE.tag.contains(block);
+		return false;
 	}
 
 	/**
