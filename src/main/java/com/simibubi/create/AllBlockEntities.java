@@ -13,6 +13,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstance;
@@ -377,13 +378,13 @@ public class AllBlockEntities {
 		.renderer(() -> AnalogLeverRenderer::new)
 		.register();
 
-	/*public static final BlockEntityType<CartAssemblerBlockEntity> CART_ASSEMBLER = createHelper("cart_assembler", CartAssemblerBlockEntity::new)
+	public static final BlockEntityType<CartAssemblerBlockEntity> CART_ASSEMBLER = createHelper("cart_assembler", CartAssemblerBlockEntity::new)
 		.validBlocks(AllBlocks.CART_ASSEMBLER)
 		// .renderer(() -> renderer)
 		.register();
 
 	// Logistics
-	public static final BlockEntityType<RedstoneLinkBlockEntity> REDSTONE_LINK = createHelper("redstone_link", RedstoneLinkBlockEntity::new)
+	/*public static final BlockEntityType<RedstoneLinkBlockEntity> REDSTONE_LINK = createHelper("redstone_link", RedstoneLinkBlockEntity::new)
 		.validBlocks(AllBlocks.REDSTONE_LINK)
 		.renderer(() -> SmartBlockEntityRenderer::new)
 		.register();
