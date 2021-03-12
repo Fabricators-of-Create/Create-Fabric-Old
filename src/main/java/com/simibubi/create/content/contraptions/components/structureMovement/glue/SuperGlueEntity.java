@@ -68,14 +68,12 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 		playSound(SoundEvents.ENTITY_SLIME_SQUISH_SMALL, 1.0F, 1.0F);
 		if (onValidSurface()) {
 			AllPackets.CHANNEL.sendToClientsTracking(new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), false), this);
-			/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-				new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), false));
-			playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.5F);*/
+//			playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.5F);
 		}
 	}
 
 	public void playPlaceSound() {
-		//playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.75F);
+//		playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.75F);
 	}
 
 	protected void updateFacingWithBoundingBox() {
@@ -164,10 +162,10 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 		BlockState state = world.getBlockState(pos);
 		if (BlockMovementTraits.isBlockAttachedTowards(world, pos, state, direction))
 			return true;
-		/*if (!BlockMovementTraits.movementNecessary(state, world, pos))
-			return false;*/
-		/*if (BlockMovementTraits.notSupportive(state, direction))
-			return false;*/
+		if (!BlockMovementTraits.movementNecessary(state, world, pos))
+			return false;
+		if (BlockMovementTraits.notSupportive(state, direction))
+			return false;
 		return true;
 	}
 

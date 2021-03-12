@@ -4,6 +4,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Mov
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -37,7 +39,7 @@ public class AllMovementBehaviours {
 	}
 
 	public static boolean contains(Block block) {
-		return movementBehaviours.containsKey(block.getName());
+		return movementBehaviours.containsKey(Registry.BLOCK.getId(block));
 	}
 
 	/*public static <B extends Block> NonNullConsumer<? super B> addMovementBehaviour(
