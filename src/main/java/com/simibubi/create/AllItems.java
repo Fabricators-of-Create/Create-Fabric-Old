@@ -26,7 +26,7 @@ public class AllItems {
 	public static final Item SUPER_GLUE = new SuperGlueItem(new FabricItemSettings().maxCount(1).group(Create.baseCreativeTab));
 	public static final Item BUILDERS_TEA = new BuildersTeaItem(new FabricItemSettings().maxCount(16).group(Create.baseCreativeTab));
 	public static final Item DEFORESTER = new WrenchItem(new FabricItemSettings().maxCount(1).group(Create.baseCreativeTab));
-	public static final Item VERTICAL_GEARBOX = new VerticalGearboxItem(new FabricItemSettings().maxCount(1).group(Create.baseCreativeTab));
+	public static final Item VERTICAL_GEARBOX = new VerticalGearboxItem(new FabricItemSettings().group(Create.baseCreativeTab));
 
     //Block Items
     public static final BlockItem ZINC_ORE = new BlockItem(AllBlocks.ZINC_ORE, new FabricItemSettings().group(Create.baseCreativeTab));
