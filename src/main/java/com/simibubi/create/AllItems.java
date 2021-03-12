@@ -3,6 +3,7 @@ package com.simibubi.create;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueItem;
 import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
+import com.simibubi.create.content.contraptions.relays.gearbox.VerticalGearboxItem;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.curiosities.BuildersTeaItem;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
@@ -25,6 +26,7 @@ public class AllItems {
 	public static final Item SUPER_GLUE = new SuperGlueItem(new FabricItemSettings().maxCount(1).group(Create.baseCreativeTab));
 	public static final Item BUILDERS_TEA = new BuildersTeaItem(new FabricItemSettings().maxCount(16).group(Create.baseCreativeTab));
 	public static final Item DEFORESTER = new WrenchItem(new FabricItemSettings().maxCount(1).group(Create.baseCreativeTab));
+	public static final Item VERTICAL_GEARBOX = new VerticalGearboxItem(new FabricItemSettings().group(Create.baseCreativeTab));
 
     //Block Items
     public static final BlockItem ZINC_ORE = new BlockItem(AllBlocks.ZINC_ORE, new FabricItemSettings().group(Create.baseCreativeTab));
