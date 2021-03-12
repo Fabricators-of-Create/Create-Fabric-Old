@@ -2,6 +2,8 @@
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"block.create.acacia_window": "Acacia Window",
+	"block.create.acacia_window_pane": "Acacia Window Pane",
 	"block.create.adjustable_chain_gearshift": "Adjustable Chain Gearshift",
 	"block.create.adjustable_crate": "Adjustable Crate",
 	"block.create.adjustable_pulse_repeater": "Adjustable Pulse Repeater",
@@ -1799,4 +1801,5 @@
 	"create.tooltip.randomWipDescription8": "Use it and regret your decision immediately.",
 
 	"_": "Thank you for translating Create!"
+
 }
