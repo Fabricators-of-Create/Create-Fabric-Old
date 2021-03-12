@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.MixinEnvironment;
 
 public class Create implements ModInitializer  {
     public static final String ID = "create";
+    public static final String NAME = "Create";
 
     public static Logger logger = LogManager.getLogger();
 
