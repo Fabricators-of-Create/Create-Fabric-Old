@@ -19,43 +19,43 @@ import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 public class Create implements ModInitializer  {
-    public static final String ID = "create";
+	public static final String ID = "create";
+	public static final String NAME = "Create";
 
-    public static Logger logger = LogManager.getLogger();
+	public static Logger logger = LogManager.getLogger();
+	public static ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "base"), () -> new ItemStack(AllBlocks.COGWHEEL));
+	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "palettes"), () -> new ItemStack(AllItems.ZINC_BLOCK));
 
-    public static TorquePropagator torquePropagator;
+	public static TorquePropagator torquePropagator;
 
-    public static final ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "base"), () -> new ItemStack(AllBlocks.COGWHEEL));
-    public static final ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "palettes"), () -> new ItemStack(AllItems.ZINC_BLOCK));
+	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID);
 
-    public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID);
-
-    @Override
-    public void onInitialize() {
-        AllBlocks.registerBlocks();
-        AllItems.registerItems();
-        AllFluids.register();
-        AllTags.register();
-        AllPaletteBlocks.registerBlocks();
-        AllEntityTypes.register();
-        AllMovementBehaviours.register();
+	@Override
+	public void onInitialize() {
+		AllBlocks.registerBlocks();
+		AllItems.registerItems();
+		AllFluids.register();
+		AllTags.register();
+		AllPaletteBlocks.registerBlocks();
+		AllEntityTypes.register();
+		AllBlockEntities.register();
+		AllMovementBehaviours.register();
 		AllConfigs.register();
 
-        AllPackets.registerPackets();
-        
-        CommonEvents.register();
+		torquePropagator = new TorquePropagator();
 
-        AllWorldFeatures.reload();
+		AllPackets.registerPackets();
 
-        torquePropagator = new TorquePropagator();
+		CommonEvents.register();
 
-        RRPCallback.EVENT.register(a -> a.add(RESOURCE_PACK));
+		AllWorldFeatures.reload();
 
-        if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
-    }
+		RRPCallback.EVENT.register(a -> a.add(RESOURCE_PACK));
 
-    public static Identifier asResource(String path) {
-        return new Identifier(ID, path);
-    }
+		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
+	}
 
+	public static Identifier asResource(String path) {
+		return new Identifier(ID, path);
+	}
 }
