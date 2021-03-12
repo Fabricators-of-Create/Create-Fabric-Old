@@ -1,16 +1,15 @@
 package com.simibubi.create;
 
-import net.minecraft.client.MinecraftClient;
 import org.lwjgl.glfw.GLFW;
 
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.KeyBinding;
 
 public enum AllKeys {
-
 	TOOL_MENU("toolmenu", GLFW.GLFW_KEY_LEFT_ALT), 
 	ACTIVATE_TOOL("", GLFW.GLFW_KEY_LEFT_CONTROL),
-
 	;
 
 	private KeyBinding keybind;
@@ -26,11 +25,11 @@ public enum AllKeys {
 
 	public static void register() {
 		for (AllKeys key : values()) {
-			key.keybind = new KeyBinding(key.description, key.key, Create.ID);
+			key.keybind = new KeyBinding(key.description, key.key, Create.NAME);
 			if (!key.modifiable)
 				continue;
 
-			//TODO: FIX THIS PLS | ClientRegistry.registerKeyBinding(key.keybind);
+			KeyBindingHelper.registerKeyBinding(key.keybind);
 		}
 	}
 
@@ -45,11 +44,11 @@ public enum AllKeys {
 	}
 
 	public String getBoundKey() {
-		return keybind.getBoundKeyLocalizedText().toString().toUpperCase();
+		return keybind.getBoundKeyLocalizedText().getString().toUpperCase();
 	}
 
 	public int getBoundCode() {
-		return keybind.getDefaultKey().getCode();
+		return KeyBindingHelper.getBoundKeyOf(keybind).getCode();
 	}
 
 	public static boolean isKeyDown(int key) {
@@ -67,5 +66,4 @@ public enum AllKeys {
 	public static boolean altDown() {
 		return Screen.hasAltDown();
 	}
-
 }
