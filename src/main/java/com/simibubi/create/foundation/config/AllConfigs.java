@@ -10,7 +10,11 @@ import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 @Config(name = "create")
 public class AllConfigs implements ConfigData {
 	public static void register() {
-		AutoConfig.register(AllConfigs.class, Toml4jConfigSerializer::new);
+		try {
+			AutoConfig.register(AllConfigs.class, Toml4jConfigSerializer::new).getConfig().validatePostLoad();
+		} catch (ValidationException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	// use this to use the config
