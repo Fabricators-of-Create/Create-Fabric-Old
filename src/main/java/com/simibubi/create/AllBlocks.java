@@ -12,6 +12,9 @@ import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
+import com.simibubi.create.content.contraptions.relays.encased.ClutchBlock;
+import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
+import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlock;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -108,6 +111,18 @@ public class AllBlocks {
 		.of(Material.STONE)
 		.strength(0.8f, 0.8f));
 
+	public static final GearshiftBlock GEARSHIFT = new GearshiftBlock(Block.Settings
+		.of(Material.STONE)
+		.strength(0.8f, 0.8f));
+
+	public static final ClutchBlock CLUTCH = new ClutchBlock(Block.Settings
+		.of(Material.STONE)
+		.strength(0.8f, 0.8f));
+
+	public static final GearboxBlock GEARBOX = new GearboxBlock(Block.Settings
+		.of(Material.STONE)
+		.strength(0.8f, 0.8f));
+
 
 	public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
@@ -157,6 +172,15 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "analog_lever"), ANALOG_LEVER);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "analog_lever"), new BlockItem(ANALOG_LEVER, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "gearshift"), GEARSHIFT);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "gearshift"), new BlockItem(GEARSHIFT, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "clutch"), CLUTCH);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "clutch"), new BlockItem(CLUTCH, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "gearbox"), GEARBOX);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "gearbox"), new BlockItem(GEARBOX, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }

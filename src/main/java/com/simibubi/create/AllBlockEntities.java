@@ -1,7 +1,5 @@
 package com.simibubi.create;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.content.contraptions.base.BackHalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
@@ -21,13 +19,21 @@ import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstance;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.ClutchBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.SplitShaftInstance;
+import com.simibubi.create.content.contraptions.relays.encased.SplitShaftRenderer;
+import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
+import com.simibubi.create.content.contraptions.relays.gearbox.GearboxInstance;
+import com.simibubi.create.content.contraptions.relays.gearbox.GearboxRenderer;
+import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
-
 import me.pepperbell.reghelper.BlockEntityTypeHelper;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
+
+import java.util.function.Supplier;
 
 public class AllBlockEntities {
 	// Schematics
@@ -53,13 +59,13 @@ public class AllBlockEntities {
 		.onRegister(HalfShaftInstance::register)
 		.register();
 
-	/*public static final BlockEntityType<GearboxBlockEntity> GEARBOX = createHelper("gearbox", GearboxBlockEntity::new)
+	public static final BlockEntityType<GearboxBlockEntity> GEARBOX = createHelper("gearbox", GearboxBlockEntity::new)
 		.validBlocks(AllBlocks.GEARBOX)
 		.renderer(() -> GearboxRenderer::new)
 		.onRegister(GearboxInstance::register)
 		.register();
 
-	public static final BlockEntityType<EncasedShaftBlockEntity> ENCASED_SHAFT = createHelper("encased_shaft", EncasedShaftBlockEntity::new)
+	/*public static final BlockEntityType<EncasedShaftBlockEntity> ENCASED_SHAFT = createHelper("encased_shaft", EncasedShaftBlockEntity::new)
 		.validBlocks(AllBlocks.ANDESITE_ENCASED_SHAFT, AllBlocks.BRASS_ENCASED_SHAFT, AllBlocks.ENCASED_CHAIN_DRIVE)
 		.renderer(() -> EncasedShaftRenderer::new)
 		.onRegister(ShaftInstance::register)
@@ -82,7 +88,7 @@ public class AllBlockEntities {
 		// .renderer(() -> renderer)
 		.register();
 
-	/*public static final BlockEntityType<ClutchBlockEntity> CLUTCH = createHelper("clutch", ClutchBlockEntity::new)
+	public static final BlockEntityType<ClutchBlockEntity> CLUTCH = createHelper("clutch", ClutchBlockEntity::new)
 		.validBlocks(AllBlocks.CLUTCH)
 		.renderer(() -> SplitShaftRenderer::new)
 		.onRegister(SplitShaftInstance::register)
@@ -94,7 +100,7 @@ public class AllBlockEntities {
 		.onRegister(SplitShaftInstance::register)
 		.register();
 
-	public static final BlockEntityType<TurntableBlockEntity> TURNTABLE = createHelper("turntable", TurntableBlockEntity::new)
+	/*public static final BlockEntityType<TurntableBlockEntity> TURNTABLE = createHelper("turntable", TurntableBlockEntity::new)
 		.validBlocks(AllBlocks.TURNTABLE)
 		.renderer(() -> KineticBlockEntityRenderer::new)
 		.onRegister(SingleRotatingInstance::register)
