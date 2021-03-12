@@ -18,46 +18,69 @@ public final class EnUsTranslation extends CreateTranslation {
 			addClient(lang);
 			addCommon(lang);
 			addCuriosities(lang);
+			addFluids(lang);
 		}
 
 		private static void addClient(JLang lang) {
-			text(lang, "client", "Client");
+			final String CLIENT = "client";
+			text(lang, CLIENT, "Client");
 
 			// Option Names
-			text(lang, "enableTooltips", "Enable Tooltips", "client");
-			text(lang, "enableOverstressedTooltip", "Enable Overstressed Tooltip", "client");
-			text(lang, "explainRenderErrors", "Explain Render Errors", "client");
-			text(lang, "fanParticleDensity", "Fan Particle Density", "client");
-			text(lang, "enableRainbowDebug", "Enable Rainbow Debug", "client");
-			text(lang, "experimentalRendering", "Experimental Rendering", "client");
-			text(lang, "overlayOffsetX", "Overlay Offset X", "client");
-			text(lang, "overlayOffsetY", "Overlay Offset Y", "client");
-			text(lang, "smoothPlacementIndicator", "Smooth Placement Indicator", "client");
+			text(lang, "enableTooltips", "Enable Tooltips", CLIENT);
+			text(lang, "enableOverstressedTooltip", "Enable Overstressed Tooltip", CLIENT);
+			text(lang, "explainRenderErrors", "Explain Render Errors", CLIENT);
+			text(lang, "fanParticleDensity", "Fan Particle Density", CLIENT);
+			text(lang, "enableRainbowDebug", "Enable Rainbow Debug", CLIENT);
+			text(lang, "experimentalRendering", "Experimental Rendering", CLIENT);
+			text(lang, "overlayOffsetX", "Overlay Offset X", CLIENT);
+			text(lang, "overlayOffsetY", "Overlay Offset Y", CLIENT);
+			text(lang, "smoothPlacementIndicator", "Smooth Placement Indicator", CLIENT);
 
 			// Tooltips
-			tooltip(lang, "client", "Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!");
-			tooltip(lang, "enableTooltips", "Show item descriptions on Shift and controls on Ctrl.", "client");
-			tooltip(lang, "enableOverstressedTooltip", "Display a tooltip when looking at overstressed components.", "client");
-			tooltip(lang, "explainRenderErrors", "Log a stack-trace when rendering issues happen within a moving contraption.", "client");
-			tooltip(lang, "enableRainbowDebug", "Show colourful debug information while the F3-Menu is open.", "client");
-			tooltip(lang, "experimentalRendering", "Use modern OpenGL features to drastically increase performance.", "client");
-			tooltip(lang, "overlayOffsetX", "Offset the overlay from goggle- and hover- information by this many pixels on the X axis; Use /create overlay", "client");
-			tooltip(lang, "overlayOffsetY", "Offset the overlay from goggle- and hover- information by this many pixels on the Y axis; Use /create overlay", "client");
-			tooltip(lang, "smoothPlacementIndicator", "Use an alternative indicator when showing where the assisted placement ends up relative to your crosshair", "client");
+			tooltip(lang, CLIENT, "Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!");
+			tooltip(lang, "enableTooltips", "Show item descriptions on Shift and controls on Ctrl.", CLIENT);
+			tooltip(lang, "enableOverstressedTooltip", "Display a tooltip when looking at overstressed components.", CLIENT);
+			tooltip(lang, "explainRenderErrors", "Log a stack-trace when rendering issues happen within a moving contraption.", CLIENT);
+			tooltip(lang, "enableRainbowDebug", "Show colourful debug information while the F3-Menu is open.", CLIENT);
+			tooltip(lang, "experimentalRendering", "Use modern OpenGL features to drastically increase performance.", CLIENT);
+			tooltip(lang, "overlayOffsetX", "Offset the overlay from goggle- and hover- information by this many pixels on the X axis; Use /create overlay", CLIENT);
+			tooltip(lang, "overlayOffsetY", "Offset the overlay from goggle- and hover- information by this many pixels on the Y axis; Use /create overlay", CLIENT);
+			tooltip(lang, "smoothPlacementIndicator", "Use an alternative indicator when showing where the assisted placement ends up relative to your crosshair", CLIENT);
 		}
 
 		private static void addCommon(JLang lang) {
-			text(lang, "common", "Common");
+			final String COMMON = "common";
+			text(lang, COMMON, "Common");
 
-			text(lang, "logBeErrors", "Log BE Errors", "common");
-			tooltip(lang, "logBeErrors", "Forward caught BlockEntityExceptions to the log at debug level.", "common");
+			text(lang, "logBeErrors", "Log BE Errors", COMMON);
+			tooltip(lang, "logBeErrors", "Forward caught BlockEntityExceptions to the log at debug level.", COMMON);
 		}
 
 		private static void addCuriosities(JLang lang) {
-			text(lang, "curiosities", "Curiosities");
+			final String CURIOSITIES = "curiosities";
+			text(lang, CURIOSITIES, "Curiosities");
 
-			text(lang, "maxSymmetryWandRange", "Max Symmetry Wand Range", "curiosities");
-			tooltip(lang, "maxSymmetryWandRange", "The Maximum Distance to an active mirror for the symmetry wand to trigger.", "curiosities");
+			text(lang, "maxSymmetryWandRange", "Max Symmetry Wand Range", CURIOSITIES);
+			tooltip(lang, "maxSymmetryWandRange", "The Maximum Distance to an active mirror for the symmetry wand to trigger.", CURIOSITIES);
+		}
+
+		private static void addFluids(JLang lang) {
+			final String FLUIDS = "fluids";
+			text(lang, FLUIDS, "Fluids");
+
+			// Option Names
+			text(lang, "fluidTankCapacity", "Fluid Tank Capacity", FLUIDS);
+			text(lang, "fluidTankMaxHeight", "Fluid Tank Max Height", FLUIDS);
+			text(lang, "mechanicalPumpRange", "Mechanical Pump Range", FLUIDS);
+			text(lang, "hosePulleyBlockThreshold", "Hose Pulley Block Threshold", FLUIDS);
+			text(lang, "hosePulleyRange", "Hose Pulley Range", FLUIDS);
+
+			// Tooltips
+			tooltip(lang, "fluidTankCapacity", "[In Buckets] The amount of liquid a tank can hold per block.", FLUIDS);
+			tooltip(lang, "fluidTankMaxHeight", "[In Blocks] The maximum height a fluid tank can reach.", FLUIDS);
+			tooltip(lang, "mechanicalPumpRange", "[In Blocks] The maximum distance a mechanical pump can push or pull liquids on either side.", FLUIDS);
+			tooltip(lang, "hosePulleyBlockThreshold", "[In Blocks]\n[-1 to disable this behaviour] The minimum amount of fluid blocks the hose pulley needs to find before deeming it an infinite source.", FLUIDS);
+			tooltip(lang, "hosePulleyRange", "[In Blocks] The maximum distance a hose pulley can draw fluid blocks from.", FLUIDS);
 		}
 	}
 

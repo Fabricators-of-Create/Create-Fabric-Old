@@ -1,14 +1,11 @@
 package com.simibubi.create.foundation.config;
 
-import com.simibubi.create.foundation.config.util.Validatable;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.CollapsibleObject;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
-
-import java.lang.reflect.Field;
 
 @Config(name = "create")
 public class AllConfigs implements ConfigData {

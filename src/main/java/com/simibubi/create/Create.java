@@ -3,10 +3,13 @@ package com.simibubi.create;
 import com.simibubi.create.content.contraptions.TorquePropagator;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.events.CommonEvents;
+import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.resource.AllClientResources;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigData;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.SharedConstants;
@@ -24,10 +27,8 @@ public class Create implements ModInitializer  {
 
     public static TorquePropagator torquePropagator;
 
-    public static final ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "base"), () -> new ItemStack(AllBlocks.COGWHEEL));
-    public static final ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "palettes"), () -> new ItemStack(AllItems.ZINC_BLOCK));
-
-    public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID);
+    public static final ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(id("base"), () -> new ItemStack(AllBlocks.COGWHEEL));
+    public static final ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(id("palettes"), () -> new ItemStack(AllItems.ZINC_BLOCK));
 
     @Override
     public void onInitialize() {
@@ -51,11 +52,19 @@ public class Create implements ModInitializer  {
 
 		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
 
-		AllTriggres.regsiter();
+		AllTriggers.register();
 	}
 
-    public static Identifier asResource(String path) {
+    public static Identifier id(String path) {
         return new Identifier(ID, path);
     }
-
+    public static AllConfigs getConfig() {
+    	AllConfigs config = AutoConfig.getConfigHolder(AllConfigs.class).getConfig();
+		try {
+			config.validatePostLoad(); // The best way to validate :)
+		} catch (ConfigData.ValidationException e) {
+			throw new RuntimeException(e);
+		}
+		return config;
+	}
 }
