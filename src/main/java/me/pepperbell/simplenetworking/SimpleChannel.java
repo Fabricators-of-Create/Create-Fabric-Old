@@ -1,8 +1,8 @@
 package me.pepperbell.simplenetworking;
 
 import java.lang.reflect.Constructor;
+import java.util.Collection;
 
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,14 +16,18 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
@@ -52,14 +56,22 @@ public class SimpleChannel {
 	}
 
 	/**
-	 * An error will be thrown if the passed class does not define a public nullary constructor!
+	 * The registered class <b>must</b> have a nullary constructor or else an error will be thrown.
+	 *
+	 * <p>A nullary constructor is one that has no arguments and in this case should not do anything.
+	 * For example, if the class name is {@code ExamplePacket}, the public nullary constructor would be <code>public ExamplePacket() {}</code>.
+	 * The visibility of this constructor does not matter for this method.
 	 */
 	public <T extends C2SPacket> void registerC2SPacket(Class<T> clazz, int id) {
 		c2sIdMap.put(id, clazz);
 	}
 
 	/**
-	 * An error will be thrown if the passed class does not define a public nullary constructor!
+	 * The registered class <b>must</b> have a nullary constructor or else an error will be thrown.
+	 *
+	 * <p>A nullary constructor is one that has no arguments and in this case should not do anything.
+	 * For example, if the class name is {@code ExamplePacket}, the public nullary constructor would be <code>public ExamplePacket() {}</code>.
+	 * The visibility of this constructor does not matter for this method.
 	 */
 	public <T extends S2CPacket> void registerS2CPacket(Class<T> clazz, int id) {
 		s2cIdMap.put(id, clazz);
@@ -67,26 +79,26 @@ public class SimpleChannel {
 
 	private PacketByteBuf createBuf(C2SPacket packet) {
 		Integer id = c2sIdMap.inverse().get(packet.getClass());
-		if (id != null) {
-			PacketByteBuf buf = PacketByteBufs.create();
-			buf.writeVarInt(id);
-			packet.write(buf);
-			return buf;
+		if (id == null) {
+			LOGGER.error("Could not get id for c2s packet " + packet.toString() + " in channel " + channelName);
+			return null;
 		}
-		LOGGER.error("Could not get id for c2s packet " + packet.toString() + " in channel " + channelName);
-		return null;
+		PacketByteBuf buf = PacketByteBufs.create();
+		buf.writeVarInt(id);
+		packet.write(buf);
+		return buf;
 	}
 
 	private PacketByteBuf createBuf(S2CPacket packet) {
 		Integer id = s2cIdMap.inverse().get(packet.getClass());
-		if (id != null) {
-			PacketByteBuf buf = PacketByteBufs.create();
-			buf.writeVarInt(id);
-			packet.write(buf);
-			return buf;
+		if (id == null) {
+			LOGGER.error("Could not get id for s2c packet " + packet.toString() + " in channel " + channelName);
+			return null;
 		}
-		LOGGER.error("Could not get id for s2c packet " + packet.toString() + " in channel " + channelName);
-		return null;
+		PacketByteBuf buf = PacketByteBufs.create();
+		buf.writeVarInt(id);
+		packet.write(buf);
+		return buf;
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -102,36 +114,44 @@ public class SimpleChannel {
 		ServerPlayNetworking.send(player, channelName, buf);
 	}
 
-	public void sendToClientsInServer(S2CPacket packet, MinecraftServer server) {
+	public void sendToClients(S2CPacket packet, Collection<ServerPlayerEntity> players) {
 		PacketByteBuf buf = createBuf(packet);
 		if (buf == null) return;
-		for (ServerPlayerEntity player : PlayerLookup.all(server)) {
+		for (ServerPlayerEntity player : players) {
 			ServerPlayNetworking.send(player, channelName, buf);
 		}
+	}
+
+	public void sendToClientsInServer(S2CPacket packet, MinecraftServer server) {
+		sendToClients(packet, PlayerLookup.all(server));
 	}
 
 	public void sendToClientsInWorld(S2CPacket packet, ServerWorld world) {
-		PacketByteBuf buf = createBuf(packet);
-		if (buf == null) return;
-		for (ServerPlayerEntity player : PlayerLookup.world(world)) {
-			ServerPlayNetworking.send(player, channelName, buf);
-		}
+		sendToClients(packet, PlayerLookup.world(world));
+	}
+
+	public void sendToClientsTracking(S2CPacket packet, ServerWorld world, BlockPos pos) {
+		sendToClients(packet, PlayerLookup.tracking(world, pos));
+	}
+
+	public void sendToClientsTracking(S2CPacket packet, ServerWorld world, ChunkPos pos) {
+		sendToClients(packet, PlayerLookup.tracking(world, pos));
+	}
+
+	public void sendToClientsTracking(S2CPacket packet, Entity entity) {
+		sendToClients(packet, PlayerLookup.tracking(entity));
+	}
+
+	public void sendToClientsTracking(S2CPacket packet, BlockEntity blockEntity) {
+		sendToClients(packet, PlayerLookup.tracking(blockEntity));
 	}
 
 	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3d pos, double radius) {
-		PacketByteBuf buf = createBuf(packet);
-		if (buf == null) return;
-		for (ServerPlayerEntity player : PlayerLookup.around(world, pos, radius)) {
-			ServerPlayNetworking.send(player, channelName, buf);
-		}
+		sendToClients(packet, PlayerLookup.around(world, pos, radius));
 	}
 
 	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3i pos, double radius) {
-		PacketByteBuf buf = createBuf(packet);
-		if (buf == null) return;
-		for (ServerPlayerEntity player : PlayerLookup.around(world, pos, radius)) {
-			ServerPlayNetworking.send(player, channelName, buf);
-		}
+		sendToClients(packet, PlayerLookup.around(world, pos, radius));
 	}
 
 	@Environment(EnvType.CLIENT)

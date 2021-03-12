@@ -14,6 +14,8 @@ public class GlueEffectPacket implements S2CPacket {
 	private Direction direction;
 	private boolean fullBlock;
 
+	public GlueEffectPacket() {}
+
 	public GlueEffectPacket(BlockPos pos, Direction direction, boolean fullBlock) {
 		this.pos = pos;
 		this.direction = direction;
@@ -36,8 +38,10 @@ public class GlueEffectPacket implements S2CPacket {
 
 	@Override
 	public void handle(MinecraftClient client, ClientPlayNetworkHandler handler, SimpleChannel.ResponseTarget responseTarget) {
-		if (!client.player.getBlockPos().isWithinDistance(pos, 100))
-			return;
-		SuperGlueItem.spawnParticles(client.world, pos, direction, fullBlock);
+		client.execute(() -> {
+			if (!client.player.getBlockPos().isWithinDistance(pos, 100))
+				return;
+			SuperGlueItem.spawnParticles(client.world, pos, direction, fullBlock);
+		});
 	}
 }

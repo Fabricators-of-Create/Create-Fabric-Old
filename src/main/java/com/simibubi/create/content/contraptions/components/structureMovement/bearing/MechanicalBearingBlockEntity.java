@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -29,6 +30,11 @@ public class MechanicalBearingBlockEntity extends GeneratingKineticBlockEntity i
 	protected boolean assembleNextTick;
 	protected float clientAngleDiff;
 	protected AssemblyException lastException;
+
+	public MechanicalBearingBlockEntity(BlockEntityType<? extends MechanicalBearingBlockEntity> type) {
+		super(type);
+		setLazyTickRate(3);
+	}
 
 	public MechanicalBearingBlockEntity() {
 		super(AllBlockEntities.MECHANICAL_BEARING);
@@ -296,7 +302,7 @@ public class MechanicalBearingBlockEntity extends GeneratingKineticBlockEntity i
 	}
 
 	@Override
-	public boolean shouldRenderAsBe() {
+	public boolean shouldRenderAsBE() {
 		return true;
 	}
 }

@@ -3,6 +3,7 @@ package com.simibubi.create.foundation.item;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class WipScription extends ItemDescription {
 	}
 
 	@Override
-	public List<LiteralText> addInformation(List<LiteralText> tooltip) {
+	public List<Text> addInformation(List<Text> tooltip) {
 		tooltip.set(0, new LiteralText(decorateName(tooltip.get(0).toString())));
 		tooltip.addAll(getLines());
 		return tooltip;

@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BakedModelManagerMixin",
+    "EntityTypeMixin",
     "FogColorTrackerMixin",
     "Matrix4fMixin",
     "MouseMixin",
@@ -13,7 +14,8 @@
     "accessor.GameRendererAccessor",
     "accessor.GlStateManagerAccessor",
     "accessor.ItemAccessor",
-    "accessor.ItemRendererAccessor"
+    "accessor.ItemRendererAccessor",
+		"accessor.CriteriaRegistryAccessor"
   ],
   "client": [
     "ChunkBuilder$ChunkDataMixin",

@@ -44,7 +44,7 @@ public class SuperGlueHandler {
 
 		Map<Direction, SuperGlueEntity> gatheredGlue = gatherGlue(world, pos);
 		for (Direction direction : gatheredGlue.keySet())
-			AllPackets.CHANNEL.sendToClientsInServer(new GlueEffectPacket(pos, direction, false), world.getServer());
+			AllPackets.CHANNEL.sendToClientsTracking(new GlueEffectPacket(pos, direction, false), entity);
 			/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity),
 				new GlueEffectPacket(pos, direction, true));*/
 
@@ -93,7 +93,7 @@ public class SuperGlueHandler {
 			if (!world.isClient) {
 				entity.playPlaceSound();
 				world.spawnEntity(entity);
-				AllPackets.CHANNEL.sendToClientsInServer(new GlueEffectPacket(ray.getBlockPos(), face, false), world.getServer());
+				AllPackets.CHANNEL.sendToClientsTracking(new GlueEffectPacket(ray.getBlockPos(), face, false), entity);
 				/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity),
 					new GlueEffectPacket(ray.getBlockPos(), face, true));*/
 			}
