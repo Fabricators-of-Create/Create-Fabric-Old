@@ -163,45 +163,4 @@ public final class EnUsTranslation extends CreateTranslation {
 		tooltip(lang, "mechanicalArmRange", "Maximum distance in blocks a Mechanical Arm can reach across.", LOGISTICS);
 		tooltip(lang, "linkRange", "Maximum possible range in blocks of redstone link connections.", LOGISTICS);
 	}
-
-	/*
-	// Consider: The following? Will not be able to copy Forge Create lang when it updates
-
-	private static final class BlockLang {
-		public static void addAll(JLang lang) {
-			lang.block(id("acacia_window"), "Acacia Window");
-			lang.block(id("acacia_window_pane"), "Acacia Window Pane");
-
-			// TODO: All other blocks
-		}
-	}
-
-	// TODO: Item lang
-	// TODO: Advancement lang
-	// TODO: Item group lang
-	// TODO: Death lang
-
-	// TODO: Create recipe lang
-	// TODO: Create generic lang
-	// TODO: Create action lang
-	// TODO: Create keyinfo lang
-	// TODO: Create GUI lang
-	// TODO: Create symmetry lang
-	// TODO: Create orientation lang
-	// TODO: Create terrainzapper lang
-	// TODO: Create blockzapper lang
-	// TODO: Create minecart coupling lang
-	// TODO: Create contraptions lang
-	// TODO: Create logistics lang
-	// TODO: Create schematic and quill lang
-	// TODO: Create schematic lang
-	// TODO: Create material checklist lang
-	// TODO: Create item attributes lang
-	// TODO: Create tooltip lang
-	// TODO: Create mechanical arm lang
-	// TODO: Create tunnel lang
-	// TODO: Create hint lang
-	// TODO: Create command lang
-	// TODO: Create subtitle lang
-	*/
 }
