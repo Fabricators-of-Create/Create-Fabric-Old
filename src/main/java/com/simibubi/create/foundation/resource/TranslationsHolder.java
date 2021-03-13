@@ -12,7 +12,7 @@ import static com.simibubi.create.Create.ID;
 import static com.simibubi.create.Create.id;
 
 @SuppressWarnings("SameParameterValue")
-public final class AllClientResources { // Data packs in another class
+public final class TranslationsHolder {
 	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id(ID).toString());
 
 	/**

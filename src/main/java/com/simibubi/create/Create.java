@@ -6,7 +6,7 @@ import com.simibubi.create.events.CommonEvents;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.resource.AllClientResources;
+import com.simibubi.create.foundation.resource.TranslationsHolder;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
@@ -49,7 +49,7 @@ public class Create implements ModInitializer  {
         AllWorldFeatures.reload();
 
         torquePropagator = new TorquePropagator();
-		AllClientResources.initialize();
+		TranslationsHolder.initialize();
 
 		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
 
