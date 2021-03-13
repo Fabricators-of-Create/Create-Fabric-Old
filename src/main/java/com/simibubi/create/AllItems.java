@@ -7,6 +7,7 @@ import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorIt
 import com.simibubi.create.content.contraptions.relays.gearbox.VerticalGearboxItem;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.curiosities.BuildersTeaItem;
+import com.simibubi.create.content.curiosities.TreeFertilizerItem;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
@@ -67,7 +68,11 @@ public class AllItems {
     public static final BlockItem ZINC_BLOCK = new BlockItem(AllBlocks.ZINC_BLOCK, new FabricItemSettings().group(Create.baseCreativeTab));
     public static final BlockItem TILED_GLASS = new BlockItem(AllPaletteBlocks.TILED_GLASS, new FabricItemSettings().group(Create.palettesCreativeTab));
 
+	public static final Item TREE_FERTILIZER = new TreeFertilizerItem(new FabricItemSettings().group(Create.baseCreativeTab));
+
     public static void registerItems() {
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "tree_fertilizer"), TREE_FERTILIZER);
+
         Registry.register(Registry.ITEM, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
         Registry.register(Registry.ITEM, new Identifier(Create.ID, "zinc_block"), ZINC_BLOCK);
         Registry.register(Registry.ITEM, new Identifier(Create.ID, "tiled_glass"), TILED_GLASS);
