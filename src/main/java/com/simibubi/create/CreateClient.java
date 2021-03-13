@@ -58,6 +58,7 @@ public class CreateClient implements ClientModInitializer {
 			((ReloadableResourceManager) resourceManager).registerListener(new ResourceReloadHandler());
 
 		BlockRenderLayerMap.INSTANCE.putBlock(AllPaletteBlocks.TILED_GLASS, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(AllBlocks.WATER_WHEEL, RenderLayer.getCutout());
 	}
 
 	public static CustomBlockModels getCustomBlockModels() {
