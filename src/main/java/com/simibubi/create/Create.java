@@ -3,6 +3,7 @@ package com.simibubi.create;
 import com.simibubi.create.content.contraptions.TorquePropagator;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.events.CommonEvents;
+import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
@@ -53,6 +54,8 @@ public class Create implements ModInitializer  {
 		RRPCallback.EVENT.register(a -> a.add(RESOURCE_PACK));
 
 		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
+
+		AllTriggers.register();
 	}
 
 	public static Identifier asResource(String path) {

@@ -8,6 +8,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.LinearChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.RadialChassisBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
@@ -48,23 +50,23 @@ public class AllBlocks {
             .strength(0.8f, 0.8f));
 
     public static final ShaftBlock SHAFT = new ShaftBlock(Block.Settings
-            .of(Material.STONE)
+            .of(Material.METAL)
             .strength(0.8f, 0.8f)
             .nonOpaque());
 
     public static final CreativeMotorBlock CREATIVE_MOTOR = new CreativeMotorBlock(Block.Settings
-            .of(Material.STONE)
+            .of(Material.METAL)
             .strength(0.8f, 0.8f)
             .nonOpaque());
 
 	public static final CogWheelBlock COGWHEEL = new CogWheelBlock(false, Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f)
 		.sounds(BlockSoundGroup.WOOD)
 		.nonOpaque());
 
 	public static final CogWheelBlock LARGE_COGWHEEL = new CogWheelBlock(true, Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f)
 		.sounds(BlockSoundGroup.WOOD)
 		.nonOpaque());
@@ -92,36 +94,36 @@ public class AllBlocks {
 		.strength(0.8f, 0.8f));
 
 	public static final NozzleBlock NOZZLE = new NozzleBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f)
 		.nonOpaque());
 
 	public static final MechanicalBearingBlock MECHANICAL_BEARING = new MechanicalBearingBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f));
 
 	public static final WindmillBearingBlock WINDMILL_BEARING = new WindmillBearingBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f));
 
 	public static final ClockworkBearingBlock CLOCKWORK_BEARING = new ClockworkBearingBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f));
 
 	public static final AnalogLeverBlock ANALOG_LEVER = new AnalogLeverBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f));
 
 	public static final GearshiftBlock GEARSHIFT = new GearshiftBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f));
 
 	public static final ClutchBlock CLUTCH = new ClutchBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f));
 
 	public static final GearboxBlock GEARBOX = new GearboxBlock(Block.Settings
-		.of(Material.STONE)
+		.of(Material.METAL)
 		.strength(0.8f, 0.8f));
 
 	public static final CuckooClockBlock CUCKOO_CLOCK = CuckooClockBlock.regular(Block.Settings
@@ -131,6 +133,11 @@ public class AllBlocks {
 	public static final CuckooClockBlock MYSTERIOUS_CUCKOO_CLOCK = CuckooClockBlock.mysterious(Block.Settings
 		.of(Material.WOOD)
 		.strength(0.8f, 0.8f));
+
+	public static final CartAssemblerBlock CART_ASSEMBLER = new CartAssemblerBlock(Block.Settings
+		.of(Material.METAL)
+		.strength(0.8f, 0.8f)
+		.nonOpaque());
 
 	public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Create.ID, "zinc_ore"), ZINC_ORE);
@@ -195,6 +202,9 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "mysterious_cuckoo_clock"), MYSTERIOUS_CUCKOO_CLOCK);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "mysterious_cuckoo_clock"), new BlockItem(MYSTERIOUS_CUCKOO_CLOCK, new Item.Settings().group(Create.baseCreativeTab)));
+
+		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "cart_assembler"), CART_ASSEMBLER);
+		Registry.register(Registry.ITEM, new Identifier(Create.ID, "cart_assembler"), new CartAssemblerBlockItem(CART_ASSEMBLER, new Item.Settings().group(Create.baseCreativeTab)));
     }
 
 }
