@@ -132,7 +132,7 @@ public abstract class Contraption {
 		anchor = pos;
 
 		if (bounds == null)
-			bounds = new Box((BlockPos) BlockPos.ZERO);
+			bounds = new Box(BlockPos.ORIGIN);
 
 		/**if (!BlockMovementTraits.isBrittle(world.getBlockState(pos)))
 		 frontier.add(pos);
