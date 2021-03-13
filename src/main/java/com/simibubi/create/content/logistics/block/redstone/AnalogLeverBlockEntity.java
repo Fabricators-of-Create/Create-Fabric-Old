@@ -68,8 +68,8 @@ public class AnalogLeverBlockEntity extends SmartBlockEntity implements GoggleIn
 	}
 
 	@Override
-	public boolean addToGoggleTooltip(List<String> tooltip, boolean isPlayerSneaking) {
-		tooltip.add(Text.of(spacing).copy().append(Lang.translate("tooltip.analogStrength", this.state)).getString());
+	public boolean addToGoggleTooltip(List<Text> tooltip, boolean isPlayerSneaking) {
+		tooltip.add(componentSpacing.copy().append(Lang.translate("tooltip.analogStrength", this.state)));
 
 		return true;
 	}

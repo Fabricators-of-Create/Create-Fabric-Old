@@ -1,20 +1,11 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import java.util.IdentityHashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.lang3.tuple.MutablePair;
-
 import com.simibubi.create.AllMovementBehaviours;
+import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
 import com.simibubi.create.foundation.collision.Matrix3d;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.piston.PistonBehavior;
@@ -26,6 +17,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
@@ -36,6 +28,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.tuple.MutablePair;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public abstract class AbstractContraptionEntity extends Entity {
 
@@ -89,7 +86,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 			return;
 		contraption.getSeatMapping()
 			.put(passenger.getUuid(), seatIndex);
-		/**AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
+		/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
 		 new ContraptionSeatMappingPacket(getUuid(), contraption.getSeatMapping()));*/
 	}
 
@@ -103,7 +100,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 			passenger.toTag((CompoundTag) new CompoundTag().put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector))); // TODO COULD BE WRONG
 		contraption.getSeatMapping()
 			.remove(passenger.getUuid());
-		/**AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
+		/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
 		 new ContraptionSeatMappingPacket(getUuid(), contraption.getSeatMapping()));*/
 	}
 
@@ -302,7 +299,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 	}
 
 	protected void onContraptionStalled() {
-		/**AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
+		/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
 		 new ContraptionStallPacket(getEntityId(), getX(), getY(), getZ(), getStalledAngle()));*/
 	}
 
@@ -392,7 +389,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 		remove();
 
 		StructureTransform transform = makeStructureTransform();
-		/**AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
+		/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
 		 new ContraptionDisassemblyPacket(this.getUuid(), transform));*/
 
 		contraption.addBlocksToWorld(world, transform);
@@ -444,15 +441,12 @@ public abstract class AbstractContraptionEntity extends Entity {
 		super.remove();
 	}
 
-	/**
-	 * @Override public void onRemovedFromWorld() {
-	 * super.onRemovedFromWorld();
-	 * if (world != null && world.isClient)
-	 * return;
-	 * getPassengerList().forEach(Entity::remove);
-	 * }
-	 */
-
+ 	/*@Override public void onRemovedFromWorld() {
+ 		super.onRemovedFromWorld();
+ 		if (world != null && world.isClient)
+ 			return;
+ 		getPassengerList().forEach(Entity::remove);
+	}*/
 
 	@Override
 	protected void onSwimmingStart() {
@@ -475,7 +469,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 		return dataTracker.get(STALLED);
 	}
 
-	/**
+	/*
 	 * @Environment(EnvType.CLIENT) static void handleStallPacket(ContraptionStallPacket packet) {
 	 * Entity entity = MinecraftClient.getInstance().world.getEntityByID(packet.entityID);
 	 * if (!(entity instanceof AbstractContraptionEntity))
@@ -562,30 +556,30 @@ public abstract class AbstractContraptionEntity extends Entity {
 			return false;
 		if (e.noClip)
 			return false;
-		/**if (e instanceof HangingEntity) TODO BUNCH OF MINECRAFT CHECKS
-		 return false;
+		/*if (e instanceof HangingEntity)
+	 		return false;*/
 		 if (e instanceof AbstractMinecartEntity)
-		 return !(contraption instanceof MountedContraption);
+	 		return !(contraption instanceof MountedContraption);
 		 if (e instanceof SuperGlueEntity)
-		 return false;
-		 if (e instanceof SeatEntity)
-		 return false;
+	 		return false;
+		 /*if (e instanceof SeatEntity)
+	 		return false;
 		 if (e instanceof IProjectile)
-		 return false;
+	 		return false;
 		 if (e.getRidingEntity() != null)
-		 return false;
+	 		return false;*/
 
-		 Entity riding = this.getRidingEntity();
-		 while (riding != null) {
-		 if (riding == e)
-		 return false;
-		 riding = riding.getRidingEntity();
+		 /*Entity riding = this.getRidingEntity();
+		while (riding != null) {
+		 	if (riding == e)
+		 		return false;
+		 	riding = riding.getRidingEntity();
 		 }*/
 
 		return e.getPistonBehavior() == PistonBehavior.NORMAL;
 	}
 
-	/**
+	/*
 	 * @Override public boolean isOnePlayerRiding() {
 	 * return false;
 	 * }
@@ -594,7 +588,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 	@Environment(EnvType.CLIENT)
 	public abstract void doLocalTransforms(float partialTicks, MatrixStack[] matrixStacks);
 
-	/**
+	/*
 	 * @Override public void updateAquatics() {
 	 * <p>
 	 * Override this with an empty method to reduce enormous calculation time when contraptions are in water
@@ -648,7 +642,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 
 	}
 
-	/**@Override public void setFire(int p_70015_1_) { // TODO IF CONTRAPTIONS CAN CATCH FIRE FIX THIS
+	/*@Override public void setFire(int p_70015_1_) { // TODO IF CONTRAPTIONS CAN CATCH FIRE FIX THIS
 	// Contraptions no longer catch fire
 	}*/
 

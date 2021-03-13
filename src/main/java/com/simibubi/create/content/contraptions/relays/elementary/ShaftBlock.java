@@ -62,12 +62,12 @@ public class ShaftBlock extends AbstractShaftBlock {
 
 		 if (!encasedShaft.getCasing()
 		 .isIn(heldItem))
-		 continue;
+		 continue;*/
 
 		 if (world.isClient)
-		 return ActionResult.SUCCESS;
+		 	return ActionResult.SUCCESS;
 
-		 AllTriggers.triggerFor(AllTriggers.CASING_SHAFT, player);
+		 /*AllTriggers.triggerFor(AllTriggers.CASING_SHAFT, player);
 		 KineticTileEntity.switchToBlockState(world, pos, encasedShaft.getDefaultState()
 		 .with(AXIS, state.get(AXIS)));
 		 return ActionResult.SUCCESS;

@@ -21,6 +21,8 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -388,26 +390,25 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	 */
 
 	@Override
-	public boolean addToTooltip(List<String> tooltip, boolean isPlayerSneaking) {
+	public boolean addToTooltip(List<Text> tooltip, boolean isPlayerSneaking) {
 		boolean notFastEnough = !isSpeedRequirementFulfilled() && getSpeed() != 0;
 
-		if (overStressed /*&& AllConfigs.CLIENT.enableOverstressedTooltip.get() TODO FIX THIS CONFIG Overstressed */) {
-			tooltip.add(spacing + GOLD + Lang.translate("gui.stressometer.overstressed"));
-			String hint = Lang.translate("gui.contraptions.network_overstressed", I18n.translate(getCachedState().getBlock()
-				.getTranslationKey()));
-			List<String> cutString = TooltipHelper.cutString(spacing + hint, GRAY, Formatting.WHITE);
+		if (overStressed /*&& AllConfigs.CLIENT.enableOverstressedTooltip.get()*/) {
+			tooltip.add(componentSpacing.copy().append(Lang.translate("gui.stressometer.overstressed").formatted(GOLD)));
+			Text hint = Lang.translate("gui.contraptions.network_overstressed");
+			List<Text> cutString = TooltipHelper.cutTextComponent(hint, GRAY, Formatting.WHITE);
 			for (int i = 0; i < cutString.size(); i++)
-				tooltip.add((i == 0 ? "" : spacing) + cutString.get(i));
+				tooltip.add(componentSpacing.copy().append(cutString.get(i)));
 			return true;
 		}
 
 		if (notFastEnough) {
-			tooltip.add(spacing + GOLD + Lang.translate("tooltip.speedRequirement"));
-			String hint = Lang.translate("gui.contraptions.not_fast_enough", I18n.translate(getCachedState().getBlock()
+			tooltip.add(componentSpacing.copy().append(Lang.translate("tooltip.speedRequirement").formatted(GOLD)));
+			Text hint = Lang.translate("gui.contraptions.not_fast_enough", I18n.translate(getCachedState().getBlock()
 				.getTranslationKey()));
-			List<String> cutString = TooltipHelper.cutString(spacing + hint, GRAY, Formatting.WHITE);
+			List<Text> cutString = TooltipHelper.cutTextComponent(hint, GRAY, Formatting.WHITE);
 			for (int i = 0; i < cutString.size(); i++)
-				tooltip.add((i == 0 ? "" : spacing) + cutString.get(i));
+				tooltip.add(componentSpacing.copy().append(cutString.get(i)));
 			return true;
 		}
 
@@ -415,26 +416,23 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	}
 
 	@Override
-	public boolean addToGoggleTooltip(List<String> tooltip, boolean isPlayerSneaking) {
+	public boolean addToGoggleTooltip(List<Text> tooltip, boolean isPlayerSneaking) {
 		boolean added = false;
 		float stressAtBase = calculateStressApplied();
 
 		if (calculateStressApplied() != 0 && Rotating.StressImpact.isEnabled()) {
-			tooltip.add(spacing + Lang.translate("gui.goggles.kinetic_stats"));
-			tooltip.add(spacing + Formatting.GRAY + Lang.translate("tooltip.stressImpact"));
+			tooltip.add(componentSpacing.copy().append(Lang.translate("gui.goggles.kinetic_stats")));
+			tooltip.add(componentSpacing.copy().append(Lang.translate("tooltip.stressImpact").formatted(Formatting.GRAY)));
 
 			float stressTotal = stressAtBase * Math.abs(getTheoreticalSpeed());
 
-			String stressString =
-				spacing + "%s%s" + Lang.translate("generic.unit.stress") + " " + Formatting.DARK_GRAY + "%s";
-			tooltip.add(" " + String.format(stressString, Formatting.AQUA,
-				GoggleInformationProvider.format(stressTotal), Lang.translate("gui.goggles.at_current_speed")));
+			tooltip.add(componentSpacing.copy().append(new LiteralText(" " + GoggleInformationProvider.format(stressTotal))
+				.append(Lang.translate("generic.unit.stress")).append(" ").formatted(Formatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").formatted(Formatting.DARK_GRAY)));
 
 			added = true;
 		}
 
 		return added;
-
 	}
 
 	public void clearKineticInformation() {

@@ -1,19 +1,18 @@
 package com.simibubi.create.foundation.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
@@ -95,7 +94,7 @@ public class GuiGameElement {
 		}
 
 		public abstract void render();
-
+/*
 		protected void prepare() {
 			RenderSystem.pushMatrix();
 			RenderSystem.enableBlend();
@@ -124,7 +123,7 @@ public class GuiGameElement {
 			RenderSystem.disableAlphaTest();
 			RenderSystem.disableRescaleNormal();
 		}
-	}
+	*/}
 
 	private static class GuiBlockModelRenderBuilder extends GuiRenderBuilder {
 
@@ -138,7 +137,7 @@ public class GuiGameElement {
 
 		@Override
 		public void render() {
-			prepare();
+			//prepare();
 
 			MinecraftClient mc = MinecraftClient.getInstance();
 			BlockRenderManager blockRenderer = mc.getBlockRenderManager();
@@ -149,22 +148,22 @@ public class GuiGameElement {
 			VertexConsumer vb = buffer.getBuffer(renderType);
 			MatrixStack ms = new MatrixStack();
 
-			transform();
+			//transform();
 
 			mc.getTextureManager()
 				.bindTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE);
 			renderModel(blockRenderer, buffer, renderType, vb, ms);
 
-			cleanUp();
+			//cleanUp();
 		}
 
 		protected void renderModel(BlockRenderManager blockRenderer, VertexConsumerProvider.Immediate buffer,
 								   RenderLayer renderType, VertexConsumer vb, MatrixStack ms) {
 			int color = MinecraftClient.getInstance().getBlockColors().getColor(blockState, null, null, 0);
-			Vector3f rgb = ColorHelper.getRGB(color == -1 ? this.color : color);
-			blockRenderer.getModelRenderer()
+			//Vector3f rgb = ColorHelper.getRGB(color == -1 ? this.color : color);
+			/*blockRenderer.getModelRenderer()
 				.render(ms.peek(), vb, blockState, blockmodel, rgb.getX(), rgb.getY(), rgb.getZ(),
-					0xF000F0, OverlayTexture.DEFAULT_UV);
+					0xF000F0, OverlayTexture.DEFAULT_UV); */
 			buffer.draw();
 		}
 	}
@@ -194,13 +193,13 @@ public class GuiGameElement {
 				.isEmpty())
 				return;
 
-			RenderSystem.pushMatrix();
-			DiffuseLighting.disable();
+			//RenderSystem.pushMatrix();
+			//DiffuseLighting.disable();
 			/**FluidRenderer.renderTiledFluidBB(new FluidStack(blockState.getFluidState()
 			 .getFluid(), 1000), 0, 0, 0, 1.0001f, 1.0001f, 1.0001f, buffer, ms, 0xf000f0, true);*/
 			buffer.draw(RenderLayer.getTranslucent());
-			DiffuseLighting.enable();
-			RenderSystem.popMatrix();
+			//DiffuseLighting.enable();
+			//RenderSystem.popMatrix();
 		}
 	}
 
@@ -226,14 +225,14 @@ public class GuiGameElement {
 
 		@Override
 		public void render() {
-			prepare();
-			transform();
-			RenderSystem.scaled(1, -1, 1);
-			RenderSystem.translated(0, 0, -75);
+			//prepare();
+			//transform();
+			//RenderSystem.scaled(1, -1, 1);
+			//RenderSystem.translated(0, 0, -75);
 			MinecraftClient.getInstance()
 				.getItemRenderer()
 				.renderGuiItemIcon(stack, 0, 0);
-			cleanUp();
+			//cleanUp();
 		}
 
 	}

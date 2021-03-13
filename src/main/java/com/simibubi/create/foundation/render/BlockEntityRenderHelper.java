@@ -38,12 +38,12 @@ public class BlockEntityRenderHelper {
 			BlockEntity blockEntity = iterator.next();
 			//if (blockEntity instanceof IInstanceRendered) continue; // TODO: some things still need to render
 
-			BlockEntityRenderer<BlockEntity> renderer = BlockEntityRenderDispatcher.INSTANCE.get(blockEntity);
+			/*BlockEntityRenderer<BlockEntity> renderer = BlockEntityRenderDispatcher.INSTANCE.get(blockEntity);
 			if (renderer == null) {
 				iterator.remove();
 				continue;
 			}
-
+*/
 			try {
 				BlockPos pos = blockEntity.getPos();
 				ms.push();
@@ -55,8 +55,8 @@ public class BlockEntityRenderHelper {
 				BlockPos lightPos = new BlockPos(vec.getX(), vec.getY(), vec.getZ());
 				int worldLight = ContraptionRenderDispatcher.getLightOnContraption(world, renderWorld, pos, lightPos);
 
-				renderer.render(blockEntity, pt, ms, buffer, worldLight,
-								OverlayTexture.DEFAULT_UV);
+				//renderer.render(blockEntity, pt, ms, buffer, worldLight,
+								//OverlayTexture.DEFAULT_UV);
 				ms.pop();
 
 			} catch (Exception e) {

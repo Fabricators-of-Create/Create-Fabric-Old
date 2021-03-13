@@ -4,8 +4,14 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -38,22 +44,22 @@ public class BlockMovementTraits {
 
 		// Move controllers only when they aren't moving
 		/*if (block instanceof MechanicalPistonBlock && state.get(MechanicalPistonBlock.STATE) != MechanicalPistonBlock.PistonState.MOVING)
-		 return true;
-		 if (block instanceof MechanicalBearingBlock) {
-		 BlockEntity te = world.getBlockEntity(pos);
-		 if (te instanceof MechanicalBearingTileEntity)
-		 return !((MechanicalBearingTileEntity) te).isRunning();
-		 }
-		 if (block instanceof ClockworkBearingBlock) {
-		 BlockEntity te = world.getBlockEntity(pos);
-		 if (te instanceof ClockworkBearingTileEntity)
-		 return !((ClockworkBearingTileEntity) te).isRunning();
-		 }
-		 if (block instanceof PulleyBlock) {
-		 BlockEntity te = world.getBlockEntity(pos);
-		 if (te instanceof PulleyTileEntity)
-		 return !((PulleyTileEntity) te).running;
-		 }*/
+	 		return true;*/
+	 	if (block instanceof MechanicalBearingBlock) {
+	 		BlockEntity te = world.getBlockEntity(pos);
+	 		if (te instanceof MechanicalBearingBlockEntity)
+	 		return !((MechanicalBearingBlockEntity) te).isRunning();
+	 	}
+	 	if (block instanceof ClockworkBearingBlock) {
+	 		BlockEntity te = world.getBlockEntity(pos);
+	 		if (te instanceof ClockworkBearingBlockEntity)
+	 		return !((ClockworkBearingBlockEntity) te).isRunning();
+	 	}
+	 	/*if (block instanceof PulleyBlock) {
+	 		BlockEntity te = world.getBlockEntity(pos);
+	 		if (te instanceof PulleyTileEntity)
+	 		return !((PulleyTileEntity) te).running;
+	 	}*/
 
 		if (AllBlocks.BELT.hasBlockEntity(state))
 			return true;
@@ -78,11 +84,11 @@ public class BlockMovementTraits {
 			return true;
 		if (block instanceof WallMountedBlock && !(block instanceof GrindstoneBlock))
 			return true;
-		/*if (block instanceof CartAssemblerBlock)
+		if (block instanceof CartAssemblerBlock)
 			return false;
 		if (block instanceof AbstractRailBlock)
 			return true;
-		if (block instanceof RedstoneDiodeBlock)
+		/*if (block instanceof RedstoneDiodeBlock)
 			return true;*/
 		if (block instanceof RedstoneWireBlock)
 			return true;
@@ -162,19 +168,19 @@ public class BlockMovementTraits {
 	 */
 	public static boolean notSupportive(BlockState state, Direction facing) {
 		/*if (AllBlocks.MECHANICAL_DRILL.has(state))
-		 return state.get(BlockStateProperties.FACING) == facing;
-		 if (AllBlocks.MECHANICAL_BEARING.has(state))
-		 return state.get(BlockStateProperties.FACING) == facing;
-		 if (AllBlocks.CART_ASSEMBLER.has(state))
-		 return Direction.DOWN == facing;
-		 if (AllBlocks.MECHANICAL_SAW.has(state))
-		 return state.get(BlockStateProperties.FACING) == facing;
-		 if (AllBlocks.PORTABLE_STORAGE_INTERFACE.has(state))
-		 return state.get(PortableStorageInterfaceBlock.FACING) == facing;
-		 if (state.getBlock() instanceof AttachedActorBlock)
-		 return state.get(BlockStateProperties.HORIZONTAL_FACING) == facing;
-		 if (AllBlocks.ROPE_PULLEY.has(state))
-		 return facing == Direction.DOWN;*/
+			return state.get(BlockStateProperties.FACING) == facing;*/
+	 	if (AllBlocks.MECHANICAL_BEARING.getStateManager().getStates().contains(state))
+		 	return state.get(Properties.FACING) == facing;
+	 	if (AllBlocks.CART_ASSEMBLER.getStateManager().getStates().contains(state))
+		 	return Direction.DOWN == facing;
+	 	/*if (AllBlocks.MECHANICAL_SAW.has(state))
+	 		return state.get(BlockStateProperties.FACING) == facing;
+	 	if (AllBlocks.PORTABLE_STORAGE_INTERFACE.has(state))
+	 		return state.get(PortableStorageInterfaceBlock.FACING) == facing;
+		if (state.getBlock() instanceof AttachedActorBlock)
+			return state.get(BlockStateProperties.HORIZONTAL_FACING) == facing;
+	 	if (AllBlocks.ROPE_PULLEY.has(state))
+	 		return facing == Direction.DOWN;*/
 		if (state.getBlock() instanceof CarpetBlock)
 			return facing == Direction.UP;
 		/*if (state.getBlock() instanceof SailBlock)

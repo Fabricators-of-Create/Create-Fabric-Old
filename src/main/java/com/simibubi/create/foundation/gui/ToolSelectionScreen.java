@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class ToolSelectionScreen extends Screen {
 
-	public final String scrollToCycle = Lang.translate("gui.toolmenu.cycle");
+	public final String scrollToCycle = Lang.translate("gui.toolmenu.cycle").getString();
 	public final String holdToFocus = "gui.toolmenu.focusKey";
 
 	protected List<Tools> tools;
@@ -78,7 +78,7 @@ public class ToolSelectionScreen extends Screen {
 		drawTexture(matrixStack, x - 15, y, gray.startX, gray.startY, w, h, gray.width, gray.height);
 
 		float toolTipAlpha = yOffset / 10;
-		List<String> toolTip = tools.get(selection)
+		List<Text> toolTip = tools.get(selection)
 			.getDescription();
 		int stringAlphaComponent = ((int) (toolTipAlpha * 0xFF)) << 24;
 
@@ -103,7 +103,7 @@ public class ToolSelectionScreen extends Screen {
 			int width = client.getWindow()
 				.getScaledWidth();
 			if (!focused)
-				drawCenteredText(matrixStack, client.textRenderer, Text.of(Lang.translate(holdToFocus, keyName)), width / 2,
+				drawCenteredText(matrixStack, client.textRenderer, Lang.translate(holdToFocus, keyName), width / 2,
 					y - 10, 0xCCDDFF);
 			else
 				drawCenteredString(matrixStack, client.textRenderer, scrollToCycle, width / 2, y - 10, 0xCCDDFF);

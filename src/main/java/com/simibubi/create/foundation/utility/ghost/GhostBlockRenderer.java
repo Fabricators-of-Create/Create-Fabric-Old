@@ -14,7 +14,6 @@ import net.minecraft.util.math.*;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.MemoryStack;
 
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
@@ -130,15 +129,16 @@ public abstract class GhostBlockRenderer {
 			Vector3f vector3f = new Vector3f((float) vec3i.getX(), (float) vec3i.getY(), (float) vec3i.getZ());
 			Matrix4f matrix4f = p_227890_1_.getModel();
 			vector3f.transform(p_227890_1_.getNormal());
-			int j = aint.length / 8;
+			int vertexSize = VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL.getVertexSizeInteger();
+			int j = aint.length / vertexSize;
 
 			try (MemoryStack memorystack = MemoryStack.stackPush()) {
 				ByteBuffer bytebuffer = memorystack.malloc(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL.getVertexSize());
 				IntBuffer intbuffer = bytebuffer.asIntBuffer();
 
 				for (int k = 0; k < j; ++k) {
-					((Buffer) intbuffer).clear();
-					intbuffer.put(aint, k * 8, 8);
+					intbuffer.clear();
+					intbuffer.put(aint, k * vertexSize, vertexSize);
 					float f = bytebuffer.getFloat(0);
 					float f1 = bytebuffer.getFloat(4);
 					float f2 = bytebuffer.getFloat(8);
@@ -150,13 +150,11 @@ public abstract class GhostBlockRenderer {
 					g = p_227890_3_[k] * p_227890_5_;
 					b = p_227890_3_[k] * p_227890_6_;
 
-
-					int l = 0; //vb.applyBakedLighting(p_227890_7_[k], bytebuffer); // TODO FIX GHOST RENDERING HERE
+					int l = p_227890_7_[k];
 					float f9 = bytebuffer.getFloat(16);
 					float f10 = bytebuffer.getFloat(20);
 					Vector4f vector4f = new Vector4f(f, f1, f2, 1.0F);
 					vector4f.transform(matrix4f);
-					//vb.normal(vector3f, bytebuffer, p_227890_1_.getNormal());
 					vb.vertex(vector4f.getX(), vector4f.getY(), vector4f.getZ(), r, g, b, alpha, f9, f10, p_227890_8_, l, vector3f.getX(), vector3f.getY(), vector3f.getZ());
 				}
 			}

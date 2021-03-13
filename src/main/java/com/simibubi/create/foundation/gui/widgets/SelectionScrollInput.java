@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SelectionScrollInput extends ScrollInput {
 
-	private final String scrollToSelect = Lang.translate("gui.scrollInput.scrollToSelect");
+	private final Text scrollToSelect = Lang.translate("gui.scrollInput.scrollToSelect");
 	protected List<Text> options;
 
 	public SelectionScrollInput(int xIn, int yIn, int widthIn, int heightIn) {
@@ -38,7 +38,7 @@ public class SelectionScrollInput extends ScrollInput {
 	@Override
 	protected void updateTooltip() {
 		toolTip.clear();
-		toolTip.add(Text.of(title).copy().formatted(Formatting.BLUE));
+		toolTip.add(title.copy().formatted(Formatting.BLUE));
 		for (int i = min; i < max; i++) {
 			if (i == state)
 				toolTip.add(LiteralText.EMPTY.copy().append("-> ").append(options.get(i)).formatted(Formatting.WHITE));

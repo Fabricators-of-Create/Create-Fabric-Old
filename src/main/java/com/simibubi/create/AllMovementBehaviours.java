@@ -20,7 +20,7 @@ public class AllMovementBehaviours {
 	}
 
 	public static void addMovementBehaviour(Block block, MovementBehaviour movementBehaviour) {
-		addMovementBehaviour(block, movementBehaviour);
+		addMovementBehaviour(block/*.getRegistryName()*/, movementBehaviour);
 	}
 
 	@Nullable
@@ -30,7 +30,7 @@ public class AllMovementBehaviours {
 
 	@Nullable
 	public static MovementBehaviour of(Block block) {
-		return of(block);
+		return of(block/*.getRegistryName()*/);
 	}
 	
 	@Nullable
@@ -39,7 +39,8 @@ public class AllMovementBehaviours {
 	}
 
 	public static boolean contains(Block block) {
-		return movementBehaviours.containsKey(Registry.BLOCK.getId(block));
+		return movementBehaviours.containsKey(Registry.BLOCK.getId(block)); // TODO ???
+		// return movementBehaviours.containsKey(block.getRegistryName());
 	}
 
 	/*public static <B extends Block> NonNullConsumer<? super B> addMovementBehaviour(

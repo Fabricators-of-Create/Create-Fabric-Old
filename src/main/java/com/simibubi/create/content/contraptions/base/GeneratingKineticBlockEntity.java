@@ -1,15 +1,16 @@
 package com.simibubi.create.content.contraptions.base;
 
-import java.util.List;
-
 import com.simibubi.create.content.contraptions.KineticNetwork;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.foundation.utility.Lang;
-
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.List;
 
 public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 	public boolean reActivateSource;
@@ -50,13 +51,13 @@ public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 	}
 
 	@Override
-	public boolean addToGoggleTooltip(List<String> tooltip, boolean isPlayerSneaking) {
+	public boolean addToGoggleTooltip(List<Text> tooltip, boolean isPlayerSneaking) {
 		boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
 
 		float stressBase = calculateAddedStressCapacity();
 		if (stressBase != 0 && Rotating.StressImpact.isEnabled()) {
-			tooltip.add(spacing + Lang.translate("gui.goggles.generator_stats"));
-			tooltip.add(spacing + Formatting.GRAY + Lang.translate("tooltip.capacityProvided"));
+			tooltip.add(new LiteralText(spacing).append(Lang.translate("gui.goggles.generator_stats")));
+			tooltip.add(new LiteralText(spacing).append(Lang.translate("tooltip.capacityProvided").formatted(Formatting.GRAY)));
 
 			float speed = getTheoreticalSpeed();
 			if (speed != getGeneratedSpeed() && speed != 0)
@@ -65,10 +66,8 @@ public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 			speed = Math.abs(speed);
 			float stressTotal = stressBase * speed;
 
-			String stressString =
-				spacing + "%s%s" + Lang.translate("generic.unit.stress") + " " + Formatting.DARK_GRAY + "%s";
-			tooltip.add(" " + String.format(stressString, Formatting.AQUA, GoggleInformationProvider.format(stressTotal),
-				Lang.translate("gui.goggles.at_current_speed")));
+			tooltip.add(componentSpacing.copy().append(new LiteralText(" " + GoggleInformationProvider.format(stressTotal))
+				.append(Lang.translate("generic.unit.stress")).append(" ").formatted(Formatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").formatted(Formatting.DARK_GRAY)));
 
 			added = true;
 		}

@@ -1,7 +1,7 @@
 package com.simibubi.create.foundation.advancement;
 
-import com.smellypengu.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.smellypengu.registrate.util.nullness.ParametersAreNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 import org.jetbrains.annotations.Nullable;
 
 @ParametersAreNonnullByDefault

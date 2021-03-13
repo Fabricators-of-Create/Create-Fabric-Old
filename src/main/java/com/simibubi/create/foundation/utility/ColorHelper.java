@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.utility;
 
-import java.util.UUID;
-import net.minecraft.client.util.math.Vector3f;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.util.math.Vector3f;
+
+import java.util.UUID;
 
 public class ColorHelper {
 

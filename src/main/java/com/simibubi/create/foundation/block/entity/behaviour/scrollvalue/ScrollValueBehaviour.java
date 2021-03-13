@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.networking.AllPackets;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -24,15 +25,15 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 	int max = 1;
 	int ticksUntilScrollPacket;
 	boolean forceClientState;
-	String label;
+	Text label;
 	Consumer<Integer> callback;
 	Consumer<Integer> clientCallback;
 	Function<Integer, String> formatter;
-	Function<Integer, String> unit;
+	Function<Integer, Text> unit;
 	Function<StepContext, Integer> step;
 	boolean needsWrench;
 
-	public ScrollValueBehaviour(String label, SmartBlockEntity te, ValueBoxTransform slot) {
+	public ScrollValueBehaviour(Text label, SmartBlockEntity te, ValueBoxTransform slot) {
 		super(te);
 		this.setLabel(label);
 		slotPositioning = slot;
@@ -115,7 +116,7 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 		return this;
 	}
 
-	public ScrollValueBehaviour withUnit(Function<Integer, String> unit) {
+	public ScrollValueBehaviour withUnit(Function<Integer, Text> unit) {
 		this.unit = unit;
 		return this;
 	}
@@ -163,7 +164,7 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 		return slotPositioning.testHit(state, localHit);
 	}
 
-	public void setLabel(String label) {
+	public void setLabel(Text label) {
 		this.label = label;
 	}
 

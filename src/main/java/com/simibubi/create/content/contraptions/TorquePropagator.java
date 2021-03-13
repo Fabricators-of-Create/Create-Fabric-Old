@@ -13,24 +13,24 @@ public class TorquePropagator {
 
 	public void onLoadWorld(WorldAccess world) {
 		networks.put(world, new HashMap<>());
-		Create.logger.debug("Prepared Kinetic Network Space for " + WorldHelper.getDimensionID(world)/*world.getDimension()*/); // TODO COULD BE WRONG HERE
+		Create.logger.debug("Prepared Kinetic Network Space for " + WorldHelper.getDimensionID(world));
 	}
 
 	public void onUnloadWorld(WorldAccess world) {
 		networks.remove(world);
-		Create.logger.debug("Removed Kinetic Network Space for " + WorldHelper.getDimensionID(world)/*world.getDimension()*/);
+		Create.logger.debug("Removed Kinetic Network Space for " + WorldHelper.getDimensionID(world));
 	}
 
-	public KineticNetwork getOrCreateNetworkFor(KineticBlockEntity te) {
-		Long id = te.network;
+	public KineticNetwork getOrCreateNetworkFor(KineticBlockEntity be) {
+		Long id = be.network;
 		KineticNetwork network;
-		Map<Long, KineticNetwork> map = networks.get(te.getWorld());
+		Map<Long, KineticNetwork> map = networks.get(be.getWorld());
 		if (id == null)
 			return null;
 
 		if (!map.containsKey(id)) {
 			network = new KineticNetwork();
-			network.id = te.network;
+			network.id = be.network;
 			map.put(id, network);
 		}
 		network = map.get(id);

@@ -2,9 +2,11 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltSlope;
 import com.simibubi.create.foundation.utility.DirectionHelper;
+import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Attachment;
@@ -12,6 +14,7 @@ import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
@@ -64,33 +67,31 @@ public class StructureTransform {
 
 	}
 
-	/**
-	 * private BlockState rotateChassis(BlockState state) {
-	 * if (rotation == BlockRotation.NONE)
-	 * return state;
-	 * <p>
-	 * BlockState rotated = state.with(AXIS, transformAxis(state.get(AXIS)));
-	 * AbstractChassisBlock block = (AbstractChassisBlock) state.getBlock();
-	 * <p>
-	 * for (Direction face : Iterate.directions) {
-	 * BooleanProperty glueableSide = block.getGlueableSide(rotated, face);
-	 * if (glueableSide != null)
-	 * rotated = rotated.with(glueableSide, false);
-	 * }
-	 * <p>
-	 * for (Direction face : Iterate.directions) {
-	 * BooleanProperty glueableSide = block.getGlueableSide(state, face);
-	 * if (glueableSide == null || !state.get(glueableSide))
-	 * continue;
-	 * Direction rotatedFacing = transformFacing(face);
-	 * BooleanProperty rotatedGlueableSide = block.getGlueableSide(rotated, rotatedFacing);
-	 * if (rotatedGlueableSide != null)
-	 * rotated = rotated.with(rotatedGlueableSide, true);
-	 * }
-	 * <p>
-	 * return rotated;
-	 * }
-	 */
+ 	private BlockState rotateChassis(BlockState state) {
+ 		if (rotation == BlockRotation.NONE)
+			return state;
+
+ 		BlockState rotated = state.with(AXIS, transformAxis(state.get(AXIS)));
+	 	AbstractChassisBlock block = (AbstractChassisBlock) state.getBlock();
+
+	 	for (Direction face : Iterate.directions) {
+	 		BooleanProperty glueableSide = block.getGlueableSide(rotated, face);
+			if (glueableSide != null)
+	 			rotated = rotated.with(glueableSide, false);
+		}
+
+		for (Direction face : Iterate.directions) {
+ 			BooleanProperty glueableSide = block.getGlueableSide(state, face);
+	 		if (glueableSide == null || !state.get(glueableSide))
+	 			continue;
+	 		Direction rotatedFacing = transformFacing(face);
+	 		BooleanProperty rotatedGlueableSide = block.getGlueableSide(rotated, rotatedFacing);
+	 		if (rotatedGlueableSide != null)
+	 			rotated = rotated.with(rotatedGlueableSide, true);
+	 	}
+
+	 	return rotated;
+ 	}
 
 	public static StructureTransform fromBuffer(PacketByteBuf buffer) {
 		BlockPos readBlockPos = buffer.readBlockPos();
@@ -136,8 +137,8 @@ public class StructureTransform {
 			return state.rotate(rotation);
 		}
 
-		/**if (block instanceof AbstractChassisBlock) TODO AbstractChassisBlock CHECK
-		 return rotateChassis(state);*/
+		if (block instanceof AbstractChassisBlock)
+			return rotateChassis(state);
 
 		if (block instanceof HorizontalFacingBlock) {
 			Direction stateFacing = state.get(WallMountedBlock.FACING);
