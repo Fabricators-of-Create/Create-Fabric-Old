@@ -2,16 +2,12 @@ package com.simibubi.create.content.contraptions;
 
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.content.contraptions.relays.encased.DirectionalShaftHalvesBlockEntity;
-import com.simibubi.create.content.contraptions.relays.encased.SplitShaftBlockEntity;
-import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 import java.util.LinkedList;
@@ -67,15 +63,15 @@ public class RotationPropagator {
 			return custom;
 
 		// Axis <-> Axis
-		if (connectedByAxis) {
+		/**if (connectedByAxis) { TODO AXIS <-> AXIS
 		 float axisModifier = getAxisModifier(to, direction.getOpposite());
 		 if (axisModifier != 0)
 		 axisModifier = 1 / axisModifier;
 		 return getAxisModifier(from, direction) * axisModifier;
-		 }
+		 }*/
 
 		// Attached Encased Belts
-		/*if (fromBlock instanceof EncasedBeltBlock && toBlock instanceof EncasedBeltBlock) { TODO ENCASED BELT BLOCK
+		/**if (fromBlock instanceof EncasedBeltBlock && toBlock instanceof EncasedBeltBlock) { TODO ENCASED BELT BLOCK
 		 boolean connected = EncasedBeltBlock.areBlocksConnected(stateFrom, stateTo, direction);
 		 return connected ? EncasedBeltBlock.getRotationSpeedModifier(from, to) : 0;
 		 }*/
@@ -118,7 +114,7 @@ public class RotationPropagator {
 		final BlockState stateTo = to.getCachedState();
 
 		// Rotation Speed Controller <-> Large Gear
-		/*if (isLargeCogToSpeedController(stateFrom, stateTo, to.getPos() TODO SPEED CONTROLLER CHECK THING
+		/**if (isLargeCogToSpeedController(stateFrom, stateTo, to.getPos() TODO SPEED CONTROLLER CHECK THING
 		 .subtract(from.getPos())))
 		 return SpeedControllerTileEntity.getConveyedSpeed(from, to, true);
 		 if (isLargeCogToSpeedController(stateTo, stateFrom, from.getPos()
@@ -148,20 +144,20 @@ public class RotationPropagator {
 		return true;
 	}
 
-	private static float getAxisModifier(KineticBlockEntity te, Direction direction) {
-		if (!te.hasSource() || !(te instanceof DirectionalShaftHalvesBlockEntity))
+	/*private static float getAxisModifier(KineticTileEntity te, Direction direction) {
+		if (!te.hasSource() || !(te instanceof DirectionalShaftHalvesTileEntity))
 			return 1;
-		Direction source = ((DirectionalShaftHalvesBlockEntity) te).getSourceFacing();
+		Direction source = ((DirectionalShaftHalvesTileEntity) te).getSourceFacing();
 
-		if (te instanceof GearboxBlockEntity)
+		if (te instanceof GearboxTileEntity)
 			return direction.getAxis() == source.getAxis() ? direction == source ? 1 : -1
 				: direction.getDirection() == source.getDirection() ? -1 : 1;
 
-		if (te instanceof SplitShaftBlockEntity)
-			return ((SplitShaftBlockEntity) te).getRotationSpeedModifier(direction);
+		if (te instanceof SplitShaftTileEntity)
+			return ((SplitShaftTileEntity) te).getRotationSpeedModifier(direction);
 
 		return 1;
-	}
+	}*/
 
 	private static boolean isLargeToSmallCog(BlockState from, BlockState to, Rotating defTo, BlockPos diff) {
 		Direction.Axis axisFrom = from.get(AXIS);
@@ -178,7 +174,7 @@ public class RotationPropagator {
 		return true;
 	}
 
-	/*private static boolean isLargeCogToSpeedController(BlockState from, BlockState to, BlockPos diff) { todo: speed controller
+	/*private static boolean isLargeCogToSpeedController(BlockState from, BlockState to, BlockPos diff) {
 		if (!isLargeCog(from) || !AllBlocks.ROTATION_SPEED_CONTROLLER.has(to))
 			return false;
 		if (!diff.equals(BlockPos.ZERO.down()))
@@ -217,7 +213,7 @@ public class RotationPropagator {
 		for (KineticBlockEntity neighbourTE : getConnectedNeighbours(currentTE)) {
 			float speedOfCurrent = currentTE.getTheoreticalSpeed();
 			float speedOfNeighbour = neighbourTE.getTheoreticalSpeed();
-			float newSpeed = getConveyedSpeed(currentTE, neighbourTE); // todo
+			float newSpeed = getConveyedSpeed(currentTE, neighbourTE);
 			float oppositeSpeed = getConveyedSpeed(neighbourTE, currentTE);
 
 			if (newSpeed == 0 && oppositeSpeed == 0)
@@ -371,7 +367,7 @@ public class RotationPropagator {
 		if (!(neighbourTE instanceof KineticBlockEntity)) return null;
 		KineticBlockEntity neighbourKbe = (KineticBlockEntity) neighbourTE;
 		if (!(neighbourKbe.getCachedState().getBlock() instanceof Rotating)) return null;
-		if (!isConnected(currentTE, neighbourKbe) && !isConnected(neighbourKbe, currentTE)) return neighbourKbe;
+		if (!isConnected(currentTE, neighbourKbe) && !isConnected(neighbourKbe, currentTE)) return null;
 		return neighbourKbe;
 	}
 
@@ -399,7 +395,7 @@ public class RotationPropagator {
 		List<BlockPos> neighbours = new LinkedList<>();
 
 		if (!be.getWorld()
-			.isRegionLoaded(be.getPos().subtract(new Vec3i(1, 1, 1)), be.getPos().add(new Vec3i(1, 1, 1)))) // think i fixed this
+			.isRegionLoaded(be.getPos(), BlockPos.fromLong(1))) // TODO COULD BE COMPLETELY WRONG
 			return neighbours;
 
 		for (Direction facing : Iterate.directions)

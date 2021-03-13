@@ -4,13 +4,10 @@ import java.util.Iterator;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
-import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.config.CClient;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.OverlayTexture;
@@ -67,10 +64,10 @@ public class BlockEntityRenderHelper {
 				
 				String message = "BlockEntity " + BlockEntityType.getId(blockEntity.getType()).toString()
 						+ " didn't want to render while moved.\n";
-				if (CClient.explainRenderErrors) { //no idea if this works
-					Create.logger.error(message, e);
-					continue;
-				}
+//				if (AllConfigs.CLIENT.explainRenderErrors.get()) { TODO FIX CONFIG
+//					Create.logger.error(message, e);
+//					continue;
+//				}
 				
 				Create.logger.error(message);
 				continue;
