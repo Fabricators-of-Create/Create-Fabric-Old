@@ -11,6 +11,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 import java.util.LinkedList;
@@ -370,7 +371,7 @@ public class RotationPropagator {
 		if (!(neighbourTE instanceof KineticBlockEntity)) return null;
 		KineticBlockEntity neighbourKbe = (KineticBlockEntity) neighbourTE;
 		if (!(neighbourKbe.getCachedState().getBlock() instanceof Rotating)) return null;
-		if (!isConnected(currentTE, neighbourKbe) && !isConnected(neighbourKbe, currentTE)) return null;
+		if (!isConnected(currentTE, neighbourKbe) && !isConnected(neighbourKbe, currentTE)) return neighbourKbe;
 		return neighbourKbe;
 	}
 
@@ -398,7 +399,7 @@ public class RotationPropagator {
 		List<BlockPos> neighbours = new LinkedList<>();
 
 		if (!be.getWorld()
-			.isRegionLoaded(be.getPos(), BlockPos.fromLong(1))) // TODO COULD BE COMPLETELY WRONG
+			.isRegionLoaded(be.getPos().subtract(new Vec3i(1, 1, 1)), be.getPos().add(new Vec3i(1, 1, 1)))) // think i fixed this
 			return neighbours;
 
 		for (Direction facing : Iterate.directions)

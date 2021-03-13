@@ -8,6 +8,7 @@ import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.Nullable;
@@ -126,9 +127,9 @@ public abstract class GhostBlockRenderer {
 		static void quad(float alpha, VertexConsumer vb, MatrixStack.Entry p_227890_1_, BakedQuad p_227890_2_, float[] p_227890_3_, float p_227890_4_, float p_227890_5_, float p_227890_6_, int[] p_227890_7_, int p_227890_8_) {
 			int[] aint = p_227890_2_.getVertexData();
 			Vec3i vec3i = p_227890_2_.getFace().getVector();
-			//Vector3f vector3f = new Vector3f((float) vec3i.getX(), (float) vec3i.getY(), (float) vec3i.getZ());
+			Vector3f vector3f = new Vector3f((float) vec3i.getX(), (float) vec3i.getY(), (float) vec3i.getZ());
 			Matrix4f matrix4f = p_227890_1_.getModel();
-			//vector3f.transform(p_227890_1_.getNormal());
+			vector3f.transform(p_227890_1_.getNormal());
 			int j = aint.length / 8;
 
 			try (MemoryStack memorystack = MemoryStack.stackPush()) {
@@ -156,7 +157,7 @@ public abstract class GhostBlockRenderer {
 					Vector4f vector4f = new Vector4f(f, f1, f2, 1.0F);
 					vector4f.transform(matrix4f);
 					//vb.normal(vector3f, bytebuffer, p_227890_1_.getNormal()); todo
-					//vb.vertex(vector4f.getX(), vector4f.getY(), vector4f.getZ(), r, g, b, alpha, f9, f10, p_227890_8_, l, vector3f.getX(), vector3f.getY(), vector3f.getZ());
+					vb.vertex(vector4f.getX(), vector4f.getY(), vector4f.getZ(), r, g, b, alpha, f9, f10, p_227890_8_, l, vector3f.getX(), vector3f.getY(), vector3f.getZ());
 				}
 			}
 		}
