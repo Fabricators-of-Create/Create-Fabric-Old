@@ -87,7 +87,7 @@ public class GoggleOverlayRenderer {
 			return;
 
 		// check for piston poles if goggles are worn
-		/**BlockState state = world.getBlockState(pos);
+		/*BlockState state = world.getBlockState(pos);
 		 if (wearingGoggles && AllBlocks.PISTON_EXTENSION_POLE.has(state)) {
 		 Direction[] directions = Iterate.directionsInAxis(state.get(PistonExtensionPoleBlock.FACING)
 		 .getAxis());

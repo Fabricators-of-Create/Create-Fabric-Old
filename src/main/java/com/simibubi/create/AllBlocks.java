@@ -205,6 +205,8 @@ public class AllBlocks {
 
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "cart_assembler"), CART_ASSEMBLER);
 		Registry.register(Registry.ITEM, new Identifier(Create.ID, "cart_assembler"), new CartAssemblerBlockItem(CART_ASSEMBLER, new Item.Settings().group(Create.baseCreativeTab)));
-    }
+
+		//AllMovementBehaviours.addMovementBehaviour(new Identifier(Create.ID, "mechanical_bearing"), new StabilizedBearingMovementBehaviour());
+	}
 
 }

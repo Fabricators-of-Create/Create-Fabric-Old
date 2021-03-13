@@ -77,8 +77,6 @@ public class TooltipHelper {
 			words.add(word);
 		}
 
-		System.out.println(words.size());
-
 		// Apply hard wrap
 		TextRenderer font = MinecraftClient.getInstance().textRenderer;
 		List<String> lines = new LinkedList<>();
