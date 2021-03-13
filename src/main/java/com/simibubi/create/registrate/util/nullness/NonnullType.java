@@ -1,6 +1,6 @@
-package com.smellypengu.registrate.util.nullness;
+package com.simibubi.create.registrate.util.nullness;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.*;
 
@@ -10,6 +10,6 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE_PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Nullable
-public @interface NullableType {
+@NotNull
+public @interface NonnullType {
 }

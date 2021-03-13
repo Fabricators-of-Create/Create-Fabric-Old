@@ -1,4 +1,4 @@
-package com.smellypengu.registrate.util.nullness;
+package com.simibubi.create.registrate.util.nullness;
 
 import java.util.Objects;
 import java.util.function.Supplier;

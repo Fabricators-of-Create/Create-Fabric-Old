@@ -1,7 +1,7 @@
 package com.simibubi.create.foundation.block.render;
 
-import com.smellypengu.registrate.util.nullness.NonNullBiConsumer;
-import com.smellypengu.registrate.util.nullness.NonNullFunction;
+import com.simibubi.create.registrate.util.nullness.NonNullBiConsumer;
+import com.simibubi.create.registrate.util.nullness.NonNullFunction;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.model.BakedModel;
 import org.apache.commons.lang3.tuple.Pair;

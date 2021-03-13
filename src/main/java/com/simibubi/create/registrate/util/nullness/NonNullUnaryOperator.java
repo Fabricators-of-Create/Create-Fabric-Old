@@ -1,4 +1,4 @@
-package com.smellypengu.registrate.util.nullness;
+package com.simibubi.create.registrate.util.nullness;
 
 @FunctionalInterface
 public interface NonNullUnaryOperator<T> extends NonNullFunction<T, T> {

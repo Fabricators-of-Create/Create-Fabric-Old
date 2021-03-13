@@ -57,12 +57,12 @@ public enum AllSections {
 	 }
 
 	 static AllSections ofItem(Item item) {
-	 return Create.com.smellypengu.registrate()
+	 return Create.com.simibubi.create.registrate()
 	 .getSection(item);
 	 }
 
 	 static AllSections ofBlock(Block block) {
-	 return Create.com.smellypengu.registrate()
+	 return Create.com.simibubi.create.registrate()
 	 .getSection(block);
 	 }*/
 

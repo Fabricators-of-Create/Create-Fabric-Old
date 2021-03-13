@@ -1,4 +1,4 @@
-package com.smellypengu.registrate.util;
+package com.simibubi.create.registrate.util;
 
 import java.util.function.Supplier;
 

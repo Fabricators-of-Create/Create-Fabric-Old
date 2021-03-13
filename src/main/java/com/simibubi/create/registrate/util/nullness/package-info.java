@@ -1,4 +1,4 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-package com.smellypengu.registrate.util.nullness;
+package com.simibubi.create.registrate.util.nullness;

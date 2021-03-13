@@ -2,8 +2,8 @@ package com.simibubi.create.foundation.advancement;
 
 import com.google.common.collect.Maps;
 import com.simibubi.create.Create;
-import com.smellypengu.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.smellypengu.registrate.util.nullness.ParametersAreNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.advancement.criterion.Criterion;

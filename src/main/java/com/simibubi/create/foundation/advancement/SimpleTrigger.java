@@ -1,8 +1,8 @@
 package com.simibubi.create.foundation.advancement;
 
 import com.google.gson.JsonObject;
-import com.smellypengu.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.smellypengu.registrate.util.nullness.ParametersAreNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
