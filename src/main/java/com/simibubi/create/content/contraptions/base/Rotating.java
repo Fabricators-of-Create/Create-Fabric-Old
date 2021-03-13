@@ -100,7 +100,7 @@ public interface Rotating extends Wrenchable {
 		}
 
 		public static boolean isEnabled() {
-			return false; //!AllConfigs.SERVER.kinetics.disableStress.get();
+			return true; //!AllConfigs.SERVER.kinetics.disableStress.get();
 		}
 
 		public static Text getFormattedStressText(double stressPercent) {

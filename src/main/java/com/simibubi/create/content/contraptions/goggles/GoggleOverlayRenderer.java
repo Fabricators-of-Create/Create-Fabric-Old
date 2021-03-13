@@ -15,6 +15,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -57,7 +58,7 @@ public class GoggleOverlayRenderer {
 		boolean goggleAddedInformation = false;
 		boolean hoverAddedInformation = false;
 
-		List<String> tooltip = new ArrayList<>();
+		List<Text> tooltip = new ArrayList<>();
 
 		if (hasGoggleInformation && wearingGoggles) {
 			GoggleInformationProvider gte = (GoggleInformationProvider) te;
@@ -66,7 +67,7 @@ public class GoggleOverlayRenderer {
 
 		if (hasHoveringInformation) {
 			if (!tooltip.isEmpty())
-				tooltip.add("");
+				tooltip.add(LiteralText.EMPTY);
 			HoveringInformationProvider hte = (HoveringInformationProvider) te;
 			hoverAddedInformation = hte.addToTooltip(tooltip, mc.player.isSneaking());
 
@@ -119,13 +120,11 @@ public class GoggleOverlayRenderer {
 				.getScaledHeight());
 		int posX = tooltipScreen.width / 2 + 20; /** AllConfigs.CLIENT.overlayOffsetX.get(); TODO CONFIG*/
 		int posY = tooltipScreen.height / 2 + 0; /** AllConfigs.CLIENT.overlayOffsetY.get(); TODO CONFIG*/
-		// tooltipScreen.renderTooltip(tooltip, tooltipScreen.width / 2,
-		// tooltipScreen.height / 2);
-		tooltipScreen.renderTooltip(matrixStack, Text.of(String.valueOf(tooltip)), posX, posY);
+
+		tooltipScreen.renderTooltip(matrixStack, tooltip, posX, posY);
 
 		ItemStack item = AllItems.GOGGLES.getDefaultStack();
-		// GuiGameElement.of(item).at(tooltipScreen.width / 2 + 10, tooltipScreen.height
-		// / 2 - 16).render();
+
 		GuiGameElement.of(item)
 			.at(posX + 10, posY - 16)
 			.render();

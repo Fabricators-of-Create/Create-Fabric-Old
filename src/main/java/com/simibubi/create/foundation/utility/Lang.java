@@ -2,6 +2,8 @@ package com.simibubi.create.foundation.utility;
 
 import com.simibubi.create.Create;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
@@ -10,8 +12,8 @@ import java.util.Locale;
 
 public class Lang {
 
-	public static String translate(String key, Object... args) {
-		return createTranslationTextComponent(key, args).getString();
+	public static MutableText translate(String key, Object... args) {
+		return createTranslationTextComponent(key, args);
 	}
 
 	public static TranslatableText createTranslationTextComponent(String key, Object... args) {
@@ -22,8 +24,8 @@ public class Lang {
 		player.sendMessage(createTranslationTextComponent(key, args), true);
 	}
 
-	public static List<String> translatedOptions(String prefix, String... keys) {
-		List<String> result = new ArrayList<>(keys.length);
+	public static List<Text> translatedOptions(String prefix, String... keys) {
+		List<Text> result = new ArrayList<>(keys.length);
 		for (String key : keys) {
 			result.add(translate(prefix + "." + key));
 		}

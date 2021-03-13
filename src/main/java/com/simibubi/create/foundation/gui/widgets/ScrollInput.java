@@ -13,11 +13,11 @@ import java.util.function.Function;
 
 public class ScrollInput extends AbstractSimiWidget {
 
-	protected final String scrollToModify = Lang.translate("gui.scrollInput.scrollToModify");
-	protected final String shiftScrollsFaster = Lang.translate("gui.scrollInput.shiftScrollsFaster");
+	protected final Text scrollToModify = Lang.translate("gui.scrollInput.scrollToModify");
+	protected final Text shiftScrollsFaster = Lang.translate("gui.scrollInput.shiftScrollsFaster");
 	protected Consumer<Integer> onScroll;
 	protected int state;
-	protected String title = Lang.translate("gui.scrollInput.defaultTitle");
+	protected Text title = Lang.translate("gui.scrollInput.defaultTitle");
 	protected Label displayLabel;
 
 	protected int min, max;
@@ -54,7 +54,7 @@ public class ScrollInput extends AbstractSimiWidget {
 	}
 
 	public ScrollInput titled(MutableText title) {
-		this.title = title.getString();
+		this.title = title;
 		updateTooltip();
 		return this;
 	}
@@ -136,9 +136,9 @@ public class ScrollInput extends AbstractSimiWidget {
 
 	protected void updateTooltip() {
 		toolTip.clear();
-		toolTip.add(Text.of(title).copy().formatted(Formatting.BLUE));
-		toolTip.add(Text.of(scrollToModify).copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
-		toolTip.add(Text.of(shiftScrollsFaster).copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
+		toolTip.add(title.copy().formatted(Formatting.BLUE));
+		toolTip.add(scrollToModify.copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
+		toolTip.add(shiftScrollsFaster.copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
 	}
 
 }

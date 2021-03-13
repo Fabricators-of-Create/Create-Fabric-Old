@@ -31,7 +31,7 @@ public enum Tools {
 	}
 
 	public Text getDisplayName() {
-		return Text.of(Lang.translate("schematic.tool." + Lang.asId(name())));
+		return Lang.translate("schematic.tool." + Lang.asId(name()));
 	}
 
 	public AllIcons getIcon() {
@@ -46,7 +46,7 @@ public enum Tools {
 		return tools;
 	}
 
-	public List<String> getDescription() {
+	public List<Text> getDescription() {
 		return Lang.translatedOptions("schematic.tool." + Lang.asId(name()) + ".description", "0", "1", "2", "3");
 	}
 

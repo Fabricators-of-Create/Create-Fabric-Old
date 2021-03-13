@@ -3,32 +3,26 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.minecraft.util.Formatting.GRAY;
-
 public interface DisplayAssemblyExceptionsProvider {
-	default boolean addExceptionToTooltip(List<String> tooltip) {
+
+	default boolean addExceptionToTooltip(List<Text> tooltip) {
 		AssemblyException e = getLastAssemblyException();
 		if (e == null)
 			return false;
 
 		if (!tooltip.isEmpty())
-			tooltip.add("");
+			tooltip.add(LiteralText.EMPTY);
 
-		String spacing = GoggleInformationProvider.spacing;
-		tooltip.add(GoggleInformationProvider.spacing + Formatting.GOLD + Lang.translate("gui.assembly.exception"));
-
-		Arrays.stream(e.getFormattedText()
-			.split("\n"))
-			.forEach(l -> {
-				List<String> cutString = TooltipHelper.cutString(spacing + l, GRAY, Formatting.WHITE);
-				for (int i = 0; i < cutString.size(); i++)
-					tooltip.add((i == 0 ? "" : spacing) + cutString.get(i));
-			});
+		tooltip.add(GoggleInformationProvider.componentSpacing.copy().append(Lang.translate("gui.assembly.exception").formatted(Formatting.GOLD)));
+		String text = TooltipHelper.getUnformattedDeepText(e.component);
+		Arrays.stream(text.split("\n")).forEach(l -> tooltip.add(GoggleInformationProvider.componentSpacing.copy().append(new LiteralText(l).setStyle(e.component.getStyle()).formatted(Formatting.GRAY))));
 
 		return true;
 	}

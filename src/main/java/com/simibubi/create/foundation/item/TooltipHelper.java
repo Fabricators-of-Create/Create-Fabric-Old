@@ -6,44 +6,52 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.content.curiosities.tools.AllToolTiers;
+import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.font.TextVisitFactory;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.text.BreakIterator;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-import static net.minecraft.util.Formatting.*;
+import static net.minecraft.util.Formatting.GOLD;
+import static net.minecraft.util.Formatting.GRAY;
 
 public class TooltipHelper {
 
 	public static final int maxWidthPerLine = 200;
 	public static final Map<String, ItemDescription> cachedTooltips = new HashMap<>();
-	private static final Map<Item, Supplier<String>> tooltipReferrals = new HashMap<>();
 	public static Language cachedLanguage;
 	private static boolean gogglesMode;
+	private static final Map<Item, Supplier<String>> tooltipReferrals = new HashMap<>();
 
-	public static String holdShift(ItemDescription.Palette color, boolean highlighted) {
+	public static MutableText holdShift(Palette color, boolean highlighted) {
 		Formatting colorFormat = highlighted ? color.hColor : color.color;
-		return DARK_GRAY
-			+ Lang.translate("tooltip.holdKey", colorFormat + Lang.translate("tooltip.keyShift") + DARK_GRAY);
+		return Lang.translate("tooltip.holdKey", Lang.translate("tooltip.keyShift")
+			.formatted(colorFormat)).formatted(Formatting.DARK_GRAY);
 	}
 
-	public static void addHint(List<String> tooltip, String hintKey, Object... messageParams) {
-		String spacing = GoggleInformationProvider.spacing;
-		tooltip.add(spacing + GOLD + Lang.translate(hintKey + ".title"));
-		String hint = Lang.translate(hintKey);
-		List<String> cutString = TooltipHelper.cutString(spacing + hint, GRAY, WHITE);
-		for (int i = 0; i < cutString.size(); i++)
-			tooltip.add((i == 0 ? "" : spacing) + cutString.get(i));
+	public static void addHint(List<Text> tooltip, String hintKey, Object... messageParams) {
+		Text spacing = GoggleInformationProvider.componentSpacing;
+		tooltip.add(spacing.copy().append(Lang.translate(hintKey + ".title")).formatted(GOLD));
+		Text hint = Lang.translate(hintKey);
+		List<Text> cutComponent = TooltipHelper.cutTextComponent(hint, GRAY, Formatting.WHITE);
+		for (Text component : cutComponent) tooltip.add(spacing.copy().append(component));
 	}
-
+	
 	public static void referTo(ItemConvertible item, Supplier<? extends ItemConvertible> itemWithTooltip) {
 		tooltipReferrals.put(item.asItem(), () -> itemWithTooltip.get()
 			.asItem()
@@ -54,12 +62,14 @@ public class TooltipHelper {
 		tooltipReferrals.put(item.asItem(), () -> string);
 	}
 
-	public static List<String> cutString(String s, Formatting defaultColor, Formatting highlightColor) {
-		return cutString(s, defaultColor, highlightColor, 0);
+	@Deprecated
+	public static List<String> cutString(Text s, Formatting defaultColor, Formatting highlightColor) {
+		return cutString(s.asString(), defaultColor, highlightColor, 0);
 	}
 
+	@Deprecated
 	public static List<String> cutString(String s, Formatting defaultColor, Formatting highlightColor,
-										 int indent) {
+		int indent) {
 		// Apply markup
 		String markedUp = s.replaceAll("_([^_]+)_", highlightColor + "$1" + defaultColor);
 
@@ -71,7 +81,6 @@ public class TooltipHelper {
 		BreakIterator iterator = BreakIterator.getLineInstance(locale);
 		iterator.setText(markedUp);
 		int start = iterator.first();
-
 		for (int end = iterator.next(); end != BreakIterator.DONE; start = end, end = iterator.next()) {
 			String word = markedUp.substring(start, end);
 			words.add(word);
@@ -109,10 +118,132 @@ public class TooltipHelper {
 		for (String line : lines) {
 			String formattedLine = format + lineStart + line;
 			formattedLines.add(formattedLine);
-			format = Formatting.strip(formattedLine); // TODO COULD BE WRONG
+//			format = TextFormatting.getFormatString(formattedLine);
 		}
 		return formattedLines;
 	}
+
+	public static List<Text> cutStringTextComponent(String c, Formatting defaultColor,
+		Formatting highlightColor) {
+		return cutTextComponent(new LiteralText(c), defaultColor, highlightColor, 0);
+	}
+
+	public static List<Text> cutTextComponent(Text c, Formatting defaultColor,
+		Formatting highlightColor) {
+		return cutTextComponent(c, defaultColor, highlightColor, 0);
+	}
+
+	public static List<Text> cutStringTextComponent(String c, Formatting defaultColor,
+		Formatting highlightColor, int indent) {
+		return cutTextComponent(new LiteralText(c), defaultColor, highlightColor, indent);
+	}
+
+	public static List<Text> cutTextComponent(Text c, Formatting defaultColor,
+		Formatting highlightColor, int indent) {
+		String s = getUnformattedDeepText(c);
+		
+		// Apply markup
+		String markedUp = s;//.replaceAll("_([^_]+)_", highlightColor + "$1" + defaultColor); do not fix this, it's from the original mod.
+
+		String localeStr = MinecraftClient.getInstance().getLanguageManager().getLanguage().getCode();
+		Locale locale = Locale.forLanguageTag(localeStr.replace("_", "-"));
+
+		// Split words
+		List<String> words = new LinkedList<>();
+		BreakIterator iterator = BreakIterator.getLineInstance(locale);
+		iterator.setText(markedUp);
+		int start = iterator.first();
+		for (int end = iterator.next(); end != BreakIterator.DONE; start = end, end = iterator.next()) {
+			String word = markedUp.substring(start, end);
+			words.add(word);
+		}
+
+		// Apply hard wrap
+		TextRenderer font = MinecraftClient.getInstance().textRenderer;
+		List<String> lines = new LinkedList<>();
+		StringBuilder currentLine = new StringBuilder();
+		int width = 0;
+		for (String word : words) {
+			int newWidth = font.getWidth(word.replaceAll("_", ""));
+			if (width + newWidth > maxWidthPerLine) {
+				if (width > 0) {
+					String line = currentLine.toString();
+					lines.add(line);
+					currentLine = new StringBuilder();
+					width = 0;
+				} else {
+					lines.add(word);
+					continue;
+				}
+			}
+			currentLine.append(word);
+			width += newWidth;
+		}
+		if (width > 0) {
+			lines.add(currentLine.toString());
+		}
+
+		// Format
+		MutableText lineStart = new LiteralText(Strings.repeat(" ", indent));
+		lineStart.formatted(defaultColor);
+		List<Text> formattedLines = new ArrayList<>(lines.size());
+		Couple<Formatting> f = Couple.create(highlightColor, defaultColor);
+
+		boolean currentlyHighlighted = false;
+		for (String string : lines) {
+			MutableText currentComponent = lineStart.copy();
+			String[] split = string.split("_");
+			for (String part : split) {
+				currentComponent.append(new LiteralText(part).formatted(f.get(currentlyHighlighted)));
+				currentlyHighlighted = !currentlyHighlighted;
+			}
+			
+			formattedLines.add(currentComponent);
+			currentlyHighlighted = !currentlyHighlighted;
+		}
+		
+		
+		return formattedLines;
+	}
+	
+//	public static List<ITextComponent> cutTextComponentOld(ITextComponent c, TextFormatting defaultColor,
+//		TextFormatting highlightColor, int indent) {
+//		IFormattableTextComponent lineStart = StringTextComponent.EMPTY.copy();
+//		for (int i = 0; i < indent; i++)
+//			lineStart.append(" ");
+//		lineStart.formatted(defaultColor);
+//
+//		List<ITextComponent> lines = new ArrayList<>();
+//		String rawText = getUnformattedDeepText(c);
+//		String[] words = rawText.split(" ");
+//		String word;
+//		IFormattableTextComponent currentLine = lineStart.copy();
+//
+//		boolean firstWord = true;
+//		boolean lastWord;
+//
+//		// Apply hard wrap
+//		for (int i = 0; i < words.length; i++) {
+//			word = words[i];
+//			lastWord = i == words.length - 1;
+//
+//			if (!lastWord && !firstWord && getComponentLength(currentLine) + word.length() > maxCharsPerLine) {
+//				lines.add(currentLine);
+//				currentLine = lineStart.copy();
+//				firstWord = true;
+//			}
+//
+//			currentLine.append(new StringTextComponent((firstWord ? "" : " ") + word.replace("_", ""))
+//				.formatted(word.matches("_([^_]+)_") ? highlightColor : defaultColor));
+//			firstWord = false;
+//		}
+//
+//		if (!firstWord) {
+//			lines.add(currentLine);
+//		}
+//
+//		return lines;
+//	}
 
 	private static void checkLocale() {
 		Language currentLanguage = MinecraftClient.getInstance()
@@ -163,21 +294,21 @@ public class TooltipHelper {
 
 	private static ItemDescription buildToolTip(String translationKey, ItemStack stack) {
 		/*AllSections module = AllSections.of(stack);
-		 if (I18n.translate(translationKey)
-		 .equals("WIP"))
-		 return new WipScription(module.getTooltipPalette());*/
+		if (I18n.translate(translationKey)
+			.equals("WIP"))
+			return new WipScription(module.getTooltipPalette());*/
 
-		ItemDescription tooltip = new ItemDescription(null); /*new ItemDescription(module.getTooltipPalette());*/
+		ItemDescription tooltip = new ItemDescription(null);
 		String summaryKey = translationKey + ".summary";
 
 		// Summary
 		if (I18n.hasTranslation(summaryKey))
-			tooltip = tooltip.withSummary(I18n.translate(summaryKey));
+			tooltip = tooltip.withSummary(new LiteralText(I18n.translate(summaryKey)));
 
 		// Requirements
 		if (stack.getItem() instanceof BlockItem) {
 			BlockItem item = (BlockItem) stack.getItem();
-			if (item.getBlock() instanceof Rotating /*|| item.getBlock() instanceof EngineBlock*/) { // TODO EngineBlock CHECK
+			if (item.getBlock() instanceof Rotating /*|| item.getBlock() instanceof EngineBlock*/) {
 				tooltip = tooltip.withKineticStats(item.getBlock());
 			}
 		}
@@ -216,6 +347,23 @@ public class TooltipHelper {
 		if (tooltipReferrals.containsKey(item))
 			return tooltipReferrals.get(item).get() + ".tooltip";
 		return item.getTranslationKey(stack) + ".tooltip";
+	}
+
+	private static int getComponentLength(Text component) {
+		AtomicInteger l = new AtomicInteger();
+		TextVisitFactory.visitFormatted(component, Style.EMPTY, (s, style, charConsumer) -> {
+			l.getAndIncrement();
+			return true;
+		});
+		return l.get();
+	}
+
+	public static String getUnformattedDeepText(Text component) {
+		StringBuilder b = new StringBuilder();
+		b.append(component.getString());
+		component.getSiblings()
+			.forEach(c -> b.append(getUnformattedDeepText(c)));
+		return b.toString();
 	}
 
 }

@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -92,7 +93,7 @@ public interface ItemAttribute {
 	}
 
 	@Environment(EnvType.CLIENT)
-	default String format(boolean inverted) {
+	default Text format(boolean inverted) {
 		return Lang.translate("item_attributes." + getTranslationKey() + (inverted ? ".inverted" : ""),
 			getTranslationParameters());
 	}
@@ -262,7 +263,7 @@ public interface ItemAttribute {
 
 		@Override
 		@Environment(EnvType.CLIENT)
-		public String format(boolean inverted) {
+		public Text format(boolean inverted) {
 			return Lang.translate("item_attributes." + getTranslationKey() + (inverted ? ".inverted" : ""),
 				group.getTranslationKey());
 		}
