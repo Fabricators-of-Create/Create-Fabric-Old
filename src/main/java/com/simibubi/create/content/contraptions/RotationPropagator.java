@@ -2,6 +2,9 @@ package com.simibubi.create.content.contraptions;
 
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.content.contraptions.relays.encased.DirectionalShaftHalvesBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.SplitShaftBlockEntity;
+import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -63,12 +66,12 @@ public class RotationPropagator {
 			return custom;
 
 		// Axis <-> Axis
-		/**if (connectedByAxis) { TODO AXIS <-> AXIS
-		 float axisModifier = getAxisModifier(to, direction.getOpposite());
-		 if (axisModifier != 0)
-		 axisModifier = 1 / axisModifier;
-		 return getAxisModifier(from, direction) * axisModifier;
-		 }*/
+		if (connectedByAxis) {
+	 		float axisModifier = getAxisModifier(to, direction.getOpposite());
+	 		if (axisModifier != 0)
+		 	axisModifier = 1 / axisModifier;
+			 return getAxisModifier(from, direction) * axisModifier;
+	 	}
 
 		// Attached Encased Belts
 		/**if (fromBlock instanceof EncasedBeltBlock && toBlock instanceof EncasedBeltBlock) { TODO ENCASED BELT BLOCK
@@ -144,20 +147,20 @@ public class RotationPropagator {
 		return true;
 	}
 
-	/*private static float getAxisModifier(KineticTileEntity te, Direction direction) {
-		if (!te.hasSource() || !(te instanceof DirectionalShaftHalvesTileEntity))
+	private static float getAxisModifier(KineticBlockEntity te, Direction direction) {
+		if (!te.hasSource() || !(te instanceof DirectionalShaftHalvesBlockEntity))
 			return 1;
-		Direction source = ((DirectionalShaftHalvesTileEntity) te).getSourceFacing();
+		Direction source = ((DirectionalShaftHalvesBlockEntity) te).getSourceFacing();
 
-		if (te instanceof GearboxTileEntity)
+		if (te instanceof GearboxBlockEntity)
 			return direction.getAxis() == source.getAxis() ? direction == source ? 1 : -1
 				: direction.getDirection() == source.getDirection() ? -1 : 1;
 
-		if (te instanceof SplitShaftTileEntity)
-			return ((SplitShaftTileEntity) te).getRotationSpeedModifier(direction);
+		if (te instanceof SplitShaftBlockEntity)
+			return ((SplitShaftBlockEntity) te).getRotationSpeedModifier(direction);
 
 		return 1;
-	}*/
+	}
 
 	private static boolean isLargeToSmallCog(BlockState from, BlockState to, Rotating defTo, BlockPos diff) {
 		Direction.Axis axisFrom = from.get(AXIS);

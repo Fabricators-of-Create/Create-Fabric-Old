@@ -1,7 +1,9 @@
 package com.simibubi.create.foundation.utility;
 
-import java.util.UUID;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.util.math.Vector3f;
+
+import java.util.UUID;
 
 public class ColorHelper {
 
@@ -46,14 +48,14 @@ public class ColorHelper {
 		int g = (color >> 8) & 0xFF;
 		int b = color & 0xFF;
 
-		//RenderSystem.color4f(r / 256f, g / 256f, b / 256f, 1);
+		RenderSystem.color4f(r / 256f, g / 256f, b / 256f, 1);
 	}
 
-	/*public static void glResetColor() {
+	public static void glResetColor() {
 		RenderSystem.color4f(1, 1, 1, 1);
 	}
-*/
-	/*public static Vector3f getRGB(int color) {
+
+	public static Vector3f getRGB(int color) {
 		int r = (color >> 16);
 		int g = (color >> 8) & 0xFF;
 		int b = color & 0xFF;
@@ -61,7 +63,7 @@ public class ColorHelper {
 		Vector3f v = new Vector3f(r, g, b);
 		v.scale(1 / 256f);
 		return v; // TODO: ?????
-	}*/
+	}
 
 	public static int colorFromUUID(UUID uuid) {
 		if (uuid == null)

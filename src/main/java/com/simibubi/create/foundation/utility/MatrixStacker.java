@@ -1,6 +1,7 @@
 package com.simibubi.create.foundation.utility;
 
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.*;
 
 public class MatrixStacker {
@@ -16,13 +17,13 @@ public class MatrixStacker {
 		instance.ms = ms;
 		return instance;
 	}
-/*
+
 	public MatrixStacker rotate(double angle, Direction.Axis axis) {
 		Vector3f vec =
 			axis == Direction.Axis.X ? Vector3f.POSITIVE_X : axis == Direction.Axis.Y ? Vector3f.POSITIVE_Y : Vector3f.POSITIVE_Z;
 		return multiply(vec, angle);
-	}*/
-/*
+	}
+
 	public MatrixStacker rotateX(double angle) {
 		return multiply(Vector3f.POSITIVE_X, angle);
 	}
@@ -34,7 +35,7 @@ public class MatrixStacker {
 	public MatrixStacker rotateZ(double angle) {
 		return multiply(Vector3f.POSITIVE_Z, angle);
 	}
-*/
+
 	public MatrixStacker centre() {
 		return translate(center);
 	}
@@ -67,12 +68,12 @@ public class MatrixStacker {
 		ms.translate(xNudge, yNudge, zNudge);
 		return this;
 	}
-/*
+
 	private MatrixStacker multiply(Vector3f axis, double angle) {
 		if (angle == 0)
 			return this;
 		ms.multiply(axis.getDegreesQuaternion((float) angle));
 		return this;
 	}
-*/
+
 }

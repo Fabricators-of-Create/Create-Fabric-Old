@@ -1,15 +1,15 @@
 package com.simibubi.create.foundation.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
@@ -22,7 +22,7 @@ import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
 public class GuiGameElement {
-/*
+
 	public static GuiRenderBuilder of(ItemStack stack) {
 		return new GuiItemRenderBuilder(stack);
 	}
@@ -43,7 +43,7 @@ public class GuiGameElement {
 		return new GuiBlockStateRenderBuilder(fluid.getDefaultState()
 			.getBlockState()
 			.with(FluidBlock.LEVEL, 0));
-	}*/
+	}
 
 	public static abstract class GuiRenderBuilder {
 		double xBeforeScale, yBeforeScale;
