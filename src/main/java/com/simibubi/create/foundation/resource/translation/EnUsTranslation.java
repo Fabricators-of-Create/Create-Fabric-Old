@@ -15,6 +15,7 @@ public final class EnUsTranslation extends CreateTranslation {
 		addCuriosities(lang);
 		addFluids(lang);
 		addKinetics(lang);
+		addLogistics(lang);
 	}
 
 	private static void addClient(JLang lang) {
@@ -142,6 +143,25 @@ public final class EnUsTranslation extends CreateTranslation {
 		tooltip(lang, "highStressImpact", "[in Stress Units] Minimum stress impact to be considered 'high'", KINETICS);
 		tooltip(lang, "mediumCapacity", "[in Stress Units] Minimum added Capacity by sources to be considered 'medium'", KINETICS);
 		tooltip(lang, "highCapacity", "[in Stress Units] Minimum added Capacity by sources to be considered 'high'", KINETICS);
+	}
+
+	private static void addLogistics(JLang lang) {
+		final String LOGISTICS = "logistics";
+		text(lang, LOGISTICS, "Logistics");
+
+		// Option Names
+		text(lang, "defaultExtractionLimit", "Default Extraction Limit", LOGISTICS);
+		text(lang, "defaultExtractionTimer", "Default Extraction Timer", LOGISTICS);
+		text(lang, "psiTimeout", "PSI Timeout", LOGISTICS);
+		text(lang, "mechanicalArmRange", "Mechanical Arm Range", LOGISTICS);
+		text(lang, "linkRange", "Link Range", LOGISTICS);
+
+		// Tooltips
+		tooltip(lang, "defaultExtractionLimit", "The maximum amount of items a funnel pulls at a time without an applied filter.", LOGISTICS);
+		tooltip(lang, "defaultExtractionTimer", "The amount of ticks a funnel waits between item transferrals, when it is not re-activated by redstone.", LOGISTICS);
+		tooltip(lang, "psiTimeout", "The amount of ticks a portable storage interface waits for transfers until letting contraptions move along.", LOGISTICS);
+		tooltip(lang, "mechanicalArmRange", "Maximum distance in blocks a Mechanical Arm can reach across.", LOGISTICS);
+		tooltip(lang, "linkRange", "Maximum possible range in blocks of redstone link connections.", LOGISTICS);
 	}
 
 	/*
