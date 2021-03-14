@@ -1,5 +1,7 @@
 package me.pepperbell.reghelper;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -17,32 +19,36 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class BlockEntityTypeHelper<T extends BlockEntity> {
+public class BlockEntityTypeRegBuilder<T extends BlockEntity> {
 	private final Identifier identifier;
 	private final Supplier<T> supplier;
 	private Block[] validBlocks = new Block[0];
 	private Function<BlockEntityRenderDispatcher, BlockEntityRenderer<? super T>> rendererFactory;
-	private Consumer<BlockEntityType<T>> onRegister;
+	private Deque<Consumer<BlockEntityType<T>>> onRegister = new ArrayDeque<>();
 
-	private BlockEntityTypeHelper(Identifier identifier, Supplier<T> supplier) {
+	private BlockEntityTypeRegBuilder(Identifier identifier, Supplier<T> supplier) {
 		this.identifier = identifier;
 		this.supplier = supplier;
 	}
 
-	public BlockEntityTypeHelper<T> validBlocks(Block... blocks) {
+	public Identifier getId() {
+		return identifier;
+	}
+
+	public BlockEntityTypeRegBuilder<T> validBlocks(Block... blocks) {
 		validBlocks = ArrayUtils.addAll(validBlocks, blocks);
 		return this;
 	}
 
-	public BlockEntityTypeHelper<T> renderer(Supplier<Function<BlockEntityRenderDispatcher, BlockEntityRenderer<? super T>>> factorySupplier) {
+	public BlockEntityTypeRegBuilder<T> renderer(Supplier<Function<BlockEntityRenderDispatcher, BlockEntityRenderer<? super T>>> factorySupplier) {
 		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
 			rendererFactory = factorySupplier.get();
 		}
 		return this;
 	}
 
-	public BlockEntityTypeHelper<T> onRegister(Consumer<BlockEntityType<T>> consumer) {
-		this.onRegister = consumer;
+	public BlockEntityTypeRegBuilder<T> onRegister(Consumer<BlockEntityType<T>> consumer) {
+		onRegister.add(consumer);
 		return this;
 	}
 
@@ -54,13 +60,13 @@ public class BlockEntityTypeHelper<T extends BlockEntity> {
 			// For some reason this method does not allow the BER to render for a superclass of T
 			BlockEntityRendererRegistry.INSTANCE.register((BlockEntityType) type, (Function) rendererFactory);
 		}
-		if (onRegister != null) {
-			onRegister.accept(type);
+		for (Consumer<BlockEntityType<T>> consumer : onRegister) {
+			consumer.accept(type);
 		}
 		return type;
 	}
 
-	public static <T extends BlockEntity> BlockEntityTypeHelper<T> create(Identifier identifier, Supplier<T> supplier) {
-		return new BlockEntityTypeHelper<T>(identifier, supplier);
+	public static <T extends BlockEntity> BlockEntityTypeRegBuilder<T> create(Identifier identifier, Supplier<T> supplier) {
+		return new BlockEntityTypeRegBuilder<T>(identifier, supplier);
 	}
 }
