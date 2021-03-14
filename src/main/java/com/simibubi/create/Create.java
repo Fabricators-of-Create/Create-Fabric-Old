@@ -21,14 +21,14 @@ import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 public class Create implements ModInitializer  {
-    public static final String ID = "create";
-    public static final String NAME = "Create";
+	public static final String ID = "create";
+	public static final String NAME = "Create";
 
 	public static Logger logger = LogManager.getLogger();
 	public static ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(id("base"), () -> new ItemStack(AllBlocks.COGWHEEL));
 	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(id("palettes"), () -> new ItemStack(AllBlocks.ZINC_BLOCK));
 
-    public static TorquePropagator torquePropagator;
+	public static TorquePropagator torquePropagator;
 
 
 	@Override
@@ -43,13 +43,13 @@ public class Create implements ModInitializer  {
 		AllMovementBehaviours.register();
 		AllConfigs.register();
 
-        AllPackets.registerPackets();
-        
-        CommonEvents.register();
+		AllPackets.registerPackets();
+		
+		CommonEvents.register();
 
-        AllWorldFeatures.reload();
+		AllWorldFeatures.reload();
 
-        torquePropagator = new TorquePropagator();
+		torquePropagator = new TorquePropagator();
 		TranslationsHolder.initialize();
 
 		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
@@ -57,11 +57,11 @@ public class Create implements ModInitializer  {
 		AllTriggers.register();
 	}
 
-    public static Identifier id(String path) {
-        return new Identifier(ID, path);
-    }
-    public static AllConfigs getConfig() {
-    	AllConfigs config = AutoConfig.getConfigHolder(AllConfigs.class).getConfig();
+	public static Identifier id(String path) {
+		return new Identifier(ID, path);
+	}
+	public static AllConfigs getConfig() {
+		AllConfigs config = AutoConfig.getConfigHolder(AllConfigs.class).getConfig();
 		try {
 			config.validatePostLoad(); // The best way to validate :)
 		} catch (ConfigData.ValidationException e) {
