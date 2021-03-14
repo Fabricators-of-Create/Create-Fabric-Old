@@ -14,6 +14,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -105,9 +106,8 @@ public class KineticBlockEntityRenderer extends SafeBlockEntityRenderer<KineticB
 	protected void renderSafe(KineticBlockEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer, int light, int overlay) {
 		if (FastRenderDispatcher.available(te.getWorld())) return;
 
-		for (RenderLayer type : RenderLayer.getBlockLayers())
-			//if (RenderLayers.canRenderInLayer(te.getCachedState(), type)) TODO DONT KNOW WHAT TO DO ABOUT THIS RenderLayers CHECK
-			renderRotatingBuffer(te, getRotatedModel(te), ms, buffer.getBuffer(type), light);
+		RenderLayer type = RenderLayers.getBlockLayer(te.getCachedState());
+		renderRotatingBuffer(te, getRotatedModel(te), ms, buffer.getBuffer(type), light);
 	}
 
 	protected BlockState getRenderedBlockState(KineticBlockEntity te) {
