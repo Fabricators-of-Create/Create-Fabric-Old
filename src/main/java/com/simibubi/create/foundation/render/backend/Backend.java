@@ -6,12 +6,11 @@ import com.simibubi.create.foundation.render.backend.gl.shader.*;
 import com.simibubi.create.foundation.render.backend.gl.versioned.GlFeatureCompat;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.TextureUtil;
-import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLCapabilities;
 import org.lwjgl.system.MemoryUtil;
 
@@ -22,7 +21,6 @@ import java.nio.FloatBuffer;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 
 public class Backend {
     public static final Boolean SHADER_DEBUG_OUTPUT = false;
@@ -82,40 +80,29 @@ public class Backend {
         return capabilities.OpenGL20;
     }
 
-    public static void init() {
+    public static void init(MinecraftClient client) {
         // Can be null when running datagenerators due to the unfortunate time we call this
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc == null) return;
 
-        ResourceManager manager = mc.getResourceManager();
+        ResourceManager manager = client.getResourceManager();
 
-        if (manager instanceof ReloadableResourceManager) {
-            /*ResourceReloadListener listener = Backend::onResourceManagerReload;
-            ((ReloadableResourceManager) manager).registerListener(listener);*/
-        }
-    }
+		capabilities = GL.createCapabilities();
+		compat = new GlFeatureCompat(capabilities);
 
-    private static void onResourceManagerReload(ResourceManager manager, Predicate<ResourceType> predicate) {
-        /*if (predicate.test(ResourceType.SHADERS)) {
-            capabilities = GL.createCapabilities();
-            compat = new GlFeatureCompat(capabilities);
+		//OptifineHandler.refresh();
+		refresh();
 
-            //OptifineHandler.refresh(); TODO OPTIFINE THING
-            refresh();
+		if (gl20()) {
 
-            if (gl20()) {
-
-                programs.values().forEach(ProgramGroup::delete);
-                programs.clear();
-                for (ProgramSpec<?> shader : registry.values()) {
-                    loadProgram(manager, shader);
-                }
-            }
-        }*/
+			programs.values().forEach(ProgramGroup::delete);
+			programs.clear();
+			for (ProgramSpec<?> shader : registry.values()) {
+				loadProgram(manager, shader);
+			}
+		}
     }
 
     public static void refresh() {
-        enabled = true; //TODO CONFIG THING PLS HELP AllConfigs.CLIENT.experimentalRendering.get() && !OptifineHandler.usingShaders();
+        enabled = true; //TODO CONFIG AllConfigs.CLIENT.experimentalRendering.get() && !OptifineHandler.usingShaders();
     }
 
     private static <P extends GlProgram, S extends ProgramSpec<P>> void loadProgram(ResourceManager manager, S programSpec) {

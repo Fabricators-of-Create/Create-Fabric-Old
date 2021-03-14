@@ -1,7 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlock;
@@ -39,8 +38,8 @@ public class BlockMovementTraits {
 		 	return true;
 		if (state.getHardness(world, pos) == -1)
 			return false;
-		if (AllTags.AllBlockTags.NON_MOVABLE.matches(state))
-			return false;
+		/*if (AllTags.AllBlockTags.NON_MOVABLE.matches(state))
+			return false;*/
 
 		// Move controllers only when they aren't moving
 		/*if (block instanceof MechanicalPistonBlock && state.get(MechanicalPistonBlock.STATE) != MechanicalPistonBlock.PistonState.MOVING)

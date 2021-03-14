@@ -1,13 +1,10 @@
 package com.simibubi.create.foundation.render;
 
-import java.util.Iterator;
-
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
-
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.OverlayTexture;
@@ -19,6 +16,8 @@ import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
+
+import java.util.Iterator;
 
 public class BlockEntityRenderHelper {
 
@@ -38,12 +37,12 @@ public class BlockEntityRenderHelper {
 			BlockEntity blockEntity = iterator.next();
 			//if (blockEntity instanceof IInstanceRendered) continue; // TODO: some things still need to render
 
-			/*BlockEntityRenderer<BlockEntity> renderer = BlockEntityRenderDispatcher.INSTANCE.get(blockEntity);
+			BlockEntityRenderer<BlockEntity> renderer = BlockEntityRenderDispatcher.INSTANCE.get(blockEntity);
 			if (renderer == null) {
 				iterator.remove();
 				continue;
 			}
-*/
+
 			try {
 				BlockPos pos = blockEntity.getPos();
 				ms.push();
@@ -55,8 +54,8 @@ public class BlockEntityRenderHelper {
 				BlockPos lightPos = new BlockPos(vec.getX(), vec.getY(), vec.getZ());
 				int worldLight = ContraptionRenderDispatcher.getLightOnContraption(world, renderWorld, pos, lightPos);
 
-				//renderer.render(blockEntity, pt, ms, buffer, worldLight,
-								//OverlayTexture.DEFAULT_UV);
+				renderer.render(blockEntity, pt, ms, buffer, worldLight,
+								OverlayTexture.DEFAULT_UV);
 				ms.pop();
 
 			} catch (Exception e) {

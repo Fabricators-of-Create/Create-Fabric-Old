@@ -20,7 +20,6 @@ import com.simibubi.create.foundation.render.backend.RenderWork;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
-
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -88,6 +87,8 @@ public class ClientEvents {
 	}
 
 	public static void onRenderWorld(WorldRenderContext context) {
+		ContraptionRenderDispatcher.renderTick();
+
 		Vec3d cameraPos = context.camera().getPos();
 
 		MatrixStack ms = context.matrixStack();

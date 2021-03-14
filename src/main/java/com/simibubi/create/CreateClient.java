@@ -17,6 +17,7 @@ import com.simibubi.create.foundation.utility.outliner.Outliner;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.resource.ReloadableResourceManager;
@@ -36,7 +37,8 @@ public class CreateClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientEvents.register();
 
-		Backend.init();
+		ClientLifecycleEvents.CLIENT_STARTED.register(Backend::init);
+		//Backend.init();
 
 		kineticRenderer = new KineticRenderer();
 

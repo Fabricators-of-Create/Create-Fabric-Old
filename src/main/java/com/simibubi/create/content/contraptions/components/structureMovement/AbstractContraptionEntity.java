@@ -291,7 +291,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 		if (!world.isClient) {
 			if (!stalledPreviously && contraption.stalled)
 				onContraptionStalled();
-			//dataManager.set(STALLED, contraption.stalled);
+			dataTracker.set(STALLED, contraption.stalled);
 			return;
 		}
 
@@ -343,7 +343,7 @@ public abstract class AbstractContraptionEntity extends Entity {
 
 	@Override
 	protected void initDataTracker() {
-		dataTracker.set(STALLED, false); // TODO PROBABLY RIGHT
+		dataTracker.startTracking(STALLED, false); // TODO PROBABLY RIGHT
 	}
 
 	@Override

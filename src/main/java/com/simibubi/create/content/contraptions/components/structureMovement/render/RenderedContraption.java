@@ -1,21 +1,9 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.render;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.lwjgl.opengl.GL11;
-
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.components.actors.ContraptionActorData;
-import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
-import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
+import com.simibubi.create.content.contraptions.components.structureMovement.*;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
@@ -23,7 +11,6 @@ import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
 import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
-
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -43,6 +30,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.light.LightingProvider;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class RenderedContraption {
 	public final PlacementSimulationWorld renderWorld;

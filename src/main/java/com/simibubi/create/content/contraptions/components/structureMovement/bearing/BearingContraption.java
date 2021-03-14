@@ -1,6 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.simibubi.create.AllTags.AllBlockTags;
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
@@ -56,8 +55,8 @@ public class BearingContraption extends Contraption {
 	@Override
 	public void addBlock(BlockPos pos, Pair<StructureBlockInfo, BlockEntity> capture) {
 		BlockPos localPos = pos.subtract(anchor);
-		if (!getBlocks().containsKey(localPos) && AllBlockTags.WINDMILL_SAILS.matches(capture.getKey().state))
-			sailBlocks++;
+		/*if (!getBlocks().containsKey(localPos) && AllBlockTags.WINDMILL_SAILS.matches(capture.getKey().state))
+			sailBlocks++;*/
 		super.addBlock(pos, capture);
 	}
 
