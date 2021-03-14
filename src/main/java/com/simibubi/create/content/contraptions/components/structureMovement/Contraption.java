@@ -132,7 +132,7 @@ public abstract class Contraption {
 		anchor = pos;
 
 		if (bounds == null)
-			bounds = new Box((BlockPos) BlockPos.ZERO);
+			bounds = new Box(BlockPos.ORIGIN);
 
 		/**if (!BlockMovementTraits.isBrittle(world.getBlockState(pos)))
 		 frontier.add(pos);
@@ -172,13 +172,13 @@ public abstract class Contraption {
 		}
 
 		// Gather itemhandlers of mounted storage
-		/**List<IItemHandlerModifiable> list = storage.values()
+		/*List<IItemHandlerModifiable> list = storage.values()
 		 .stream()
 		 .map(MountedStorage::getItemHandler)
 		 .collect(Collectors.toList());
 		 inventory = new CombinedInvWrapper(Arrays.copyOf(list.toArray(), list.size(), IItemHandlerModifiable[].class));*/
 
-		/**List<IFluidHandler> fluidHandlers = fluidStorage.values()
+		/*List<IFluidHandler> fluidHandlers = fluidStorage.values()
 		 .stream()
 		 .map(MountedFluidStorage::getFluidHandler)
 		 .collect(Collectors.toList());

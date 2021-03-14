@@ -14,7 +14,7 @@ public class GogglesItem extends Item {
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 	}
 
-	/**
+	/*
 	 * public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 	 * ItemStack itemstack = playerIn.getStackInHand(handIn);
 	 * EquipmentSlot equipmentslottype = MobEntity.getPreferredEquipmentSlot(itemstack);

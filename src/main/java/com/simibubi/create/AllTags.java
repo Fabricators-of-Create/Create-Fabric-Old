@@ -7,7 +7,7 @@ import net.minecraft.tag.BlockTags;
 
 // TODO FIX THIS WHOLE CLASS TAGS
 public class AllTags {
-	/*private static final CreateRegistrate REGISTRATE = Create.com.smellypengu.registrate()
+	/*private static final CreateRegistrate REGISTRATE = Create.com.simibubi.create.registrate()
 		.itemGroup(() -> Create.baseCreativeTab);*/
 
 	/*public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, ItemBuilder<BlockItem, BlockBuilder<T, P>>> tagBlockAndItem(

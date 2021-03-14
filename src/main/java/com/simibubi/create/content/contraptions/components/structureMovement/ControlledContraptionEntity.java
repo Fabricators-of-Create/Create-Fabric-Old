@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.simibubi.create.AllEntityTypes;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingContraption;
 import com.simibubi.create.foundation.utility.CNBTHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -55,10 +56,8 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 	@Override
 	protected void setContraption(Contraption contraption) {
 		super.setContraption(contraption);
-		/**if (contraption instanceof BearingContraption) TODO BearingContraption CHECK
-		 rotationAxis = ((BearingContraption) contraption).getFacing()
-		 .getAxis();*/
-
+		if (contraption instanceof BearingContraption)
+			rotationAxis = ((BearingContraption) contraption).getFacing().getAxis();
 	}
 
 	@Override
@@ -160,25 +159,24 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 			return true;
 
 		// Special activation timer for actors in the center of a bearing contraption
-		/**if (!(contraption instanceof BearingContraption)) TODO BearingContraption CHECK
-		 return false;
-		 BearingContraption bc = (BearingContraption) contraption;
-		 Direction facing = bc.getFacing();
-		 Vec3d activeAreaOffset = actor.getActiveAreaOffset(context);
-		 if (!activeAreaOffset.multiply(VecHelper.axisAlingedPlaneOf(new Vec3d(facing.getDirectionVec())))
-		 .equals(Vec3d.ZERO))
-		 return false;
-		 if (!VecHelper.onSameAxis(blockInfo.pos, (BlockPos) BlockPos.ZERO, facing.getAxis()))
-		 return false;
-		 context.motion = new Vec3d(facing.getDirectionVec()).scale(angle - prevAngle);
-		 context.relativeMotion = context.motion;
-		 int timer = context.data.getInt("StationaryTimer");
-		 if (timer > 0) {
-		 context.data.putInt("StationaryTimer", timer - 1);
-		 return false;
-		 }
+		if (!(contraption instanceof BearingContraption))
+	 		return false;
+	 	BearingContraption bc = (BearingContraption) contraption;
+	 	Direction facing = bc.getFacing();
+	 	Vec3d activeAreaOffset = actor.getActiveAreaOffset(context);
+		if (!activeAreaOffset.multiply(VecHelper.axisAlingedPlaneOf(new Vec3d(facing.getUnitVector()))).equals(Vec3d.ZERO))
+		 	return false;
+	 	if (!VecHelper.onSameAxis(blockInfo.pos, (BlockPos) BlockPos.ZERO, facing.getAxis()))
+			return false;
+		context.motion = new Vec3d(facing.getUnitVector()).multiply(angle - prevAngle);
+	 	context.relativeMotion = context.motion;
+	 	int timer = context.data.getInt("StationaryTimer");
+		if (timer > 0) {
+			context.data.putInt("StationaryTimer", timer - 1);
+			return false;
+	 	}
 
-		 context.data.putInt("StationaryTimer", 20);*/
+	 	context.data.putInt("StationaryTimer", 20);
 		return true;
 	}
 

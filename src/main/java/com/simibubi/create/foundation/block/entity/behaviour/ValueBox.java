@@ -12,6 +12,8 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -19,9 +21,9 @@ import net.minecraft.util.math.Vec3d;
 public class ValueBox extends ChasingAABBOutline {
 
 	public boolean isPassive;
-	protected String label = "Value Box";
-	protected String sublabel = "";
-	protected String scrollTooltip = "";
+	protected Text label;
+	protected Text sublabel = LiteralText.EMPTY;
+	protected Text scrollTooltip = LiteralText.EMPTY;
 	protected Vec3d labelOffset = Vec3d.ZERO;
 	protected int passiveColor;
 	protected int highlightColor;
@@ -29,14 +31,14 @@ public class ValueBox extends ChasingAABBOutline {
 	protected ValueBoxTransform transform;
 	protected BlockState blockState;
 
-	public ValueBox(String label, Box bb, BlockPos pos) {
+	public ValueBox(Text label, Box bb, BlockPos pos) {
 		super(bb);
 		this.label = label;
 		this.pos = pos;
 		this.blockState = MinecraftClient.getInstance().world.getBlockState(pos);
 	}
 
-	private static void drawString(MatrixStack ms, VertexConsumerProvider buffer, String text, float x, float y, int color) {
+	private static void drawString(MatrixStack ms, VertexConsumerProvider buffer, Text text, float x, float y, int color) {
 		MinecraftClient.getInstance().textRenderer.draw(text, x, y, color, false, ms.peek()
 			.getModel(), buffer, false, 0, 15728880);
 	}
@@ -51,12 +53,12 @@ public class ValueBox extends ChasingAABBOutline {
 		return this;
 	}
 
-	public ValueBox subLabel(String sublabel) {
+	public ValueBox subLabel(Text sublabel) {
 		this.sublabel = sublabel;
 		return this;
 	}
 
-	public ValueBox scrollTooltip(String scrollTip) {
+	public ValueBox scrollTooltip(Text scrollTip) {
 		this.scrollTooltip = scrollTip;
 		return this;
 	}
@@ -103,11 +105,11 @@ public class ValueBox extends ChasingAABBOutline {
 			ms.translate(labelOffset.x, labelOffset.y, labelOffset.z);
 
 			renderHoveringText(ms, buffer, label);
-			if (!sublabel.isEmpty()) {
+			if (!sublabel.toString().isEmpty()) {
 				ms.translate(0, 10, 0);
 				renderHoveringText(ms, buffer, sublabel);
 			}
-			if (!scrollTooltip.isEmpty()) {
+			if (!scrollTooltip.asString().isEmpty()) {
 				ms.translate(0, 10, 0);
 				renderHoveringText(ms, buffer, scrollTooltip, 0x998899, 0x111111);
 			}
@@ -121,11 +123,11 @@ public class ValueBox extends ChasingAABBOutline {
 	public void renderContents(MatrixStack ms, VertexConsumerProvider buffer) {
 	}
 
-	protected void renderHoveringText(MatrixStack ms, VertexConsumerProvider buffer, String text) {
+	protected void renderHoveringText(MatrixStack ms, VertexConsumerProvider buffer, Text text) {
 		renderHoveringText(ms, buffer, text, highlightColor, ColorHelper.mixColors(passiveColor, 0, 0.75f));
 	}
 
-	protected void renderHoveringText(MatrixStack ms, VertexConsumerProvider buffer, String text, int color,
+	protected void renderHoveringText(MatrixStack ms, VertexConsumerProvider buffer, Text text, int color,
 									  int shadowColor) {
 		ms.push();
 		drawString(ms, buffer, text, 0, 0, color);
@@ -140,7 +142,7 @@ public class ValueBox extends ChasingAABBOutline {
 		ItemStack stack;
 		int count;
 
-		public ItemValueBox(String label, Box bb, BlockPos pos, ItemStack stack, int count) {
+		public ItemValueBox(Text label, Box bb, BlockPos pos, ItemStack stack, int count) {
 			super(label, bb, pos);
 			this.stack = stack;
 			this.count = count;
@@ -150,7 +152,7 @@ public class ValueBox extends ChasingAABBOutline {
 		public void renderContents(MatrixStack ms, VertexConsumerProvider buffer) {
 			super.renderContents(ms, buffer);
 			TextRenderer font = MinecraftClient.getInstance().textRenderer;
-			String countString = count == 0 ? "*" : count + "";
+			Text countString = new LiteralText(count == 0 ? "*" : count + "");
 			ms.translate(17.5f, -5f, 7f);
 
 			//boolean isFilter = stack.getItem() instanceof FilterItem; TODO FILTER CHECKS
@@ -176,9 +178,9 @@ public class ValueBox extends ChasingAABBOutline {
 	}
 
 	public static class TextValueBox extends ValueBox {
-		String text;
+		Text text;
 
-		public TextValueBox(String label, Box bb, BlockPos pos, String text) {
+		public TextValueBox(Text label, Box bb, BlockPos pos, Text text) {
 			super(label, bb, pos);
 			this.text = text;
 		}
@@ -209,7 +211,7 @@ public class ValueBox extends ChasingAABBOutline {
 	public static class IconValueBox extends ValueBox {
 		AllIcons icon;
 
-		public IconValueBox(String label, NamedIconOptions iconValue, Box bb, BlockPos pos) {
+		public IconValueBox(Text label, NamedIconOptions iconValue, Box bb, BlockPos pos) {
 			super(label, bb, pos);
 			subLabel(Lang.translate(iconValue.getTranslationKey()));
 			icon = iconValue.getIcon();

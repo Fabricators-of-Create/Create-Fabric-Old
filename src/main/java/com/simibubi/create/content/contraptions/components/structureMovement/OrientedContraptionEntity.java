@@ -2,6 +2,8 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.simibubi.create.AllEntityTypes;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.CNBTHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
@@ -237,11 +239,11 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 		boolean rotationLock = false;
 		boolean pauseWhileRotating = false;
 		boolean wasStalled = isStalled();
-		/**if (contraption instanceof MountedContraption) { TODO MOUNTED CONTRAPTION CHECK
-		 MountedContraption mountedContraption = (MountedContraption) contraption;
-		 rotationLock = mountedContraption.rotationMode == CartMovementMode.ROTATION_LOCKED;
-		 pauseWhileRotating = mountedContraption.rotationMode == CartMovementMode.ROTATE_PAUSED;
-		 }*/
+		if (contraption instanceof MountedContraption) {
+	 		MountedContraption mountedContraption = (MountedContraption) contraption;
+		 	rotationLock = mountedContraption.rotationMode == CartAssemblerBlockEntity.CartMovementMode.ROTATION_LOCKED;
+		 	pauseWhileRotating = mountedContraption.rotationMode == CartAssemblerBlockEntity.CartMovementMode.ROTATE_PAUSED;
+	 	}
 
 		Entity riding = e;
 		while (riding.getVehicle() != null && !(contraption instanceof StabilizedContraption))
@@ -261,7 +263,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 			tickActors();
 		boolean isStalled = isStalled();
 
-		/**LazyOptional<MinecartController> capability =
+		/*LazyOptional<MinecartController> capability =
 		 riding.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
 		 if (capability.isPresent()) {
 		 if (!world.isClient)
@@ -282,7 +284,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 		if (world.isClient)
 			return;
 
-		/**if (!isStalled()) {
+		/*if (!isStalled()) {
 		 if (isOnCoupling) {
 		 Couple<MinecartController> coupledCarts = getCoupledCartsIfPresent();
 		 if (coupledCarts == null)
@@ -297,7 +299,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 
 	protected boolean updateOrientation(boolean rotationLock, boolean wasStalled, Entity riding, boolean isOnCoupling) {
 		if (isOnCoupling) {
-			/**Couple<MinecartController> coupledCarts = getCoupledCartsIfPresent();
+			/*Couple<MinecartController> coupledCarts = getCoupledCartsIfPresent();
 			 if (coupledCarts == null)
 			 return false;
 
@@ -379,7 +381,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 		return rotating;
 	}
 
-	/**
+	/*
 	 * protected void powerFurnaceCartWithFuelFromStorage(Entity riding) {
 	 * if (!(riding instanceof FurnaceMinecartEntity))
 	 * return;
