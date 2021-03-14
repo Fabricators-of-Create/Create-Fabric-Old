@@ -1,10 +1,10 @@
 package com.simibubi.create.content.contraptions;
 
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 
 public class KineticNetwork {
 

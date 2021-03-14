@@ -3,6 +3,7 @@ package com.simibubi.create;
 import java.util.function.BiFunction;
 
 import com.simibubi.create.foundation.utility.VoxelShaper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FacingBlock;

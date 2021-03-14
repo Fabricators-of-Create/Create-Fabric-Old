@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.worldgen;
 
+import java.util.Optional;
+
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -7,8 +9,6 @@ import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-
-import java.util.Optional;
 
 public class OreFeature {
 

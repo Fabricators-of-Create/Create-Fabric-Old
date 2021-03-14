@@ -1,11 +1,12 @@
 package com.simibubi.create.content.logistics.item.filter.attribute;
 
-import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 
 public class BookAuthorAttribute implements ItemAttribute {
     String author;

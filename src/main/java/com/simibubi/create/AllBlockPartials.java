@@ -175,7 +175,7 @@ public class AllBlockPartials {
 				out.accept(partial.modelLocation);
 		});
 	}
-//
+
 	public static void onModelBake() {
 		BakedModelManagerExtension e = (BakedModelManagerExtension) MinecraftClient.getInstance().getBakedModelManager();
 		for (AllBlockPartials partial : all)

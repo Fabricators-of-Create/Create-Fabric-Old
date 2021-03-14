@@ -1,7 +1,5 @@
 package com.simibubi.create.foundation.config;
 
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
-
 public class CClient {
 	// todo: lang
 	// "Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!"

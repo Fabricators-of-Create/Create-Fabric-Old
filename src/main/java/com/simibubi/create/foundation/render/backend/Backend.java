@@ -1,19 +1,5 @@
 package com.simibubi.create.foundation.render.backend;
 
-import com.simibubi.create.foundation.render.backend.gl.GlFog;
-import com.simibubi.create.foundation.render.backend.gl.GlFogMode;
-import com.simibubi.create.foundation.render.backend.gl.shader.*;
-import com.simibubi.create.foundation.render.backend.gl.versioned.GlFeatureCompat;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.texture.TextureUtil;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GLCapabilities;
-import org.lwjgl.system.MemoryUtil;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +7,27 @@ import java.nio.FloatBuffer;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GLCapabilities;
+import org.lwjgl.system.MemoryUtil;
+
+import com.simibubi.create.foundation.render.backend.gl.GlFog;
+import com.simibubi.create.foundation.render.backend.gl.GlFogMode;
+import com.simibubi.create.foundation.render.backend.gl.shader.GlProgram;
+import com.simibubi.create.foundation.render.backend.gl.shader.GlShader;
+import com.simibubi.create.foundation.render.backend.gl.shader.ProgramGroup;
+import com.simibubi.create.foundation.render.backend.gl.shader.ProgramSpec;
+import com.simibubi.create.foundation.render.backend.gl.shader.ShaderConstants;
+import com.simibubi.create.foundation.render.backend.gl.shader.ShaderType;
+import com.simibubi.create.foundation.render.backend.gl.versioned.GlFeatureCompat;
+
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.texture.TextureUtil;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.util.Identifier;
 
 public class Backend {
     public static final Boolean SHADER_DEBUG_OUTPUT = false;

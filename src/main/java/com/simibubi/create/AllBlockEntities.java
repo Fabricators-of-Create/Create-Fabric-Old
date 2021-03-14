@@ -1,6 +1,12 @@
 package com.simibubi.create;
 
-import com.simibubi.create.content.contraptions.base.*;
+import java.util.function.Supplier;
+
+import com.simibubi.create.content.contraptions.base.BackHalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlockEntity;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockRenderer;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlockEntity;
@@ -33,8 +39,6 @@ import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
-
-import java.util.function.Supplier;
 
 public class AllBlockEntities {
 	// Schematics

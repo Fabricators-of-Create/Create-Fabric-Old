@@ -1,9 +1,14 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.mounted;
 
+import java.util.Optional;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
 import com.simibubi.create.foundation.utility.CNBTHelper;
+
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
@@ -25,9 +30,6 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 public class MinecartContraptionItem extends Item {
 

@@ -1,11 +1,14 @@
 package com.simibubi.create.foundation.render.backend;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
 import com.simibubi.create.foundation.mixin.accessor.GameRendererAccessor;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.MixinHelper;
 import com.simibubi.create.foundation.utility.WorldAttached;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -18,8 +21,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 public class FastRenderDispatcher {
 	public static WorldAttached<ConcurrentHashMap.KeySetView<BlockEntity, Boolean>> queuedUpdates = new WorldAttached<>(ConcurrentHashMap::newKeySet);

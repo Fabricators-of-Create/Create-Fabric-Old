@@ -1,15 +1,16 @@
 package com.simibubi.create.foundation.advancement;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Predicate;
+
 import com.simibubi.create.foundation.mixin.accessor.CriteriaRegistryAccessor;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.WorldAccess;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Predicate;
 
 public class AllTriggers {
 

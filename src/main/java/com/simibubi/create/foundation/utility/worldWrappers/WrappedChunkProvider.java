@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.foundation.utility.worldWrappers.chunk.WrappedChunk;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.BlockView;
@@ -12,7 +15,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.light.LightingProvider;
-import org.jetbrains.annotations.Nullable;
 
 public class WrappedChunkProvider extends ChunkManager {
     private PlacementSimulationWorld world;

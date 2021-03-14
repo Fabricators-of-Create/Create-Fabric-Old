@@ -1,11 +1,11 @@
 package com.simibubi.create.foundation.gui.widgets;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public abstract class AbstractSimiWidget extends AbstractButtonWidget {
 

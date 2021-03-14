@@ -1,12 +1,12 @@
 package com.simibubi.create.foundation.render.backend.gl.versioned;
 
+import java.nio.ByteBuffer;
+import java.util.function.Consumer;
+
 import org.lwjgl.opengl.ARBMapBufferRange;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GLCapabilities;
-
-import java.nio.ByteBuffer;
-import java.util.function.Consumer;
 
 public enum MapBuffer implements GlVersioned {
 

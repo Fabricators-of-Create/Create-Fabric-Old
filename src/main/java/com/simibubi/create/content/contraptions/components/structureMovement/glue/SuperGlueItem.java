@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.glue;
 
 import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;

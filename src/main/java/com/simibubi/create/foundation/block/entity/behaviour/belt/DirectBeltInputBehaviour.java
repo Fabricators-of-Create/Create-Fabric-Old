@@ -1,13 +1,14 @@
 package com.simibubi.create.foundation.block.entity.behaviour.belt;
 
+import java.util.function.Supplier;
+
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
-
-import java.util.function.Supplier;
 
 /**
  * Behaviour for TileEntities to which belts can transfer items directly in a

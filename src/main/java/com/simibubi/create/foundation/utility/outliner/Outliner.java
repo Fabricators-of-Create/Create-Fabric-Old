@@ -1,15 +1,21 @@
 package com.simibubi.create.foundation.utility.outliner;
 
-import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBox;
+import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
+
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.*;
 
 public class Outliner {
 

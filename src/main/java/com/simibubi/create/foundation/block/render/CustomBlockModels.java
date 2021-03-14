@@ -1,16 +1,18 @@
 package com.simibubi.create.foundation.block.render;
 
-import com.simibubi.create.registrate.util.nullness.NonNullBiConsumer;
-import com.simibubi.create.registrate.util.nullness.NonNullFunction;
-import net.minecraft.block.Block;
-import net.minecraft.client.render.model.BakedModel;
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.simibubi.create.registrate.util.nullness.NonNullBiConsumer;
+import com.simibubi.create.registrate.util.nullness.NonNullFunction;
+
+import net.minecraft.block.Block;
+import net.minecraft.client.render.model.BakedModel;
 
 public class CustomBlockModels {
 

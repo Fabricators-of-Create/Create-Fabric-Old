@@ -1,10 +1,13 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import static com.simibubi.create.foundation.utility.AngleHelper.angleLerp;
+
 import com.simibubi.create.AllEntityTypes;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingContraption;
 import com.simibubi.create.foundation.utility.CNBTHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,8 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import static com.simibubi.create.foundation.utility.AngleHelper.angleLerp;
 
 /**
  * Ex: Pistons, bearings <br>

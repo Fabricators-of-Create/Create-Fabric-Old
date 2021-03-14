@@ -1,7 +1,8 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.foundation.item.ItemDescription;
 import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.foundation.item.ItemDescription;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;

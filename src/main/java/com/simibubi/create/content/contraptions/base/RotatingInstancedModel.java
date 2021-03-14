@@ -1,8 +1,9 @@
 package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
+
 import net.minecraft.client.render.BufferBuilder;
 
 public class RotatingInstancedModel extends InstancedModel<RotatingData> {

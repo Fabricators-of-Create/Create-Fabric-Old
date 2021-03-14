@@ -1,17 +1,19 @@
 package com.simibubi.create.foundation.block.entity.behaviour.belt;
 
+import java.util.List;
+import java.util.function.Function;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.ImmutableList;
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.function.Function;
 
 public class TransportedItemStackHandlerBehaviour extends BlockEntityBehaviour {
 

@@ -1,11 +1,11 @@
 package com.simibubi.create.foundation.block.render;
 
+import java.util.function.Function;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
-
-import java.util.function.Function;
 
 public class SpriteShiftEntry {
 	protected Identifier originalTextureLocation;

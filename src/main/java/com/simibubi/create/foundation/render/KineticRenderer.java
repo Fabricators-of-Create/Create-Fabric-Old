@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.render;
 
+import java.util.ArrayList;
+
 import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.base.RotatingInstancedModel;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstancedModel;
@@ -8,14 +10,13 @@ import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
 import com.simibubi.create.foundation.utility.extensions.Matrix4fUtils;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
-
-import java.util.ArrayList;
 
 public class KineticRenderer extends InstancedBlockRenderer<BasicProgram> {
     public static int MAX_ORIGIN_DISTANCE = 100;

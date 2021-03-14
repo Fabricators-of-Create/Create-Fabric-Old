@@ -1,14 +1,15 @@
 package com.simibubi.create.foundation.command;
 
+import java.util.Collections;
+import java.util.function.Predicate;
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-
-import java.util.Collections;
-import java.util.function.Predicate;
 
 public class AllCommands {
 

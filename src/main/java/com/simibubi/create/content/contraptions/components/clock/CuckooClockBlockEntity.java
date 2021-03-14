@@ -1,5 +1,9 @@
 package com.simibubi.create.content.contraptions.components.clock;
 
+import static com.simibubi.create.foundation.utility.AngleHelper.deg;
+import static com.simibubi.create.foundation.utility.AngleHelper.getShortestAngleDiff;
+import static com.simibubi.create.foundation.utility.AngleHelper.rad;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
@@ -7,6 +11,7 @@ import com.simibubi.create.foundation.gui.widgets.InterpolatedValue;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.CNBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
@@ -14,8 +19,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
-
-import static com.simibubi.create.foundation.utility.AngleHelper.*;
 
 public class CuckooClockBlockEntity extends KineticBlockEntity {
 

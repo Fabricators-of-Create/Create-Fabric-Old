@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.mixin.accessor;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
+
+import com.mojang.blaze3d.platform.GlStateManager;
 
 @Mixin(GlStateManager.class)
 public interface GlStateManagerAccessor {

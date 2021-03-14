@@ -1,10 +1,18 @@
 package com.simibubi.create.content.logistics.item.filter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+
 import com.google.common.base.Predicates;
 import com.simibubi.create.content.logistics.item.filter.attribute.BookAuthorAttribute;
 import com.simibubi.create.content.logistics.item.filter.attribute.BookCopyAttribute;
 import com.simibubi.create.content.logistics.item.filter.attribute.ItemNameAttribute;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
@@ -16,13 +24,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 public interface ItemAttribute {
 

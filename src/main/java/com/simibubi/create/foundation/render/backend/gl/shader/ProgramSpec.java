@@ -1,11 +1,12 @@
 package com.simibubi.create.foundation.render.backend.gl.shader;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
-import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
+
+import net.minecraft.util.Identifier;
 
 public class ProgramSpec<P extends GlProgram> {
 

@@ -16,10 +16,8 @@ import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ResourceManager;
 
@@ -37,8 +35,9 @@ public class CreateClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientEvents.register();
 
-		ClientLifecycleEvents.CLIENT_STARTED.register(Backend::init);
-		//Backend.init();
+		ClientLifecycleEvents.CLIENT_STARTED.register(this::onClientStarted);
+
+		AllPackets.clientInit();
 
 		kineticRenderer = new KineticRenderer();
 
@@ -52,14 +51,15 @@ public class CreateClient implements ClientModInitializer {
 		AllEntityTypes.registerRenderers();
 		AllFluids.registerRenderers();
 
-		AllPackets.clientInit();
+		AllPaletteBlocks.setRenderLayers();
+	}
+	
+	public void onClientStarted(MinecraftClient client) {
+		Backend.init(client);
 
-		ResourceManager resourceManager = MinecraftClient.getInstance()
-				.getResourceManager();
+		ResourceManager resourceManager = client.getResourceManager();
 		if (resourceManager instanceof ReloadableResourceManager)
 			((ReloadableResourceManager) resourceManager).registerListener(new ResourceReloadHandler());
-
-		BlockRenderLayerMap.INSTANCE.putBlock(AllPaletteBlocks.TILED_GLASS, RenderLayer.getCutout());
 	}
 
 	public static CustomBlockModels getCustomBlockModels() {

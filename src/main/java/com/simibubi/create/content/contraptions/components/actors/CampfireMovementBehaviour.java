@@ -1,11 +1,12 @@
 package com.simibubi.create.content.contraptions.components.actors;
 
+import java.util.Random;
+
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
+
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.particle.ParticleTypes;
-
-import java.util.Random;
 
 public class CampfireMovementBehaviour extends MovementBehaviour {
 	@Override

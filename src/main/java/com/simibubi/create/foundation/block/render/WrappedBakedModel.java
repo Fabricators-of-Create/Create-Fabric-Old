@@ -1,5 +1,8 @@
 package com.simibubi.create.foundation.block.render;
 
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -7,9 +10,6 @@ import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.util.math.Direction;
-
-import java.util.List;
-import java.util.Random;
 
 public class WrappedBakedModel implements BakedModel {
 

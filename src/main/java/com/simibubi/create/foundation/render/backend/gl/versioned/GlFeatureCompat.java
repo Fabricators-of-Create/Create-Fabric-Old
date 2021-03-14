@@ -1,10 +1,10 @@
 package com.simibubi.create.foundation.render.backend.gl.versioned;
 
-import org.lwjgl.opengl.GLCapabilities;
-
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.function.Consumer;
+
+import org.lwjgl.opengl.GLCapabilities;
 
 /**
  * An instance of this class stores information

@@ -1,18 +1,19 @@
 package com.simibubi.create.foundation.block.entity.behaviour.scrollvalue;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.networking.AllPackets;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class ScrollValueBehaviour extends BlockEntityBehaviour {
 

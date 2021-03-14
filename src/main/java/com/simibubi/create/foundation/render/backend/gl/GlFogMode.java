@@ -1,10 +1,10 @@
 package com.simibubi.create.foundation.render.backend.gl;
 
-import com.google.common.collect.Lists;
-import com.simibubi.create.foundation.render.backend.gl.shader.ProgramFogMode;
-
 import java.util.Collections;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+import com.simibubi.create.foundation.render.backend.gl.shader.ProgramFogMode;
 
 public enum GlFogMode {
 	NONE(ProgramFogMode.None::new),

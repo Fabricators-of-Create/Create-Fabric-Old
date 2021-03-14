@@ -1,12 +1,12 @@
 package com.simibubi.create.foundation.utility.worldWrappers;
 
+import java.util.HashMap;
+import java.util.function.Predicate;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.HashMap;
-import java.util.function.Predicate;
 
 public class PlacementSimulationServerWorld extends WrappedServerWorld {
 	public HashMap<BlockPos, BlockState> blocksAdded;

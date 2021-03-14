@@ -1,10 +1,13 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
+import java.util.Random;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.RotationPropagator;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftBlockEntity;
 import com.simibubi.create.foundation.block.IBE;
+
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,8 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class GearshiftBlock extends AbstractEncasedShaftBlock implements IBE<GearshiftBlockEntity> {
 
