@@ -6,7 +6,7 @@ import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -28,7 +28,7 @@ public class GearboxInstance extends KineticBlockInstance<GearboxBlockEntity> {
     protected EnumMap<Direction, InstanceKey<RotatingData>> keys;
     protected Direction sourceFacing;
 
-    public GearboxInstance(InstancedTileRenderer modelManager, GearboxBlockEntity tile) {
+    public GearboxInstance(InstancedBlockRenderer modelManager, GearboxBlockEntity tile) {
         super(modelManager, tile);
     }
 

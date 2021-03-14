@@ -15,12 +15,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class InstancedTileRenderer<P extends BasicProgram> {
+public abstract class InstancedBlockRenderer<P extends BasicProgram> {
     protected Map<BlockEntity, BlockEntityInstance<?>> instances = new HashMap<>();
 
     protected Map<MaterialType<?>, RenderMaterial<P, ?>> materials = new HashMap<>();
 
-    protected InstancedTileRenderer() {
+    protected InstancedBlockRenderer() {
         registerMaterials();
     }
 

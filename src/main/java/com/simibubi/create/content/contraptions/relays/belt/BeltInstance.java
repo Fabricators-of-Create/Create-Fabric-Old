@@ -8,7 +8,7 @@ import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -34,7 +34,7 @@ public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
 	private BeltSlope beltSlope;
 	private Direction facing;
 
-	public BeltInstance(InstancedTileRenderer<?> modelManager, BeltBlockEntity tile) {
+	public BeltInstance(InstancedBlockRenderer<?> modelManager, BeltBlockEntity tile) {
 		super(modelManager, tile);
 	}
 

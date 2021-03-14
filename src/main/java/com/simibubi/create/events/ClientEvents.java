@@ -1,6 +1,7 @@
 package com.simibubi.create.events;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
@@ -41,6 +42,8 @@ public class ClientEvents {
 		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
 		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
 		//ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
+
+		AllBlockPartials.onModelRegistry();
 
 		HudRenderCallback.EVENT.register(GoggleOverlayRenderer::lookingAtBlocksThroughGogglesShowsTooltip);
 		PlayerBlockBreakEvents.AFTER.register(DeforesterItem::onBlockDestroyed);

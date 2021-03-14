@@ -1,7 +1,7 @@
 package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntityType;
@@ -14,7 +14,7 @@ public class HorizontalHalfShaftInstance extends HalfShaftInstance {
 			InstancedTileRenderRegistry.instance.register(type, HorizontalHalfShaftInstance::new);
     }
 
-    public HorizontalHalfShaftInstance(InstancedTileRenderer<?> modelManager, KineticBlockEntity tile) {
+    public HorizontalHalfShaftInstance(InstancedBlockRenderer<?> modelManager, KineticBlockEntity tile) {
         super(modelManager, tile);
     }
 

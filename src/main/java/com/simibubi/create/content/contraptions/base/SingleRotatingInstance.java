@@ -3,7 +3,10 @@ package com.simibubi.create.content.contraptions.base;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.Direction;
@@ -13,13 +16,13 @@ import static com.simibubi.create.content.contraptions.base.KineticBlockEntityRe
 public class SingleRotatingInstance extends KineticBlockInstance<KineticBlockEntity> {
 	protected InstanceKey<RotatingData> rotatingModelKey;
 
-	public SingleRotatingInstance(InstancedTileRenderer modelManager, KineticBlockEntity tile) {
+	public SingleRotatingInstance(InstancedBlockRenderer<?> modelManager, KineticBlockEntity tile) {
 		super(modelManager, tile);
 	}
 
 	public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
-		/**DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->*/
-		InstancedTileRenderRegistry.instance.register(type, SingleRotatingInstance::new);
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
+			InstancedTileRenderRegistry.instance.register(type, SingleRotatingInstance::new);
 	}
 
 	@Override

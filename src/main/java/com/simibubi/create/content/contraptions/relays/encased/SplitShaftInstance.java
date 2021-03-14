@@ -7,7 +7,7 @@ import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -25,7 +25,7 @@ public class SplitShaftInstance extends KineticBlockInstance<SplitShaftBlockEnti
 
     protected ArrayList<InstanceKey<RotatingData>> keys;
 
-    public SplitShaftInstance(InstancedTileRenderer modelManager, SplitShaftBlockEntity tile) {
+    public SplitShaftInstance(InstancedBlockRenderer modelManager, SplitShaftBlockEntity tile) {
         super(modelManager, tile);
     }
 
