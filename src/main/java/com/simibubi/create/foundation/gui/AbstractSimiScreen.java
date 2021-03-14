@@ -33,7 +33,7 @@ public abstract class AbstractSimiScreen extends Screen {
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
 		renderBackground(matrices);
-		render(matrices, mouseX, mouseY, partialTicks);
+		super.render(matrices, mouseX, mouseY, partialTicks);
 		for (AbstractButtonWidget widget : widgets)
 			widget.render(matrices, mouseX, mouseY, partialTicks);
 		renderWindowForeground(matrices, mouseX, mouseY, partialTicks);

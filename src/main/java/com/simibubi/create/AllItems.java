@@ -1,13 +1,5 @@
 package com.simibubi.create;
 
-import static com.simibubi.create.content.AllSections.CURIOSITIES;
-import static com.simibubi.create.content.AllSections.KINETICS;
-import static com.simibubi.create.content.AllSections.LOGISTICS;
-import static com.simibubi.create.content.AllSections.MATERIALS;
-import static com.simibubi.create.content.AllSections.SCHEMATICS;
-
-import java.util.function.Function;
-
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MinecartContraptionItem;
@@ -18,11 +10,11 @@ import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.curiosities.BuildersTeaItem;
 import com.simibubi.create.content.curiosities.RefinedRadianceItem;
 import com.simibubi.create.content.curiosities.TreeFertilizerItem;
+import com.simibubi.create.content.curiosities.symmetry.SymmetryWandItem;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
-
 import me.pepperbell.reghelper.ItemRegBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.FoodComponent;
@@ -31,6 +23,10 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+
+import java.util.function.Function;
+
+import static com.simibubi.create.content.AllSections.*;
 
 public class AllItems {
 	private static AllSections currentSection;
@@ -207,10 +203,10 @@ public class AllItems {
 //		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
-//	public static final SymmetryWandItem WAND_OF_SYMMETRY = createBuilder("wand_of_symmetry", SymmetryWandItem::new)
+	public static final SymmetryWandItem WAND_OF_SYMMETRY = createBuilder("wand_of_symmetry", SymmetryWandItem::new)
 //		.transform(CreateRegistrate.customRenderedItem(() -> SymmetryWandModel::new))
-////		.model(AssetLookup.itemModelWithPartials())
-//		.register();
+//			.model(AssetLookup.itemModelWithPartials())
+		.register();
 
 //	public static final ExtendoGripItem EXTENDO_GRIP = createBuilder("extendo_grip", ExtendoGripItem::new)
 //		.transform(CreateRegistrate.customRenderedItem(() -> ExtendoGripModel::new))
