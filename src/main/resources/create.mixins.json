@@ -15,9 +15,9 @@
     "accessor.GlStateManagerAccessor",
     "accessor.ItemAccessor",
     "accessor.ItemRendererAccessor",
-		"accessor.CriteriaRegistryAccessor",
-		"accessor.BiomeAccessAccessor",
-		"accessor.MinecraftServerAccessor"
+    "accessor.CriteriaRegistryAccessor",
+    "accessor.BiomeAccessAccessor",
+    "accessor.MinecraftServerAccessor"
   ],
   "client": [
     "ChunkBuilder$ChunkDataMixin",
@@ -31,5 +31,5 @@
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  }
 }

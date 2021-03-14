@@ -29,7 +29,7 @@ public class Create implements ModInitializer  {
 
 	public static TorquePropagator torquePropagator;
 
-	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID);
+	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID + ":resources");
 
 	@Override
 	public void onInitialize() {
