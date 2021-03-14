@@ -60,13 +60,13 @@ public class AllBlockEntities {
 		.onRegister(HalfShaftInstance::register)
 		.register();
 
-	public static final BlockEntityType<GearboxBlockEntity> GEARBOX = createHelper("gearbox", GearboxBlockEntity::new)
+	public static final BlockEntityType<GearboxBlockEntity> GEARBOX = createBuilder("gearbox", GearboxBlockEntity::new)
 		.validBlocks(AllBlocks.GEARBOX)
 		.renderer(() -> GearboxRenderer::new)
 		.onRegister(GearboxInstance::register)
 		.register();
 
-	/*public static final BlockEntityType<EncasedShaftBlockEntity> ENCASED_SHAFT = createHelper("encased_shaft", EncasedShaftBlockEntity::new)
+	/*public static final BlockEntityType<EncasedShaftBlockEntity> ENCASED_SHAFT = createBuilder("encased_shaft", EncasedShaftBlockEntity::new)
 		.validBlocks(AllBlocks.ANDESITE_ENCASED_SHAFT, AllBlocks.BRASS_ENCASED_SHAFT, AllBlocks.ENCASED_CHAIN_DRIVE)
 		.renderer(() -> EncasedShaftRenderer::new)
 		.onRegister(ShaftInstance::register)
@@ -89,7 +89,7 @@ public class AllBlockEntities {
 		// .renderer(() -> renderer)
 		.register();
 
-	public static final BlockEntityType<ClutchBlockEntity> CLUTCH = createHelper("clutch", ClutchBlockEntity::new)
+	public static final BlockEntityType<ClutchBlockEntity> CLUTCH = createBuilder("clutch", ClutchBlockEntity::new)
 		.validBlocks(AllBlocks.CLUTCH)
 		.renderer(() -> SplitShaftRenderer::new)
 		.onRegister(SplitShaftInstance::register)
@@ -101,7 +101,7 @@ public class AllBlockEntities {
 		.onRegister(SplitShaftInstance::register)
 		.register();
 
-	/*public static final BlockEntityType<TurntableBlockEntity> TURNTABLE = createHelper("turntable", TurntableBlockEntity::new)
+	/*public static final BlockEntityType<TurntableBlockEntity> TURNTABLE = createBuilder("turntable", TurntableBlockEntity::new)
 		.validBlocks(AllBlocks.TURNTABLE)
 		.renderer(() -> KineticBlockEntityRenderer::new)
 		.onRegister(SingleRotatingInstance::register)
@@ -114,13 +114,13 @@ public class AllBlockEntities {
 		.onRegister(SingleRotatingInstance::register)
 		.register();
 
-	public static final BlockEntityType<CuckooClockBlockEntity> CUCKOO_CLOCK = createHelper("cuckoo_clock", CuckooClockBlockEntity::new)
+	public static final BlockEntityType<CuckooClockBlockEntity> CUCKOO_CLOCK = createBuilder("cuckoo_clock", CuckooClockBlockEntity::new)
 		.validBlocks(AllBlocks.CUCKOO_CLOCK, AllBlocks.MYSTERIOUS_CUCKOO_CLOCK)
 		.renderer(() -> CuckooClockRenderer::new)
 		.onRegister(HorizontalHalfShaftInstance::register)
 		.register();
 	
-	/*public static final BlockEntityType<GantryShaftBlockEntity> GANTRY_SHAFT = createHelper("gantry_shaft", GantryShaftBlockEntity::new)
+	/*public static final BlockEntityType<GantryShaftBlockEntity> GANTRY_SHAFT = createBuilder("gantry_shaft", GantryShaftBlockEntity::new)
 		.validBlocks(AllBlocks.GANTRY_SHAFT)
 		.renderer(() -> KineticBlockEntityRenderer::new)
 		.onRegister(SingleRotatingInstance::register)
@@ -379,13 +379,13 @@ public class AllBlockEntities {
 		.renderer(() -> AnalogLeverRenderer::new)
 		.register();
 
-	public static final BlockEntityType<CartAssemblerBlockEntity> CART_ASSEMBLER = createHelper("cart_assembler", CartAssemblerBlockEntity::new)
+	public static final BlockEntityType<CartAssemblerBlockEntity> CART_ASSEMBLER = createBuilder("cart_assembler", CartAssemblerBlockEntity::new)
 		.validBlocks(AllBlocks.CART_ASSEMBLER)
 		// .renderer(() -> renderer)
 		.register();
 
 	// Logistics
-	/*public static final BlockEntityType<RedstoneLinkBlockEntity> REDSTONE_LINK = createHelper("redstone_link", RedstoneLinkBlockEntity::new)
+	/*public static final BlockEntityType<RedstoneLinkBlockEntity> REDSTONE_LINK = createBuilder("redstone_link", RedstoneLinkBlockEntity::new)
 		.validBlocks(AllBlocks.REDSTONE_LINK)
 		.renderer(() -> SmartBlockEntityRenderer::new)
 		.register();

@@ -17,9 +17,11 @@ import com.simibubi.create.content.contraptions.relays.gearbox.VerticalGearboxIt
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.curiosities.BuildersTeaItem;
 import com.simibubi.create.content.curiosities.RefinedRadianceItem;
+import com.simibubi.create.content.curiosities.TreeFertilizerItem;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
+import com.simibubi.create.foundation.item.TooltipHelper;
 
 import me.pepperbell.reghelper.ItemRegBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -122,10 +124,10 @@ public class AllItems {
 //		.lang("Mechanical Belt")
 		.register();
 
-//	public static final VerticalGearboxItem VERTICAL_GEARBOX = createBuilder("vertical_gearbox", VerticalGearboxItem::new)
-////		.model(AssetLookup.<VerticalGearboxItem>customItemModel("gearbox", "item_vertical"))
-//		.onRegister(v -> TooltipHelper.referTo(v, AllBlocks.GEARBOX))
-//		.register();
+	public static final VerticalGearboxItem VERTICAL_GEARBOX = createBuilder("vertical_gearbox", VerticalGearboxItem::new)
+//		.model(AssetLookup.<VerticalGearboxItem>customItemModel("gearbox", "item_vertical"))
+		.onRegister(item -> TooltipHelper.referTo(item, () -> AllBlocks.GEARBOX))
+		.register();
 
 //	public static final BlazeBurnerBlockItem EMPTY_BLAZE_BURNER = createBuilder("empty_blaze_burner", BlazeBurnerBlockItem::empty)
 ////		.model(AssetLookup.<BlazeBurnerBlockItem>customItemModel("blaze_burner", "block"))
@@ -158,14 +160,14 @@ public class AllItems {
 //		.lang("Engineer's Goggles")
 		.register();
 
-//	public static final MinecartContraptionItem MINECART_CONTRAPTION = createBuilder("minecart_contraption", MinecartContraptionItem::rideable)
-//		.register();
+	public static final MinecartContraptionItem MINECART_CONTRAPTION = createBuilder("minecart_contraption", MinecartContraptionItem::rideable)
+		.register();
 
-//	public static final MinecartContraptionItem FURNACE_MINECART_CONTRAPTION = createBuilder("furnace_minecart_contraption", MinecartContraptionItem::furnace)
-//		.register();
+	public static final MinecartContraptionItem FURNACE_MINECART_CONTRAPTION = createBuilder("furnace_minecart_contraption", MinecartContraptionItem::furnace)
+		.register();
 
-//	public static final MinecartContraptionItem CHEST_MINECART_CONTRAPTION = createBuilder("chest_minecart_contraption", MinecartContraptionItem::chest)
-//		.register();
+	public static final MinecartContraptionItem CHEST_MINECART_CONTRAPTION = createBuilder("chest_minecart_contraption", MinecartContraptionItem::chest)
+		.register();
 
 	// Logistics
 
@@ -187,8 +189,8 @@ public class AllItems {
 		currentSection = CURIOSITIES;
 	}
 
-//	public static final TreeFertilizerItem TREE_FERTILIZER = createBuilder("tree_fertilizer", TreeFertilizerItem::new)
-//		.register();
+	public static final TreeFertilizerItem TREE_FERTILIZER = createBuilder("tree_fertilizer", TreeFertilizerItem::new)
+		.register();
 
 //	public static final BlockzapperItem BLOCKZAPPER = createBuilder("handheld_blockzapper", BlockzapperItem::new)
 //		.transform(CreateRegistrate.customRenderedItem(() -> BlockzapperModel::new))

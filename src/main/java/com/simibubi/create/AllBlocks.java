@@ -3,6 +3,7 @@ package com.simibubi.create;
 import java.util.function.Function;
 
 import com.simibubi.create.content.AllSections;
+import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlock;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
@@ -26,6 +27,7 @@ import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.item.TooltipHelper;
 
 import me.pepperbell.reghelper.BlockRegBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -104,39 +106,42 @@ public class AllBlocks {
 
 	public static final EncasedShaftBlock BRASS_ENCASED_SHAFT = createBuilder("brass_encased_shaft", EncasedShaftBlock::brass)
 		.transform(BuilderTransformers.encasedShaft("brass", AllSpriteShifts.BRASS_CASING))
-		.register();
+		.register();*/
 
 	public static final GearboxBlock GEARBOX = createBuilder("gearbox", GearboxBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
-		.transform(StressConfigDefaults.setNoImpact())
-		.onRegister(CreateRegistrate.connectedTextures(new EncasedCTBehaviour(AllSpriteShifts.ANDESITE_CASING)))
-		.onRegister(CreateRegistrate.casingConnectivity((block, cc) -> cc.make(block, AllSpriteShifts.ANDESITE_CASING,
-			(s, f) -> f.getAxis() == s.get(GearboxBlock.AXIS))))
-		.blockstate((c, p) -> axisBlock(c, p, $ -> AssetLookup.partialBaseModel(c, p), true))
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.onRegister(CreateRegistrate.connectedTextures(new EncasedCTBehaviour(AllSpriteShifts.ANDESITE_CASING))) TODO
+//		.onRegister(CreateRegistrate.casingConnectivity((block, cc) -> cc.make(block, AllSpriteShifts.ANDESITE_CASING, TODO
+//			(s, f) -> f.getAxis() == s.get(GearboxBlock.AXIS))))
+//		.blockstate((c, p) -> axisBlock(c, p, $ -> AssetLookup.partialBaseModel(c, p), true))
 		.item()
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
 	public static final ClutchBlock CLUTCH = createBuilder("clutch", ClutchBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
-		.transform(StressConfigDefaults.setNoImpact())
-		.blockstate((c, p) -> BlockStateGen.axisBlock(c, p, AssetLookup.forPowered(c, p)))
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.blockstate((c, p) -> BlockStateGen.axisBlock(c, p, AssetLookup.forPowered(c, p)))
 		.item()
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
 	public static final GearshiftBlock GEARSHIFT = createBuilder("gearshift", GearshiftBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
-		.transform(StressConfigDefaults.setNoImpact())
-		.blockstate((c, p) -> BlockStateGen.axisBlock(c, p, AssetLookup.forPowered(c, p)))
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.blockstate((c, p) -> BlockStateGen.axisBlock(c, p, AssetLookup.forPowered(c, p)))
 		.item()
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
-	public static final EncasedBeltBlock ENCASED_CHAIN_DRIVE = createBuilder("encased_chain_drive", EncasedBeltBlock::new)
+	/*public static final EncasedBeltBlock ENCASED_CHAIN_DRIVE = createBuilder("encased_chain_drive", EncasedBeltBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
 		.transform(StressConfigDefaults.setNoImpact())
@@ -228,17 +233,17 @@ public class AllBlocks {
 		.build()
 		.register();
 
-	/*public static final CuckooClockBlock CUCKOO_CLOCK = createBuilder("cuckoo_clock", CuckooClockBlock::regular)
-		.transform(BuilderTransformers.cuckooClock())
+	public static final CuckooClockBlock CUCKOO_CLOCK = createBuilder("cuckoo_clock", CuckooClockBlock::regular)
+		.consume(BuilderConsumers.cuckooClock())
 		.register();
 
 	public static final CuckooClockBlock MYSTERIOUS_CUCKOO_CLOCK = createBuilder("mysterious_cuckoo_clock", CuckooClockBlock::mysterious)
-		.transform(BuilderTransformers.cuckooClock())
-		.lang("Cuckoo Clock")
-		.onRegisterAfter(Item.class, c -> TooltipHelper.referTo(c, CUCKOO_CLOCK))
+		.consume(BuilderConsumers.cuckooClock())
+//		.lang("Cuckoo Clock")
+		.onRegisterItem(item -> TooltipHelper.referTo(item, () -> CUCKOO_CLOCK))
 		.register();
 
-	public static final MillstoneBlock MILLSTONE = createBuilder("millstone", MillstoneBlock::new)
+	/*public static final MillstoneBlock MILLSTONE = createBuilder("millstone", MillstoneBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
 		.transform(StressConfigDefaults.setImpact(4.0))
@@ -596,19 +601,20 @@ public class AllBlocks {
 		.tag(AllBlockTags.BRITTLE.tag)
 		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
 			.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
-		.register();
+		.register();*/
 
 	public static final CartAssemblerBlock CART_ASSEMBLER = createBuilder("cart_assembler", CartAssemblerBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
-		.blockstate(BlockStateGen.cartAssembler())
+//		.blockstate(BlockStateGen.cartAssembler())
 		.addLayer(() -> RenderLayer::getCutoutMipped)
-		.tag(BlockTags.RAILS, AllBlockTags.SAFE_NBT.tag)
+//		.tag(BlockTags.RAILS, AllBlockTags.SAFE_NBT.tag)
 		.item(CartAssemblerBlockItem::new)
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
-	public static final ReinforcedRailBlock REINFORCED_RAIL = createBuilder("reinforced_rail", ReinforcedRailBlock::new)
+	/*public static final ReinforcedRailBlock REINFORCED_RAIL = createBuilder("reinforced_rail", ReinforcedRailBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
 		.blockstate(BlockStateGen.reinforcedRail())
