@@ -66,7 +66,7 @@ public class BeltRenderer extends SafeBlockEntityRenderer<BeltBlockEntity> {
 		if (!FastRenderDispatcher.available(te.getWorld())) {
 
 			BlockState blockState = te.getCachedState();
-			if (!AllBlocks.BELT.hasBlockEntity(blockState)) return;
+			if (!AllBlocks.BELT.hasBlockEntity()) return;
 
 			BeltSlope beltSlope = blockState.get(BeltBlock.SLOPE);
 			BeltPart part = blockState.get(BeltBlock.PART);

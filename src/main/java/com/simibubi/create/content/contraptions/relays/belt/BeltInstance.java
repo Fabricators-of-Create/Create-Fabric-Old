@@ -46,7 +46,7 @@ public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
 
 	@Override
 	protected void init() {
-		if (!AllBlocks.BELT.hasBlockEntity(lastState))
+		if (!AllBlocks.BELT.hasBlockEntity())
 			return;
 
 		keys = new ArrayList<>(2);

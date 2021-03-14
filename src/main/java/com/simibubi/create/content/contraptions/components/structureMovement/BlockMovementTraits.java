@@ -74,7 +74,7 @@ public class BlockMovementTraits {
 	 		return !((PulleyTileEntity) te).running;
 	 	}*/
 
-		if (AllBlocks.BELT.hasBlockEntity(state))
+		if (AllBlocks.BELT.hasBlockEntity())
 			return true;
 		if (state.getBlock() instanceof GrindstoneBlock)
 			return true;

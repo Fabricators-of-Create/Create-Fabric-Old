@@ -1,10 +1,13 @@
 package com.simibubi.create.foundation.block.entity.behaviour.scrollvalue;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBox;
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBox.IconValueBox;
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBox.TextValueBox;
 import com.simibubi.create.foundation.utility.Lang;
 
 import net.minecraft.client.MinecraftClient;
@@ -34,23 +37,23 @@ public class ScrollValueRenderer {
 		ScrollValueBehaviour behaviour = BlockEntityBehaviour.get(world, pos, ScrollValueBehaviour.TYPE);
 		if (behaviour == null)
 			return;
-		/**if (behaviour.needsWrench && !AllItems.WRENCH.isIn(MinecraftClient.getInstance().player.getHeldItemMainhand())) TODO WRENCH CHECK
-		 return;*/
+		if (behaviour.needsWrench && AllItems.WRENCH != (MinecraftClient.getInstance().player.getMainHandStack().getItem()))
+			return;
 		boolean highlight = behaviour.testHit(target.getPos());
 
 		if (behaviour instanceof BulkScrollValueBehaviour && AllKeys.ctrlDown()) {
 			BulkScrollValueBehaviour bulkScrolling = (BulkScrollValueBehaviour) behaviour;
-			for (SmartBlockEntity smartBlockEntity : bulkScrolling.getBulk()) {
-				ScrollValueBehaviour other = smartBlockEntity.getBehaviour(ScrollValueBehaviour.TYPE);
+			for (SmartBlockEntity smartTileEntity : bulkScrolling.getBulk()) {
+				ScrollValueBehaviour other = smartTileEntity.getBehaviour(ScrollValueBehaviour.TYPE);
 				if (other != null)
-					addBox(world, smartBlockEntity.getPos(), face, other, highlight);
+					addBox(world, smartTileEntity.getPos(), face, other, highlight);
 			}
 		} else
 			addBox(world, pos, face, behaviour, highlight);
 	}
 
 	protected static void addBox(ClientWorld world, BlockPos pos, Direction face, ScrollValueBehaviour behaviour,
-								 boolean highlight) {
+		boolean highlight) {
 		Box bb = new Box(Vec3d.ZERO, Vec3d.ZERO).expand(.5f)
 			.shrink(0, 0, -.5f)
 			.offset(0, 0, -.125f);
@@ -58,14 +61,14 @@ public class ScrollValueRenderer {
 		ValueBox box;
 
 		if (behaviour instanceof ScrollOptionBehaviour) {
-			box = new ValueBox.IconValueBox(label, ((ScrollOptionBehaviour<?>) behaviour).getIconForSelected(), bb, pos);
+			box = new IconValueBox(label, ((ScrollOptionBehaviour<?>) behaviour).getIconForSelected(), bb, pos);
 		} else {
-			box = new ValueBox.TextValueBox(label, bb, pos, new LiteralText(behaviour.formatValue()));
+			box = new TextValueBox(label, bb, pos, new LiteralText(behaviour.formatValue()));
 			if (behaviour.unit != null)
-				box.subLabel(new LiteralText("(" + behaviour.unit.apply(behaviour.scrollableValue) + ")"));
+				box.subLabel(new LiteralText("(").append(behaviour.unit.apply(behaviour.scrollableValue)).append(")"));
 		}
 
-		box.scrollTooltip(new LiteralText("[" + Lang.translate("action.scroll") + "]"));
+		box.scrollTooltip(new LiteralText("[").append(Lang.translate("action.scroll")).append("]"));
 		box.offsetLabel(behaviour.textShift.add(20, -10, 0))
 			.withColors(0x5A5D5A, 0xB5B7B6)
 			.passive(!highlight);

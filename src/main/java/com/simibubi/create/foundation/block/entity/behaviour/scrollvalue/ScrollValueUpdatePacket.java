@@ -7,10 +7,9 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 
 public class ScrollValueUpdatePacket extends BlockEntityConfigurationPacket<SmartBlockEntity> {
-	int value;
+	private int value;
 
-	public ScrollValueUpdatePacket() {
-	}
+	public ScrollValueUpdatePacket() {}
 
 	public ScrollValueUpdatePacket(BlockPos pos, int amount) {
 		super(pos);
@@ -34,5 +33,4 @@ public class ScrollValueUpdatePacket extends BlockEntityConfigurationPacket<Smar
 			return;
 		behaviour.setValue(value);
 	}
-
 }

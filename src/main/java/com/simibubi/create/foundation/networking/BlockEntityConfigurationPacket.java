@@ -12,8 +12,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BlockEntityConfigurationPacket<TE extends SyncedBlockEntity> implements C2SPacket {
-
+public abstract class BlockEntityConfigurationPacket<BE extends SyncedBlockEntity> implements C2SPacket {
 	protected BlockPos pos;
 
 	protected BlockEntityConfigurationPacket() {}
@@ -46,7 +45,7 @@ public abstract class BlockEntityConfigurationPacket<TE extends SyncedBlockEntit
 				return;
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof SyncedBlockEntity) {
-				applySettings((TE) blockEntity);
+				applySettings((BE) blockEntity);
 				((SyncedBlockEntity) blockEntity).sendData();
 				blockEntity.markDirty();
 			}
@@ -56,6 +55,5 @@ public abstract class BlockEntityConfigurationPacket<TE extends SyncedBlockEntit
 
 	protected abstract void writeSettings(PacketByteBuf buffer);
 	protected abstract void readSettings(PacketByteBuf buffer);
-	protected abstract void applySettings(TE te);
-
+	protected abstract void applySettings(BE te);
 }

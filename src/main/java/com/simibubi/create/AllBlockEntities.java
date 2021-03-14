@@ -52,7 +52,7 @@ public class AllBlockEntities {
 		.register();*/
 
 	// Kinetics
-	public static final BlockEntityType<SimpleKineticBlockEntity> SIMPLE_KINETIC = createBuilder("simple_kinetic", SimpleKineticBlockEntity::new)
+	public static final BlockEntityType<SimpleKineticBlockEntity> SIMPLE_KINETIC = createBuilder("simple_kinetic", SimpleKineticBlockEntity::create)
 		.validBlocks(AllBlocks.SHAFT, AllBlocks.COGWHEEL, AllBlocks.LARGE_COGWHEEL)
 		.renderer(() -> KineticBlockEntityRenderer::new)
 		.onRegister(SingleRotatingInstance::register)

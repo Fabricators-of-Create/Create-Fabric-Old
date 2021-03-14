@@ -43,7 +43,6 @@ public class GearboxBlock extends RotatedPillarKineticBlock {
 		items.add(AllItems.VERTICAL_GEARBOX.getDefaultStack());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, Builder builder) {
 		if (state.get(AXIS).isVertical())

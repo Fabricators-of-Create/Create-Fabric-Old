@@ -15,7 +15,7 @@ public class BackHalfShaftInstance extends HalfShaftInstance {
 			InstancedTileRenderRegistry.instance.register(type, BackHalfShaftInstance::new);
     }
 
-    public BackHalfShaftInstance(InstancedBlockRenderer modelManager, KineticBlockEntity tile) {
+    public BackHalfShaftInstance(InstancedBlockRenderer<?> modelManager, KineticBlockEntity tile) {
         super(modelManager, tile);
     }
 

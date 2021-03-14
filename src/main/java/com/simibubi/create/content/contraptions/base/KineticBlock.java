@@ -1,8 +1,6 @@
 package com.simibubi.create.content.contraptions.base;
 
-import org.jetbrains.annotations.Nullable;
-
-import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.ItemDescription.Palette;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -13,15 +11,35 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 public abstract class KineticBlock extends Block implements BlockEntityProvider, Rotating {
-
-	protected static final ItemDescription.Palette color = ItemDescription.Palette.Red;
+	protected static final Palette color = Palette.Red;
 
 	public KineticBlock(Settings properties) {
 		super(properties);
 	}
+
+//	@Override
+//	public ToolType getHarvestTool(BlockState state) {
+//		return null;
+//	}
+//
+//	@Override
+//	public boolean canHarvestBlock(BlockState state, BlockView world, BlockPos pos, PlayerEntity player) {
+//		for (ToolType toolType : player.getMainHandStack()
+//			.getToolTypes()) {
+//			if (isToolEffective(state, toolType))
+//				return true;
+//		}
+//		return super.canHarvestBlock(state, world, pos, player);
+//	}
+//
+//	@Override
+//	public boolean isToolEffective(BlockState state, ToolType tool) {
+//		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
+//	}
 
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
@@ -56,22 +74,18 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 		return false;
 	}
 
-	public boolean hasBlockEntity(BlockState state) {
-		return true;
-	}
-
 	protected boolean areStatesKineticallyEquivalent(BlockState oldState, BlockState newState) {
 		return getRotationAxis(newState) == getRotationAxis(oldState);
 	}
 
 	@Override
-	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-		super.neighborUpdate(state, world, pos, block, fromPos, notify);
-		if (world.isClient())
+	public void prepare(BlockState stateIn, WorldAccess worldIn, BlockPos pos, int flags, int count) {
+		if (worldIn.isClient())
 			return;
 
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (!(blockEntity instanceof KineticBlockEntity)) return;
+		BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+		if (!(blockEntity instanceof KineticBlockEntity))
+			return;
 		KineticBlockEntity kbe = (KineticBlockEntity) blockEntity;
 
 		if (kbe.preventSpeedUpdate) {
@@ -86,15 +100,16 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 	}
 
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-		if (world.isClient)
+	public void onPlaced(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		if (worldIn.isClient)
 			return;
 
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (!(blockEntity instanceof KineticBlockEntity)) return;
+		BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+		if (!(blockEntity instanceof KineticBlockEntity))
+			return;
 
-		KineticBlockEntity kte = (KineticBlockEntity) blockEntity;
-		kte.effects.queueRotationIndicators();
+		KineticBlockEntity kbe = (KineticBlockEntity) blockEntity;
+		kbe.effects.queueRotationIndicators();
 	}
 
 	public float getParticleTargetRadius() {

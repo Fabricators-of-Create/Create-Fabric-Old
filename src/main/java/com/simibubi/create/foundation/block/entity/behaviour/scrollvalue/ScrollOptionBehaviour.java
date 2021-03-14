@@ -6,8 +6,7 @@ import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
 import net.minecraft.text.Text;
 
 public class ScrollOptionBehaviour<E extends Enum<E> & NamedIconOptions> extends ScrollValueBehaviour {
-
-	private final E[] options;
+	private E[] options;
 
 	public ScrollOptionBehaviour(Class<E> enum_, Text label, SmartBlockEntity te, ValueBoxTransform slot) {
 		super(label, te, slot);
@@ -19,9 +18,8 @@ public class ScrollOptionBehaviour<E extends Enum<E> & NamedIconOptions> extends
 	NamedIconOptions getIconForSelected() {
 		return get();
 	}
-
+	
 	public E get() {
 		return options[scrollableValue];
 	}
-
 }

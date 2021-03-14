@@ -16,14 +16,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class ScrollValueBehaviour extends BlockEntityBehaviour {
-
 	public static BehaviourType<ScrollValueBehaviour> TYPE = new BehaviourType<>();
-	public int value;
-	public int scrollableValue;
+
 	ValueBoxTransform slotPositioning;
 	Vec3d textShift;
+
 	int min = 0;
 	int max = 1;
+	public int value;
+	public int scrollableValue;
 	int ticksUntilScrollPacket;
 	boolean forceClientState;
 	Text label;
@@ -34,8 +35,8 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 	Function<StepContext, Integer> step;
 	boolean needsWrench;
 
-	public ScrollValueBehaviour(Text label, SmartBlockEntity te, ValueBoxTransform slot) {
-		super(te);
+	public ScrollValueBehaviour(Text label, SmartBlockEntity be, ValueBoxTransform slot) {
+		super(be);
 		this.setLabel(label);
 		slotPositioning = slot;
 		callback = i -> {
@@ -90,7 +91,7 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 		clientCallback = valueCallback;
 		return this;
 	}
-
+	
 	public ScrollValueBehaviour withCallback(Consumer<Integer> valueCallback) {
 		callback = valueCallback;
 		return this;
@@ -134,10 +135,6 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 		scrollableValue = value;
 	}
 
-	public int getValue() {
-		return value;
-	}
-
 	public void setValue(int value) {
 		value = MathHelper.clamp(value, min, max);
 		if (value == this.value)
@@ -148,6 +145,10 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 		blockEntity.markDirty();
 		blockEntity.sendData();
 		scrollableValue = value;
+	}
+
+	public int getValue() {
+		return value;
 	}
 
 	public String formatValue() {
@@ -161,19 +162,18 @@ public class ScrollValueBehaviour extends BlockEntityBehaviour {
 
 	public boolean testHit(Vec3d hit) {
 		BlockState state = blockEntity.getCachedState();
-		Vec3d localHit = hit.subtract(new Vec3d(blockEntity.getPos().getX(), blockEntity.getPos().getY(), blockEntity.getPos().getZ()));
+		Vec3d localHit = hit.subtract(Vec3d.of(blockEntity.getPos()));
 		return slotPositioning.testHit(state, localHit);
 	}
 
 	public void setLabel(Text label) {
 		this.label = label;
 	}
-
+	
 	public static class StepContext {
 		public int currentValue;
 		public boolean forward;
 		public boolean shift;
 		public boolean control;
 	}
-
 }
