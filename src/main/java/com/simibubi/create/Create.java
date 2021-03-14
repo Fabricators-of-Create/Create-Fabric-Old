@@ -24,7 +24,7 @@ public class Create implements ModInitializer  {
 
 	public static Logger logger = LogManager.getLogger();
 	public static ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "base"), () -> new ItemStack(AllBlocks.COGWHEEL));
-	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "palettes"), () -> new ItemStack(AllItems.ZINC_BLOCK));
+	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "palettes"), () -> new ItemStack(AllBlocks.ZINC_BLOCK));
 
 	public static TorquePropagator torquePropagator;
 
@@ -32,8 +32,8 @@ public class Create implements ModInitializer  {
 
 	@Override
 	public void onInitialize() {
-		AllBlocks.registerBlocks();
-		AllItems.registerItems();
+		AllBlocks.register();
+		AllItems.register();
 		AllFluids.register();
 		AllTags.register();
 		AllPaletteBlocks.registerBlocks();

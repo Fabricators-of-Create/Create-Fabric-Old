@@ -12,7 +12,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.glu
 import com.simibubi.create.foundation.mixinterface.EntityTypeExtension;
 import com.simibubi.create.foundation.utility.Lang;
 
-import me.pepperbell.reghelper.EntityTypeHelper;
+import me.pepperbell.reghelper.EntityTypeRegBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
@@ -47,7 +47,7 @@ public class AllEntityTypes {
 		SpawnGroup group, int range, int updateFrequency, boolean sendVelocity,
 		Consumer<EntityType.Builder<T>> propertyBuilder) {
 		String id = Lang.asId(name);
-		EntityType<T> type = createHelper(id, factory, group)
+		EntityType<T> type = createBuilder(id, factory, group)
 			.properties(b -> b.maxTrackingRange(range)
 				.trackingTickInterval(updateFrequency))
 			.properties(propertyBuilder)
@@ -56,8 +56,8 @@ public class AllEntityTypes {
 		return type;
 	}
 
-	private static <T extends Entity> EntityTypeHelper<T> createHelper(String id, EntityFactory<T> factory, SpawnGroup spawnGroup) {
-		return EntityTypeHelper.create(new Identifier(Create.ID, id), factory, spawnGroup);
+	private static <T extends Entity> EntityTypeRegBuilder<T> createBuilder(String id, EntityFactory<T> factory, SpawnGroup spawnGroup) {
+		return EntityTypeRegBuilder.create(new Identifier(Create.ID, id), factory, spawnGroup);
 	}
 
 	public static void register() {}

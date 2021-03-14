@@ -31,13 +31,13 @@ public class CogWheelBlock extends AbstractShaftBlock {
         isLarge = large;
     }
 
-    /*public static CogWheelBlock small(Settings properties) {
+    public static CogWheelBlock small(Settings properties) {
         return new CogWheelBlock(false, properties);
     }
 
     public static CogWheelBlock large(Settings properties) {
         return new CogWheelBlock(true, properties);
-    }*/
+    }
 
     public static boolean isSmallCog(BlockState state) {
         return AllBlocks.COGWHEEL.stateManager.getStates().contains(state);

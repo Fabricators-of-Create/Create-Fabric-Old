@@ -5,7 +5,6 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.DyeColor;
 
 public class DyeHelper {
-
 	public static ItemConvertible getWoolOfDye(DyeColor color) {
 		switch (color) {
 		case BLACK:
@@ -44,41 +43,41 @@ public class DyeHelper {
 		}
 	}
 
-	/**public static Tag<Item> getTagOfDye(DyeColor color) {
-		switch (color) {
-		case BLACK:
-			return Tags.Items.DYES_BLACK;
-		case BLUE:
-			return Tags.Items.DYES_BLUE;
-		case BROWN:
-			return Tags.Items.DYES_BROWN;
-		case CYAN:
-			return Tags.Items.DYES_CYAN;
-		case GRAY:
-			return Tags.Items.DYES_GRAY;
-		case GREEN:
-			return Tags.Items.DYES_GREEN;
-		case LIGHT_BLUE:
-			return Tags.Items.DYES_LIGHT_BLUE;
-		case LIGHT_GRAY:
-			return Tags.Items.DYES_LIGHT_GRAY;
-		case LIME:
-			return Tags.Items.DYES_LIME;
-		case MAGENTA:
-			return Tags.Items.DYES_MAGENTA;
-		case ORANGE:
-			return Tags.Items.DYES_ORANGE;
-		case PINK:
-			return Tags.Items.DYES_PINK;
-		case PURPLE:
-			return Tags.Items.DYES_PURPLE;
-		case RED:
-			return Tags.Items.DYES_RED;
-		case YELLOW:
-			return Tags.Items.DYES_YELLOW;
-		case WHITE:
-		default:
-			return Tags.Items.DYES_WHITE;
-		}
-	}*/
+//	public static Tag<Item> getTagOfDye(DyeColor color) {
+//		switch (color) {
+//		case BLACK:
+//			return Tags.Items.DYES_BLACK;
+//		case BLUE:
+//			return Tags.Items.DYES_BLUE;
+//		case BROWN:
+//			return Tags.Items.DYES_BROWN;
+//		case CYAN:
+//			return Tags.Items.DYES_CYAN;
+//		case GRAY:
+//			return Tags.Items.DYES_GRAY;
+//		case GREEN:
+//			return Tags.Items.DYES_GREEN;
+//		case LIGHT_BLUE:
+//			return Tags.Items.DYES_LIGHT_BLUE;
+//		case LIGHT_GRAY:
+//			return Tags.Items.DYES_LIGHT_GRAY;
+//		case LIME:
+//			return Tags.Items.DYES_LIME;
+//		case MAGENTA:
+//			return Tags.Items.DYES_MAGENTA;
+//		case ORANGE:
+//			return Tags.Items.DYES_ORANGE;
+//		case PINK:
+//			return Tags.Items.DYES_PINK;
+//		case PURPLE:
+//			return Tags.Items.DYES_PURPLE;
+//		case RED:
+//			return Tags.Items.DYES_RED;
+//		case YELLOW:
+//			return Tags.Items.DYES_YELLOW;
+//		case WHITE:
+//		default:
+//			return Tags.Items.DYES_WHITE;
+//		}
+//	}
 }
