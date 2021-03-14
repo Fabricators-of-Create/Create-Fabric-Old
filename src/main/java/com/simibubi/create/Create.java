@@ -44,7 +44,7 @@ public class Create implements ModInitializer  {
 		AllConfigs.register();
 
 		AllPackets.registerPackets();
-		
+
 		CommonEvents.register();
 
 		AllWorldFeatures.reload();
