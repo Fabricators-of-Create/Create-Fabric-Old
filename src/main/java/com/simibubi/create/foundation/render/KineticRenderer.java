@@ -5,7 +5,7 @@ import com.simibubi.create.content.contraptions.base.RotatingInstancedModel;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstancedModel;
 import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
 import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
 import com.simibubi.create.foundation.utility.extensions.Matrix4fUtils;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,7 +17,7 @@ import net.minecraft.util.math.Matrix4f;
 
 import java.util.ArrayList;
 
-public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
+public class KineticRenderer extends InstancedBlockRenderer<BasicProgram> {
     public static int MAX_ORIGIN_DISTANCE = 100;
 
     public BlockPos originCoordinate = BlockPos.ORIGIN;

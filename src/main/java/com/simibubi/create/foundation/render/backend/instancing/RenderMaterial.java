@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 
 public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel<?>> {
 
-    protected final InstancedTileRenderer<?> renderer;
+    protected final InstancedBlockRenderer<?> renderer;
     protected final Map<Compartment<?>, Cache<Object, MODEL>> models;
     protected final ModelFactory<MODEL> factory;
     protected final ProgramSpec<P> programSpec;
@@ -40,11 +40,11 @@ public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel
     /**
      * Creates a material that renders in the default layer (CUTOUT_MIPPED)
      */
-    public RenderMaterial(InstancedTileRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory) {
+    public RenderMaterial(InstancedBlockRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory) {
         this(renderer, programSpec, factory, type -> type == RenderLayer.getCutoutMipped());
     }
 
-    public RenderMaterial(InstancedTileRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory, Predicate<RenderLayer> layerPredicate) {
+    public RenderMaterial(InstancedBlockRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory, Predicate<RenderLayer> layerPredicate) {
         this.renderer = renderer;
         this.models = new HashMap<>();
         this.factory = factory;

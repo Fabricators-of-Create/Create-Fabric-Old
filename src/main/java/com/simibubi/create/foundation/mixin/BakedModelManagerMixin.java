@@ -1,6 +1,23 @@
 package com.simibubi.create.foundation.mixin;
 
+import static com.simibubi.create.CreateClient.getCustomBlockModels;
+import static com.simibubi.create.CreateClient.getCustomItemModels;
+import static com.simibubi.create.CreateClient.getCustomRenderedItems;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.foundation.mixinterface.BakedModelManagerExtension;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.render.block.BlockModels;
 import net.minecraft.client.render.model.BakedModel;
@@ -11,23 +28,14 @@ import net.minecraft.item.Item;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
-import static com.simibubi.create.CreateClient.*;
 
 @Mixin(BakedModelManager.class)
-public class BakedModelManagerMixin {
+public class BakedModelManagerMixin implements BakedModelManagerExtension {
+	@Shadow
+	private Map<Identifier, BakedModel> models;
+
 	@Inject(at = @At("TAIL"), method = "apply(Lnet/minecraft/client/render/model/ModelLoader;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V")
 	public void onModelBake(ModelLoader modelLoader, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
-		AllBlockPartials.onModelRegistry();
 		AllBlockPartials.onModelBake();
 
 		getCustomBlockModels()
@@ -38,6 +46,11 @@ public class BakedModelManagerMixin {
 			swapModels(modelLoader.getBakedModelMap(), getItemModelLocation(item), m -> modelFunc.apply(m)
 				.loadPartials(modelLoader));
 		});
+	}
+
+	@Override
+	public BakedModel getModel(Identifier id) {
+		return models.get(id);
 	}
 
 	private Identifier getItemModelLocation(Item item) {

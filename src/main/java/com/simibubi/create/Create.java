@@ -24,22 +24,23 @@ public class Create implements ModInitializer  {
     public static final String ID = "create";
     public static final String NAME = "Create";
 
-    public static Logger logger = LogManager.getLogger();
+	public static Logger logger = LogManager.getLogger();
+	public static ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(id("base"), () -> new ItemStack(AllBlocks.COGWHEEL));
+	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(id("palettes"), () -> new ItemStack(AllBlocks.ZINC_BLOCK));
 
     public static TorquePropagator torquePropagator;
 
-    public static final ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(id("base"), () -> new ItemStack(AllBlocks.COGWHEEL));
-    public static final ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(id("palettes"), () -> new ItemStack(AllItems.ZINC_BLOCK));
 
-    @Override
-    public void onInitialize() {
-        AllBlocks.registerBlocks();
-        AllItems.registerItems();
-        AllFluids.register();
-        AllTags.register();
-        AllPaletteBlocks.registerBlocks();
-        AllEntityTypes.register();
-        AllMovementBehaviours.register();
+	@Override
+	public void onInitialize() {
+		AllBlocks.register();
+		AllItems.register();
+		AllFluids.register();
+		AllTags.register();
+		AllPaletteBlocks.registerBlocks();
+		AllEntityTypes.register();
+		AllBlockEntities.register();
+		AllMovementBehaviours.register();
 		AllConfigs.register();
 
         AllPackets.registerPackets();

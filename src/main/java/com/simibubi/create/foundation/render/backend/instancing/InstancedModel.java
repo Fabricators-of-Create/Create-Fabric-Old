@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL20;
 public abstract class InstancedModel<D extends InstanceData> extends BufferedModel {
 	public static final VertexFormat FORMAT = VertexFormat.builder().addAttributes(ModelVertexAttributes.class).build();
 
-	public final InstancedTileRenderer<?> renderer;
+	public final InstancedBlockRenderer<?> renderer;
 
 	protected GlVertexArray vao;
 	protected GlBuffer instanceVBO;
@@ -32,7 +32,7 @@ public abstract class InstancedModel<D extends InstanceData> extends BufferedMod
 	protected int minIndexChanged = -1;
 	protected int maxIndexChanged = -1;
 
-	public InstancedModel(InstancedTileRenderer<?> renderer, BufferBuilder buf) {
+	public InstancedModel(InstancedBlockRenderer<?> renderer, BufferBuilder buf) {
 		super(buf);
 		this.renderer = renderer;
 	}

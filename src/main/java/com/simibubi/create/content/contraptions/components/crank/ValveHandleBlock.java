@@ -1,14 +1,18 @@
 package com.simibubi.create.content.contraptions.components.crank;
 
 import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
@@ -35,20 +39,18 @@ public class ValveHandleBlock extends HandCrankBlock {
 	@Override
 	public ActionResult onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
 		BlockHitResult hit) {
-		ItemStack heldItem = player.getStackInHand(handIn);
-		/*for (DyeColor color : DyeColor.values()) {
-			if (!heldItem.getItem()
-				.isIn(DyeHelper.getTagOfDye(color)))
-				continue;
-			if (worldIn.isClient)
-				return ActionResult.SUCCESS;
+		if (worldIn.isClient)
+			return ActionResult.SUCCESS;
 
+		ItemStack heldItem = player.getStackInHand(handIn);
+		if (heldItem.getItem() instanceof DyeItem) {
+			DyeColor color = ((DyeItem) heldItem.getItem()).getColor();
 			BlockState newState = AllBlocks.DYED_VALVE_HANDLES[color.ordinal()].getDefaultState()
 				.with(FACING, state.get(FACING));
 			if (newState != state)
 				worldIn.setBlockState(pos, newState);
 			return ActionResult.SUCCESS;
-		}*/
+		}
 
 		return super.onUse(state, worldIn, pos, player, handIn, hit);
 	}

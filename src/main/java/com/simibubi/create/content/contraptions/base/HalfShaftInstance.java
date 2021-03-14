@@ -3,7 +3,7 @@ package com.simibubi.create.content.contraptions.base;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntityType;
@@ -11,7 +11,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
 
 public class HalfShaftInstance extends SingleRotatingInstance {
-	public HalfShaftInstance(InstancedTileRenderer<?> modelManager, KineticBlockEntity tile) {
+	public HalfShaftInstance(InstancedBlockRenderer<?> modelManager, KineticBlockEntity tile) {
 		super(modelManager, tile);
 	}
 

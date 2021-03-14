@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public abstract class KineticBlockInstance<T extends KineticBlockEntity> extends BlockEntityInstance<T> {
 
-	public KineticBlockInstance(InstancedTileRenderer<?> modelManager, T tile) {
+	public KineticBlockInstance(InstancedBlockRenderer<?> modelManager, T tile) {
 		super(modelManager, tile);
 	}
 

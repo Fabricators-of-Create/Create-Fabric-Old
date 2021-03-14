@@ -2,11 +2,11 @@ package com.simibubi.create.content.contraptions.components.actors;
 
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import net.minecraft.client.render.BufferBuilder;
 
 public class RotatingActorModel extends InstancedModel<ContraptionActorData> {
-	public RotatingActorModel(InstancedTileRenderer<?> renderer, BufferBuilder buf) {
+	public RotatingActorModel(InstancedBlockRenderer<?> renderer, BufferBuilder buf) {
 		super(renderer, buf);
 	}
 
