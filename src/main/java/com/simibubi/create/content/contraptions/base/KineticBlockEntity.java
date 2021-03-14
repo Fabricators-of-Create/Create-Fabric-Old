@@ -179,7 +179,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	}
 
 	public float calculateAddedStressCapacity() {
-		float capacity = 10; //(float) AllConfigs.SERVER.kinetics.stressValues.getCapacityOf(getStressConfigKey()); TODO CAPACITY CONFIG
+		float capacity = 0; //(float) AllConfigs.SERVER.kinetics.stressValues.getCapacityOf(getStressConfigKey()); TODO CAPACITY CONFIG
 		this.lastCapacityProvided = capacity;
 		return capacity;
 	}
@@ -189,7 +189,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	}
 
 	public float calculateStressApplied() {
-		float impact = 10; //(float) AllConfigs.SERVER.kinetics.stressValues.getImpactOf(getCachedState().getBlock()); TODO IMPACT CONFIG
+		float impact = 0; //(float) AllConfigs.SERVER.kinetics.stressValues.getImpactOf(getCachedState().getBlock()); TODO IMPACT CONFIG
 		this.lastStressApplied = impact;
 		return impact;
 	}

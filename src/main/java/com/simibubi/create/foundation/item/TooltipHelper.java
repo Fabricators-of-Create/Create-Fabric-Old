@@ -3,6 +3,7 @@ package com.simibubi.create.foundation.item;
 import com.google.common.base.Strings;
 import com.mojang.bridge.game.Language;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.content.curiosities.tools.AllToolTiers;
@@ -293,12 +294,12 @@ public class TooltipHelper {
 	}
 
 	private static ItemDescription buildToolTip(String translationKey, ItemStack stack) {
-		/*AllSections module = AllSections.of(stack);
+		AllSections module = AllSections.of(stack);
 		if (I18n.translate(translationKey)
 			.equals("WIP"))
-			return new WipScription(module.getTooltipPalette());*/
+			return new WipScription(module.getTooltipPalette());
 
-		ItemDescription tooltip = new ItemDescription(null);
+		ItemDescription tooltip = new ItemDescription(module.getTooltipPalette());
 		String summaryKey = translationKey + ".summary";
 
 		// Summary
