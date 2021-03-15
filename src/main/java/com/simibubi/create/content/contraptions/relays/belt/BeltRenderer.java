@@ -3,6 +3,8 @@ package com.simibubi.create.content.contraptions.relays.belt;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
@@ -134,21 +136,21 @@ public class BeltRenderer extends SafeBlockEntityRenderer<BeltBlockEntity> {
 			}
 			ms.pop();
 
-			/**if (te.hasPulley()) { TODO hasPulley CHECK
-			 // TODO 1.15 find a way to cache this model matrix computation
-			 MatrixStack modelTransform = new MatrixStack();
-			 Direction dir = blockState.get(BeltBlock.HORIZONTAL_FACING).rotateY();
-			 if (sideways) dir = Direction.UP;
-			 msr = MatrixStacker.of(modelTransform);
-			 msr.centre();
-			 if (dir.getAxis() == Axis.X) msr.rotateY(90);
-			 if (dir.getAxis() == Axis.Y) msr.rotateX(90);
-			 msr.rotateX(90);
-			 msr.unCentre();
+			if (te.hasPulley()) {
+		 		// TODO 1.15 find a way to cache this model matrix computation
+		 		MatrixStack modelTransform = new MatrixStack();
+		 		Direction dir = blockState.get(BeltBlock.HORIZONTAL_FACING).rotateYClockwise();
+		 		if (sideways) dir = Direction.UP;
+				msr = MatrixStacker.of(modelTransform);
+		 		msr.centre();
+		 		if (dir.getAxis() == Direction.Axis.X) msr.rotateY(90);
+		 		if (dir.getAxis() == Direction.Axis.Y) msr.rotateX(90);
+		 		msr.rotateX(90);
+		 		msr.unCentre();
 
-			 SuperByteBuffer superBuffer = CreateClient.bufferCache.renderDirectionalPartial(AllBlockPartials.BELT_PULLEY, blockState, dir, modelTransform);
-			 KineticTileEntityRenderer.standardKineticRotationTransform(superBuffer, te, light).renderInto(ms, vb);
-			 }*/
+		 		SuperByteBuffer superBuffer = CreateClient.bufferCache.renderDirectionalPartial(AllBlockPartials.BELT_PULLEY, blockState, dir, modelTransform);
+		 		KineticBlockEntityRenderer.standardKineticRotationTransform(superBuffer, te, light).renderInto(ms, vb);
+			 }
 		}
 
 		renderItems(te, partialTicks, ms, buffer, light, overlay);

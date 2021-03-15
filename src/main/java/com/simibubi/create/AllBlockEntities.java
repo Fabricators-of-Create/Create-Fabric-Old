@@ -1,16 +1,13 @@
 package com.simibubi.create;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.content.contraptions.base.BackHalfShaftInstance;
-import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
-import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
+import com.simibubi.create.content.contraptions.base.*;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlockEntity;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockRenderer;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlockEntity;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankRenderer;
+import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlockEntity;
+import com.simibubi.create.content.contraptions.components.fan.EncasedFanRenderer;
+import com.simibubi.create.content.contraptions.components.fan.FanInstance;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorRenderer;
@@ -20,25 +17,32 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyRenderer;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstance;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticBlockEntity;
 import com.simibubi.create.content.contraptions.relays.encased.ClutchBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.ShaftInstance;
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftInstance;
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftRenderer;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxInstance;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxRenderer;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftBlockEntity;
+import com.simibubi.create.content.logistics.block.diodes.AdjustablePulseRepeaterBlockEntity;
+import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlockEntity;
+import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterRenderer;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
-
 import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
+
+import java.util.function.Supplier;
 
 public class AllBlockEntities {
 	// Schematics
@@ -80,13 +84,13 @@ public class AllBlockEntities {
 		.validBlocks(AllBlocks.ADJUSTABLE_CHAIN_GEARSHIFT)
 		.renderer(() -> EncasedShaftRenderer::new)
 		.onRegister(ShaftInstance::register)
-		.register();
+		.register();*/
 
 	public static final BlockEntityType<EncasedFanBlockEntity> ENCASED_FAN = createBuilder("encased_fan", EncasedFanBlockEntity::new)
 		.validBlocks(AllBlocks.ENCASED_FAN)
 		.renderer(() -> EncasedFanRenderer::new)
 		.onRegister(FanInstance::register)
-		.register();*/
+		.register();
 
 	public static final BlockEntityType<NozzleBlockEntity> NOZZLE = createBuilder("nozzle", NozzleBlockEntity::new)
 		.validBlocks(AllBlocks.NOZZLE)
@@ -248,11 +252,11 @@ public class AllBlockEntities {
 		.onRegister(BackHalfShaftInstance::register)
 		.register();
 
-	/*public static final BlockEntityType<PulleyBlockEntity> ROPE_PULLEY = createBuilder("rope_pulley", PulleyBlockEntity::new)
+	public static final BlockEntityType<PulleyBlockEntity> ROPE_PULLEY = createBuilder("rope_pulley", PulleyBlockEntity::new)
 		.validBlocks(AllBlocks.ROPE_PULLEY)
 		.renderer(() -> PulleyRenderer::new)
 		.onRegister(ShaftInstance::register)
-		.register();*/
+		.register();
 
 	public static final BlockEntityType<ChassisBlockEntity> CHASSIS = createBuilder("chassis", ChassisBlockEntity::new)
 		.validBlocks(AllBlocks.RADIAL_CHASSIS, AllBlocks.LINEAR_CHASSIS, AllBlocks.SECONDARY_LINEAR_CHASSIS)
@@ -428,7 +432,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<ContentObserverBlockEntity> CONTENT_OBSERVER = createBuilder("content_observer", ContentObserverBlockEntity::new)
 		.validBlocks(AllBlocks.CONTENT_OBSERVER)
 		.renderer(() -> SmartBlockEntityRenderer::new)
-		.register();
+		.register();*/
 
 	public static final BlockEntityType<AdjustableRepeaterBlockEntity> ADJUSTABLE_REPEATER = createBuilder("adjustable_repeater", AdjustableRepeaterBlockEntity::new)
 		.validBlocks(AllBlocks.ADJUSTABLE_REPEATER)
@@ -438,7 +442,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<AdjustablePulseRepeaterBlockEntity> ADJUSTABLE_PULSE_REPEATER = createBuilder("adjustable_pulse_repeater", AdjustablePulseRepeaterBlockEntity::new)
 		.validBlocks(AllBlocks.ADJUSTABLE_PULSE_REPEATER)
 		.renderer(() -> AdjustableRepeaterRenderer::new)
-		.register();*/
+		.register();
 
 	private static <T extends BlockEntity> BlockEntityTypeRegBuilder<T> createBuilder(String id, Supplier<T> supplier) {
 		return BlockEntityTypeRegBuilder.create(new Identifier(Create.ID, id), supplier);

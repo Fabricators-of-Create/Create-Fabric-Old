@@ -1,11 +1,10 @@
 package com.simibubi.create;
 
-import java.util.function.Function;
-
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlock;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
+import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlock;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlock;
@@ -15,6 +14,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.cha
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.RadialChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
@@ -23,12 +23,15 @@ import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
 import com.simibubi.create.content.contraptions.relays.encased.ClutchBlock;
 import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlock;
+import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock;
+import com.simibubi.create.content.logistics.block.diodes.PoweredLatchBlock;
+import com.simibubi.create.content.logistics.block.diodes.PulseRepeaterBlock;
+import com.simibubi.create.content.logistics.block.diodes.ToggleLatchBlock;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.TooltipHelper;
-
 import me.pepperbell.reghelper.BlockRegBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -41,6 +44,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+
+import java.util.function.Function;
 
 public class AllBlocks {
 	private static AllSections currentSection;
@@ -196,15 +201,16 @@ public class AllBlocks {
 		.simpleItem()
 		.register();
 
-	/*public static final EncasedFanBlock ENCASED_FAN = createBuilder("encased_fan", EncasedFanBlock::new)
+	public static final EncasedFanBlock ENCASED_FAN = createBuilder("encased_fan", EncasedFanBlock::new)
 		.initialProperties(SharedProperties::stone)
-		.blockstate(BlockStateGen.directionalBlockProvider(true))
+//		.blockstate(BlockStateGen.directionalBlockProvider(true))
 		.addLayer(() -> RenderLayer::getCutoutMipped)
-		.transform(StressConfigDefaults.setCapacity(16.0))
-		.transform(StressConfigDefaults.setImpact(2.0))
+		.consume(StressConfigDefaults.capacityConsumer(16.0))
+		.consume(StressConfigDefaults.impactConsumer(2.0))
 		.item()
-		.transform(customItemModel())
-		.register();*/
+//		.transform(customItemModel())
+		.build()
+		.register();
 
 	public static final NozzleBlock NOZZLE = createBuilder("nozzle", NozzleBlock::new)
 		.initialProperties(SharedProperties::stone)
@@ -579,29 +585,30 @@ public class AllBlocks {
 //		.tag(AllBlockTags.SAFE_NBT.tag)
 		.register();
 
-	/*public static final PulleyBlock ROPE_PULLEY = createBuilder("rope_pulley", PulleyBlock::new)
+	public static final PulleyBlock ROPE_PULLEY = createBuilder("rope_pulley", PulleyBlock::new)
 		.initialProperties(SharedProperties::stone)
-		.tag(AllBlockTags.SAFE_NBT.tag)
-		.blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
-		.transform(StressConfigDefaults.setImpact(4.0))
+//		.tag(AllBlockTags.SAFE_NBT.tag)
+//		.blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
+		.consume(StressConfigDefaults.impactConsumer(4.0))
 		.item()
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
 	public static final PulleyBlock.RopeBlock ROPE = createBuilder("rope", PulleyBlock.RopeBlock::new)
 		.initialProperties(SharedProperties.beltMaterial, MaterialColor.BROWN)
-		.tag(AllBlockTags.BRITTLE.tag)
+//		.tag(AllBlockTags.BRITTLE.tag)
 		.properties(p -> p.sounds(BlockSoundGroup.WOOL))
-		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-		.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
+//		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+//		.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
 		.register();
 
 	public static final PulleyBlock.MagnetBlock PULLEY_MAGNET = createBuilder("pulley_magnet", PulleyBlock.MagnetBlock::new)
 		.initialProperties(SharedProperties::stone)
-		.tag(AllBlockTags.BRITTLE.tag)
-		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-			.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
-		.register();*/
+//		.tag(AllBlockTags.BRITTLE.tag)
+//		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+//			.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
+		.register();
 
 	public static final CartAssemblerBlock CART_ASSEMBLER = createBuilder("cart_assembler", CartAssemblerBlock::new)
 		.initialProperties(SharedProperties::stone)
@@ -989,47 +996,49 @@ public class AllBlocks {
 		.build()
 		.register();
 
-	/*public static final PulseRepeaterBlock PULSE_REPEATER = createBuilder("pulse_repeater", PulseRepeaterBlock::new)
+	public static final PulseRepeaterBlock PULSE_REPEATER = createBuilder("pulse_repeater", PulseRepeaterBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.blockstate(new PulseRepeaterGenerator()::generate)
+//		.blockstate(new PulseRepeaterGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.item()
-		.transform(customItemModel("diodes", "pulse_repeater"))
+//		.transform(customItemModel("diodes", "pulse_repeater"))
+		.build()
 		.register();
 
 	public static final AdjustableRepeaterBlock ADJUSTABLE_REPEATER = createBuilder("adjustable_repeater", AdjustableRepeaterBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.tag(AllBlockTags.SAFE_NBT.tag)
-		.blockstate(new AdjustableRepeaterGenerator()::generate)
+//		.tag(AllBlockTags.SAFE_NBT.tag)
+//		.blockstate(new AdjustableRepeaterGenerator()::generate)
 		.item()
-		.model(AbstractDiodeGenerator.diodeItemModel(true))
+//		.model(AbstractDiodeGenerator.diodeItemModel(true))
 		.build()
 		.register();
 
 	public static final AdjustableRepeaterBlock ADJUSTABLE_PULSE_REPEATER = createBuilder("adjustable_pulse_repeater", AdjustableRepeaterBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.tag(AllBlockTags.SAFE_NBT.tag)
-		.blockstate(new AdjustableRepeaterGenerator()::generate)
+//		.tag(AllBlockTags.SAFE_NBT.tag)
+//		.blockstate(new AdjustableRepeaterGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.item()
-		.model(AbstractDiodeGenerator.diodeItemModel(true))
+//		.model(AbstractDiodeGenerator.diodeItemModel(true))
 		.build()
 		.register();
 
 	public static final PoweredLatchBlock POWERED_LATCH = createBuilder("powered_latch", PoweredLatchBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.blockstate(new PoweredLatchGenerator()::generate)
+//		.blockstate(new PoweredLatchGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.simpleItem()
 		.register();
 
 	public static final ToggleLatchBlock POWERED_TOGGLE_LATCH = createBuilder("powered_toggle_latch", ToggleLatchBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.blockstate(new ToggleLatchGenerator()::generate)
+//		.blockstate(new ToggleLatchGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.item()
-		.transform(customItemModel("diodes", "latch_off"))
-		.register();*/
+//		.transform(customItemModel("diodes", "latch_off"))
+		.build()
+		.register();
 
 	// Materials
 

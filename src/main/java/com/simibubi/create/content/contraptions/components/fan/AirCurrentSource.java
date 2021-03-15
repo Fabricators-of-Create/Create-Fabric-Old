@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 
 @MethodsReturnNonnullByDefault
 public interface AirCurrentSource {
-	/*@Nullable
-	AirCurrent getAirCurrent();*/
+	@Nullable
+	AirCurrent getAirCurrent();
 
 	@Nullable
 	World getAirCurrentWorld();
