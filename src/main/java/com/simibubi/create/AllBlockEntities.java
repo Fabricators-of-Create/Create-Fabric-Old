@@ -1,16 +1,13 @@
 package com.simibubi.create;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.content.contraptions.base.BackHalfShaftInstance;
-import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
-import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
+import com.simibubi.create.content.contraptions.base.*;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlockEntity;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockRenderer;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlockEntity;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankRenderer;
+import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlockEntity;
+import com.simibubi.create.content.contraptions.components.fan.EncasedFanRenderer;
+import com.simibubi.create.content.contraptions.components.fan.FanInstance;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorRenderer;
@@ -34,11 +31,12 @@ import com.simibubi.create.content.contraptions.relays.gearbox.GearboxRenderer;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
-
 import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
+
+import java.util.function.Supplier;
 
 public class AllBlockEntities {
 	// Schematics
@@ -80,13 +78,13 @@ public class AllBlockEntities {
 		.validBlocks(AllBlocks.ADJUSTABLE_CHAIN_GEARSHIFT)
 		.renderer(() -> EncasedShaftRenderer::new)
 		.onRegister(ShaftInstance::register)
-		.register();
+		.register();*/
 
 	public static final BlockEntityType<EncasedFanBlockEntity> ENCASED_FAN = createBuilder("encased_fan", EncasedFanBlockEntity::new)
 		.validBlocks(AllBlocks.ENCASED_FAN)
 		.renderer(() -> EncasedFanRenderer::new)
 		.onRegister(FanInstance::register)
-		.register();*/
+		.register();
 
 	public static final BlockEntityType<NozzleBlockEntity> NOZZLE = createBuilder("nozzle", NozzleBlockEntity::new)
 		.validBlocks(AllBlocks.NOZZLE)

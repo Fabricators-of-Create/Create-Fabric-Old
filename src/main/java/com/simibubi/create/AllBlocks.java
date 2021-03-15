@@ -1,11 +1,10 @@
 package com.simibubi.create;
 
-import java.util.function.Function;
-
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlock;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
+import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlock;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlock;
@@ -28,7 +27,6 @@ import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.TooltipHelper;
-
 import me.pepperbell.reghelper.BlockRegBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -41,6 +39,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+
+import java.util.function.Function;
 
 public class AllBlocks {
 	private static AllSections currentSection;
@@ -196,15 +196,16 @@ public class AllBlocks {
 		.simpleItem()
 		.register();
 
-	/*public static final EncasedFanBlock ENCASED_FAN = createBuilder("encased_fan", EncasedFanBlock::new)
+	public static final EncasedFanBlock ENCASED_FAN = createBuilder("encased_fan", EncasedFanBlock::new)
 		.initialProperties(SharedProperties::stone)
-		.blockstate(BlockStateGen.directionalBlockProvider(true))
+//		.blockstate(BlockStateGen.directionalBlockProvider(true))
 		.addLayer(() -> RenderLayer::getCutoutMipped)
-		.transform(StressConfigDefaults.setCapacity(16.0))
-		.transform(StressConfigDefaults.setImpact(2.0))
+		.consume(StressConfigDefaults.capacityConsumer(16.0))
+		.consume(StressConfigDefaults.impactConsumer(2.0))
 		.item()
-		.transform(customItemModel())
-		.register();*/
+//		.transform(customItemModel())
+		.build()
+		.register();
 
 	public static final NozzleBlock NOZZLE = createBuilder("nozzle", NozzleBlock::new)
 		.initialProperties(SharedProperties::stone)

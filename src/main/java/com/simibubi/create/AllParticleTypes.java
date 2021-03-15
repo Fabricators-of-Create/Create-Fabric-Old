@@ -1,23 +1,23 @@
 package com.simibubi.create;
 
-import java.util.function.Supplier;
-
+import com.simibubi.create.content.contraptions.particle.AirFlowParticleData;
 import com.simibubi.create.content.contraptions.particle.CubeParticleData;
 import com.simibubi.create.content.contraptions.particle.CustomParticleData;
 import com.simibubi.create.content.contraptions.particle.RotationIndicatorParticleData;
 import com.simibubi.create.foundation.utility.Lang;
-
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
+
+import java.util.function.Supplier;
 
 public enum AllParticleTypes {
 
 	ROTATION_INDICATOR(RotationIndicatorParticleData::new),
-	/**AIR_FLOW(AirFlowParticleData::new),
-	AIR(AirParticleData::new),
+	AIR_FLOW(AirFlowParticleData::new),
+	/*AIR(AirParticleData::new),
 	HEATER_PARTICLE(HeaterParticleData::new),*/
 	CUBE(CubeParticleData::new),
-	/**FLUID_PARTICLE(FluidParticleData::new),
+	/*FLUID_PARTICLE(FluidParticleData::new),
 	BASIN_FLUID(FluidParticleData::new),
 	FLUID_DRIP(FluidParticleData::new)*/
 
@@ -27,10 +27,10 @@ public enum AllParticleTypes {
 
 	<D extends ParticleEffect> AllParticleTypes(Supplier<? extends CustomParticleData<D>> typeFactory) {
 		String asId = Lang.asId(this.name());
-		/**entry = new ParticleEntry<>(new Identifier(Create.ID, asId), typeFactory);*/
+		//entry = new ParticleEntry<>(new Identifier(Create.ID, asId), typeFactory);
 	}
 
-	/**public static void register(RegistryEvent.Register<ParticleType<?>> event) {
+	/*public static void register(RegistryEvent.Register<ParticleType<?>> event) {
 		for (AllParticleTypes particle : values())
 			particle.entry.register(event.getRegistry());
 	}
@@ -50,7 +50,7 @@ public enum AllParticleTypes {
 		return Lang.asId(name());
 	}
 
-	/**private class ParticleEntry<D extends ParticleEffect> {
+	/*private class ParticleEntry<D extends ParticleEffect> {
 		Supplier<? extends ICustomParticleData<D>> typeFactory;
 		ParticleType<D> type;
 		Identifier id;

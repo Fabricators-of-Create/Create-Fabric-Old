@@ -21,6 +21,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+import java.util.Random;
+
 public class Create implements ModInitializer  {
 	public static final String ID = "create";
 	public static final String NAME = "Create";
@@ -30,6 +32,7 @@ public class Create implements ModInitializer  {
 	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "palettes"), () -> new ItemStack(AllBlocks.ZINC_BLOCK));
 
 	public static TorquePropagator torquePropagator;
+	public static Random random;
 
 	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID + ":resources");
 
@@ -44,6 +47,8 @@ public class Create implements ModInitializer  {
 		AllBlockEntities.register();
 		AllMovementBehaviours.register();
 		AllConfigs.register();
+
+		random = new Random();
 
 		torquePropagator = new TorquePropagator();
 
