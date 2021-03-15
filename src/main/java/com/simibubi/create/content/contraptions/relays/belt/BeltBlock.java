@@ -1,16 +1,13 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -21,6 +18,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.state.StateManager;
@@ -39,6 +37,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEntity>, SpecialBlockItemRequirement {
 	public static final Property<BeltSlope> SLOPE = EnumProperty.of("slope", BeltSlope.class);
@@ -203,10 +204,10 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 	public boolean hasShaftTowards(WorldView world, BlockPos pos, BlockState state, Direction face) {
 		if (face.getAxis() != getRotationAxis(state))
 			return false;
-		/*try {
-			return getTileEntity(world, pos).hasPulley();
-		} catch (ITE.TileEntityException e) {
-		}*/
+		try {
+			return getBlockEntity(world, pos).hasPulley();
+		} catch (IBE.BlockEntityException e) {
+		}
 		return false;
 	}
 
@@ -224,7 +225,7 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 		return AllItems.BELT_CONNECTOR.asItem().getDefaultStack();
 	}
 
-	/*@Override
+	@Override
 	public ActionResult onWrenched(BlockState state, ItemUsageContext context) {
 		World world = context.getWorld();
 		PlayerEntity player = context.getPlayer();
@@ -233,29 +234,29 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 		if (state.get(CASING)) {
 			if (world.isClient)
 				return ActionResult.SUCCESS;
-			//withTileEntityDo(world, pos, te -> te.setCasingType(BeltTileEntity.CasingType.NONE));
+			//withBlockEntityDo(world, pos, te -> te.setCasingType(BeltBlockEntity.CasingType.NONE));
 			return ActionResult.SUCCESS;
 		}
 
 		if (state.get(PART) == BeltPart.PULLEY) {
 			if (world.isClient)
 				return ActionResult.SUCCESS;
-			KineticTileEntity.switchToBlockState(world, pos, state.with(PART, BeltPart.MIDDLE));
+			KineticBlockEntity.switchToBlockState(world, pos, state.with(PART, BeltPart.MIDDLE));
 			if (player != null && !player.isCreative())
-				player.inventory.placeItemBackInInventory(world, AllBlocks.SHAFT.asStack());
+				player.inventory.offerOrDrop(world, AllBlocks.SHAFT.asItem().getDefaultStack());
 			return ActionResult.SUCCESS;
 		}
 
 		return ActionResult.FAIL;
-	}*/
+	}
 
 	@Override
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> drops = super.getDroppedStacks(state, builder);
 		BlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY);
-		/**if (blockEntity instanceof BeltTileEntity && ((BeltTileEntity) blockEntity).hasPulley())
-		 drops.addAll(AllBlocks.SHAFT.getDefaultState()
-		 .getDrops(builder));*/
+		/*if (blockEntity instanceof BeltBlockEntity && ((BeltBlockEntity) blockEntity).hasPulley())
+	 		drops.addAll(AllBlocks.SHAFT.getDefaultState()
+	 			.getDrops(builder));*/
 		return drops;
 	}
 
@@ -484,12 +485,12 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 			BlockEntity blockEntity = world.getBlockEntity(currentPos);
 			if (blockEntity instanceof BeltBlockEntity) {
 				BeltBlockEntity belt = (BeltBlockEntity) blockEntity;
-				/**if (belt.isController())
+				/*if (belt.isController())
 				 belt.getInventory()
 				 .ejectAll();*/
 
 				belt.markRemoved();
-				/**hasPulley = belt.hasPulley();*/
+				hasPulley = belt.hasPulley();
 			}
 
 			BlockState shaftState = AllBlocks.SHAFT.getDefaultState()

@@ -1,21 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Queue;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.BiConsumer;
-
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
-
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
@@ -25,35 +9,20 @@ import com.simibubi.create.content.contraptions.components.structureMovement.cha
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueHandler;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
 import com.simibubi.create.foundation.render.backend.light.EmptyLighter;
-import com.simibubi.create.foundation.utility.BlockFace;
-import com.simibubi.create.foundation.utility.CNBTHelper;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.NBTProcessors;
-import com.simibubi.create.foundation.utility.UniqueLinkedList;
-import com.simibubi.create.foundation.utility.VecHelper;
-
+import com.simibubi.create.foundation.utility.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.block.AbstractButtonBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.block.Waterloggable;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.structure.Structure;
 import net.minecraft.util.BlockRotation;
@@ -62,6 +31,12 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
+import java.util.function.BiConsumer;
 
 public abstract class Contraption {
 
@@ -330,23 +305,23 @@ public abstract class Contraption {
 	 }
 	 }*/
 
-	/*private void movePulley(World world, BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited) {
-	 int limit = AllConfigs.SERVER.kinetics.maxRopeLength.get();
-	 BlockPos ropePos = pos;
-	 while (limit-- >= 0) {
-	 ropePos = ropePos.down();
-	 if (!world.canSetBlock(ropePos))
-	 break;
-	 BlockState ropeState = world.getBlockState(ropePos);
-	 Block block = ropeState.getBlock();
-	 if (!(block instanceof RopeBlock) && !(block instanceof MagnetBlock)) {
-	 if (!visited.contains(ropePos))
-	 frontier.add(ropePos);
-	 break;
+	private void movePulley(World world, BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited) {
+ 		int limit = 128; //AllConfigs.SERVER.kinetics.maxRopeLength.get();
+ 		BlockPos ropePos = pos;
+ 		while (limit-- >= 0) {
+ 			ropePos = ropePos.down();
+ 			if (!world.canSetBlock(ropePos))
+ 				break;
+			BlockState ropeState = world.getBlockState(ropePos);
+	 		Block block = ropeState.getBlock();
+			if (!(block instanceof PulleyBlock.RopeBlock) && !(block instanceof PulleyBlock.MagnetBlock)) {
+	 			if (!visited.contains(ropePos))
+	 				frontier.add(ropePos);
+	 			break;
+			}
+	 		addBlock(ropePos, capture(world, ropePos));
+	 	}
 	 }
-	 addBlock(ropePos, capture(world, ropePos));
-	 }
-	 }*/
 
 	/*private boolean moveMechanicalPiston(World world, BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited, BlockState state) throws AssemblyException {
 	 Direction direction = state.get(MechanicalPistonBlock.FACING);
@@ -429,14 +404,14 @@ public abstract class Contraption {
 
 		 // Seats transfer their passenger to the contraption
 		 /*if (state.getBlock() instanceof SeatBlock)
-		 moveSeat(world, pos);
+		 moveSeat(world, pos);*/
 
 		 // Pulleys drag their rope and their attached structure
-		 if (state.getBlock() instanceof PulleyBlock)
-		 movePulley(world, pos, frontier, visited);
+	 	if (state.getBlock() instanceof PulleyBlock)
+	 		movePulley(world, pos, frontier, visited);
 
 		 // Pistons drag their attaches poles and extension
-		 if (state.getBlock() instanceof MechanicalPistonBlock)
+		 /*if (state.getBlock() instanceof MechanicalPistonBlock)
 		 if (!moveMechanicalPiston(world, pos, frontier, visited, state))
 		 return false;
 		 if (isExtensionPole(state))
@@ -939,13 +914,13 @@ public abstract class Contraption {
 					tag.putInt("y", targetPos.getY());
 					tag.putInt("z", targetPos.getZ());
 
-					/*if (verticalRotation && blockEntity instanceof PulleyTileEntity) {
-					 tag.remove("Offset");
-					 tag.remove("InitialOffset");
-					 }
+					if (verticalRotation && blockEntity instanceof PulleyBlockEntity) {
+				 		tag.remove("Offset");
+				 		tag.remove("InitialOffset");
+					}
 
-					 if (blockEntity instanceof FluidTankTileEntity && tag.contains("LastKnownPos"))
-					 tag.put("LastKnownPos", NbtHelper.fromBlockPos((BlockPos) BlockPos.ZERO.down()));*/
+				 	/*if (blockEntity instanceof FluidTankTileEntity && tag.contains("LastKnownPos"))
+				 		tag.put("LastKnownPos", NbtHelper.fromBlockPos((BlockPos) BlockPos.ZERO.down()));*/
 
 					blockEntity.fromTag(state, tag);
 

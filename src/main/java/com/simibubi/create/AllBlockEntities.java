@@ -17,12 +17,15 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyRenderer;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstance;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticBlockEntity;
 import com.simibubi.create.content.contraptions.relays.encased.ClutchBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.ShaftInstance;
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftInstance;
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftRenderer;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
@@ -246,11 +249,11 @@ public class AllBlockEntities {
 		.onRegister(BackHalfShaftInstance::register)
 		.register();
 
-	/*public static final BlockEntityType<PulleyBlockEntity> ROPE_PULLEY = createBuilder("rope_pulley", PulleyBlockEntity::new)
+	public static final BlockEntityType<PulleyBlockEntity> ROPE_PULLEY = createBuilder("rope_pulley", PulleyBlockEntity::new)
 		.validBlocks(AllBlocks.ROPE_PULLEY)
 		.renderer(() -> PulleyRenderer::new)
 		.onRegister(ShaftInstance::register)
-		.register();*/
+		.register();
 
 	public static final BlockEntityType<ChassisBlockEntity> CHASSIS = createBuilder("chassis", ChassisBlockEntity::new)
 		.validBlocks(AllBlocks.RADIAL_CHASSIS, AllBlocks.LINEAR_CHASSIS, AllBlocks.SECONDARY_LINEAR_CHASSIS)

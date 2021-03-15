@@ -14,6 +14,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.cha
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.RadialChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
@@ -580,29 +581,30 @@ public class AllBlocks {
 //		.tag(AllBlockTags.SAFE_NBT.tag)
 		.register();
 
-	/*public static final PulleyBlock ROPE_PULLEY = createBuilder("rope_pulley", PulleyBlock::new)
+	public static final PulleyBlock ROPE_PULLEY = createBuilder("rope_pulley", PulleyBlock::new)
 		.initialProperties(SharedProperties::stone)
-		.tag(AllBlockTags.SAFE_NBT.tag)
-		.blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
-		.transform(StressConfigDefaults.setImpact(4.0))
+//		.tag(AllBlockTags.SAFE_NBT.tag)
+//		.blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
+		.consume(StressConfigDefaults.impactConsumer(4.0))
 		.item()
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
 	public static final PulleyBlock.RopeBlock ROPE = createBuilder("rope", PulleyBlock.RopeBlock::new)
 		.initialProperties(SharedProperties.beltMaterial, MaterialColor.BROWN)
-		.tag(AllBlockTags.BRITTLE.tag)
+//		.tag(AllBlockTags.BRITTLE.tag)
 		.properties(p -> p.sounds(BlockSoundGroup.WOOL))
-		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-		.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
+//		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+//		.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
 		.register();
 
 	public static final PulleyBlock.MagnetBlock PULLEY_MAGNET = createBuilder("pulley_magnet", PulleyBlock.MagnetBlock::new)
 		.initialProperties(SharedProperties::stone)
-		.tag(AllBlockTags.BRITTLE.tag)
-		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-			.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
-		.register();*/
+//		.tag(AllBlockTags.BRITTLE.tag)
+//		.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+//			.getExistingFile(p.modLoc("block/rope_pulley/" + c.getName()))))
+		.register();
 
 	public static final CartAssemblerBlock CART_ASSEMBLER = createBuilder("cart_assembler", CartAssemblerBlock::new)
 		.initialProperties(SharedProperties::stone)

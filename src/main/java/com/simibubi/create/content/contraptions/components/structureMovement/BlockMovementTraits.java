@@ -10,6 +10,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
 
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
 import net.minecraft.block.AbstractPressurePlateBlock;
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.Block;
@@ -68,11 +70,11 @@ public class BlockMovementTraits {
 	 		if (te instanceof ClockworkBearingBlockEntity)
 	 		return !((ClockworkBearingBlockEntity) te).isRunning();
 	 	}
-	 	/*if (block instanceof PulleyBlock) {
+	 	if (block instanceof PulleyBlock) {
 	 		BlockEntity te = world.getBlockEntity(pos);
-	 		if (te instanceof PulleyTileEntity)
-	 		return !((PulleyTileEntity) te).running;
-	 	}*/
+	 		if (te instanceof PulleyBlockEntity)
+	 		return !((PulleyBlockEntity) te).running;
+	 	}
 
 		if (AllBlocks.BELT.hasBlockEntity())
 			return true;
@@ -191,9 +193,9 @@ public class BlockMovementTraits {
 	 	if (AllBlocks.PORTABLE_STORAGE_INTERFACE.has(state))
 	 		return state.get(PortableStorageInterfaceBlock.FACING) == facing;
 		if (state.getBlock() instanceof AttachedActorBlock)
-			return state.get(BlockStateProperties.HORIZONTAL_FACING) == facing;
-	 	if (AllBlocks.ROPE_PULLEY.has(state))
-	 		return facing == Direction.DOWN;*/
+			return state.get(BlockStateProperties.HORIZONTAL_FACING) == facing;*/
+	 	if (AllBlocks.ROPE_PULLEY.getStateManager().getStates().contains(state))
+	 		return facing == Direction.DOWN;
 		if (state.getBlock() instanceof CarpetBlock)
 			return facing == Direction.UP;
 		/*if (state.getBlock() instanceof SailBlock)
