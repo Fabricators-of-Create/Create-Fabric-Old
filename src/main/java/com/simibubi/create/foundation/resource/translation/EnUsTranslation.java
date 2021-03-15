@@ -2,7 +2,6 @@ package com.simibubi.create.foundation.resource.translation;
 
 import net.devtech.arrp.json.lang.JLang;
 
-@SuppressWarnings("CommentedOutCode")
 public final class EnUsTranslation extends CreateTranslation {
 	public static final EnUsTranslation INSTANCE = new EnUsTranslation();
 	private EnUsTranslation() {
@@ -16,6 +15,7 @@ public final class EnUsTranslation extends CreateTranslation {
 		addFluids(lang);
 		addKinetics(lang);
 		addLogistics(lang);
+		addRecipes(lang);
 	}
 
 	private static void addClient(JLang lang) {
@@ -162,5 +162,30 @@ public final class EnUsTranslation extends CreateTranslation {
 		tooltip(lang, "psiTimeout", "The amount of ticks a portable storage interface waits for transfers until letting contraptions move along.", LOGISTICS);
 		tooltip(lang, "mechanicalArmRange", "Maximum distance in blocks a Mechanical Arm can reach across.", LOGISTICS);
 		tooltip(lang, "linkRange", "Maximum possible range in blocks of redstone link connections.", LOGISTICS);
+	}
+
+	private static void addRecipes(JLang lang) {
+		final String RECIPES = "recipes";
+		text(lang, RECIPES, "Recipes");
+
+		// Option Names
+		text(lang, "allowShapelessInMixer", "Allow Shapeless in Mixer", RECIPES);
+		text(lang, "allowShapedSquareInPress", "Allow Shaped Square in Press", RECIPES);
+		text(lang, "allowRegularCraftingInCrafter", "Allow Regular Crafting in Crafter", RECIPES);
+		text(lang, "allowStonecuttingOnSaw", "Allow Stonecutting on Saw", RECIPES);
+		text(lang, "allowWoodcuttingOnSaw", "Allow Woodcutting on Saw", RECIPES);
+		text(lang, "lightSourceCountForRefinedRadiance", "Light Source Count for Refined Radiance", RECIPES);
+		text(lang, "enableRefinedRadianceRecipe", "Enable Refined Radiance Recipe", RECIPES);
+		text(lang, "enableShadowSteelRecipe", "Enable Shadow Steel Recipe", RECIPES);
+
+		// Tooltips
+		tooltip(lang, "allowShapelessInMixer", "When true, allows any shapeless crafting recipes to be processed by a Mechanical Mixer + Basin.", RECIPES);
+		tooltip(lang, "allowShapedSquareInPress", "When true, allows any single-ingredient 2x2 or 3x3 crafting recipes to be processed by a Mechanical Press + Basin.", RECIPES);
+		tooltip(lang, "allowRegularCraftingInCrafter", "When true, allows any standard crafting recipes to be processed by Mechanical Crafters.", RECIPES);
+		tooltip(lang, "allowStonecuttingOnSaw", "When true, allows any stonecutting recipes to be processed by a Mechanical Saw.", RECIPES);
+		tooltip(lang, "allowWoodcuttingOnSaw", "When true, allows any Druidcraft woodcutter recipes to be processed by a Mechanical Saw.", RECIPES);
+		tooltip(lang, "lightSourceCountForRefinedRadiance", "The amount of Light sources destroyed before Chromatic Compound turns into Refined Radiance.", RECIPES);
+		tooltip(lang, "enableRefinedRadianceRecipe", "Allow the standard in-world Refined Radiance recipes.", RECIPES);
+		tooltip(lang, "enableShadowSteelRecipe", "Allow the standard in-world Shadow Steel recipe.", RECIPES);
 	}
 }
