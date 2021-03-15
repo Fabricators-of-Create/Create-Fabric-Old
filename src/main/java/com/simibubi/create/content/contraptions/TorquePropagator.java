@@ -10,7 +10,6 @@ import com.simibubi.create.foundation.utility.WorldHelper;
 import net.minecraft.world.WorldAccess;
 
 public class TorquePropagator {
-
 	static Map<WorldAccess, Map<Long, KineticNetwork>> networks = new HashMap<>();
 
 	public void onLoadWorld(WorldAccess world) {

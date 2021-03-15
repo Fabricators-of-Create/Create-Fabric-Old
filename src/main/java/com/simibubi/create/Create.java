@@ -10,10 +10,10 @@ import com.simibubi.create.events.CommonEvents;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.foundation.resource.TranslationsHolder;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
-
-import net.devtech.arrp.api.RRPCallback;
-import net.devtech.arrp.api.RuntimeResourcePack;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigData;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.SharedConstants;
@@ -28,13 +28,12 @@ public class Create implements ModInitializer  {
 	public static final String NAME = "Create";
 
 	public static Logger logger = LogManager.getLogger();
-	public static ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "base"), () -> new ItemStack(AllBlocks.COGWHEEL));
-	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(new Identifier(ID, "palettes"), () -> new ItemStack(AllBlocks.ZINC_BLOCK));
+	public static ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(id("base"), () -> new ItemStack(AllBlocks.COGWHEEL));
+	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(id("palettes"), () -> new ItemStack(AllBlocks.ZINC_BLOCK));
 
 	public static TorquePropagator torquePropagator;
 	public static Random random;
 
-	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID + ":resources");
 
 	@Override
 	public void onInitialize() {
@@ -58,14 +57,23 @@ public class Create implements ModInitializer  {
 
 		AllWorldFeatures.reload();
 
-		RRPCallback.EVENT.register(a -> a.add(RESOURCE_PACK));
+		TranslationsHolder.initialize();
 
 		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
 
 		AllTriggers.register();
 	}
 
-	public static Identifier asResource(String path) {
+	public static Identifier id(String path) {
 		return new Identifier(ID, path);
+	}
+	public static AllConfigs getConfig() {
+		AllConfigs config = AutoConfig.getConfigHolder(AllConfigs.class).getConfig();
+		try {
+			config.validatePostLoad(); // The best way to validate :)
+		} catch (ConfigData.ValidationException e) {
+			throw new RuntimeException(e);
+		}
+		return config;
 	}
 }
