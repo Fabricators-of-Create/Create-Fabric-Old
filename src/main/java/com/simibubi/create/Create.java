@@ -52,7 +52,6 @@ public class Create implements ModInitializer  {
 
 		AllWorldFeatures.reload();
 
-		torquePropagator = new TorquePropagator();
 		TranslationsHolder.initialize();
 
 		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
