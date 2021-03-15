@@ -3,6 +3,7 @@ package com.simibubi.create.foundation.gui.widgets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
+
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 

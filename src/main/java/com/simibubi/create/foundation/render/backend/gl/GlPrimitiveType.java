@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.render.backend.gl;
 
+import org.lwjgl.opengl.GL11;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import org.lwjgl.opengl.GL11;
 
 @Environment(EnvType.CLIENT)
 public enum GlPrimitiveType {

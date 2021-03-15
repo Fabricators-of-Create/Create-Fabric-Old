@@ -1,8 +1,12 @@
 package com.simibubi.create.registrate.util.nullness;
 
-import org.jetbrains.annotations.NotNull;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import java.lang.annotation.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This annotation can be applied to a package or class to indicate that the fields in that element are nonnull by default unless there is:

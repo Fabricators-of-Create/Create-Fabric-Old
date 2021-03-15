@@ -50,7 +50,7 @@ public class WrappedWorld extends World {
 	
 	@Override
 	public LightingProvider getLightingProvider() {
-		return super.getLightingProvider();
+		return world.getLightingProvider();
 	}
 	
 	@Override

@@ -1,16 +1,17 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
+import java.util.List;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.NamedIconOptions;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollOptionBehaviour;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.MathHelper;
-
-import java.util.List;
 
 public class WindmillBearingBlockEntity extends MechanicalBearingBlockEntity {
 

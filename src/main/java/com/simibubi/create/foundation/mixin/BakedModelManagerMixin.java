@@ -53,11 +53,11 @@ public class BakedModelManagerMixin implements BakedModelManagerExtension {
 		return models.get(id);
 	}
 
-	private Identifier getItemModelLocation(Item item) {
+	private static Identifier getItemModelLocation(Item item) {
 		return new ModelIdentifier(item.getName().toString(), "inventory");
 	}
 
-	private List<Identifier> getAllBlockStateModelLocations(Block block) {
+	private static List<Identifier> getAllBlockStateModelLocations(Block block) {
 		List<Identifier> models = new ArrayList<>();
 		block.getStateManager()
 			.getStates()
@@ -67,18 +67,18 @@ public class BakedModelManagerMixin implements BakedModelManagerExtension {
 		return models;
 	}
 
-	private Identifier getBlockModelLocation(Block block, String suffix) {
+	private static Identifier getBlockModelLocation(Block block, String suffix) {
 		return new Identifier(block.getName().toString(), suffix);
 	}
 
-	private <T extends BakedModel> void swapModels(Map<Identifier, BakedModel> modelRegistry,
+	private static <T extends BakedModel> void swapModels(Map<Identifier, BakedModel> modelRegistry,
 												   List<Identifier> locations, Function<BakedModel, T> factory) {
 		locations.forEach(location -> {
 			swapModels(modelRegistry, location, factory);
 		});
 	}
 
-	private <T extends BakedModel> void swapModels(Map<Identifier, BakedModel> modelRegistry,
+	private static <T extends BakedModel> void swapModels(Map<Identifier, BakedModel> modelRegistry,
 												   Identifier location, Function<BakedModel, T> factory) {
 		modelRegistry.put(location, factory.apply(modelRegistry.get(location)));
 	}

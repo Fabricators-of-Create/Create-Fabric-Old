@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.mixin;
 
-import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+
+import net.minecraft.util.math.Vec3d;
 
 @Mixin(Vec3d.class)
 public abstract class Vec3dMixin {

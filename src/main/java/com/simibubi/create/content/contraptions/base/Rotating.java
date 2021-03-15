@@ -4,6 +4,7 @@ import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvide
 import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;

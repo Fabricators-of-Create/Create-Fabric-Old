@@ -1,5 +1,11 @@
 package com.simibubi.create.content.contraptions.relays.belt.transport;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Function;
+
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
@@ -8,6 +14,7 @@ import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.behaviour.belt.BeltProcessingBehaviour;
 import com.simibubi.create.foundation.block.entity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.block.entity.behaviour.belt.TransportedItemStackHandlerBehaviour;
+
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -17,12 +24,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Function;
 
 public class BeltInventory {
 

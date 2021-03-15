@@ -1,11 +1,18 @@
 package com.simibubi.create.content.contraptions;
 
+import static com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock.isLargeCog;
+import static net.minecraft.state.property.Properties.AXIS;
+
+import java.util.LinkedList;
+import java.util.List;
+
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.relays.encased.DirectionalShaftHalvesBlockEntity;
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
 import com.simibubi.create.foundation.utility.Iterate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,12 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import static com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock.isLargeCog;
-import static net.minecraft.state.property.Properties.AXIS;
 
 public class RotationPropagator {
 

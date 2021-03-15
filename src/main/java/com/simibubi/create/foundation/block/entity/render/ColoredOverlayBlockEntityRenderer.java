@@ -1,6 +1,7 @@
 package com.simibubi.create.foundation.block.entity.render;
 
 import com.simibubi.create.foundation.render.SuperByteBuffer;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.RenderLayer;

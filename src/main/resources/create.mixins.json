@@ -10,6 +10,7 @@
     "Matrix4fMixin",
     "MouseMixin",
     "ParticleManagerMixin",
+    "WorldMixin",
     "accessor.BufferBuilderAccessor",
     "accessor.GameRendererAccessor",
     "accessor.GlStateManagerAccessor",
@@ -21,7 +22,6 @@
   ],
   "client": [
     "ChunkBuilder$ChunkDataMixin",
-    "OnRemoveTileMixin",
     "RenderHooksMixin",
     "event.ClientWorldMixin",
     "event.MinecraftClientMixin"

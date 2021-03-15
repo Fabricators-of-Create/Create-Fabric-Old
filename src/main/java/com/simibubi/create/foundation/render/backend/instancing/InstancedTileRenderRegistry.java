@@ -2,11 +2,12 @@ package com.simibubi.create.foundation.render.backend.instancing;
 
 import java.util.Map;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.Maps;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import org.jetbrains.annotations.Nullable;
 
 public class InstancedTileRenderRegistry {
     public static final InstancedTileRenderRegistry instance = new InstancedTileRenderRegistry();

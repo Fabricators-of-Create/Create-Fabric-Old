@@ -1,9 +1,13 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
+import java.util.Optional;
+import java.util.function.Predicate;
+
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.utility.CNBTHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -11,9 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.world.World;
-
-import java.util.Optional;
-import java.util.function.Predicate;
 
 // TODO Advancement CHECK s
 public class BracketedBlockEntityBehaviour extends BlockEntityBehaviour {

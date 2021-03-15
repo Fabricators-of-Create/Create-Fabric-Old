@@ -18,6 +18,7 @@ import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.curiosities.BuildersTeaItem;
 import com.simibubi.create.content.curiosities.RefinedRadianceItem;
 import com.simibubi.create.content.curiosities.TreeFertilizerItem;
+import com.simibubi.create.content.curiosities.symmetry.SymmetryWandItem;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
@@ -207,10 +208,10 @@ public class AllItems {
 //		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
-//	public static final SymmetryWandItem WAND_OF_SYMMETRY = createBuilder("wand_of_symmetry", SymmetryWandItem::new)
+	public static final SymmetryWandItem WAND_OF_SYMMETRY = createBuilder("wand_of_symmetry", SymmetryWandItem::new)
 //		.transform(CreateRegistrate.customRenderedItem(() -> SymmetryWandModel::new))
-////		.model(AssetLookup.itemModelWithPartials())
-//		.register();
+//		.model(AssetLookup.itemModelWithPartials())
+		.register();
 
 //	public static final ExtendoGripItem EXTENDO_GRIP = createBuilder("extendo_grip", ExtendoGripItem::new)
 //		.transform(CreateRegistrate.customRenderedItem(() -> ExtendoGripModel::new))

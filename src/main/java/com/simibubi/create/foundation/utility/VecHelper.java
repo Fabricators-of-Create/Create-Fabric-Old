@@ -1,11 +1,16 @@
 package com.simibubi.create.foundation.utility;
 
-import net.minecraft.nbt.DoubleTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.util.math.*;
+import java.util.Random;
+
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
 public class VecHelper {
 

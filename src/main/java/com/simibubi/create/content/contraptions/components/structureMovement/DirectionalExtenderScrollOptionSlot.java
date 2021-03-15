@@ -1,15 +1,16 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import java.util.function.BiPredicate;
+
 import com.simibubi.create.foundation.block.entity.behaviour.CenteredSideValueBoxTransform;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.function.BiPredicate;
 
 public class DirectionalExtenderScrollOptionSlot extends CenteredSideValueBoxTransform {
 

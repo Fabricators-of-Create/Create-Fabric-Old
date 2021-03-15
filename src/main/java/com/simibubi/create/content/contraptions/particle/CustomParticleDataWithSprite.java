@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.particle;
 
 import com.mojang.serialization.Codec;
 import com.simibubi.create.foundation.utility.extensions.ParticleManagerUtils;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.ParticleFactory;

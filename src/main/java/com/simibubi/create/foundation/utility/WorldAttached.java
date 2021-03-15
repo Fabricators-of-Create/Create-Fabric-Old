@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.world.WorldAccess;
 
 public class WorldAttached<T> {
 

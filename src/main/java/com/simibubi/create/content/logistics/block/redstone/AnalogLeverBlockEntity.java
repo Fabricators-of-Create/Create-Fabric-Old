@@ -1,17 +1,18 @@
 package com.simibubi.create.content.logistics.block.redstone;
 
+import java.util.List;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
-
-import java.util.List;
 
 public class AnalogLeverBlockEntity extends SmartBlockEntity implements GoggleInformationProvider {
 

@@ -1,6 +1,12 @@
 package com.simibubi.create;
 
-import com.simibubi.create.content.contraptions.base.*;
+import java.util.function.Supplier;
+
+import com.simibubi.create.content.contraptions.base.BackHalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlockEntity;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockRenderer;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlockEntity;
@@ -34,8 +40,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 
-import java.util.function.Supplier;
-
 public class AllBlockEntities {
 	// Schematics
 	/*public static final BlockEntityType<SchematicannonBlockEntity> SCHEMATICANNON = createBuilder("schematicannon", SchematicannonBlockEntity::new)
@@ -48,7 +52,7 @@ public class AllBlockEntities {
 		.register();*/
 
 	// Kinetics
-	public static final BlockEntityType<SimpleKineticBlockEntity> SIMPLE_KINETIC = createBuilder("simple_kinetic", SimpleKineticBlockEntity::new)
+	public static final BlockEntityType<SimpleKineticBlockEntity> SIMPLE_KINETIC = createBuilder("simple_kinetic", SimpleKineticBlockEntity::create)
 		.validBlocks(AllBlocks.SHAFT, AllBlocks.COGWHEEL, AllBlocks.LARGE_COGWHEEL)
 		.renderer(() -> KineticBlockEntityRenderer::new)
 		.onRegister(SingleRotatingInstance::register)

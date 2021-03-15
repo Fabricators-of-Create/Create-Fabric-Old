@@ -3,6 +3,7 @@ package com.simibubi.create.content.curiosities.tools;
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModelRenderer;
 import com.simibubi.create.foundation.item.PartialItemModelRenderer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
+
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;

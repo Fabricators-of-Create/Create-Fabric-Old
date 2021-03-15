@@ -30,12 +30,11 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock implements Waterloggable, WrenchableWithBracket {
-
 	public AbstractShaftBlock(Settings properties) {
 		super(properties);
 		setDefaultState(super.getDefaultState().with(Properties.WATERLOGGED, false));
 	}
-	
+
 	@Override
 	public ActionResult onWrenched(BlockState state, ItemUsageContext context) {
 		return WrenchableWithBracket.super.onWrenched(state, context);

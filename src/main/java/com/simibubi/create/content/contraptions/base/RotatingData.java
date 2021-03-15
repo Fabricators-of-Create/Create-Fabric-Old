@@ -1,10 +1,12 @@
 package com.simibubi.create.content.contraptions.base;
 
+import java.nio.ByteBuffer;
+
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
+
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Direction;
-import java.nio.ByteBuffer;
 
 public class RotatingData extends KineticData<RotatingData> {
 	public static VertexFormat FORMAT = VertexFormat.builder()

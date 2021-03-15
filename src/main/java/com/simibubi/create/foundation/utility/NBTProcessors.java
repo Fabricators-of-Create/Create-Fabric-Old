@@ -1,14 +1,15 @@
 package com.simibubi.create.foundation.utility;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.UnaryOperator;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.UnaryOperator;
 
 public final class NBTProcessors {
 

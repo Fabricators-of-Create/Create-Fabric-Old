@@ -1,10 +1,12 @@
 package com.simibubi.create.foundation.block.entity.behaviour.scrollvalue;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform.Sided;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour.StepContext;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -15,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
 public class ScrollValueHandler {
-
 	@Environment(EnvType.CLIENT)
 	public static boolean onScroll(double delta) {
 		HitResult objectMouseOver = MinecraftClient.getInstance().crosshairTarget;
@@ -32,8 +33,8 @@ public class ScrollValueHandler {
 			return false;
 		if (!mc.player.canModifyBlocks())
 			return false;
-//		if (scrolling.needsWrench && !AllItems.WRENCH.isIn(mc.player.getMainHandStack()))
-//			return false;
+		if (scrolling.needsWrench && AllItems.WRENCH != mc.player.getMainHandStack().getItem())
+			return false;
 		if (scrolling.slotPositioning instanceof Sided)
 			((Sided) scrolling.slotPositioning).fromSide(result.getSide());
 		if (!scrolling.testHit(objectMouseOver.getPos()))
@@ -41,8 +42,8 @@ public class ScrollValueHandler {
 
 		if (scrolling instanceof BulkScrollValueBehaviour && AllKeys.ctrlDown()) {
 			BulkScrollValueBehaviour bulkScrolling = (BulkScrollValueBehaviour) scrolling;
-			for (SmartBlockEntity te : bulkScrolling.getBulk()) {
-				ScrollValueBehaviour other = te.getBehaviour(ScrollValueBehaviour.TYPE);
+			for (SmartBlockEntity be : bulkScrolling.getBulk()) {
+				ScrollValueBehaviour other = be.getBehaviour(ScrollValueBehaviour.TYPE);
 				if (other != null)
 					applyTo(delta, other);
 			}
@@ -69,5 +70,4 @@ public class ScrollValueHandler {
 		if (valueBefore != scrolling.scrollableValue)
 			scrolling.clientCallback.accept(scrolling.scrollableValue);
 	}
-
 }

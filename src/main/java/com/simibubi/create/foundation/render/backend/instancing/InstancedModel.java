@@ -5,6 +5,10 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
+
 import com.simibubi.create.foundation.render.RenderMath;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.BufferedModel;
@@ -12,10 +16,8 @@ import com.simibubi.create.foundation.render.backend.gl.GlBuffer;
 import com.simibubi.create.foundation.render.backend.gl.GlVertexArray;
 import com.simibubi.create.foundation.render.backend.gl.attrib.ModelVertexAttributes;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
+
 import net.minecraft.client.render.BufferBuilder;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
 
 public abstract class InstancedModel<D extends InstanceData> extends BufferedModel {
 	public static final VertexFormat FORMAT = VertexFormat.builder().addAttributes(ModelVertexAttributes.class).build();

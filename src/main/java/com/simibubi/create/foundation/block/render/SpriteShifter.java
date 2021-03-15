@@ -1,12 +1,13 @@
 package com.simibubi.create.foundation.block.render;
 
-import com.simibubi.create.Create;
-import net.minecraft.util.Identifier;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.simibubi.create.Create;
+
+import net.minecraft.util.Identifier;
 
 public class SpriteShifter {
 

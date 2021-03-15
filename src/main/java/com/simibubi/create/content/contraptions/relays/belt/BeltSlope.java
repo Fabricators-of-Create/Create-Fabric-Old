@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.util.StringIdentifiable;
 
 public enum BeltSlope implements StringIdentifiable {

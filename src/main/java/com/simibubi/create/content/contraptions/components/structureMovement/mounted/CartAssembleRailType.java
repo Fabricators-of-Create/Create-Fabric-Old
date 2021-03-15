@@ -1,14 +1,15 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.mounted;
 
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.StringIdentifiable;
-
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public enum CartAssembleRailType implements StringIdentifiable {
 	

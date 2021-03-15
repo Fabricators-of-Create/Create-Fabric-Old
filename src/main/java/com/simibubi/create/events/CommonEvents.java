@@ -1,9 +1,12 @@
 package com.simibubi.create.events;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.foundation.command.AllCommands;
 import com.simibubi.create.foundation.utility.WorldAttached;
+
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -15,7 +18,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 public class CommonEvents {
 	public static void register() {

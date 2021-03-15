@@ -1,19 +1,21 @@
 package com.simibubi.create.foundation.utility.recipe;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.SinglePreparationResourceReloadListener;
-import net.minecraft.util.profiler.Profiler;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.Nullable;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+
+import net.minecraft.recipe.Recipe;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.SinglePreparationResourceReloadListener;
+import net.minecraft.util.profiler.Profiler;
+import net.minecraft.world.World;
 
 /**
  * Utility for searching through a world's recipe collection. Non-dynamic

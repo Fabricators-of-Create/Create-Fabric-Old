@@ -1,18 +1,19 @@
 package com.simibubi.create.foundation.gui;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.content.schematics.client.tools.Tools;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-
-import java.util.List;
-import java.util.function.Consumer;
 
 public class ToolSelectionScreen extends Screen {
 

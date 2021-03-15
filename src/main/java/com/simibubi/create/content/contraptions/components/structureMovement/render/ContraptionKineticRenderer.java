@@ -7,6 +7,7 @@ import com.simibubi.create.content.contraptions.relays.belt.BeltInstancedModel;
 import com.simibubi.create.foundation.render.AllProgramSpecs;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
+
 import net.minecraft.util.math.BlockPos;
 
 public class ContraptionKineticRenderer extends InstancedBlockRenderer<ContraptionProgram> {

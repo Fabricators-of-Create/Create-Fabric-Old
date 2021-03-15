@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.advancement;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
-import org.jetbrains.annotations.Nullable;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault

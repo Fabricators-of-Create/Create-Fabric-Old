@@ -1,14 +1,14 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingContraption;
-import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkContraption;
-import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
-import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Supplier;
+
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
 
 public class ContraptionType {
 

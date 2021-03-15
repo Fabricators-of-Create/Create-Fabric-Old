@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.utility.placement;
 
+import java.util.function.Function;
+
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,8 +20,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-
-import java.util.function.Function;
 
 public class PlacementOffset {
 

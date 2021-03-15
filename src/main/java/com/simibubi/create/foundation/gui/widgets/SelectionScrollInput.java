@@ -1,12 +1,13 @@
 package com.simibubi.create.foundation.gui.widgets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SelectionScrollInput extends ScrollInput {
 

@@ -1,8 +1,10 @@
 package com.simibubi.create.foundation.utility.extensions;
 
-import com.simibubi.create.foundation.utility.MixinHelper;
-import net.minecraft.util.math.Matrix4f;
 import org.jetbrains.annotations.Contract;
+
+import com.simibubi.create.foundation.utility.MixinHelper;
+
+import net.minecraft.util.math.Matrix4f;
 
 public final class Matrix4fUtils {
     @Contract(mutates = "param1")

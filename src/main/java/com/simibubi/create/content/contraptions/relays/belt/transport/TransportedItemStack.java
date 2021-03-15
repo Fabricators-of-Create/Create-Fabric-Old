@@ -1,11 +1,12 @@
 package com.simibubi.create.content.contraptions.relays.belt.transport;
 
+import java.util.Random;
+
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.Direction;
-
-import java.util.Random;
 
 public class TransportedItemStack implements Comparable<TransportedItemStack> {
 

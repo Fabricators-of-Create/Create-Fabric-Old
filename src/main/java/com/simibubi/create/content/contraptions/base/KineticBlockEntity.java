@@ -1,9 +1,18 @@
 package com.simibubi.create.content.contraptions.base;
 
+import static net.minecraft.util.Formatting.GOLD;
+import static net.minecraft.util.Formatting.GRAY;
+
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticNetwork;
 import com.simibubi.create.content.contraptions.RotationPropagator;
+import com.simibubi.create.content.contraptions.base.Rotating.SpeedLevel;
+import com.simibubi.create.content.contraptions.base.Rotating.StressImpact;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.content.contraptions.goggles.HoveringInformationProvider;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
@@ -12,6 +21,7 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -27,13 +37,9 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-
-import static net.minecraft.util.Formatting.GOLD;
-import static net.minecraft.util.Formatting.GRAY;
 
 public abstract class KineticBlockEntity extends SmartBlockEntity
 	implements GoggleInformationProvider, HoveringInformationProvider, InstanceRendered {
@@ -63,41 +69,9 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		updateSpeed = true;
 	}
 
-	public static void switchToBlockState(World world, BlockPos pos, BlockState state) {
-		if (world.isClient)
-			return;
-
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		BlockState currentState = world.getBlockState(pos);
-		boolean isKinetic = blockEntity instanceof KineticBlockEntity;
-
-		if (currentState == state)
-			return;
-		if (blockEntity == null || !isKinetic) {
-			world.setBlockState(pos, state, 3);
-			return;
-		}
-
-		KineticBlockEntity be = (KineticBlockEntity) blockEntity;
-		if (state.getBlock() instanceof KineticBlock
-			&& !((KineticBlock) state.getBlock()).areStatesKineticallyEquivalent(currentState, state)) {
-			if (be.hasNetwork())
-				be.getOrCreateNetwork()
-					.remove(be);
-			be.detachKinetics();
-			be.removeSource();
-		}
-
-		world.setBlockState(pos, state, 3);
-	}
-
-	public static float convertToDirection(float axisSpeed, Direction d) {
-		return d.getDirection() == Direction.AxisDirection.POSITIVE ? axisSpeed : -axisSpeed;
-	}
-
 	@Override
 	public void initialize() {
-		if (hasNetwork() && !world.isClient) {
+		if (!world.isClient && hasNetwork()) {
 			KineticNetwork network = getOrCreateNetwork();
 			if (!network.initialized)
 				network.initFromTE(capacity, stress, networkSize);
@@ -106,8 +80,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 
 		super.initialize();
 
-		if (world != null && world.isClient)
-			/*DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->*/ CreateClient.kineticRenderer.add(this);
+		onLoad();
 	}
 
 	@Override
@@ -122,7 +95,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			return;
 
 		if (validationCountdown-- <= 0) {
-			validationCountdown = 60; // TODO FIX CONFIG kineticValidationFrequency AllConfigs.SERVER.kinetics.kineticValidationFrequency.get();
+			validationCountdown = 20; //AllConfigs.SERVER.kinetics.kineticValidationFrequency.get();
 			validateKinetics();
 		}
 
@@ -146,9 +119,10 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			if (!world.canSetBlock(source))
 				return;
 
-			BlockEntity blockEntity = world.getBlockEntity(source);
-			KineticBlockEntity sourceBe = blockEntity instanceof KineticBlockEntity ? (KineticBlockEntity) blockEntity : null;
-			if (sourceBe == null || sourceBe.speed == 0) {
+			BlockEntity tileEntity = world.getBlockEntity(source);
+			KineticBlockEntity sourceTe =
+				tileEntity instanceof KineticBlockEntity ? (KineticBlockEntity) tileEntity : null;
+			if (sourceTe == null || sourceTe.speed == 0) {
 				removeSource();
 				detachKinetics();
 				return;
@@ -168,7 +142,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		this.capacity = maxStress;
 		this.stress = currentStress;
 		this.networkSize = networkSize;
-		boolean overStressed = maxStress < currentStress && Rotating.StressImpact.isEnabled();
+		boolean overStressed = maxStress < currentStress && StressImpact.isEnabled();
 
 		if (overStressed != this.overStressed) {
 			float prevSpeed = getSpeed();
@@ -179,7 +153,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	}
 
 	public float calculateAddedStressCapacity() {
-		float capacity = 10; //(float) AllConfigs.SERVER.kinetics.stressValues.getCapacityOf(getStressConfigKey()); TODO CAPACITY CONFIG
+		float capacity = 0; //(float) AllConfigs.SERVER.kinetics.stressValues.getCapacityOf(getStressConfigKey());
 		this.lastCapacityProvided = capacity;
 		return capacity;
 	}
@@ -189,7 +163,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	}
 
 	public float calculateStressApplied() {
-		float impact = 10; //(float) AllConfigs.SERVER.kinetics.stressValues.getImpactOf(getCachedState().getBlock()); TODO IMPACT CONFIG
+		float impact = 0; //(float) AllConfigs.SERVER.kinetics.stressValues.getImpactOf(getCachedState().getBlock());
 		this.lastStressApplied = impact;
 		return impact;
 	}
@@ -267,7 +241,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			networkSize = networkTag.getInt("Size");
 			lastStressApplied = networkTag.getFloat("AddedStress");
 			lastCapacityProvided = networkTag.getFloat("AddedCapacity");
-			overStressed = capacity < stress && Rotating.StressImpact.isEnabled();
+			overStressed = capacity < stress && StressImpact.isEnabled();
 		}
 
 		super.fromTag(state, compound, clientPacket);
@@ -287,37 +261,37 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		return getGeneratedSpeed() != 0;
 	}
 
-	public void setSource(BlockPos source) {
-		this.source = source;
-		if (world == null || world.isClient)
-			return;
-
-		BlockEntity blockEntity = world.getBlockEntity(source);
-		if (!(blockEntity instanceof KineticBlockEntity)) {
-			removeSource();
-			return;
-		}
-
-		KineticBlockEntity sourceTe = (KineticBlockEntity) blockEntity;
-		setNetwork(sourceTe.network);
-	}
-
 	public float getSpeed() {
 		if (overStressed)
 			return 0;
 		return getTheoreticalSpeed();
 	}
 
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
 	public float getTheoreticalSpeed() {
 		return speed;
 	}
 
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
 	public boolean hasSource() {
 		return source != null;
+	}
+
+	public void setSource(BlockPos source) {
+		this.source = source;
+		if (world == null || world.isClient)
+			return;
+
+		BlockEntity tileEntity = world.getBlockEntity(source);
+		if (!(tileEntity instanceof KineticBlockEntity)) {
+			removeSource();
+			return;
+		}
+
+		KineticBlockEntity sourceTe = (KineticBlockEntity) tileEntity;
+		setNetwork(sourceTe.network);
 	}
 
 	public void removeSource() {
@@ -369,31 +343,52 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		if (!(getCachedState().getBlock() instanceof Rotating))
 			return true;
 		Rotating def = (Rotating) state.getBlock();
-		Rotating.SpeedLevel minimumRequiredSpeedLevel = def.getMinimumRequiredSpeedLevel();
+		SpeedLevel minimumRequiredSpeedLevel = def.getMinimumRequiredSpeedLevel();
 		if (minimumRequiredSpeedLevel == null)
 			return true;
-		if (minimumRequiredSpeedLevel == Rotating.SpeedLevel.MEDIUM)
-			return Math.abs(getSpeed()) >= 1000 /**AllConfigs.SERVER.kinetics.mediumSpeed.get() TODO FIX THIS CONFIG */;
-		if (minimumRequiredSpeedLevel == Rotating.SpeedLevel.FAST)
-			return Math.abs(getSpeed()) >= 1000 /**AllConfigs.SERVER.kinetics.fastSpeed.get() TODO FIX THIS CONFIG */;
+		if (minimumRequiredSpeedLevel == SpeedLevel.MEDIUM)
+			return Math.abs(getSpeed()) >= 64; //AllConfigs.SERVER.kinetics.mediumSpeed.get();
+		if (minimumRequiredSpeedLevel == SpeedLevel.FAST)
+			return Math.abs(getSpeed()) >= 128; //AllConfigs.SERVER.kinetics.fastSpeed.get();
 		return true;
 	}
 
-	@Override
-	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+	public static void switchToBlockState(World world, BlockPos pos, BlockState state) {
+		if (world.isClient)
+			return;
+
+		BlockEntity tileEntityIn = world.getBlockEntity(pos);
+		BlockState currentState = world.getBlockState(pos);
+		boolean isKinetic = tileEntityIn instanceof KineticBlockEntity;
+
+		if (currentState == state)
+			return;
+		if (tileEntityIn == null || !isKinetic) {
+			world.setBlockState(pos, state, 3);
+			return;
+		}
+
+		KineticBlockEntity tileEntity = (KineticBlockEntity) tileEntityIn;
+		if (state.getBlock() instanceof KineticBlock
+			&& !((KineticBlock) state.getBlock()).areStatesKineticallyEquivalent(currentState, state)) {
+			if (tileEntity.hasNetwork())
+				tileEntity.getOrCreateNetwork()
+					.remove(tileEntity);
+			tileEntity.detachKinetics();
+			tileEntity.removeSource();
+		}
+
+		world.setBlockState(pos, state, 3);
 	}
 
-	/**
-	 * @Override public boolean hasFastRenderer() {
-	 * return true;
-	 * }
-	 */
+	@Override
+	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
 
 	@Override
 	public boolean addToTooltip(List<Text> tooltip, boolean isPlayerSneaking) {
 		boolean notFastEnough = !isSpeedRequirementFulfilled() && getSpeed() != 0;
 
-		if (overStressed /*&& AllConfigs.CLIENT.enableOverstressedTooltip.get()*/) {
+		if (overStressed/* && AllConfigs.CLIENT.enableOverstressedTooltip.get()*/) {
 			tooltip.add(componentSpacing.copy().append(Lang.translate("gui.stressometer.overstressed").formatted(GOLD)));
 			Text hint = Lang.translate("gui.contraptions.network_overstressed");
 			List<Text> cutString = TooltipHelper.cutTextComponent(hint, GRAY, Formatting.WHITE);
@@ -420,7 +415,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		boolean added = false;
 		float stressAtBase = calculateStressApplied();
 
-		if (calculateStressApplied() != 0 && Rotating.StressImpact.isEnabled()) {
+		if (calculateStressApplied() != 0 && StressImpact.isEnabled()) {
 			tooltip.add(componentSpacing.copy().append(Lang.translate("gui.goggles.kinetic_stats")));
 			tooltip.add(componentSpacing.copy().append(Lang.translate("tooltip.stressImpact").formatted(Formatting.GRAY)));
 
@@ -433,6 +428,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		}
 
 		return added;
+
 	}
 
 	public void clearKineticInformation() {
@@ -454,6 +450,10 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		return flickerTally;
 	}
 
+	public static float convertToDirection(float axisSpeed, Direction d) {
+		return d.getDirection() == AxisDirection.POSITIVE ? axisSpeed : -axisSpeed;
+	}
+
 	public boolean isOverStressed() {
 		return overStressed;
 	}
@@ -473,10 +473,10 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	 * @param connectedViaCogs whether these kinetic blocks are connected via mutual
 	 *                         IRotate.hasIntegratedCogwheel()
 	 * @return factor of rotation speed from this TE to other. 0 if no rotation is
-	 * transferred, or the standard rules apply (integrated shafts/cogs)
+	 *         transferred, or the standard rules apply (integrated shafts/cogs)
 	 */
 	public float propagateRotationTo(KineticBlockEntity target, BlockState stateFrom, BlockState stateTo, BlockPos diff,
-									 boolean connectedViaAxes, boolean connectedViaCogs) {
+		boolean connectedViaAxes, boolean connectedViaCogs) {
 		return 0;
 	}
 
@@ -494,12 +494,12 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		if (!canPropagateDiagonally(block, state))
 			return neighbours;
 
-		Direction.Axis axis = block.getRotationAxis(state);
-		BlockPos.iterate(new BlockPos(-1, -1, -1), new BlockPos(1, 1, 1))
+		Axis axis = block.getRotationAxis(state);
+		BlockPos.stream(new BlockPos(-1, -1, -1), new BlockPos(1, 1, 1))
 			.forEach(offset -> {
 				if (axis.choose(offset.getX(), offset.getY(), offset.getZ()) != 0)
 					return;
-				if (offset.getSquaredDistance(0, 0, 0, false) != BlockPos.ZERO.getSquaredDistance(1, 1, 0, false))
+				if (offset.getSquaredDistance(0, 0, 0, false) != BlockPos.ORIGIN.getSquaredDistance(1, 1, 0, false))
 					return;
 				neighbours.add(pos.add(offset));
 			});
@@ -516,7 +516,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	 * @param state
 	 * @param otherState
 	 * @return true if this and the other component should check their propagation
-	 * factor and are not already connected via integrated cogs or shafts
+	 *         factor and are not already connected via integrated cogs or shafts
 	 */
 	public boolean isCustomConnection(KineticBlockEntity other, BlockState state, BlockState otherState) {
 		return false;
@@ -526,16 +526,22 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		return block.hasIntegratedCogwheel(world, pos, state);
 	}
 
-	/**
-	 * @Override public void onChunkUnloaded() { TODO onChunkUnloaded COULD BE VERY IMPORTANT
-	 * if (world != null && world.isClient)
-	 * DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> CreateClient.kineticRenderer.remove(this);
-	 * }
-	 */
+//	@Override
+	public void onLoad() {
+//		super.onLoad();
+		if (world != null && world.isClient)
+			CreateClient.kineticRenderer.add(this);
+	}
 
-	@Override
-	public void notifyUpdate() { // TODO not sure about this one fam
-		super.notifyUpdate();
+//	@Override
+	public void onChunkUnloaded() {
+		if (world != null && world.isClient)
+			CreateClient.kineticRenderer.remove(this);
+	}
+
+//	@Override
+	public void requestModelDataUpdate() {
+//		super.requestModelDataUpdate();
 		if (!this.removed) {
 			FastRenderDispatcher.enqueueUpdate(this);
 		}
@@ -547,16 +553,15 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	}
 
 	protected Box cachedBoundingBox;
-
- 	@Environment(EnvType.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Box getRenderBoundingBox() {
- 		if (cachedBoundingBox == null) {
+		if (cachedBoundingBox == null) {
 			cachedBoundingBox = makeRenderBoundingBox();
- 		}
+		}
 		return cachedBoundingBox;
- 	}
+	}
 
- 	protected Box makeRenderBoundingBox() {
- 		return null; //super.getRenderBoundingBox();
- 	}
+	protected Box makeRenderBoundingBox() {
+		return new Box(0, 0, 0, 1, 1, 1); //super.getRenderBoundingBox();
+	}
 }

@@ -1,13 +1,14 @@
 package com.simibubi.create.foundation.item;
 
+import java.util.List;
+import java.util.Random;
+
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-
-import java.util.List;
-import java.util.Random;
 
 public class WipScription extends ItemDescription {
 

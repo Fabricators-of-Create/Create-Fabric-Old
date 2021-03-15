@@ -1,5 +1,21 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
@@ -9,19 +25,35 @@ import com.simibubi.create.content.contraptions.components.structureMovement.cha
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueHandler;
-import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.foundation.render.backend.light.EmptyLighter;
-import com.simibubi.create.foundation.utility.*;
+import com.simibubi.create.foundation.utility.BlockFace;
+import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.NBTProcessors;
+import com.simibubi.create.foundation.utility.UniqueLinkedList;
+import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractButtonBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.state.property.Properties;
 import net.minecraft.structure.Structure;
 import net.minecraft.util.BlockRotation;
@@ -30,12 +62,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.*;
-import java.util.function.BiConsumer;
 
 public abstract class Contraption {
 
@@ -127,23 +153,23 @@ public abstract class Contraption {
 
 	public boolean searchMovedStructure(World world, BlockPos pos, @Nullable Direction forcedDirection) throws AssemblyException {
 		initialPassengers.clear();
-		/**Queue<BlockPos> frontier = new UniqueLinkedList<>();*/
+		Queue<BlockPos> frontier = new UniqueLinkedList<>();
 		Set<BlockPos> visited = new HashSet<>();
 		anchor = pos;
 
 		if (bounds == null)
 			bounds = new Box(BlockPos.ORIGIN);
 
-		/**if (!BlockMovementTraits.isBrittle(world.getBlockState(pos)))
-		 frontier.add(pos);
-		 if (!addToInitialFrontier(world, pos, forcedDirection, frontier))
-		 return false;
-		 for (int limit = 100000; limit > 0; limit--) {
-		 if (frontier.isEmpty())
-		 return true;
-		 if (!moveBlock(world, forcedDirection, frontier, visited))
-		 return false;
-		 }*/
+		if (!BlockMovementTraits.isBrittle(world.getBlockState(pos)))
+	 		frontier.add(pos);
+	 	if (!addToInitialFrontier(world, pos, forcedDirection, frontier))
+	 		return false;
+	 	for (int limit = 100000; limit > 0; limit--) {
+	 		if (frontier.isEmpty())
+	 			return true;
+	 		if (!moveBlock(world, forcedDirection, frontier, visited))
+	 			return false;
+		}
 		throw AssemblyException.structureTooLarge();
 	}
 
@@ -388,8 +414,8 @@ public abstract class Contraption {
 		/*if (AllBlocks.ADJUSTABLE_CRATE.has(state))
 		 AdjustableCrateBlock.splitCrate(world, pos);*/
 
-		if (AllBlocks.BELT.hasBlockEntity(state))
-			moveBelt(pos, frontier, visited, state);
+		/*if (AllBlocks.BELT.hasBlockEntity(state))
+			moveBelt(pos, frontier, visited, state);*/
 
 		/*if (AllBlocks.GANTRY_PINION.has(state))
 		 moveGantryPinion(world, pos, frontier, visited, state);
@@ -497,14 +523,14 @@ public abstract class Contraption {
 		pendingSubContraptions.add(new BlockFace(pos, facing));
 	}
 
-	private void moveBelt(BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited, BlockState state) {
+	/*private void moveBelt(BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited, BlockState state) {
 		BlockPos nextPos = BeltBlock.nextSegmentPosition(state, pos, true);
 		BlockPos prevPos = BeltBlock.nextSegmentPosition(state, pos, false);
 		if (nextPos != null && !visited.contains(nextPos))
 			frontier.add(nextPos);
 		if (prevPos != null && !visited.contains(prevPos))
 			frontier.add(prevPos);
-	}
+	}*/
 
 
 	protected Pair<Structure.StructureBlockInfo, BlockEntity> capture(World world, BlockPos pos) {

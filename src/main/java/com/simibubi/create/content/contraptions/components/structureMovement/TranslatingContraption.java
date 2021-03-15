@@ -1,13 +1,13 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.structure.Structure;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 public abstract class TranslatingContraption extends Contraption {
 

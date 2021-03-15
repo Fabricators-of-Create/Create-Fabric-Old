@@ -1,13 +1,7 @@
 package com.simibubi.create.content.curiosities;
 
-import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 public class RefinedRadianceItem extends Item {
 

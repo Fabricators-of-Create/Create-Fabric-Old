@@ -1,11 +1,11 @@
 package com.simibubi.create.registrate.util.nullness;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This annotation can be applied to a package, class or method to indicate that

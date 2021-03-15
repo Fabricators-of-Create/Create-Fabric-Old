@@ -1,8 +1,12 @@
 package com.simibubi.create.content.contraptions.relays.belt.item;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
+
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -16,10 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 public class BeltConnectorHandler {
 

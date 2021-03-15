@@ -1,7 +1,8 @@
 package com.simibubi.create.foundation.utility;
 
-import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
 import org.jetbrains.annotations.Nullable;
+
+import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
 
 /**
  * This model data instance is passed whenever a model is rendered without

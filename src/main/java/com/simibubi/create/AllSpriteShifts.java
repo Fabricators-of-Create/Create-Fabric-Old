@@ -1,11 +1,12 @@
 package com.simibubi.create;
 
-import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
-import com.simibubi.create.foundation.block.render.SpriteShifter;
-import net.minecraft.util.DyeColor;
-
 import java.util.IdentityHashMap;
 import java.util.Map;
+
+import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
+import com.simibubi.create.foundation.block.render.SpriteShifter;
+
+import net.minecraft.util.DyeColor;
 
 public class AllSpriteShifts {
 

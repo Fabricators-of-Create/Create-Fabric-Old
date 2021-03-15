@@ -1,26 +1,27 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
+import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticBlockInstance;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.LightType;
-
-import java.util.ArrayList;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
 	protected ArrayList<InstanceKey<BeltData>> keys;
@@ -45,7 +46,7 @@ public class BeltInstance extends KineticBlockInstance<BeltBlockEntity> {
 
 	@Override
 	protected void init() {
-		if (!AllBlocks.BELT.hasBlockEntity(lastState))
+		if (!AllBlocks.BELT.hasBlockEntity())
 			return;
 
 		keys = new ArrayList<>(2);

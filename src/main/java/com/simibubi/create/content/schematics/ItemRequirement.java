@@ -1,6 +1,17 @@
 package com.simibubi.create.content.schematics;
 
-import net.minecraft.block.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FarmlandBlock;
+import net.minecraft.block.GrassPathBlock;
+import net.minecraft.block.SeaPickleBlock;
+import net.minecraft.block.SnowBlock;
+import net.minecraft.block.TurtleEggBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -13,10 +24,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ItemRequirement {
 

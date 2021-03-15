@@ -3,6 +3,7 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.NamedIconOptions;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.util.math.BlockPos;
 
 public interface ControlContraption {

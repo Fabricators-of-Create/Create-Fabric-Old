@@ -1,11 +1,13 @@
 package com.simibubi.create.foundation.render.backend.gl.shader;
 
+import org.lwjgl.opengl.GL20;
+
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.gl.GlFogMode;
 import com.simibubi.create.foundation.render.backend.gl.GlObject;
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexAttrib;
+
 import net.minecraft.util.Identifier;
-import org.lwjgl.opengl.GL20;
 
 public abstract class GlProgram extends GlObject {
 

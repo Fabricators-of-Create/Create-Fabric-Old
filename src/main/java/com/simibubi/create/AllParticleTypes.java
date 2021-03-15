@@ -1,13 +1,14 @@
 package com.simibubi.create;
 
+import java.util.function.Supplier;
+
 import com.simibubi.create.content.contraptions.particle.CubeParticleData;
 import com.simibubi.create.content.contraptions.particle.CustomParticleData;
 import com.simibubi.create.content.contraptions.particle.RotationIndicatorParticleData;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
-
-import java.util.function.Supplier;
 
 public enum AllParticleTypes {
 

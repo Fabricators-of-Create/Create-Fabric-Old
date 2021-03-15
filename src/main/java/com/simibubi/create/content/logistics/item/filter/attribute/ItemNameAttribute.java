@@ -1,13 +1,14 @@
 package com.simibubi.create.content.logistics.item.filter.attribute;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.JsonParseException;
 import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemNameAttribute implements ItemAttribute {
     String itemName;

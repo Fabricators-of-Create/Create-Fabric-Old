@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.goggles;
 
 import com.simibubi.create.AllItems;
+
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;

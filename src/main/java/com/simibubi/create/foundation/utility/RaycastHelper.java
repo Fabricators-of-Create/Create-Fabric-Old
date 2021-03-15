@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.utility;
 
+import java.util.function.Predicate;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -8,8 +10,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
-
-import java.util.function.Predicate;
 
 public class RaycastHelper {
 

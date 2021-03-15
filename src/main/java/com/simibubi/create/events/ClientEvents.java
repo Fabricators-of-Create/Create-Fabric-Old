@@ -1,5 +1,8 @@
 package com.simibubi.create.events;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.Create;
@@ -9,11 +12,13 @@ import com.simibubi.create.content.contraptions.components.structureMovement.cha
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHandler;
+import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.events.custom.ClientWorldEvents;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueRenderer;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
 import com.simibubi.create.foundation.gui.ScreenOpener;
+import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.RenderWork;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
@@ -21,15 +26,19 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 public class ClientEvents {
@@ -41,7 +50,11 @@ public class ClientEvents {
 		ClientWorldEvents.LOAD.register(ClientEvents::onLoadWorld);
 		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
 		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
-		//ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
+		ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
+
+		ClientTickEvents.END_CLIENT_TICK.register(SymmetryHandler::onClientTick);
+		WorldRenderEvents.END.register(SymmetryHandler::render);
+		PlayerBlockBreakEvents.AFTER.register(SymmetryHandler::onBlockDestroyed);
 
 		AllBlockPartials.onModelRegistry();
 
@@ -80,6 +93,8 @@ public class ClientEvents {
 	}
 
 	public static void onRenderWorld(WorldRenderContext context) {
+		ContraptionRenderDispatcher.renderTick();
+
 		Vec3d cameraPos = context.camera().getPos();
 
 		MatrixStack ms = context.matrixStack();
@@ -103,9 +118,9 @@ public class ClientEvents {
 		FastRenderDispatcher.endFrame();
 	}
 
-	/*public static void addToItemTooltip(ItemStack stack, TooltipContext context, List<Text> texts) {
-		if (!AllConfigs.CLIENT.tooltips.get())
-			return;
+	public static void addToItemTooltip(ItemStack stack, TooltipContext context, List<Text> texts) {
+		/*if (!AllConfigs.CLIENT.tooltips.get())
+			return;*/
 		if (MinecraftClient.getInstance().player == null)
 			return;
 
@@ -121,7 +136,7 @@ public class ClientEvents {
 				.addInformation(toolTip);
 			texts.addAll(0, toolTip);
 		}
-	}*/
+	}
 
 	protected static boolean isGameActive() {
 		return !(MinecraftClient.getInstance().world == null || MinecraftClient.getInstance().player == null);

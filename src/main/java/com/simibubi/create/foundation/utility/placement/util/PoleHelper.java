@@ -1,17 +1,18 @@
 package com.simibubi.create.foundation.utility.placement.util;
 
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 import com.simibubi.create.foundation.utility.placement.PlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementOffset;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-
-import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 public abstract class PoleHelper<T extends Comparable<T>> implements PlacementHelper {
 

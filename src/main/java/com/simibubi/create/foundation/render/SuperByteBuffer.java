@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
+
 import it.unimi.dsi.fastutil.longs.Long2DoubleMap;
 import it.unimi.dsi.fastutil.longs.Long2DoubleOpenHashMap;
 import net.minecraft.client.MinecraftClient;
@@ -14,7 +15,10 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.util.math.Vector4f;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Matrix3f;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
@@ -152,7 +156,7 @@ public class SuperByteBuffer extends TemplateBuffer {
 				builder.light(getLight(buffer, i));
 
 			builder.normal(normal.getX(), normal.getY(), normal.getZ())
-				.next(); // TODO I THINK ITS .next INSTEAD OF .endVertex
+				.next();
 		}
 
 		transforms = new MatrixStack();

@@ -1,20 +1,23 @@
 package com.simibubi.create.foundation.block.entity.behaviour;
 
+import java.util.function.Function;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Vec3d;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.function.Function;
 
 public abstract class ValueBoxTransform {
-
 	protected float scale = getScale();
 
 	protected abstract Vec3d getLocalOffset(BlockState state);
@@ -43,11 +46,11 @@ public abstract class ValueBoxTransform {
 
 	protected Vec3d rotateHorizontally(BlockState state, Vec3d vec) {
 		float yRot = 0;
-		if (state.contains(Properties.FACING))
+		if (BlockHelper.hasBlockStateProperty(state, Properties.FACING))
 			yRot = AngleHelper.horizontalAngle(state.get(Properties.FACING));
-		if (state.contains(Properties.HORIZONTAL_FACING))
+		if (BlockHelper.hasBlockStateProperty(state, Properties.HORIZONTAL_FACING))
 			yRot = AngleHelper.horizontalAngle(state.get(Properties.HORIZONTAL_FACING));
-		return VecHelper.rotateCentered(vec, yRot, Direction.Axis.Y);
+		return VecHelper.rotateCentered(vec, yRot, Axis.Y);
 	}
 
 	protected float getScale() {
@@ -66,12 +69,12 @@ public abstract class ValueBoxTransform {
 			this.first = first;
 		}
 
-		public static Pair<ValueBoxTransform, ValueBoxTransform> makeSlots(Function<Boolean, ? extends Dual> factory) {
-			return Pair.of(factory.apply(true), factory.apply(false));
-		}
-
 		public boolean isFirst() {
 			return first;
+		}
+
+		public static Pair<ValueBoxTransform, ValueBoxTransform> makeSlots(Function<Boolean, ? extends Dual> factory) {
+			return Pair.of(factory.apply(true), factory.apply(false));
 		}
 
 		public boolean testHit(BlockState state, Vec3d localHit) {
@@ -84,7 +87,6 @@ public abstract class ValueBoxTransform {
 	}
 
 	public static abstract class Sided extends ValueBoxTransform {
-
 		protected Direction direction = Direction.UP;
 
 		public Sided fromSide(Direction direction) {
@@ -95,8 +97,8 @@ public abstract class ValueBoxTransform {
 		@Override
 		protected Vec3d getLocalOffset(BlockState state) {
 			Vec3d location = getSouthLocation();
-			location = VecHelper.rotateCentered(location, AngleHelper.horizontalAngle(getSide()), Direction.Axis.Y);
-			location = VecHelper.rotateCentered(location, AngleHelper.verticalAngle(getSide()), Direction.Axis.Z);
+			location = VecHelper.rotateCentered(location, AngleHelper.horizontalAngle(getSide()), Axis.Y);
+			location = VecHelper.rotateCentered(location, AngleHelper.verticalAngle(getSide()), Axis.Z);
 			return location;
 		}
 
@@ -128,7 +130,5 @@ public abstract class ValueBoxTransform {
 		public Direction getSide() {
 			return direction;
 		}
-
 	}
-
 }

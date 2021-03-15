@@ -1,7 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlock;
@@ -10,7 +9,21 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
-import net.minecraft.block.*;
+
+import net.minecraft.block.AbstractPressurePlateBlock;
+import net.minecraft.block.AbstractRailBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CarpetBlock;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.FlowerPotBlock;
+import net.minecraft.block.GrindstoneBlock;
+import net.minecraft.block.LadderBlock;
+import net.minecraft.block.RedstoneWireBlock;
+import net.minecraft.block.TorchBlock;
+import net.minecraft.block.WallMountedBlock;
+import net.minecraft.block.WallTorchBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.state.property.Properties;
@@ -39,8 +52,8 @@ public class BlockMovementTraits {
 		 	return true;
 		if (state.getHardness(world, pos) == -1)
 			return false;
-		if (AllTags.AllBlockTags.NON_MOVABLE.matches(state))
-			return false;
+		/*if (AllTags.AllBlockTags.NON_MOVABLE.matches(state))
+			return false;*/
 
 		// Move controllers only when they aren't moving
 		/*if (block instanceof MechanicalPistonBlock && state.get(MechanicalPistonBlock.STATE) != MechanicalPistonBlock.PistonState.MOVING)
@@ -61,7 +74,7 @@ public class BlockMovementTraits {
 	 		return !((PulleyTileEntity) te).running;
 	 	}*/
 
-		if (AllBlocks.BELT.hasBlockEntity(state))
+		if (AllBlocks.BELT.hasBlockEntity())
 			return true;
 		if (state.getBlock() instanceof GrindstoneBlock)
 			return true;

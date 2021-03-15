@@ -1,7 +1,12 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.glue;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.worldWrappers.RayTraceWorld;
+
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,10 +24,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SuperGlueHandler {
 

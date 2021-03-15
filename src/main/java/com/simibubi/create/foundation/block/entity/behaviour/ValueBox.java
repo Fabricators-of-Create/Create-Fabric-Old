@@ -1,11 +1,13 @@
 package com.simibubi.create.foundation.block.entity.behaviour;
 
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform.Sided;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.NamedIconOptions;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.outliner.ChasingAABBOutline;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -19,14 +21,15 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
 public class ValueBox extends ChasingAABBOutline {
-
-	public boolean isPassive;
 	protected Text label;
 	protected Text sublabel = LiteralText.EMPTY;
 	protected Text scrollTooltip = LiteralText.EMPTY;
 	protected Vec3d labelOffset = Vec3d.ZERO;
+
 	protected int passiveColor;
 	protected int highlightColor;
+	public boolean isPassive;
+
 	protected BlockPos pos;
 	protected ValueBoxTransform transform;
 	protected BlockState blockState;
@@ -36,11 +39,6 @@ public class ValueBox extends ChasingAABBOutline {
 		this.label = label;
 		this.pos = pos;
 		this.blockState = MinecraftClient.getInstance().world.getBlockState(pos);
-	}
-
-	private static void drawString(MatrixStack ms, VertexConsumerProvider buffer, Text text, float x, float y, int color) {
-		MinecraftClient.getInstance().textRenderer.draw(text, x, y, color, false, ms.peek()
-			.getModel(), buffer, false, 0, 15728880);
 	}
 
 	public ValueBox transform(ValueBoxTransform transform) {
@@ -77,8 +75,8 @@ public class ValueBox extends ChasingAABBOutline {
 	@Override
 	public void render(MatrixStack ms, SuperRenderTypeBuffer buffer) {
 		boolean hasTransform = transform != null;
-		if (transform instanceof ValueBoxTransform.Sided && params.getHighlightedFace() != null)
-			((ValueBoxTransform.Sided) transform).fromSide(params.getHighlightedFace());
+		if (transform instanceof Sided && params.getHighlightedFace() != null)
+			((Sided) transform).fromSide(params.getHighlightedFace());
 		if (hasTransform && !transform.shouldRender(blockState))
 			return;
 
@@ -120,23 +118,7 @@ public class ValueBox extends ChasingAABBOutline {
 		ms.pop();
 	}
 
-	public void renderContents(MatrixStack ms, VertexConsumerProvider buffer) {
-	}
-
-	protected void renderHoveringText(MatrixStack ms, VertexConsumerProvider buffer, Text text) {
-		renderHoveringText(ms, buffer, text, highlightColor, ColorHelper.mixColors(passiveColor, 0, 0.75f));
-	}
-
-	protected void renderHoveringText(MatrixStack ms, VertexConsumerProvider buffer, Text text, int color,
-									  int shadowColor) {
-		ms.push();
-		drawString(ms, buffer, text, 0, 0, color);
-		ms.translate(0, 0, -.25);
-		drawString(ms, buffer, text, 1, 1, shadowColor);
-		ms.pop();
-	}
-
-	// util
+	public void renderContents(MatrixStack ms, VertexConsumerProvider buffer) {}
 
 	public static class ItemValueBox extends ValueBox {
 		ItemStack stack;
@@ -155,22 +137,22 @@ public class ValueBox extends ChasingAABBOutline {
 			Text countString = new LiteralText(count == 0 ? "*" : count + "");
 			ms.translate(17.5f, -5f, 7f);
 
-			//boolean isFilter = stack.getItem() instanceof FilterItem; TODO FILTER CHECKS
+			boolean isFilter = false; //stack.getItem() instanceof FilterItem;
 			boolean isEmpty = stack.isEmpty();
 			float scale = 1.5f;
 			ms.translate(-font.getWidth(countString), 0, 0);
-
-			/*if (isFilter)
+			
+			if (isFilter)
 				ms.translate(3, 8, 7.25f);
-			else*/
-			if (isEmpty) {
+			else if (isEmpty) {
 				ms.translate(-17, -2, 3f);
 				scale = 2f;
-			} else
+			}
+			else
 				ms.translate(-7, 10, 10 + 1 / 4f);
 
 			ms.scale(scale, scale, scale);
-			drawString(ms, buffer, countString, 0, 0, /*isFilter ? 0xFFFFFF :*/ 0xEDEDED);
+			drawString(ms, buffer, countString, 0, 0, isFilter ? 0xFFFFFF : 0xEDEDED);
 			ms.translate(0, 0, -1 / 16f);
 			drawString(ms, buffer, countString, 1 - 1 / 8f, 1 - 1 / 8f, 0x4F4F4F);
 		}
@@ -228,4 +210,23 @@ public class ValueBox extends ChasingAABBOutline {
 
 	}
 
+	// util
+
+	protected void renderHoveringText(MatrixStack ms, VertexConsumerProvider buffer, Text text) {
+		renderHoveringText(ms, buffer, text, highlightColor, ColorHelper.mixColors(passiveColor, 0, 0.75f));
+	}
+
+	protected void renderHoveringText(MatrixStack ms, VertexConsumerProvider buffer, Text text, int color,
+		int shadowColor) {
+		ms.push();
+		drawString(ms, buffer, text, 0, 0, color);
+		ms.translate(0, 0, -.25);
+		drawString(ms, buffer, text, 1, 1, shadowColor);
+		ms.pop();
+	}
+
+	private static void drawString(MatrixStack ms, VertexConsumerProvider buffer, Text text, float x, float y, int color) {
+		MinecraftClient.getInstance().textRenderer.draw(text, x, y, color, false, ms.peek()
+			.getModel(), buffer, false, 0, 15728880);
+	}
 }

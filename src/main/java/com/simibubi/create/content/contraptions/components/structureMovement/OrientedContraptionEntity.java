@@ -1,5 +1,12 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import static com.simibubi.create.foundation.utility.AngleHelper.angleLerp;
+
+import java.util.Optional;
+import java.util.UUID;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.AllEntityTypes;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity;
@@ -8,6 +15,7 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.CNBTHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
@@ -28,12 +36,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
-import java.util.UUID;
-
-import static com.simibubi.create.foundation.utility.AngleHelper.angleLerp;
 
 /**
  * Ex: Minecarts, Couplings <br>

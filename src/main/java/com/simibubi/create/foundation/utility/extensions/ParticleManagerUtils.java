@@ -1,6 +1,7 @@
 package com.simibubi.create.foundation.utility.extensions;
 
 import com.simibubi.create.foundation.utility.MixinHelper;
+
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particle.ParticleEffect;

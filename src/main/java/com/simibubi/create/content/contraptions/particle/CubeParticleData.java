@@ -1,18 +1,19 @@
 package com.simibubi.create.content.contraptions.particle;
 
+import java.util.Locale;
+
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.AllParticleTypes;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
-
-import java.util.Locale;
 
 public class CubeParticleData implements ParticleEffect, CustomParticleData<CubeParticleData> {
 	public static final Codec<CubeParticleData> CODEC = RecordCodecBuilder.create(i ->

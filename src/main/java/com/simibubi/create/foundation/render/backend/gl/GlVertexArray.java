@@ -1,8 +1,8 @@
 package com.simibubi.create.foundation.render.backend.gl;
 
-import com.simibubi.create.foundation.render.backend.Backend;
-
 import java.util.function.Consumer;
+
+import com.simibubi.create.foundation.render.backend.Backend;
 
 public class GlVertexArray extends GlObject {
 	public GlVertexArray() {

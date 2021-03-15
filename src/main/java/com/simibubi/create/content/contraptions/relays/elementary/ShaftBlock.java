@@ -1,15 +1,18 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
+import java.util.function.Predicate;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -19,10 +22,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.util.function.Predicate;
-
 public class ShaftBlock extends AbstractShaftBlock {
-
 	private static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
 
 	public ShaftBlock(Settings properties) {
@@ -30,15 +30,13 @@ public class ShaftBlock extends AbstractShaftBlock {
 	}
 
 	public static boolean isShaft(BlockState state) {
-		return AllBlocks.SHAFT.stateManager.getStates().contains(state);
+		return AllBlocks.SHAFT == state.getBlock();
 	}
 
-
-	 @Override
-	 public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-	 return AllShapes.SIX_VOXEL_POLE.get(state.get(AXIS));
-	 }
-
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
+		return AllShapes.SIX_VOXEL_POLE.get(state.get(AXIS));
+	}
 
 	@Override
 	public float getParticleTargetRadius() {
@@ -52,26 +50,26 @@ public class ShaftBlock extends AbstractShaftBlock {
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-							  BlockHitResult ray) {
+		BlockHitResult ray) {
 		if (player.isSneaking() || !player.canModifyBlocks())
 			return ActionResult.PASS;
 
 		ItemStack heldItem = player.getStackInHand(hand);
-		/*for (EncasedShaftBlock encasedShaft : new EncasedShaftBlock[] { AllBlocks.ANDESITE_ENCASED_SHAFT.get(), TODO EncasedShaft CHECK
-		 AllBlocks.BRASS_ENCASED_SHAFT.get() }) {
-
-		 if (!encasedShaft.getCasing()
-		 .isIn(heldItem))
-		 continue;*/
-
-		 if (world.isClient)
-		 	return ActionResult.SUCCESS;
-
-		 /*AllTriggers.triggerFor(AllTriggers.CASING_SHAFT, player);
-		 KineticTileEntity.switchToBlockState(world, pos, encasedShaft.getDefaultState()
-		 .with(AXIS, state.get(AXIS)));
-		 return ActionResult.SUCCESS;
-		 }*/
+//		for (EncasedShaftBlock encasedShaft : new EncasedShaftBlock[] { AllBlocks.ANDESITE_ENCASED_SHAFT.get(),
+//			AllBlocks.BRASS_ENCASED_SHAFT.get() }) {
+//
+//			if (!encasedShaft.getCasing()
+//				.isIn(heldItem))
+//				continue;
+//
+//			if (world.isClient)
+//				return ActionResult.SUCCESS;
+//			
+//			AllTriggers.triggerFor(AllTriggers.CASING_SHAFT, player);
+//			KineticBlockEntity.switchToBlockState(world, pos, encasedShaft.getDefaultState()
+//				.with(AXIS, state.get(AXIS)));
+//			return ActionResult.SUCCESS;
+//		}
 
 		com.simibubi.create.foundation.utility.placement.PlacementHelper helper = PlacementHelpers.get(placementHelperId);
 		if (helper.matchesItem(heldItem))
@@ -80,14 +78,15 @@ public class ShaftBlock extends AbstractShaftBlock {
 		return ActionResult.PASS;
 	}
 
+	@MethodsReturnNonnullByDefault
 	private static class PlacementHelper extends PoleHelper<Direction.Axis> {
 		//used for extending a shaft in its axis, like the piston poles. works with shafts and cogs
 
-		private PlacementHelper() {
+		private PlacementHelper(){
 			super(
-				state -> state.getBlock() instanceof AbstractShaftBlock,
-				state -> state.get(Properties.AXIS),
-				Properties.AXIS
+					state -> state.getBlock() instanceof AbstractShaftBlock,
+					state -> state.get(AXIS),
+					AXIS
 			);
 		}
 
@@ -98,7 +97,7 @@ public class ShaftBlock extends AbstractShaftBlock {
 
 		@Override
 		public Predicate<BlockState> getStatePredicate() {
-			return AllBlocks.SHAFT.stateManager.getStates()::contains;
+			return state -> AllBlocks.SHAFT == state.getBlock();
 		}
 	}
 }
