@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -28,19 +29,18 @@ public abstract class MovementBehaviour {
 		return Vec3d.ZERO;
 	}
 
-	/**
-	 * public void dropItem(MovementContext context, ItemStack stack) { TODO PLS FIX INVENTORY MOVEMENT CONTEXT WHATEVER IDK
-	 * ItemStack remainder = ItemHandlerHelper.insertItem(context.contraption.inventory, stack, false);
-	 * if (remainder.isEmpty())
-	 * return;
-	 * <p>
-	 * Vec3d vec = context.position;
-	 * ItemEntity itemEntity = new ItemEntity(context.world, vec.x, vec.y, vec.z, remainder);
-	 * itemEntity.setVelocity(context.motion.add(0, 0.5f, 0)
-	 * .multiply(context.world.random.nextFloat() * .3f));
-	 * context.world.spawnEntity(itemEntity);
-	 * }
-	 */
+	public void dropItem(MovementContext context, ItemStack stack) {
+		/*ItemStack remainder = ItemHandlerHelper.insertItem(context.contraption.inventory, stack, false);
+		if (remainder.isEmpty())
+			return;
+
+		Vec3d vec = context.position;
+		ItemEntity itemEntity = new ItemEntity(context.world, vec.x, vec.y, vec.z, remainder);
+		itemEntity.setVelocity(context.motion.add(0, 0.5f, 0)
+			.multiply(context.world.random.nextFloat() * .3f));
+		context.world.spawnEntity(itemEntity);*/
+ 	}
+
 
 	public void stopMoving(MovementContext context) {
 

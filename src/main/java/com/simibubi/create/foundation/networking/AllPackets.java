@@ -3,6 +3,9 @@ package com.simibubi.create.foundation.networking;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.GlueEffectPacket;
+import com.simibubi.create.content.contraptions.components.structureMovement.sync.ClientMotionPacket;
+import com.simibubi.create.content.contraptions.components.structureMovement.sync.LimbSwingUpdatePacket;
+import com.simibubi.create.content.curiosities.symmetry.SymmetryEffectPacket;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueUpdatePacket;
 
 import me.pepperbell.simplenetworking.C2SPacket;
@@ -27,7 +30,7 @@ public enum AllPackets {
 	CONFIGURE_SCROLLABLE(ScrollValueUpdatePacket.class),
 //	EXTENDO_INTERACT(ExtendoGripInteractionPacket.class, ExtendoGripInteractionPacket::new, PLAY_TO_SERVER),
 //	CONTRAPTION_INTERACT(ContraptionInteractionPacket.class, ContraptionInteractionPacket::new, PLAY_TO_SERVER),
-//	CLIENT_MOTION(ClientMotionPacket.class, ClientMotionPacket::new, PLAY_TO_SERVER),
+	CLIENT_MOTION(ClientMotionPacket.class),
 //	PLACE_ARM(ArmPlacementPacket.class, ArmPlacementPacket::new, PLAY_TO_SERVER),
 //	MINECART_COUPLING_CREATION(CouplingCreationPacket.class, CouplingCreationPacket::new, PLAY_TO_SERVER),
 //	INSTANT_SCHEMATIC(InstantSchematicPacket.class, InstantSchematicPacket::new, PLAY_TO_SERVER),
@@ -35,7 +38,7 @@ public enum AllPackets {
 	LEFT_CLICK(LeftClickPacket.class),
 
 	// Server to Client
-//	SYMMETRY_EFFECT(SymmetryEffectPacket.class, SymmetryEffectPacket::new, PLAY_TO_CLIENT),
+	SYMMETRY_EFFECT(SymmetryEffectPacket.class),
 //	SERVER_SPEED(ServerSpeedProvider.Packet.class, ServerSpeedProvider.Packet::new, PLAY_TO_CLIENT),
 //	BEAM_EFFECT(ZapperBeamPacket.class, ZapperBeamPacket::new, PLAY_TO_CLIENT),
 //	CONFIGURE_CONFIG(ConfigureConfigPacket.class, ConfigureConfigPacket::new, PLAY_TO_CLIENT),
@@ -43,7 +46,7 @@ public enum AllPackets {
 //	CONTRAPTION_DISASSEMBLE(ContraptionDisassemblyPacket.class, ContraptionDisassemblyPacket::new, PLAY_TO_CLIENT),
     GLUE_EFFECT(GlueEffectPacket.class),
 //	CONTRAPTION_SEAT_MAPPING(ContraptionSeatMappingPacket.class, ContraptionSeatMappingPacket::new, PLAY_TO_CLIENT),
-//	LIMBSWING_UPDATE(LimbSwingUpdatePacket.class, LimbSwingUpdatePacket::new, PLAY_TO_CLIENT),
+	LIMBSWING_UPDATE(LimbSwingUpdatePacket.class),
 //	MINECART_CONTROLLER(MinecartControllerUpdatePacket.class, MinecartControllerUpdatePacket::new, PLAY_TO_CLIENT),
 //	FLUID_SPLASH(FluidSplashPacket.class, FluidSplashPacket::new, PLAY_TO_CLIENT),
 //	CONTRAPTION_FLUID(ContraptionFluidPacket.class, ContraptionFluidPacket::new, PLAY_TO_CLIENT),

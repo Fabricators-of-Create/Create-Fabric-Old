@@ -12,6 +12,7 @@ import com.simibubi.create.content.curiosities.symmetry.mirror.EmptyMirror;
 import com.simibubi.create.content.curiosities.symmetry.mirror.PlaneMirror;
 import com.simibubi.create.content.curiosities.symmetry.mirror.SymmetryMirror;
 import com.simibubi.create.foundation.gui.ScreenOpener;
+import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 
@@ -224,8 +225,7 @@ public class SymmetryWandItem extends Item {
 			}
 		}
 
-		/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
-			new SymmetryEffectPacket(to, targets));*/
+		AllPackets.CHANNEL.sendToClientsTracking(new SymmetryEffectPacket(to, targets), player);
 	}
 
 	private static boolean isHoldingBlock(PlayerEntity player, BlockState block) {
@@ -282,8 +282,7 @@ public class SymmetryWandItem extends Item {
 			}
 		}
 
-		/*AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
-			new SymmetryEffectPacket(to, targets));*/
+		AllPackets.CHANNEL.sendToClientsTracking(new SymmetryEffectPacket(to, targets), player);
 	}
 
 }

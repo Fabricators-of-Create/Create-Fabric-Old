@@ -149,8 +149,8 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 
 		Vec3d motion = getVelocity();
 		move(motion.x, motion.y, motion.z);
-		/**if (ContraptionCollider.collideBlocks(this)) TODO COLLISION CHECK
-		 getController().collided();*/
+		if (ContraptionCollider.collideBlocks(this))
+			getController().collided();
 	}
 
 	@Override
