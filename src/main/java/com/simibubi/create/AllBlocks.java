@@ -23,6 +23,10 @@ import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
 import com.simibubi.create.content.contraptions.relays.encased.ClutchBlock;
 import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlock;
+import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock;
+import com.simibubi.create.content.logistics.block.diodes.PoweredLatchBlock;
+import com.simibubi.create.content.logistics.block.diodes.PulseRepeaterBlock;
+import com.simibubi.create.content.logistics.block.diodes.ToggleLatchBlock;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
@@ -992,47 +996,49 @@ public class AllBlocks {
 		.build()
 		.register();
 
-	/*public static final PulseRepeaterBlock PULSE_REPEATER = createBuilder("pulse_repeater", PulseRepeaterBlock::new)
+	public static final PulseRepeaterBlock PULSE_REPEATER = createBuilder("pulse_repeater", PulseRepeaterBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.blockstate(new PulseRepeaterGenerator()::generate)
+//		.blockstate(new PulseRepeaterGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.item()
-		.transform(customItemModel("diodes", "pulse_repeater"))
+//		.transform(customItemModel("diodes", "pulse_repeater"))
+		.build()
 		.register();
 
 	public static final AdjustableRepeaterBlock ADJUSTABLE_REPEATER = createBuilder("adjustable_repeater", AdjustableRepeaterBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.tag(AllBlockTags.SAFE_NBT.tag)
-		.blockstate(new AdjustableRepeaterGenerator()::generate)
+//		.tag(AllBlockTags.SAFE_NBT.tag)
+//		.blockstate(new AdjustableRepeaterGenerator()::generate)
 		.item()
-		.model(AbstractDiodeGenerator.diodeItemModel(true))
+//		.model(AbstractDiodeGenerator.diodeItemModel(true))
 		.build()
 		.register();
 
 	public static final AdjustableRepeaterBlock ADJUSTABLE_PULSE_REPEATER = createBuilder("adjustable_pulse_repeater", AdjustableRepeaterBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.tag(AllBlockTags.SAFE_NBT.tag)
-		.blockstate(new AdjustableRepeaterGenerator()::generate)
+//		.tag(AllBlockTags.SAFE_NBT.tag)
+//		.blockstate(new AdjustableRepeaterGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.item()
-		.model(AbstractDiodeGenerator.diodeItemModel(true))
+//		.model(AbstractDiodeGenerator.diodeItemModel(true))
 		.build()
 		.register();
 
 	public static final PoweredLatchBlock POWERED_LATCH = createBuilder("powered_latch", PoweredLatchBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.blockstate(new PoweredLatchGenerator()::generate)
+//		.blockstate(new PoweredLatchGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.simpleItem()
 		.register();
 
 	public static final ToggleLatchBlock POWERED_TOGGLE_LATCH = createBuilder("powered_toggle_latch", ToggleLatchBlock::new)
 		.initialProperties(() -> Blocks.REPEATER)
-		.blockstate(new ToggleLatchGenerator()::generate)
+//		.blockstate(new ToggleLatchGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.item()
-		.transform(customItemModel("diodes", "latch_off"))
-		.register();*/
+//		.transform(customItemModel("diodes", "latch_off"))
+		.build()
+		.register();
 
 	// Materials
 

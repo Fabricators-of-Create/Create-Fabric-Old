@@ -32,6 +32,9 @@ import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntit
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxInstance;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxRenderer;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftBlockEntity;
+import com.simibubi.create.content.logistics.block.diodes.AdjustablePulseRepeaterBlockEntity;
+import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlockEntity;
+import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterRenderer;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
 import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
@@ -429,7 +432,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<ContentObserverBlockEntity> CONTENT_OBSERVER = createBuilder("content_observer", ContentObserverBlockEntity::new)
 		.validBlocks(AllBlocks.CONTENT_OBSERVER)
 		.renderer(() -> SmartBlockEntityRenderer::new)
-		.register();
+		.register();*/
 
 	public static final BlockEntityType<AdjustableRepeaterBlockEntity> ADJUSTABLE_REPEATER = createBuilder("adjustable_repeater", AdjustableRepeaterBlockEntity::new)
 		.validBlocks(AllBlocks.ADJUSTABLE_REPEATER)
@@ -439,7 +442,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<AdjustablePulseRepeaterBlockEntity> ADJUSTABLE_PULSE_REPEATER = createBuilder("adjustable_pulse_repeater", AdjustablePulseRepeaterBlockEntity::new)
 		.validBlocks(AllBlocks.ADJUSTABLE_PULSE_REPEATER)
 		.renderer(() -> AdjustableRepeaterRenderer::new)
-		.register();*/
+		.register();
 
 	private static <T extends BlockEntity> BlockEntityTypeRegBuilder<T> createBuilder(String id, Supplier<T> supplier) {
 		return BlockEntityTypeRegBuilder.create(new Identifier(Create.ID, id), supplier);
