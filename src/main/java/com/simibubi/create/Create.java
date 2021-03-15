@@ -44,6 +44,8 @@ public class Create implements ModInitializer  {
 		AllMovementBehaviours.register();
 		AllConfigs.register();
 
+		torquePropagator = new TorquePropagator();
+
 		AllPackets.registerPackets();
 
 		CommonEvents.register();
