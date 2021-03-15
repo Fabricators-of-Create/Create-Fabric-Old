@@ -11,18 +11,28 @@ import java.util.List;
 import static com.simibubi.create.Create.ID;
 import static com.simibubi.create.Create.id;
 
+/**
+ * Handles translating Create to other languages.
+ * Only Minecraft-supported languages are allowed.
+ *
+ * <p>
+ * All translations extend (or are instances of) {@link CreateTranslation}, which
+ * supplies an initialization method. Translations should only translate the configuration
+ * screen for now.
+ * </p>
+ *
+ * <p>
+ * Instances of {@link CreateTranslation} should be registered in the static
+ * initializer and added to {@link #TRANSLATIONS}. These will then be used when
+ * ARRP loads our runtime resource pack.
+ * </p>
+ *
+ * @author YTG1234
+ */
 @SuppressWarnings("SameParameterValue")
 public final class TranslationsHolder {
 	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id(ID).toString());
 
-	/**
-	 * Handles translating Create to other languages.
-	 *
-	 * <p>
-	 * Translations should be registered
-	 * in the static initializer and are processed when {@link #initialize()} is called.
-	 * </p>
-	 */
 	private static final List<CreateTranslation> TRANSLATIONS = new ArrayList<>();
 
 	static {

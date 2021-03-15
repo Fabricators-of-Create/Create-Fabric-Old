@@ -12,7 +12,7 @@ import static com.simibubi.create.Create.ID;
 
 /**
  * A translation to a Minecraft-supported language that can
- * be added to create through {@link com.simibubi.create.foundation.resource.AllClientResources}.
+ * be added to create through {@link com.simibubi.create.foundation.resource.TranslationsHolder}.
  */
 public class CreateTranslation {
 	public final String languageCode;
